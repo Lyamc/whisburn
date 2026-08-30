@@ -1,0 +1,47 @@
+# Rust / Cargo
+/target/
+**/*.rs.bk
+**/*.profraw
+
+# Downloaded and converted model weights (large; regenerate via CLI)
+/models/*
+!/models/README.md
+
+# HuggingFace / conversion intermediates (anywhere in tree)
+model.safetensors
+*.mpk
+*.mpk.gz
+shapes.json
+.burn_version
+
+# Intermediate npy dumps from HF conversion
+**/encoder/**/*.npy
+**/decoder/**/*.npy
+
+# Environment and secrets
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and temp
+*.log
+/tmp/
+/temp/
+notes/
+
+# Python (reference export scripts in parakeet-rs)
+__pycache__/
+*.pyc
+.venv/
+venv/

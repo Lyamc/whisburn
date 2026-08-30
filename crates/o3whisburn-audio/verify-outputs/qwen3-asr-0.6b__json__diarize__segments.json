@@ -1,0 +1,52 @@
+{
+  "text": "Hello and welcome. This is a test of the speech system. It supports multiple output formats. Speaker changes and sentences too?",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 0.7,
+      "text": "Hello",
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 0.7,
+      "end": 1.23,
+      "text": "and welcome.",
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 1.23,
+      "end": 2.0,
+      "text": "This is",
+      "speaker": "SPEAKER_01"
+    },
+    {
+      "start": 2.0,
+      "end": 3.1,
+      "text": "a test of the speech system.",
+      "speaker": "SPEAKER_01"
+    },
+    {
+      "start": 3.1,
+      "end": 4.0,
+      "text": "It supports"
+    },
+    {
+      "start": 4.0,
+      "end": 4.8,
+      "text": "multiple output formats."
+    },
+    {
+      "start": 4.9,
+      "end": 5.6,
+      "text": "Speaker changes"
+    },
+    {
+      "start": 5.6,
+      "end": 6.2,
+      "text": "and sentences too?"
+    }
+  ],
+  "language": "en",
+  "model": "qwen3-asr-0.6b",
+  "task": "diarize"
+}

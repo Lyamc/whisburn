@@ -1,0 +1,24 @@
+1
+00:00:00,000 --> 00:00:00,700
+[SPEAKER_00] Hello
+2
+00:00:00,700 --> 00:00:01,230
+[SPEAKER_00] and welcome.
+3
+00:00:01,230 --> 00:00:02,000
+[SPEAKER_01] This is
+4
+00:00:02,000 --> 00:00:03,100
+[SPEAKER_01] a test of the speech system.
+5
+00:00:03,100 --> 00:00:04,000
+It supports
+6
+00:00:04,000 --> 00:00:04,800
+multiple output formats.
+7
+00:00:04,900 --> 00:00:05,600
+Speaker changes
+8
+00:00:05,600 --> 00:00:06,200
+and sentences too?

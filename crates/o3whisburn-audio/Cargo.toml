@@ -1,0 +1,19 @@
+[package]
+name = "o3whisburn-audio"
+description = "Pure-Rust audio decode, resample, and format export for o3whisburn"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+o3whisburn-core = { workspace = true }
+symphonia = { workspace = true }
+rubato = { workspace = true }
+hound = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tempfile = { workspace = true }
+
+[dev-dependencies]
+o3whisburn-core = { workspace = true }

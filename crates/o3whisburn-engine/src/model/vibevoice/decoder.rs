@@ -1,0 +1,387 @@
+use burn::config::Config;
+use burn::module::Module;
+use burn::nn::{Embedding, EmbeddingConfig};
+use burn::tensor::{activation::silu, backend::Backend, Tensor, Int};
+
+use crate::model::attention::attn_decoder_mask;
+use crate::model::conformer::RMSNorm;
+
+use super::quant::QuantLinear;
+use super::runtime::VibeVoiceRuntimeConfig;
+
+type KvLayerCache<B> = (Tensor<B, 4>, Tensor<B, 4>);
+
+#[derive(Config, Debug)]
+pub struct Qwen2DecoderConfig {
+    pub hidden_size: usize,
+    pub n_layers: usize,
+    pub n_heads: usize,
+    pub n_kv_heads: usize,
+    pub head_dim: usize,
+    pub intermediate_size: usize,
+    pub vocab_size: usize,
+    pub rms_norm_eps: f64,
+    pub rope_theta: f64,
+}
+
+impl Qwen2DecoderConfig {
+    pub fn from_runtime(runtime: &VibeVoiceRuntimeConfig) -> Self {
+        let n_heads = runtime.num_attention_heads.max(1);
+        let head_dim = runtime.hidden_size / n_heads;
+        Self {
+            hidden_size: runtime.hidden_size,
+            n_layers: runtime.num_hidden_layers,
+            n_heads,
+            n_kv_heads: runtime.num_key_value_heads.max(1),
+            head_dim,
+            intermediate_size: runtime.intermediate_size.max(runtime.hidden_size * 4),
+            vocab_size: runtime.vocab_size,
+            rms_norm_eps: runtime.rms_norm_eps,
+            rope_theta: runtime.rope_theta,
+        }
+    }
+
+    pub fn init<B: Backend>(&self, device: &B::Device) -> Qwen2Decoder<B> {
+        let layers = (0..self.n_layers)
+            .map(|_| {
+                Qwen2DecoderLayer::new(
+                    self.hidden_size,
+                    self.n_heads,
+                    self.n_kv_heads,
+                    self.head_dim,
+                    self.intermediate_size,
+                    self.rms_norm_eps,
+                    device,
+                )
+            })
+            .collect();
+        Qwen2Decoder {
+            hidden_size: self.hidden_size,
+            vocab_size: self.vocab_size,
+            head_dim: self.head_dim,
+            rope_theta: self.rope_theta,
+            embed_tokens: EmbeddingConfig::new(self.vocab_size, self.hidden_size).init(device),
+            layers,
+            norm: RMSNorm::with_eps(self.hidden_size, self.rms_norm_eps, device),
+            lm_head: QuantLinear::empty(self.hidden_size, self.vocab_size, false, device),
+        }
+    }
+}
+
+#[derive(Module, Debug)]
+pub(crate) struct Qwen2Attention<B: Backend> {
+    #[module(ignore)]
+    pub(crate) n_heads: usize,
+    #[module(ignore)]
+    pub(crate) n_kv_heads: usize,
+    #[module(ignore)]
+    pub(crate) head_dim: usize,
+    pub(crate) q_proj: QuantLinear<B>,
+    pub(crate) k_proj: QuantLinear<B>,
+    pub(crate) v_proj: QuantLinear<B>,
+    pub(crate) o_proj: QuantLinear<B>,
+}
+
+impl<B: Backend> Qwen2Attention<B> {
+    fn forward_with_cache(
+        &self,
+        x: Tensor<B, 3>,
+        cos: &Tensor<B, 3>,
+        sin: &Tensor<B, 3>,
+        mask: &Tensor<B, 2>,
+        cache: Option<KvLayerCache<B>>,
+    ) -> (Tensor<B, 3>, KvLayerCache<B>) {
+        let [batch, seq, _] = x.dims();
+        let scale = (self.head_dim as f64).powf(-0.5);
+        let n_rep = self.n_heads / self.n_kv_heads;
+
+        let q = self
+            .q_proj
+            .forward(x.clone())
+            .reshape([batch, seq, self.n_heads, self.head_dim]);
+        let k = self
+            .k_proj
+            .forward(x.clone())
+            .reshape([batch, seq, self.n_kv_heads, self.head_dim]);
+        let v = self
+            .v_proj
+            .forward(x)
+            .reshape([batch, seq, self.n_kv_heads, self.head_dim]);
+
+        let q = apply_rope(q.swap_dims(1, 2), cos, sin);
+        let k_new = apply_rope(k.swap_dims(1, 2), cos, sin);
+        let v_new = v.swap_dims(1, 2);
+
+        let (k_full, v_full) = match cache {
+            Some((k_cache, v_cache)) => (
+                Tensor::cat(vec![k_cache, k_new], 2),
+                Tensor::cat(vec![v_cache, v_new], 2),
+            ),
+            None => (k_new, v_new),
+        };
+
+        let k = repeat_kv(k_full.clone(), n_rep);
+        let v = repeat_kv(v_full.clone(), n_rep);
+        let mut scores =
+            q.matmul(k.swap_dims(2, 3)).mul_scalar(scale) + mask.clone().unsqueeze::<3>().unsqueeze::<4>();
+        scores = burn::tensor::activation::softmax(scores, 3);
+        let out = scores
+            .matmul(v)
+            .swap_dims(1, 2)
+            .reshape([batch, seq, self.n_heads * self.head_dim]);
+        (self.o_proj.forward(out), (k_full, v_full))
+    }
+}
+
+#[derive(Module, Debug)]
+pub(crate) struct Qwen2Mlp<B: Backend> {
+    pub(crate) gate_proj: QuantLinear<B>,
+    pub(crate) up_proj: QuantLinear<B>,
+    pub(crate) down_proj: QuantLinear<B>,
+}
+
+impl<B: Backend> Qwen2Mlp<B> {
+    fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+        let gate = silu(self.gate_proj.forward(x.clone()));
+        self.down_proj.forward(gate * self.up_proj.forward(x))
+    }
+}
+
+#[derive(Module, Debug)]
+pub(crate) struct Qwen2DecoderLayer<B: Backend> {
+    pub(crate) input_layernorm: RMSNorm<B>,
+    pub(crate) self_attn: Qwen2Attention<B>,
+    pub(crate) post_attention_layernorm: RMSNorm<B>,
+    pub(crate) mlp: Qwen2Mlp<B>,
+}
+
+impl<B: Backend> Qwen2DecoderLayer<B> {
+    fn new(
+        hidden_size: usize,
+        n_heads: usize,
+        n_kv_heads: usize,
+        head_dim: usize,
+        intermediate_size: usize,
+        rms_norm_eps: f64,
+        device: &B::Device,
+    ) -> Self {
+        let q_out = n_heads * head_dim;
+        let kv_out = n_kv_heads * head_dim;
+        Self {
+            input_layernorm: RMSNorm::with_eps(hidden_size, rms_norm_eps, device),
+            self_attn: Qwen2Attention {
+                n_heads,
+                n_kv_heads,
+                head_dim,
+                q_proj: QuantLinear::empty(hidden_size, q_out, true, device),
+                k_proj: QuantLinear::empty(hidden_size, kv_out, true, device),
+                v_proj: QuantLinear::empty(hidden_size, kv_out, true, device),
+                o_proj: QuantLinear::empty(q_out, hidden_size, false, device),
+            },
+            post_attention_layernorm: RMSNorm::with_eps(hidden_size, rms_norm_eps, device),
+            mlp: Qwen2Mlp {
+                gate_proj: QuantLinear::empty(hidden_size, intermediate_size, false, device),
+                up_proj: QuantLinear::empty(hidden_size, intermediate_size, false, device),
+                down_proj: QuantLinear::empty(intermediate_size, hidden_size, false, device),
+            },
+        }
+    }
+
+    fn forward_with_cache(
+        &self,
+        x: Tensor<B, 3>,
+        cos: &Tensor<B, 3>,
+        sin: &Tensor<B, 3>,
+        mask: &Tensor<B, 2>,
+        cache: Option<KvLayerCache<B>>,
+    ) -> (Tensor<B, 3>, KvLayerCache<B>) {
+        let residual = x.clone();
+        let (attn, cache) = self.self_attn.forward_with_cache(
+            self.input_layernorm.forward(x),
+            cos,
+            sin,
+            mask,
+            cache,
+        );
+        let x = residual + attn;
+        let residual = x.clone();
+        let x = self.mlp.forward(self.post_attention_layernorm.forward(x));
+        (residual + x, cache)
+    }
+}
+
+#[derive(Module, Debug)]
+pub struct Qwen2Decoder<B: Backend> {
+    #[module(ignore)]
+    pub hidden_size: usize,
+    #[module(ignore)]
+    pub vocab_size: usize,
+    #[module(ignore)]
+    pub(crate) head_dim: usize,
+    #[module(ignore)]
+    pub(crate) rope_theta: f64,
+    pub embed_tokens: Embedding<B>,
+    pub(crate) layers: Vec<Qwen2DecoderLayer<B>>,
+    pub(crate) norm: RMSNorm<B>,
+    pub lm_head: QuantLinear<B>,
+}
+
+impl<B: Backend> Qwen2Decoder<B> {
+    pub fn merge_audio_embeds(
+        &self,
+        input_ids: &[usize],
+        audio_features: Tensor<B, 3>,
+        pad_token_id: usize,
+        device: &B::Device,
+    ) -> Tensor<B, 3> {
+        let ids: Vec<i32> = input_ids.iter().map(|&id| id as i32).collect();
+        let ids_tensor =
+            Tensor::<B, 1, Int>::from_ints(ids.as_slice(), device).reshape([1, input_ids.len()]);
+        let mut hidden = self.embed_tokens.forward(ids_tensor);
+        let [_, _, h] = hidden.dims();
+        let pad_positions: Vec<usize> = input_ids
+            .iter()
+            .enumerate()
+            .filter(|(_, &id)| id == pad_token_id)
+            .map(|(i, _)| i)
+            .collect();
+        let [_, audio_tokens, _] = audio_features.dims();
+        for (ai, &pos) in pad_positions.iter().enumerate() {
+            if ai >= audio_tokens {
+                break;
+            }
+            let audio_slice = audio_features.clone().slice([0..1, ai..ai + 1, 0..h]);
+            hidden = hidden.slice_assign([0..1, pos..pos + 1, 0..h], audio_slice);
+        }
+        hidden
+    }
+
+    pub fn generate_greedy(
+        &self,
+        prefix_ids: &[usize],
+        audio_features: Tensor<B, 3>,
+        pad_token_id: usize,
+        eos_ids: &[usize],
+        max_new_tokens: usize,
+        device: &B::Device,
+    ) -> Vec<usize> {
+        let prefix_len = prefix_ids.len();
+        if prefix_len == 0 {
+            return Vec::new();
+        }
+
+        let hidden = self.merge_audio_embeds(prefix_ids, audio_features, pad_token_id, device);
+        let (mut hidden, mut caches) = self.forward_hidden_with_cache(hidden, device);
+        let mut generated = Vec::new();
+        let mut pos = prefix_len;
+
+        for _ in 0..max_new_tokens {
+            let logits = self.lm_head.forward(hidden.clone());
+            let [_, seq, vocab] = logits.dims();
+            let last = logits.slice([0..1, seq - 1..seq, 0..vocab]);
+            let data = last.argmax(2).into_data();
+            let next = data
+                .clone()
+                .to_vec::<i64>()
+                .or_else(|_| data.to_vec::<i32>().map(|v| v.into_iter().map(i64::from).collect()))
+                .expect("argmax ids")[0] as usize;
+            if eos_ids.contains(&next) {
+                break;
+            }
+            generated.push(next);
+
+            let next_id = vec![next as i32];
+            let ids_tensor =
+                Tensor::<B, 1, Int>::from_ints(next_id.as_slice(), device).reshape([1, 1]);
+            let token_hidden = self.embed_tokens.forward(ids_tensor);
+            let (cos, sin) = rope_embeddings_at_pos(pos, self.head_dim, self.rope_theta, device);
+            let mask = Tensor::<B, 2>::zeros([1, pos + 1], device);
+            let mut x = token_hidden;
+            for (layer, cache) in self.layers.iter().zip(caches.iter_mut()) {
+                let (out, new_cache) = layer.forward_with_cache(x, &cos, &sin, &mask, cache.take());
+                *cache = Some(new_cache);
+                x = out;
+            }
+            hidden = self.norm.forward(x);
+            pos += 1;
+        }
+
+        generated
+    }
+
+    fn forward_hidden_with_cache(
+        &self,
+        inputs_embeds: Tensor<B, 3>,
+        device: &B::Device,
+    ) -> (Tensor<B, 3>, Vec<Option<KvLayerCache<B>>>) {
+        let [_, seq, _] = inputs_embeds.dims();
+        let (cos, sin) = rope_embeddings(seq, self.head_dim, self.rope_theta, device);
+        let mask = attn_decoder_mask(seq, device);
+        let mut x = inputs_embeds;
+        let mut caches = vec![None; self.layers.len()];
+        for (layer, cache) in self.layers.iter().zip(caches.iter_mut()) {
+            let (out, new_cache) = layer.forward_with_cache(x, &cos, &sin, &mask, None);
+            *cache = Some(new_cache);
+            x = out;
+        }
+        (self.norm.forward(x), caches)
+    }
+}
+
+fn apply_rope<B: Backend>(x: Tensor<B, 4>, cos: &Tensor<B, 3>, sin: &Tensor<B, 3>) -> Tensor<B, 4> {
+    let [b, h, s, d] = x.dims();
+    let half = d / 2;
+    let x1 = x.clone().slice([0..b, 0..h, 0..s, 0..half]);
+    let x2 = x.clone().slice([0..b, 0..h, 0..s, half..d]);
+    let rotated = Tensor::cat(vec![x2.mul_scalar(-1.0), x1], 3);
+    let cos = cos.clone().unsqueeze_dim::<4>(1);
+    let sin = sin.clone().unsqueeze_dim::<4>(1);
+    x * cos + rotated * sin
+}
+
+fn repeat_kv<B: Backend>(x: Tensor<B, 4>, n_rep: usize) -> Tensor<B, 4> {
+    if n_rep == 1 {
+        return x;
+    }
+    let [b, n_kv, s, d] = x.dims();
+    let mut heads = Vec::with_capacity(n_kv * n_rep);
+    for i in 0..n_kv {
+        let head = x.clone().slice([0..b, i..i + 1, 0..s, 0..d]);
+        for _ in 0..n_rep {
+            heads.push(head.clone());
+        }
+    }
+    Tensor::cat(heads, 1)
+}
+
+fn rope_embeddings<B: Backend>(
+    seq: usize,
+    head_dim: usize,
+    theta: f64,
+    device: &B::Device,
+) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    let half = head_dim / 2;
+    let inv_freq: Vec<f32> = (0..half)
+        .map(|i| (theta.powf(-(2.0 * i as f64) / head_dim as f64)) as f32)
+        .collect();
+    let inv = Tensor::<B, 1>::from_floats(inv_freq.as_slice(), device);
+    let t = Tensor::<B, 1, Int>::arange(0..seq as i64, device).float();
+    let freqs = t.unsqueeze::<2>().transpose().matmul(inv.unsqueeze::<2>());
+    let emb = Tensor::cat(vec![freqs.clone(), freqs], 1);
+    let cos = emb.clone().cos().unsqueeze::<3>();
+    let sin = emb.sin().unsqueeze::<3>();
+    (cos, sin)
+}
+
+fn rope_embeddings_at_pos<B: Backend>(
+    pos: usize,
+    head_dim: usize,
+    theta: f64,
+    device: &B::Device,
+) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    let (cos, sin) = rope_embeddings(pos + 1, head_dim, theta, device);
+    (
+        cos.slice([0..1, pos..pos + 1, 0..head_dim]),
+        sin.slice([0..1, pos..pos + 1, 0..head_dim]),
+    )
+}

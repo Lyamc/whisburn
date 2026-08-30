@@ -1,0 +1,76 @@
+{
+  "language": "en",
+  "model": "parakeet-tdt-0.6b-v3",
+  "segments": [
+    {
+      "end": 0.7,
+      "speaker": "SPEAKER_00",
+      "start": 0.0,
+      "text": "Hello"
+    },
+    {
+      "end": 1.23,
+      "speaker": "SPEAKER_00",
+      "start": 0.7,
+      "text": "and welcome."
+    },
+    {
+      "end": 2.0,
+      "speaker": "SPEAKER_01",
+      "start": 1.23,
+      "text": "This is"
+    },
+    {
+      "end": 3.1,
+      "speaker": "SPEAKER_01",
+      "start": 2.0,
+      "text": "a test of the speech system."
+    },
+    {
+      "end": 4.0,
+      "start": 3.1,
+      "text": "It supports"
+    },
+    {
+      "end": 4.8,
+      "start": 4.0,
+      "text": "multiple output formats."
+    },
+    {
+      "end": 5.6,
+      "start": 4.9,
+      "text": "Speaker changes"
+    },
+    {
+      "end": 6.2,
+      "start": 5.6,
+      "text": "and sentences too?"
+    }
+  ],
+  "sentences": [
+    {
+      "end": 1.23,
+      "speaker": "SPEAKER_00",
+      "start": 0.0,
+      "text": "Hello and welcome."
+    },
+    {
+      "end": 3.1,
+      "speaker": "SPEAKER_01",
+      "start": 1.23,
+      "text": "This is a test of the speech system."
+    },
+    {
+      "end": 4.8,
+      "start": 3.1,
+      "text": "It supports multiple output formats."
+    },
+    {
+      "end": 6.2,
+      "start": 4.9,
+      "text": "Speaker changes and sentences too?"
+    }
+  ],
+  "task": "diarize",
+  "text": "Hello and welcome. This is a test of the speech system. It supports multiple output formats. Speaker changes and sentences too?"
+}
