@@ -1,0 +1,278 @@
+[00:00.000 --> 00:00.740]  Hello.
+[00:01.940 --> 00:03.720]  Hey, this is Liam from Label Controls.
+[00:04.180 --> 00:05.000]  Liam, how's it going?
+[00:05.960 --> 00:07.780]  It's going good. Sorry I missed your call.
+[00:08.820 --> 00:10.960]  I figured I'd got you guys before you're open.
+[00:11.220 --> 00:13.100]  I know we're on different time zones.
+[00:16.500 --> 00:20.700]  But I am over here at Hardee County,
+[00:21.840 --> 00:27.080]  where we got a jail and stuff like that out here in Machuma, Florida.
+[00:28.720 --> 00:31.120]  And obviously they don't have nothing online.
+[00:31.120 --> 00:32.720]  We're using the Mach Pro website.
+[00:33.620 --> 00:33.860]  Yeah.
+[00:35.240 --> 00:38.640]  And they, you know, no problems at the jail building,
+[00:38.740 --> 00:40.820]  but then over at the convention center all of a sudden.
+[00:41.320 --> 00:47.120]  Now, the controller, when they plug into it,
+[00:47.240 --> 00:50.320]  I've got the IP scheme the same as those buildings,
+[00:50.400 --> 00:52.560]  so they can just plug in and put one IP address in.
+[00:53.260 --> 00:53.640]  Yeah.
+[00:54.260 --> 00:55.900]  It is not connecting.
+[00:55.900 --> 00:59.020]  And then when I like do ping, when I try to ping the controller,
+[00:59.100 --> 01:00.740]  when I'm plugged into it,
+[01:01.320 --> 01:07.580]  it's showing that it's still reverted back to the old 200 IP address,
+[01:07.740 --> 01:11.940]  and it's like it's stuck at that old IP address or something.
+[01:12.100 --> 01:15.720]  It won't come out of it, even though I've changed it.
+[01:17.320 --> 01:21.400]  So I don't know if the IP port went bad on it.
+[01:21.400 --> 01:24.600]  Because, I mean, I just, while I was out here today,
+[01:24.960 --> 01:26.860]  I was only one version behind,
+[01:27.600 --> 01:32.060]  so I put the newest version driver in just to see if there was anything to help with that,
+[01:32.080 --> 01:36.720]  because I think the last version had updates for the web system and stuff like that.
+[01:38.180 --> 01:38.660]  Yeah.
+[01:43.150 --> 01:46.210]  But I just don't, I'm kind of at a loss now.
+[01:47.770 --> 01:54.610]  The behavior is talking about where it doesn't seem to like take the connection settings.
+[01:56.650 --> 01:57.230]  Yeah.
+[01:58.810 --> 02:01.330]  That seems very strange.
+[02:02.710 --> 02:11.810]  The only thing I could really think of is if you happen to log in with a user password type thing with very low security level, maybe.
+[02:12.790 --> 02:14.370]  Aside from that...
+[02:14.370 --> 02:18.890]  Well, I wonder, like, when they plug their laptop in to DirectTech,
+[02:19.030 --> 02:23.210]  because obviously we did the website, so we got graphics and all that stuff and all they see,
+[02:23.510 --> 02:25.270]  it won't even pull up the web page.
+[02:25.930 --> 02:29.650]  Yeah. When you say direct, we're not talking with serial, right?
+[02:29.710 --> 02:32.710]  We're talking ethernet cable from laptop right into the ethernet port.
+[02:33.150 --> 02:33.430]  Yeah.
+[02:35.810 --> 02:38.170]  Do you have FireShark on your computer?
+[02:39.290 --> 02:40.270]  I do not.
+[02:40.990 --> 02:50.410]  Okay. What I would recommend doing, so like get on a hotspot on your phone, install FireShark, run it on your ethernet port, and then connect it.
+[02:50.630 --> 02:52.790]  Parasite the controller. Let's see what happens.
+[02:53.610 --> 03:03.170]  The only problem is with my laptop I have, I cannot download any software on it because of how our company is. They have us all blocked.
+[03:05.150 --> 03:07.090]  Oh, fantastic. All right.
+[03:07.090 --> 03:11.230]  Yeah, that's the wonderful working for a big corporation.
+[03:12.410 --> 03:12.590]  Yeah.
+[03:13.690 --> 03:19.530]  But I did notice something. I went back to the other site. I'm going to try this real quick. It may fix the problem.
+[03:19.890 --> 03:26.410]  I don't know, because I noticed at the other site, I had IP, subnet, and the default gateway.
+[03:26.570 --> 03:30.050]  But for some reason on this one, the default gateway was missing.
+[03:31.110 --> 03:33.470]  So I'm going to see if that might fix the problem.
+[03:34.050 --> 03:39.070]  The default gateway is only necessary for doing external connections outside of your subnet.
+[03:40.250 --> 03:42.370]  So I don't think that's going to be your issue.
+[03:43.330 --> 03:47.390]  So default gateway is a case of, okay, if I can't communicate to the thing directly, who do I send it to?
+[03:48.010 --> 03:51.590]  So when you go to the internet, you go through your modem, right?
+[03:51.750 --> 03:54.690]  So that's most people's default gateway is going to be that.
+[03:55.550 --> 03:56.990]  But that doesn't apply for this controller.
+[04:04.430 --> 04:04.830]  So...
+[04:16.720 --> 04:19.940]  Because that's the only thing, because that's all else I can think of.
+[04:20.140 --> 04:24.500]  Because I know when you set these up, you want to enable the DHCP, right?
+[04:24.500 --> 04:26.360]  And then all that, you put your IP in.
+[04:26.360 --> 04:32.700]  I have a BACnet IP network. I mean, it's set up to save all the buildings that works besides this one.
+[04:34.260 --> 04:34.700]  Yeah.
+[04:37.520 --> 04:43.620]  And that's why I'm just trying to cross everything out before I say, hey, I need to order a new controller.
+[04:44.440 --> 04:50.720]  Yeah. When you connect it, you see the ethernet light blinking away, like the RSTX.
+[04:50.900 --> 04:53.580]  You can connect to the controller. All that seems fine.
+[04:54.500 --> 04:58.680]  If there's no alarms coming up in studio, then I don't think there's anything in particular.
+[04:59.540 --> 05:04.080]  Yeah. Yeah, no, I have no alarms. It's like when I direct connect, it's fine.
+[05:04.100 --> 05:09.560]  And then like right now, you know, I got the TX like flashes every so often.
+[05:09.980 --> 05:15.320]  The RX lights always on, you know, because with the Direct Connect with their county laptop.
+[05:16.040 --> 05:17.480]  You can walk back in here.
+[05:17.480 --> 05:25.160]  I mean, that was the only thing left I could think of was possibly a bad controller.
+[05:27.140 --> 05:32.320]  I just didn't want to... I was told to confirm and call you guys before I condemn.
+[05:33.060 --> 05:35.960]  Very well could be. Yeah, very well could be.
+[05:37.600 --> 05:42.360]  If you got a backup of the panel file or on the controller, right?
+[05:43.160 --> 05:43.360]  Yeah.
+[05:43.360 --> 05:47.260]  You could do a factor reset of it, which would put on the .200 address,
+[05:47.340 --> 05:49.460]  which should allow it to ping and everything, right?
+[05:51.160 --> 05:56.740]  Yeah, because when I ping it, when I do a command prompt, what it does,
+[05:57.360 --> 05:59.840]  I'll do it again real quick because I can't remember what it does.
+[06:00.340 --> 06:03.220]  It probably says a reply from IP address and you're like,
+[06:03.400 --> 06:05.300]  that's not the IP address I'm pinging.
+[06:06.000 --> 06:08.220]  Yeah, yeah, because I'll type in the IP address.
+[06:09.720 --> 06:11.740]  That's the IP address of your computer.
+[06:13.160 --> 06:18.060]  Yeah, it's the IP of the computer because I think I have this computer set as 250.
+[06:20.480 --> 06:28.370]  Yeah. But yeah, if you don't see any RSTX,
+[06:29.550 --> 06:33.630]  then either you got a bad cable or the Ethernet port's gone.
+[06:34.090 --> 06:34.670]  That's the way I see it.
+[06:35.130 --> 06:39.630]  And I brought a new cable out with me.
+[06:40.410 --> 06:47.690]  So right now, actually, I just tried to ping it, 192.168.1.96.
+[06:48.950 --> 06:50.630]  It just failed.
+[06:51.610 --> 06:56.890]  Okay, can you try this? Do a ping at .255.
+[06:59.590 --> 06:59.910]  Ping...
+[07:00.230 --> 07:03.770]  Yeah, so like 192.168.1.255.
+[07:04.110 --> 07:08.670]  It will fail, but you'll see what I'm talking about in a little bit here.
+[07:08.670 --> 07:13.470]  So 192.168.1.255.
+[07:13.970 --> 07:18.690]  Yeah, that's right. Hit enter. It will try and ping it. It will fail four times or whatever.
+[07:18.930 --> 07:21.270]  You can just cancel it. Control C.
+[07:21.970 --> 07:25.850]  Now type ARP space dash A.
+[07:37.130 --> 07:38.650]  ARP space...
+[07:38.650 --> 07:44.170]  So ARP space dash P.
+[07:44.870 --> 07:45.890]  No, A.
+[07:46.230 --> 07:51.650]  Oh, so ARP dash space A.
+[07:56.030 --> 07:59.250]  You said type an ARP, right?
+[07:59.990 --> 08:03.010]  Yep, that part's correct. Space dash A.
+[08:03.590 --> 08:06.310]  Space dash A, okay.
+[08:06.310 --> 08:11.350]  Yep, and hit enter. And it will give you a list of IP addresses and MAC addresses, right?
+[08:12.010 --> 08:16.030]  Are there any other in the 192.168 range other than yours?
+[08:17.690 --> 08:21.210]  Let's see. So interface...
+[08:21.210 --> 08:27.470]  I have the 250, which is the computer. The other one that says interface 192.
+[08:27.510 --> 08:32.510]  It says interface 192.168.137.1.
+[08:32.510 --> 08:39.670]  And then 192.168.137.255.
+[08:41.330 --> 08:48.830]  I mean, I have the computer and it's showing 192.168.137.1.
+[08:51.350 --> 08:55.290]  Can you power cycle the controller and then do that same ARP command
+[08:56.090 --> 09:00.170]  after a couple of seconds with the computer being online?
+[09:08.530 --> 09:13.610]  Basically, what should happen is when the controller boots up, it should send out an announcement.
+[09:15.690 --> 09:19.290]  It's called ARP. It stands for address resolution protocol.
+[09:22.110 --> 09:28.130]  It's supposed to be, oh, I have this Ethernet address and I have this IP address. That's it. That's all it does.
+[09:28.130 --> 09:34.570]  So is it thinking that it's internet address right now since I have that 137.1? Is it thinking it's that?
+[09:35.910 --> 09:41.230]  No, I don't think so. No. What I'm saying is it should send that out. Your computer should pick it up.
+[09:41.250 --> 09:45.230]  And then when you do ARP again, you should have another entry in your table.
+[09:47.150 --> 09:51.690]  But I'm assuming you're not going to see anything in there because something's just broken.
+[09:51.990 --> 09:54.230]  That's the assumption I'm going off of right now.
+[09:54.230 --> 09:58.410]  Yeah, okay. So I just fired the controller back up.
+[09:58.410 --> 10:03.470]  Let it do its thing for a minute here before I type it in.
+[10:04.490 --> 10:12.410]  And do you see any flickering on the RX TX? Right now, what is the link light doing?
+[10:12.990 --> 10:19.490]  The link light is solid and the TX is just flashing every so often.
+[10:19.490 --> 10:26.210]  Yep, that sounds good. Yeah, so this is the ARP space dash A.
+[10:27.710 --> 10:32.870]  And tell me if there's any new entries in the 192.168.1 section.
+[10:40.190 --> 10:50.600]  Okay, so let's see. ARP.
+[10:51.800 --> 10:58.960]  And again. Display is modest.
+[10:59.700 --> 11:03.420]  So it's not even bringing up anything right now.
+[11:04.180 --> 11:07.960]  It's bringing up how it works now. So do I need to do it again?
+[11:08.060 --> 11:09.760]  You probably typo'd something.
+[11:10.720 --> 11:14.200]  If you do the up arrow on the keyboard, just do it twice.
+[11:14.200 --> 11:17.920]  You'll have your original command that worked before.
+[11:18.920 --> 11:26.320]  Gotcha. Okay, so I have the interface 168.137.1.
+[11:26.780 --> 11:34.980]  And then the 192.168.0.250, which is the laptop.
+[11:35.580 --> 11:36.720]  Hold on. Wait. .0.
+[11:36.720 --> 11:42.240]  .0? That should be a .1, so maybe that's what they did.
+[11:42.240 --> 11:44.460]  I've been messing around with this this entire time.
+[11:44.480 --> 11:50.440]  Those guys have the wrong number in the Dagnum computer.
+[11:52.500 --> 11:53.220]  I didn't even think.
+[11:54.100 --> 11:57.940]  It's crazy how stuff like that passes by your eye when you're sitting there looking at it forever.
+[11:59.000 --> 12:01.200]  Yeah. It could be that.
+[12:01.520 --> 12:04.340]  It could even be the 137 thing. Like, that's weird.
+[12:04.860 --> 12:06.280]  If you get really stuck.
+[12:06.920 --> 12:08.900]  So it doesn't sound like there's anything wrong with the Ethernet port.
+[12:08.980 --> 12:10.740]  I think that just the IP address is wrong.
+[12:12.260 --> 12:15.600]  Yeah, I'm sure that would be really useful at this point.
+[12:16.240 --> 12:21.240]  Yeah, that's the bad thing is these guys do not like with Amoresco.
+[12:22.860 --> 12:24.820]  They they they will not.
+[12:25.420 --> 12:28.380]  I have to go through hoops and bounds to get stuff downloaded on my computer.
+[12:29.280 --> 12:32.640]  OK, so I got 192.168.137.1.
+[12:33.080 --> 12:36.720]  And then down there, nothing. Yeah, just whatever weird numbers underneath that.
+[12:36.860 --> 12:38.260]  And then 168.1.
+[12:38.260 --> 12:41.340]  Let me see if now I go into Google.
+[12:42.740 --> 12:47.420]  I refresh this because my IP address is 192.168.
+[12:58.640 --> 13:02.040]  Make sure it's dot one. So and the controller.
+[13:02.680 --> 13:05.960]  So we want dot one, dot one. There we go.
+[13:19.780 --> 13:20.820]  That's what it is.
+[13:20.820 --> 13:25.340]  It's like the controller reverted because the controller is one dot one nine six.
+[13:26.220 --> 13:28.360]  So that just brought it in.
+[13:29.080 --> 13:29.920]  It's awesome.
+[13:34.000 --> 13:36.320]  So it's like so it's like I don't know.
+[13:36.600 --> 13:40.000]  I don't know if this is possible or not, because I haven't changed the IP address.
+[13:40.160 --> 13:42.780]  There's nothing on the controller because it's worked up until now.
+[13:43.740 --> 13:46.840]  You think it's possible with all the because it's Florida.
+[13:47.060 --> 13:48.520]  Obviously, we have a lot of power problems.
+[13:48.520 --> 13:52.980]  Do you think with it going in and out on and off on and off with a bunch of storms have had lately?
+[13:52.980 --> 14:00.160]  If we could have caused that IP to revert to whatever because it was because when I actually should take that back.
+[14:00.160 --> 14:03.320]  The IP address was dot two hundred beginning.
+[14:04.400 --> 14:07.000]  Right. So no longer dot two hundred. Yeah.
+[14:07.580 --> 14:11.240]  And I didn't have it saved as dot two hundred when I did the job originally.
+[14:12.860 --> 14:14.860]  So it's very possible. Yes.
+[14:14.920 --> 14:16.520]  If it's not two hundred, it's very possible.
+[14:16.520 --> 14:19.880]  Do they know how to factory reset the controller or anything like that?
+[14:20.240 --> 14:26.980]  Because that's the most likely thing. These guys don't have these guys don't have any access to get into Toolkit or Studio.
+[14:27.000 --> 14:30.260]  All they have is the graphical side. They use us for everything else.
+[14:30.640 --> 14:33.020]  OK. Can you check to make sure the graphical side is still there?
+[14:33.960 --> 14:35.400]  Yep. It is.
+[14:35.980 --> 14:40.180]  It is unlikely, but I would have to check the firmware.
+[14:40.280 --> 14:46.100]  But I think it's probably possible that it would somehow lose that and then revert.
+[14:47.060 --> 14:49.340]  Hey, it may in fact be an RMA still.
+[14:49.820 --> 14:56.680]  There's a couple of things I'd like you to check on the controller before you before we call it good.
+[14:57.440 --> 15:02.420]  I want to read the system error log from the controller, which you need to use Studio for.
+[15:07.460 --> 15:11.860]  And the other thing probably send the latest firmware.
+[15:12.680 --> 15:16.360]  I have the latest firmware. I just put the latest firmware in today.
+[15:26.660 --> 15:29.660]  I can't remember my password. It's been so long since I've been here.
+[15:31.140 --> 15:32.900]  I'd love that for me.
+[15:39.170 --> 15:42.190]  I'd have to get him to come over here and log in.
+[15:45.700 --> 15:49.880]  Let me grab this guy real quick. I just want to get him logged in and make sure the graphics are still in there.
+[15:57.660 --> 16:01.880]  Hey, Mark, what's your...
+[16:10.870 --> 16:14.830]  You can come log in real quick. We got the page to come up.
+[16:14.850 --> 16:17.790]  I just want to make sure all the graphics and stuff are still in there.
+[16:19.390 --> 16:19.990]  Yeah.
+[16:20.350 --> 16:25.270]  Let's see what we can get into.
+[16:26.130 --> 16:28.090]  Not seeing that for six hours.
+[16:29.330 --> 16:31.850]  That's right. Absolutely, man.
+[16:32.330 --> 16:33.450]  We'll see what we can get into.
+[16:39.290 --> 16:40.690]  Trained as rentals?
+[16:43.970 --> 16:46.290]  I don't think they trained in rentals.
+[16:48.990 --> 16:49.950]  That's interesting.
+[16:52.710 --> 16:54.070]  Yeah, if you could just log in real quick.
+[16:55.030 --> 17:02.790]  It looks like we're going to look at a couple other things, but the IP address is different now.
+[17:02.910 --> 17:05.750]  So I'll have to save the IP for you.
+[17:08.870 --> 17:11.090]  All right, yeah. All right, we got all our graphics.
+[17:14.650 --> 17:18.310]  Yeah, so connect with Studio, and I'll give you a property to read.
+[17:19.850 --> 17:20.490]  Yeah, go ahead.
+[17:20.930 --> 17:25.290]  All right, let me connect to Studio. Let me disconnect here.
+[17:27.670 --> 17:31.270]  This is what we're running on the serial connector. You can't run this studio into it.
+[18:01.440 --> 18:02.480]  Okay, yes.
+[18:10.860 --> 18:15.440]  All right, I'm refreshing my tree real quick, but I'm connecting to Studio.
+[18:18.600 --> 18:20.860]  So what are we going to want to look at here?
+[18:23.700 --> 18:24.740]  Hit F12.
+[18:24.740 --> 18:28.260]  So you'll get this little menu, read right back to properties.
+[18:31.060 --> 18:33.420]  F12, all right.
+[18:34.940 --> 18:38.380]  Now enter in the device ID of the controller, so the device ID.
+[18:39.940 --> 18:46.380]  That one is 7000.
+[18:52.090 --> 18:52.690]  Enter.
+[18:53.890 --> 18:55.070]  Or just the read property.
+[18:55.070 --> 19:00.330]  No, so sorry, it was the device ID. Object will be 128.
+[19:01.490 --> 19:02.070]  128.
+[19:02.990 --> 19:08.170]  Yeah, instance will be 1. Property will be 2091.
+[19:09.250 --> 19:13.270]  Then click read property. You'll get a list of errors on the controller.
+[19:13.870 --> 19:14.410]  2091.
+[19:15.290 --> 19:16.030]  Yep, that's right.
+[19:16.910 --> 19:18.010]  And then read property.
+[19:18.710 --> 19:23.670]  Yep, exactly. So you get a list of errors and information messages from the controller.
+[19:24.550 --> 19:28.210]  Generally, you can ignore them, but sometimes they're important.
+[19:28.350 --> 19:32.270]  And what I'm looking for is a V error.
+[19:33.830 --> 19:40.670]  It looks like I've seen DNS lookup failed. You link down.
+[19:41.590 --> 19:46.730]  DCHV timeout. It looks like a lot of timeout links and DNS failed. That's it.
+[19:47.290 --> 19:52.230]  Yeah. So in regards to that, you'll want to disable DNS.
+[19:53.170 --> 19:55.410]  You'll want to remove the DNS entries.
+[19:55.790 --> 19:58.450]  You'll want to disable DHCP.
+[20:00.390 --> 20:03.210]  Also, I want to disable DHCP.
+[20:03.950 --> 20:06.730]  Yeah, you do not want to use static if that thing is going standalone.
+[20:06.930 --> 20:08.890]  That's probably what you're talking about where it reverted.
+[20:10.670 --> 20:17.350]  Because if it doesn't have a DHCP address, I think it might just revert to that address. I can't remember.
+[20:18.010 --> 20:21.670]  Okay, so I need to get back in Toolkit and disable that.
+[20:23.570 --> 20:27.250]  And then the DNS, what do I do to disable that? Is that in Toolkit as well?
+[20:28.670 --> 20:31.790]  Yeah, you can just set it to 0.0.0.0.
+[20:32.250 --> 20:37.450]  We don't want the controller to be trying to do lookups of things where it's never going to work.
+[20:39.370 --> 20:42.330]  Back at Studio, I do want you to keep looking for something.
+[20:42.330 --> 20:45.210]  Look for NV November Victor.
+[20:45.890 --> 20:46.870]  NV error.
+[20:49.870 --> 20:54.550]  If you see NV error, then it would probably be a good idea to get a different controller, right?
+[20:56.750 --> 21:01.930]  All the errors I've seen in there were all just like the DHCP and the timeout.
+[21:02.490 --> 21:04.510]  I haven't seen any NV errors.
+[21:11.040 --> 21:14.220]  So it may have just been that thing reverting, but I don't know.
+[21:14.220 --> 21:19.600]  I mean, it's just one of those things that kind of makes me worry to wonder if I should just go ahead,
+[21:19.700 --> 21:25.380]  even though I got it messed up and going again, if we should do it.
+[21:26.220 --> 21:28.220]  Order one, just to be safe.
+[21:36.610 --> 21:37.050]  So...
+[21:39.710 --> 21:42.050]  Accidently closed out. One.
+[21:42.230 --> 21:45.170]  And then what was the property again?
+[21:46.770 --> 21:47.210]  2091.
+[21:48.150 --> 21:50.530]  Write all this down.
+[21:51.850 --> 21:55.430]  It's on the website under...
+[21:55.430 --> 22:00.330]  on the help desk articles. It's in there.
+[22:04.590 --> 22:07.670]  Yeah, object 128, property 2091.
+[22:10.230 --> 22:13.070]  So you said what was the other one you want me to look for?
+[22:14.450 --> 22:20.370]  I'm specifically in that error log, which you can't export, by the way.
+[22:22.610 --> 22:25.550]  NV, November Victor, error.
+[22:36.130 --> 22:38.570]  FS Liberty, flash.
+[22:55.940 --> 23:01.480]  I don't see any NV. I just see a lot of the DNS lookup fail.
+[23:01.480 --> 23:04.780]  Yeah, the DHCP bind out.
+[23:05.340 --> 23:06.100]  That's good news.
+[23:07.620 --> 23:12.680]  Yeah, I don't see anything with an NV. That's all it is with a lot of timeouts.
+[23:19.180 --> 23:21.280]  Is there anything else I need to look at in here?
+[23:22.560 --> 23:28.480]  Nope, that's basically it. I just back up the controller, do your regular kind of final checks, and then you're good.
+[23:29.340 --> 23:30.840]  Alright, I appreciate all the help, Liam.
+[23:31.540 --> 23:32.140]  Yep, you're welcome.
+[23:32.580 --> 23:33.700]  Alright, now we go.
+[23:34.300 --> 23:35.540]  Yep, you too. Bye.

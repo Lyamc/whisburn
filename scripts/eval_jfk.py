@@ -11,7 +11,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BIN = ROOT / "target" / "release" / "o3whisburn"
+BIN = ROOT / "target" / "release" / "whisburn"
 AUDIO = ROOT / "samples" / "jfk.wav"
 OUT_DIR = ROOT / "verify-outputs"
 REPORT = OUT_DIR / "jfk_eval.json"

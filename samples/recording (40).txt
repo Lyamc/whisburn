@@ -1,0 +1,321 @@
+[00:05.430 --> 00:07.290]  [SPEAKER_00]: I thought it was my fault.
+[00:08.250 --> 00:12.090]  [SPEAKER_00]: I thought I laughed so hard that I hit the
+button to hang up.
+[00:18.410 --> 00:24.790]  [SPEAKER_00]: I can't believe they... I mean,
+I can kind of believe it, but...
+[00:26.550 --> 00:27.570]  [SPEAKER_00]: It's pretty bad.
+[00:34.590 --> 00:37.230]  [SPEAKER_00]: When I think of databases, I think of
+precision.
+[00:39.650 --> 00:43.410]  [SPEAKER_03]: Yeah, me too, but sometimes people are
+people.
+[00:45.850 --> 00:48.610]  [SPEAKER_00]: Alright, so that should have fixed the
+issue.
+[00:48.750 --> 00:50.070]  [SPEAKER_00]: And I'm just going to show you what
+happens here.
+[00:50.670 --> 00:52.090]  [SPEAKER_00]: So I'm going to hit save configuration.
+[00:52.810 --> 00:54.050]  [SPEAKER_00]: It's going to do it's little thing here.
+[00:54.270 --> 00:55.270]  [SPEAKER_00]: Restart service.
+[01:00.790 --> 01:02.450]  [SPEAKER_00]: And watch the files in here.
+[01:02.570 --> 01:07.110]  [SPEAKER_00]: I'm going to sort by date modified the
+oldest first.
+[01:21.070 --> 01:22.010]  [SPEAKER_00]: Oh, there it's going.
+[01:22.190 --> 01:22.330]  [SPEAKER_00]: See?
+[01:25.030 --> 01:26.450]  [SPEAKER_00]: The first file is already removed.
+[01:26.590 --> 01:31.110]  [SPEAKER_00]: So what it's doing now is it's going
+through all of the files and reading them
+[01:31.110 --> 01:34.370]  [SPEAKER_00]: and figuring out what the value was at
+that point in time, yada yada.
+[01:34.370 --> 01:38.170]  [SPEAKER_00]: And then writing that to the SQL database.
+[01:39.170 --> 01:42.350]  [SPEAKER_00]: So all of that data has been there this
+whole time.
+[01:42.410 --> 01:44.210]  [SPEAKER_00]: It just hadn't been put in the database.
+[01:45.170 --> 01:46.330]  [SPEAKER_00]: That's what the issue was.
+[01:52.150 --> 01:55.650]  [SPEAKER_00]: Now if I remember right, the resource was
+changing...
+[01:58.930 --> 02:00.010]  [SPEAKER_03]: There's a buzz.
+[02:02.390 --> 02:03.370]  [SPEAKER_02]: That's a lot of buzz.
+[02:07.690 --> 02:09.090]  [SPEAKER_03]: So what do you say?
+[02:11.550 --> 02:13.310]  [SPEAKER_00]: So the data is there as far as I can tell.
+[02:13.450 --> 02:16.750]  [SPEAKER_00]: It's just it hadn't been written to the
+database yet.
+[02:18.750 --> 02:23.370]  [SPEAKER_00]: So we are going to have to wait a while
+for archive to make it through all this
+[02:23.370 --> 02:23.670]  [SPEAKER_00]: data.
+[02:24.110 --> 02:26.530]  [SPEAKER_00]: If I just check in here I can give you an
+idea as to how much.
+[02:27.330 --> 02:28.290]  [SPEAKER_00]: Let's see how many files.
+[02:30.830 --> 02:31.890]  [SPEAKER_00]: That's not so bad.
+[02:33.870 --> 02:37.310]  [SPEAKER_00]: So 36,700 and I'm just going to check
+again.
+[02:37.810 --> 02:38.930]  [SPEAKER_00]: And I expect the number to be down.
+[02:40.230 --> 02:41.550]  [SPEAKER_00]: See it's down by a little bit.
+[02:41.790 --> 02:43.730]  [SPEAKER_00]: Every time I check it will be down a
+little bit more.
+[02:44.990 --> 02:46.770]  [SPEAKER_00]: 36,700 exactly.
+[02:47.190 --> 02:48.150]  [SPEAKER_00]: It should be less than that.
+[02:48.550 --> 02:50.330]  [SPEAKER_00]: So it's going down a little bit at a time.
+[02:51.350 --> 02:54.290]  [SPEAKER_00]: So as it does that it puts the data into
+the database.
+[02:55.490 --> 02:58.350]  [SPEAKER_00]: This is the temporary location where
+everything goes.
+[02:58.750 --> 03:04.370]  [SPEAKER_00]: So if you can't reach the SQL database for
+whatever reason, like the reason right
+[03:04.370 --> 03:06.470]  [SPEAKER_00]: now, then it goes into this folder here.
+[03:07.630 --> 03:15.750]  [SPEAKER_00]: So I think that's everything for archive.
+[03:17.650 --> 03:24.170]  [SPEAKER_00]: Now for WebView, you said they had a
+particular restriction that prevented it
+[03:24.170 --> 03:25.030]  [SPEAKER_00]: from using UDP.
+[03:25.230 --> 03:25.630]  [SPEAKER_00]: Is that right?
+[03:26.970 --> 03:28.330]  [SPEAKER_03]: Yeah, I think so.
+[03:28.830 --> 03:30.030]  [SPEAKER_00]: It has to be BSN only.
+[03:30.390 --> 03:32.230]  [SPEAKER_00]: Well we can go back to BSN.
+[03:33.290 --> 03:40.330]  [SPEAKER_00]: The problem I think was that there was a
+large delay that we noticed as a result.
+[03:40.330 --> 03:42.530]  [SPEAKER_00]: Or we think as a result.
+[03:42.650 --> 03:43.830]  [SPEAKER_00]: I think as a result.
+[03:43.950 --> 03:45.550]  [SPEAKER_00]: Can you just log in with the admin here?
+[03:59.010 --> 03:59.450]  [SPEAKER_02]: Yeah,
+[04:06.150 --> 04:14.490]  [SPEAKER_03]: so another error that I actually just
+noticed is that the admin user doesn't log
+[04:14.490 --> 04:15.590]  [SPEAKER_03]: in.
+[04:16.670 --> 04:17.570]  [SPEAKER_00]: Yeah, I think I know why.
+[04:19.810 --> 04:20.830]  [SPEAKER_00]: Here's why.
+[04:22.370 --> 04:24.750]  [SPEAKER_00]: Do you guys do any maintenance of the
+database?
+[04:26.950 --> 04:28.410]  [SPEAKER_03]: We do not.
+[04:29.010 --> 04:29.990]  [SPEAKER_03]: I don't know.
+[04:33.390 --> 04:35.170]  [SPEAKER_00]: Okay, so you see this here?
+[04:35.950 --> 04:36.570]  [SPEAKER_00]: Transaction log.
+[04:37.010 --> 04:39.590]  [SPEAKER_00]: If that hits the maximum, which it did.
+[04:40.750 --> 04:41.910]  [SPEAKER_00]: I'll just add a zero.
+[04:45.290 --> 04:47.030]  [SPEAKER_00]: Then it can't do anything anymore.
+[04:51.350 --> 04:56.690]  [SPEAKER_00]: So when you try to log in as admin,
+it tries to write a entry to the audit
+[04:56.690 --> 04:57.670]  [SPEAKER_00]: log, audit trail.
+[04:58.230 --> 05:03.910]  [SPEAKER_00]: But because the log here is full,
+nothing happens.
+[05:04.150 --> 05:07.050]  [SPEAKER_00]: In fact, nothing is going to work while
+it's like this.
+[05:08.250 --> 05:09.830]  [SPEAKER_00]: Any new changes at least.
+[05:12.070 --> 05:14.710]  [SPEAKER_00]: I have no idea what sort of problems this
+might have introduced.
+[05:24.530 --> 05:25.110]  [SPEAKER_02]: What?
+[06:09.170 --> 06:10.030]  [SPEAKER_02]: Let's see here.
+[06:10.090 --> 06:13.110]  [SPEAKER_02]: I think
+[06:49.680 --> 06:50.140]  [SPEAKER_00]: I found it.
+[06:53.660 --> 06:55.260]  [SPEAKER_00]: I think I found it.
+[07:18.610 --> 07:23.770]  [SPEAKER_00]: Do you know if they are expected to manage
+this database?
+[07:24.270 --> 07:26.570]  [SPEAKER_00]: Or is this something that you guys are
+expected to manage?
+[07:27.310 --> 07:30.390]  [SPEAKER_03]: I think we manage this.
+[07:30.990 --> 07:35.150]  [SPEAKER_03]: So I don't think there is any problem with
+modifying this.
+[07:37.530 --> 07:37.690]  [SPEAKER_00]: Okay.
+[08:44.420 --> 08:46.480]  [SPEAKER_00]: Oh, I know why it's doing that.
+[08:48.900 --> 08:55.200]  [SPEAKER_00]: How do I modify this?
+[09:38.900 --> 09:49.500]  [SPEAKER_03]: I talked to a teammate, and he told me
+that you can't log in with admin user,
+[09:49.820 --> 09:53.520]  [SPEAKER_03]: but you can with another user.
+[09:54.160 --> 09:54.760]  [SPEAKER_00]: Yeah, that's fine.
+[10:55.990 --> 10:56.790]  What
+[15:42.100 --> 15:47.600]  [SPEAKER_00]: you guys need to do is look into some
+database maintenance, like admin database
+[15:47.600 --> 15:48.040]  [SPEAKER_00]: maintenance.
+[15:48.760 --> 15:55.360]  [SPEAKER_00]: If you guys don't know how to do that,
+or what to do, you leave yourself open for
+[15:55.360 --> 15:56.080]  [SPEAKER_00]: things like this.
+[15:58.240 --> 16:02.220]  [SPEAKER_00]: There's also things you can do if you
+don't want to maintain it as much,
+[16:02.260 --> 16:09.120]  [SPEAKER_00]: or you don't want to have to worry about
+it, such as going into properties here,
+[16:09.300 --> 16:13.760]  [SPEAKER_00]: and you see options here, recovery model
+full, that's what caused it.
+[16:14.000 --> 16:15.760]  [SPEAKER_00]: If it was simple, that wouldn't have
+happened.
+[16:17.980 --> 16:20.080]  [SPEAKER_00]: So, it might be worth looking into.
+[16:21.300 --> 16:24.320]  [SPEAKER_00]: But, that's something for you guys to
+decide.
+[16:26.220 --> 16:28.960]  [SPEAKER_00]: I wonder if anything else is affected by
+this.
+[16:32.320 --> 16:33.160]  [SPEAKER_00]: No, it's fine.
+[16:41.330 --> 16:42.090]  [SPEAKER_00]: It's just simple.
+[16:42.090 --> 16:45.350]  [SPEAKER_00]: No reason why you need full on that one.
+[16:52.950 --> 16:56.630]  [SPEAKER_00]: Just using 2 gigs for a 13 gigabyte
+database.
+[16:58.090 --> 16:59.210]  [SPEAKER_00]: It's unnecessary.
+[17:05.600 --> 17:09.820]  [SPEAKER_00]: And now that I've shrinked it,
+it should be significantly smaller now.
+[17:10.720 --> 17:14.560]  [SPEAKER_00]: Now it's only 18 megabytes instead of 3,
+or whatever it was, 13.
+[17:18.540 --> 17:25.120]  [SPEAKER_00]: WebView had been using 20 gigabytes for
+just logs of transactions, just
+[17:25.120 --> 17:25.800]  [SPEAKER_00]: historically.
+[17:26.740 --> 17:27.580]  [SPEAKER_00]: That's it.
+[17:27.960 --> 17:32.720]  [SPEAKER_00]: So, I took a backup of said log,
+then I shrink the log file, it was small
+[17:32.720 --> 17:33.020]  [SPEAKER_00]: again.
+[17:34.560 --> 17:38.340]  [SPEAKER_00]: If you don't maintain that, it can get
+very large very quickly.
+[17:40.900 --> 17:46.800]  [SPEAKER_00]: It just depends on how much stuff,
+how many people are accessing the database
+[17:46.800 --> 17:48.300]  [SPEAKER_00]: and making changes.
+[17:48.960 --> 17:52.280]  [SPEAKER_00]: So, for instance, someone just logging in,
+that's an entry into the audit log,
+[17:52.560 --> 17:53.840]  [SPEAKER_00]: which means a transaction.
+[17:54.460 --> 17:57.040]  [SPEAKER_00]: Which means an entry into that database
+file.
+[18:01.620 --> 18:04.320]  [SPEAKER_00]: Now if I refresh, oh yeah, I've got to put
+everything back now.
+[18:04.320 --> 18:04.960]  [SPEAKER_00]: I
+[20:00.200 --> 20:03.500]  [SPEAKER_00]: don't remember why this was ever disabled.
+[20:04.000 --> 20:05.560]  [SPEAKER_00]: I'm pretty sure there was a reason though.
+[20:07.000 --> 20:11.440]  [SPEAKER_00]: So, I'm wondering if I should try and
+adjust it.
+[21:08.510 --> 21:12.270]  [SPEAKER_02]: I don't know
+[21:34.640 --> 21:36.050]  [SPEAKER_00]: why these aren't automatically starting.
+[21:36.050 --> 21:36.940]  [SPEAKER_00]: You know
+[22:01.480 --> 22:47.910]  [SPEAKER_00]: what, I'm going to make the change
+anyways.
+[28:27.200 --> 28:28.360]  [SPEAKER_00]: Alright, I think we're good.
+[29:08.410 --> 29:10.450]  [SPEAKER_00]: Alright, try and do this stuff with
+WebView.
+[29:10.530 --> 29:11.250]  [SPEAKER_00]: Let me know if it works.
+[29:14.570 --> 29:21.690]  [SPEAKER_03]: Okay, so, we're going to test the upload
+from the WebView.
+[29:23.570 --> 29:28.690]  [SPEAKER_03]: Because, yeah, we need to see if we can do
+that.
+[29:29.330 --> 29:30.710]  [SPEAKER_00]: Yep, go ahead.
+[30:35.750 --> 30:39.550]  [SPEAKER_03]: So, they're telling me
+[30:43.930 --> 30:47.850]  [SPEAKER_00]: They may have to rediscover the WebView
+device.
+[30:49.050 --> 30:51.450]  [SPEAKER_00]: Double click on network 65518.
+[30:53.370 --> 31:01.770]  [SPEAKER_03]: They're telling me that in the past you
+have a system access username and a system
+[31:01.770 --> 31:11.710]  [SPEAKER_03]: access password like display somewhere
+here that you will use to upload the
+[31:11.710 --> 31:16.050]  [SPEAKER_03]: directory for the uploads.
+[31:18.510 --> 31:19.990]  [SPEAKER_00]: I have no idea what you're talking about.
+[31:20.050 --> 31:21.310]  [SPEAKER_00]: This thing here is actually different.
+[31:21.910 --> 31:23.750]  [SPEAKER_00]: Although I should enable this so you have
+it.
+[31:25.750 --> 31:27.510]  [SPEAKER_00]: But no, that's totally different.
+[31:27.510 --> 31:30.930]  [SPEAKER_00]: And I have no idea what you're talking
+about.
+[31:34.470 --> 31:35.630]  [SPEAKER_03]: Yeah, I...
+[31:36.890 --> 31:39.770]  [SPEAKER_03]: Honestly, I'm kind of new, so I don't know
+either.
+[31:42.290 --> 31:44.590]  [SPEAKER_00]: Ah, the blind leading the blind.
+[31:45.990 --> 31:46.710]  [SPEAKER_03]: Of course.
+[31:47.810 --> 31:53.110]  [SPEAKER_03]: Maybe that's because I'm the only one here
+that knows decent English.
+[31:55.010 --> 31:55.890]  [SPEAKER_00]: Not sure.
+[32:00.150 --> 32:03.110]  [SPEAKER_03]: But yeah, so...
+[32:05.050 --> 32:08.490]  [SPEAKER_00]: Worst case is always Google Translate and
+stuff, by the way, if you ever want to put
+[32:08.490 --> 32:09.090]  [SPEAKER_00]: one of them on.
+[32:12.090 --> 32:17.430]  [SPEAKER_00]: All I know how to understand is happy
+Spanish and angry Spanish.
+[32:17.550 --> 32:18.170]  [SPEAKER_00]: That's about it.
+[32:24.530 --> 32:28.210]  [SPEAKER_00]: Yeah, no comprendo, you know, espanol.
+[32:33.300 --> 32:35.140]  [SPEAKER_00]: What am I looking for here now?
+[32:35.880 --> 32:40.380]  [SPEAKER_00]: Okay, so for file syncing, they would use
+RC Studio, connect to the system,
+[32:40.720 --> 32:44.700]  [SPEAKER_00]: and then in the same way we have a list of
+stuff here, you have a list of stuff in
+[32:44.700 --> 32:45.280]  [SPEAKER_00]: Studio, right?
+[32:45.980 --> 32:50.600]  [SPEAKER_00]: At the very, very bottom, there should be
+a network, 65518, right there.
+[32:51.520 --> 32:55.180]  [SPEAKER_00]: Just double-click it with the mouse,
+just double-click the network in Studio.
+[32:55.400 --> 32:56.560]  [SPEAKER_00]: That should rediscover it.
+[32:57.000 --> 33:01.900]  [SPEAKER_00]: And if everything's working, what should
+happen is the WebView file server device
+[33:01.900 --> 33:04.700]  [SPEAKER_00]: ID should pop up underneath, and it should
+say file sync.
+[33:06.460 --> 33:10.520]  [SPEAKER_03]: Yeah, actually, we can't use file sync to
+upload...
+[33:10.520 --> 33:13.240]  [SPEAKER_00]: Oh, right, so they got something else for
+it.
+[33:13.320 --> 33:13.880]  [SPEAKER_00]: Yeah, that's right.
+[33:14.020 --> 33:15.340]  [SPEAKER_00]: Yeah, I remember you telling me this.
+[33:15.500 --> 33:17.700]  [SPEAKER_00]: So you can't use file sync because of
+something.
+[33:18.360 --> 33:22.680]  [SPEAKER_00]: They have some really weird rule that
+says, hey, you can't send us files,
+[33:22.880 --> 33:27.760]  [SPEAKER_00]: but you can connect to our server so then
+you can just have files just copied
+[33:27.760 --> 33:29.280]  [SPEAKER_00]: straight over.
+[33:29.540 --> 33:36.640]  [SPEAKER_00]: It is probably the weirdest case of
+security I've ever seen.
+[33:37.340 --> 33:40.880]  [SPEAKER_00]: It's sort of like, well, we don't use the
+front door for security reasons,
+[33:40.960 --> 33:42.260]  [SPEAKER_00]: so let's go in through the window.
+[33:48.300 --> 33:57.160]  [SPEAKER_03]: So, how do you think, like, they're having
+some instructions right here, like how to
+[33:57.160 --> 33:57.800]  [SPEAKER_03]: upload it.
+[33:58.240 --> 34:03.500]  [SPEAKER_03]: And they're saying that once you have all
+the password and all that stuff,
+[34:04.420 --> 34:08.540]  [SPEAKER_03]: you can go to a section that is called job
+file
+[34:11.980 --> 34:20.340]  [SPEAKER_03]: and then upload the whole path to the
+directory of your actualization.
+[34:25.250 --> 34:26.890]  [SPEAKER_00]: This is from the IT, right?
+[34:27.050 --> 34:27.790]  [SPEAKER_00]: The IT company?
+[34:27.990 --> 34:29.970]  [SPEAKER_00]: Yeah, then it's got to be something else
+they have set up.
+[34:29.970 --> 34:32.950]  [SPEAKER_00]: I don't know anything about it,
+whatever they have set up.
+[34:33.550 --> 34:36.570]  [SPEAKER_03]: No, but this isn't on the RC web view.
+[34:38.330 --> 34:39.690]  [SPEAKER_03]: We don't have it.
+[34:45.320 --> 34:46.860]  [SPEAKER_00]: Not yet at least.
+[34:47.100 --> 34:51.220]  [SPEAKER_00]: There is going to be something in the
+future where you can upload the job files
+[34:51.220 --> 34:52.120]  [SPEAKER_00]: from the browser.
+[34:52.800 --> 34:56.700]  [SPEAKER_00]: But again, that just confuses me to no
+end.
+[34:56.700 --> 34:58.340]  [SPEAKER_00]: Because what is the difference?
+[34:59.380 --> 35:03.860]  [SPEAKER_00]: Sending the files through studio versus
+sending the files through a browser?
+[35:04.070 --> 35:05.620]  [SPEAKER_00]: You see what I'm saying?
+[35:06.380 --> 35:08.920]  [SPEAKER_03]: Yeah, I completely understand you.
+[35:09.070 --> 35:11.900]  [SPEAKER_03]: And it doesn't make sense to me either.
+[35:14.780 --> 35:21.880]  [SPEAKER_00]: Yeah, it seems like a lot of work to get
+around some arbitrary restriction or maybe
+[35:21.880 --> 35:24.800]  [SPEAKER_00]: they don't understand how the file
+transfer is happening.
+[35:25.980 --> 35:27.140]  [SPEAKER_00]: I don't know.
+[35:30.180 --> 35:33.920]  [SPEAKER_00]: Anywho, you can copy the files.
+[35:34.060 --> 35:35.640]  [SPEAKER_00]: So you see right here, there is job file
+path.
+[35:35.880 --> 35:41.380]  [SPEAKER_00]: If you copy the files from your computer,
+let's say your RC Studio folder,
+[35:41.560 --> 35:45.440]  [SPEAKER_00]: over to here, that should work for the
+most part.
+[35:47.220 --> 35:50.240]  [SPEAKER_00]: After copying over the files, you hit save
+in here.
+[35:50.680 --> 35:51.360]  [SPEAKER_00]: And then that's it.
+[35:51.780 --> 35:52.400]  [SPEAKER_00]: That should be all.
+[35:56.940 --> 36:00.180]  [SPEAKER_03]: Ok, so we are going to do that.
+[36:01.040 --> 36:02.680]  [SPEAKER_03]: That solves completely the issue.
+[36:04.280 --> 36:07.400]  [SPEAKER_03]: Do you think there is anything else that
+we can do?
+[36:08.140 --> 36:09.440]  [SPEAKER_00]: Nothing else I can think of.
+[36:10.650 --> 36:12.440]  [SPEAKER_00]: You can RDP in here.
+[36:12.880 --> 36:14.620]  [SPEAKER_00]: So you should be able to copy and paste
+into here.
+[36:14.740 --> 36:17.440]  [SPEAKER_00]: And if you can copy and paste into here,
+you can send files over here.
+[36:17.840 --> 36:20.860]  [SPEAKER_00]: It baffles my mind.
+[36:21.200 --> 36:25.040]  [SPEAKER_00]: You can't send files through this secure
+VPN thing.
+[36:25.280 --> 36:29.680]  [SPEAKER_00]: But here is an RDP session that gives you
+access to the entire server.
+[36:30.900 --> 36:31.960]  [SPEAKER_00]: It's wild to me.
+[36:32.240 --> 36:32.480]  [SPEAKER_00]: Whatever.
+[36:33.340 --> 36:34.540]  [SPEAKER_00]: They can do what they want.
+[36:37.980 --> 36:41.900]  [SPEAKER_03]: So yeah, I think we solved all the
+problems.
+[36:42.400 --> 36:43.220]  [SPEAKER_03]: Thank you very much.
+[36:43.760 --> 36:44.300]  [SPEAKER_00]: You're welcome.
+[36:44.700 --> 36:44.880]  [SPEAKER_00]: Goodbye.

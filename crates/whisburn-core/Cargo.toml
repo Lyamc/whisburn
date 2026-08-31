@@ -1,0 +1,18 @@
+[package]
+name = "whisburn-core"
+description = "Core types, traits, and functional pipeline for whisburn"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+toml = "0.8"
+dirs = "6.0"
+
+[dev-dependencies]
+serde_json = { workspace = true }

@@ -1,0 +1,125 @@
+[00:08.890 --> 00:46.000]  Hello? Yep. Can you hear me? Hello? Can you hear me? Barely. You can barely hear me. Yeah,
+[00:46.000 --> 01:00.980]  okay. Now I can hear you. Okay. Now I can't. You're breaking up like crazy. Is that better?
+[01:04.430 --> 01:08.370]  A little bit. I don't know. I guess we'll now say something.
+[01:11.030 --> 01:13.470]  Just tell me your thing. I can hear you. So go ahead.
+[01:16.310 --> 01:24.250]  Okay. I'm trying to pull these devices in, but I'm having an issue, so I have a mock procom with me,
+[01:24.370 --> 01:33.300]  and I'm plugged directly into this controller. And yeah, I need some help because I'm not being
+[01:33.300 --> 01:41.480]  able to see it in studio. You're plugged directly into it? What does that mean in this case?
+[01:44.930 --> 01:50.110]  That means that I am not on the network of the rest of the building. I am just in this room with
+[01:50.110 --> 01:57.210]  a mock procom sitting on the floor and plugged directly to my computer ethernet and STP to the
+[01:57.210 --> 02:04.470]  controller, which is a mock pro zone. Oh, okay. So right. So just ethernet from your
+[02:04.470 --> 02:12.970]  computer to it. Yep. All right. IP address of your computer. Is it the same subnet
+[02:12.970 --> 02:21.970]  as the IP address of the controller? That's a good question. Yeah, it is the same subnet.
+[02:22.170 --> 02:29.190]  I just said it. I can see it in toolkit, I think. Oh, I think I know the problem.
+[02:30.150 --> 02:37.450]  In toolkit, connect to it. Okay. Configure your VIP port. Okay.
+[02:42.890 --> 02:43.850]  Enable BBMB.
+[02:44.450 --> 02:52.130]  Yeah, how do I do that? So in MSET, under Internet access. So that's after you've loaded up
+[02:52.130 --> 03:02.440]  the settings to the controller. I am sorry, you're going to have to slow down. I'm not
+[03:02.440 --> 03:08.420]  used to this system. All right. I'm in the MSET, yes. Now it's telling me to put an
+[03:08.420 --> 03:43.510]  address and device ID. I'm trying to think what I want to put through that. I think
+[03:43.510 --> 04:01.000]  one, two, three, three. Please wait at least two minutes before I rediscover it again.
+[04:08.580 --> 04:14.840]  Is there any way that I can set the baud rate on this without... It's just not... I'm not
+[04:14.840 --> 04:26.520]  getting it on when I was plugged into the building. I can't see it on the network. It's
+[04:26.520 --> 04:37.580]  zone, not the mock pro com, right? Correct. Okay. It is possible to set a controller to
+[04:37.580 --> 04:45.520]  no longer use auto baud. That is actually a thing. However, it's pretty rare for someone
+[04:45.520 --> 04:51.040]  to run into that because it would be on all of the devices. But if that were the case,
+[04:51.080 --> 04:55.400]  you should be able to change the baud rate until you find the controller and then you
+[04:56.320 --> 05:05.460]  baud rate that you want to operate on. Okay. Let's see. So is that also in AMSET?
+[05:07.740 --> 05:16.880]  Yeah. First thing, in AMSET for... Tell me when you're connected to the pro com.
+[05:20.390 --> 05:23.630]  Oh, I have the pro com open. I'm just waiting for that controller to load up
+[05:23.630 --> 05:31.090]  so I can figure it out. Okay. Let's resolve the studio can't connect to an issue.
+[05:33.810 --> 05:39.250]  So click on the particular controller, the mock pro com, in your system tree.
+[05:41.390 --> 05:45.030]  Okay. Okay. Now on the right-hand side, you'll see VIP.
+[05:49.380 --> 05:58.860]  It just came in. Okay. That one just came in.
+[06:00.460 --> 06:08.560]  What the hell? Okay. That's... Okay. How do I change the baud rate of this thing?
+[06:11.280 --> 06:12.480]  Is that also in studio?
+[06:14.940 --> 06:21.940]  No. Nothing in studio so far. Did you click on the pro com yet?
+[06:21.940 --> 06:29.160]  Okay. What did you need me to do?
+[06:30.180 --> 06:33.300]  So you're in toolkit. I can see my mock pro com here.
+[06:33.660 --> 06:38.500]  Okay. Click on the mock pro com. Okay. So I'm in toolkit. Okay.
+[06:41.100 --> 06:46.660]  Okay. Oh, that does seem right. That baud rate does seem right.
+[06:47.100 --> 06:50.580]  Okay. So this is the baud rate that the pro com is operating on,
+[06:50.580 --> 06:55.740]  which might be completely fine. But anyways, on the right-hand side,
+[06:56.220 --> 07:02.380]  you'll see in the bottom right, there is VIP 1, VIP 2. VIP 1 is probably enabled
+[07:02.380 --> 07:07.740]  with network number 20, UDP 4, 47808. Right? Click internet access.
+[07:07.740 --> 07:14.280]  You got it. Check. Enable BBMD. Hit okay. Hit send.
+[07:14.560 --> 07:26.180]  Internet access. Enable BBMD. BBMD setup. Enable BBMD. Click okay.
+[07:28.580 --> 07:30.560]  Is that all I have to do? Okay. And send.
+[07:33.980 --> 07:42.410]  And send. Warning. Controller will set.
+[07:49.310 --> 07:54.830]  All right. It looks like that's hooked. Okay. Back over to studio.
+[07:54.830 --> 07:57.330]  Okay. So I think I'll have to go through on all these...
+[07:57.330 --> 08:01.350]  No, I'm just saying, just in studio now. Try to connect to it.
+[08:02.270 --> 08:03.930]  Tell me what happens when you try and connect.
+[08:11.560 --> 08:19.140]  It's still there. But now I'd like to put it back on the building and see if the building pulls it in.
+[08:20.940 --> 08:25.240]  Yeah. So I may have to go through and do this to all the Univent controllers, correct?
+[08:26.520 --> 08:30.980]  No, you shouldn't have to do that to any of them. The reason for me checking this was
+[08:30.980 --> 08:34.920]  because you said you couldn't connect with studio. Now I'm confused because it sounds like
+[08:34.920 --> 08:38.440]  you can connect with studio or could connect with studio.
+[08:44.450 --> 08:49.650]  Yes. My problem is that whenever I plug it into the network of the building,
+[08:50.970 --> 08:56.930]  it does not pull in. Okay. Is it configured with DHCP or static IP?
+[09:00.490 --> 09:08.940]  Static. Okay. If that was given to you by IT, then we'll need to find out why it doesn't
+[09:08.940 --> 09:16.200]  pull in once it's on the network. Do you know if it has a different IP subnet versus the other
+[09:16.200 --> 09:28.020]  devices? I'm not sure what you mean. When you say the rest of the networks,
+[09:28.220 --> 09:32.680]  remember that the rest of the networks has its own IP. Like they'll have their own IPs,
+[09:32.740 --> 09:36.980]  right? When you're connected to that controller, look at its IP address,
+[09:36.980 --> 09:42.120]  then look at the IP address of the network that you're connecting to, right?
+[09:43.400 --> 09:46.420]  Is it the same subnet? That's what I'm trying to find out here.
+[09:51.070 --> 09:56.590]  Okay. Well, I guess I could give you a call back whenever I get into the building
+[09:57.290 --> 10:03.550]  and we could go from there. Sure. What you should be able to do now,
+[10:03.570 --> 10:09.510]  now that BBMD has been enabled, even if the IP address is in a different subnet,
+[10:09.510 --> 10:13.270]  you should still be able to connect to that particular controller,
+[10:14.370 --> 10:18.530]  so long as nothing else is preventing communication. And I'm thinking something
+[10:18.530 --> 10:25.130]  else is preventing communication. Now, I just want to make sure we're still talking about
+[10:25.130 --> 10:30.110]  the same thing. We're talking about a mock pro com, not the MSTP network and devices under
+[10:30.110 --> 10:36.650]  the MSTP network, correct? No, I brought a mock pro com because I do not have a direct
+[10:36.650 --> 10:44.090]  cable. I see. Okay. Yep. So I'm going to each controller to diagnose what's wrong with it so
+[10:44.090 --> 10:50.370]  I can get it on my building network, which that... what feeds that is a mock pro
+[10:51.610 --> 10:57.590]  sys or a mock pro two, one or two. So you're troubleshooting an MSTP network,
+[10:57.670 --> 11:07.000]  not an IP network, right? Correct. Okay. While you're doing the testing,
+[11:07.000 --> 11:12.060]  can you just confirm that you don't have anything duplicated? When I say duplicated, I'm saying
+[11:13.600 --> 11:23.100]  the network number of the MSTP and the network number of the VIP. Oh, also device ID. Yep.
+[11:23.240 --> 11:26.280]  Because if you have something duplicated, you're going to have trouble pulling things
+[11:26.280 --> 11:34.540]  in while you're doing your testing. So just keep that in mind. Okay. Well,
+[11:35.700 --> 11:37.440]  I'll keep going down the line.
+[11:40.780 --> 11:44.700]  I mean, you could go controller by controller. Like, that's one way to troubleshoot. Usually
+[11:44.700 --> 11:50.920]  what we recommend is segmenting. So you split it in between. So it's a diagnosis
+[11:50.920 --> 11:56.740]  technique where you go halfway, split it, then you go halfway, split it, go halfway,
+[11:56.780 --> 12:02.860]  split it until you find the problem. Yeah. I mean, it would be nice if the
+[12:02.860 --> 12:09.320]  wires were labeled. Is there a way to power off all the controllers at the same time?
+[12:13.250 --> 12:16.130]  Not at the same time, but we could power them all off.
+[12:16.710 --> 12:20.230]  But yeah, basically, yeah. But we already did that and they still did not autobot.
+[12:20.310 --> 12:23.930]  And they still didn't come back. And then power them back on one by one.
+[12:24.170 --> 12:28.990]  Correct. They still didn't autobot. When you say they didn't autobot,
+[12:32.110 --> 12:34.810]  it's very... it doesn't sound like they're not...
+[12:36.990 --> 12:41.030]  it's possible that they didn't autobot. The problem is that when you say something like
+[12:41.030 --> 12:46.290]  it didn't autobot, it makes it sound like, oh, all you have to do is change the pro com to
+[12:46.290 --> 12:51.770]  the bot rate that they should be running. And there's only like four choices. So you change
+[12:51.770 --> 12:56.590]  the pro com. And I did try that and I still couldn't get them pulled in at 348.
+[12:56.590 --> 13:03.870]  Which, well, I'm not just saying 348. I'm just saying like 76, 800, 348. Like,
+[13:03.870 --> 13:07.810]  there's only a couple of bot rates that you can try. And after about two minutes,
+[13:07.810 --> 13:12.430]  if they don't pull in, then whatever you did isn't going to be affecting it.
+[13:13.170 --> 13:16.770]  So it makes it sound like it's not actually a bot rate. You see what I'm saying? It
+[13:16.770 --> 13:19.150]  sounds like it's not actually autobotting. That's the issue.
+[13:19.150 --> 13:26.910]  Yeah, it's a difficult device ID and I agree. Yep. So I will go device by device.
+[13:30.410 --> 13:35.330]  I guess one other thing. All of the pro zones, they're all already configured,
+[13:35.530 --> 13:37.350]  right? They already have a device ID and stuff.
+[13:41.470 --> 13:45.210]  They are not because I could not see them on the network. So that's
+[13:46.050 --> 13:50.990]  one of the issues that I'm running into. And this one was configured to a 2015 for some
+[13:50.990 --> 13:58.330]  reason. Well, as far as the bot rate is concerned, if they weren't ever configured,
+[13:58.750 --> 14:02.390]  then they should absolutely be autobotting. I haven't heard of any issues with autobot.
+[14:02.470 --> 14:09.970]  So there must be a different physical issue. Okay. I will check my polarity and my device
+[14:09.970 --> 14:20.050]  instance. Yeah. But how many devices total? Go ahead. There's seven. Is it five units?
+[14:20.050 --> 14:26.290]  There's seven. Seven units. And then on my other network, I've got 10 VAVs.
+[14:29.010 --> 14:35.690]  10 VAVs on a different network. So they're not coming. And there's a new VAV right there.
+[14:39.070 --> 14:43.100]  Yeah. If it's easier, I would recommend segmenting so you can
+[14:44.370 --> 14:49.250]  hopefully publish it faster so you're not checking device after device. But I mean,
+[14:49.810 --> 14:54.430]  I feel like there's too many controllers. So if you want to do it that way, that should be fine.
+[14:56.330 --> 14:59.990]  It definitely sounds like there's a physical issue, especially if when you're connected,
+[15:00.130 --> 15:03.310]  let's say it's the pro com to this first pro zone, it works just fine.
+[15:04.490 --> 15:09.470]  Then yeah, keep adding devices to it or split it and see what happens.
+[15:11.530 --> 15:17.090]  One other note, I found that if the MSCP cable is connected to a device and the device
+[15:17.090 --> 15:22.470]  is powered off, it can affect the network. So just note that when you're doing testing yourself,
+[15:24.410 --> 15:32.990]  that can interfere with your testing. A device that's off? Gotcha. Yeah. If you power it off
+[15:32.990 --> 15:38.730]  and then don't disconnect the MSCP, it doesn't mean that the MSCP circuitry isn't having an
+[15:38.730 --> 15:46.270]  effect on the network. Yeah. So that's it. Okay. I will go from there. Thank you so much.
+[15:46.270 --> 15:51.580]  Yeah, you're welcome. All right.

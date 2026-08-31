@@ -1,0 +1,1306 @@
+[00:01.220 --> 00:04.000]  Reliable controls, Thomas speaking.
+[00:04.600 --> 00:06.980]  Hey Thomas, it's Spencer with Roll Prince George. How's it going?
+[00:07.660 --> 00:09.040]  Not bad.
+[00:11.540 --> 00:16.020]  I'm having some issues with some firmware. I'm trying to send
+[00:16.020 --> 00:20.000]  7.91 to a panel that is currently on 7.68
+[00:20.000 --> 00:24.420]  and it did fail, so I assume I have to do
+[00:24.420 --> 00:27.300]  a jump somewhere in between to like 7.78 maybe?
+[00:27.860 --> 00:31.580]  I didn't think you did too. What's it failing?
+[00:31.840 --> 00:34.620]  Is it just timing out? Is it...
+[00:34.620 --> 00:37.220]  It kind of looks like it's just timing out.
+[00:39.200 --> 00:43.600]  It doesn't even show it sending packets. It just shows it like...
+[00:43.600 --> 00:45.100]  Oh, tries and it just fails.
+[00:46.100 --> 00:49.380]  And it just comes up with fail after like 30 seconds.
+[00:51.000 --> 00:54.900]  Now when I look at the controller now, yeah, absolutely.
+[00:59.900 --> 01:02.760]  The panel is showing 7.91 now.
+[01:04.100 --> 01:06.940]  Oh, alright. So it did go through or
+[01:06.940 --> 01:10.960]  it didn't? Cause sometimes on the end it will
+[01:10.960 --> 01:14.920]  fail. Well no, it didn't even show it sending any
+[01:14.920 --> 01:18.800]  packets. It failed us in about 30 seconds. So in studio it's saying
+[01:18.800 --> 01:22.100]  mock pro web server cleared, OS send required.
+[01:24.800 --> 01:27.060]  Oh man, you're done. I mean...
+[01:27.060 --> 01:31.060]  And when I go to... yeah, exactly. When I go to
+[01:31.060 --> 01:34.980]  properties on it, under software it says initializing please wait.
+[01:37.580 --> 01:39.420]  Alright, well let's go take a look and
+[01:39.420 --> 01:42.840]  see what we can figure out here. So if you go to
+[01:43.920 --> 01:47.080]  rcsupport.screenconnect.com
+[01:52.860 --> 01:56.420]  Okay, what's the code? It's going to be D
+[01:56.420 --> 02:00.080]  capital D as in delta 43896.
+[02:16.420 --> 02:17.380]  Downloading something.
+[02:18.780 --> 02:20.880]  Do I need to extract it and all that kind of jazz?
+[02:21.860 --> 02:24.280]  Potentially, I don't know. They changed it recently again.
+[02:25.540 --> 02:27.060]  Oh, did they? Okay.
+[02:34.800 --> 02:36.500]  Looks like it might work.
+[03:03.880 --> 03:06.120]  Okay, just connecting right now.
+[03:07.960 --> 03:08.760]  I'm in!
+[03:10.160 --> 03:12.900]  You are in. So at the bottom we got studio
+[03:12.900 --> 03:15.100]  and toolkit open.
+[03:16.760 --> 03:19.560]  Which screen are we on? The other one.
+[03:19.660 --> 03:20.920]  The other one on the other side.
+[03:24.760 --> 03:28.780]  Alright, let's connect and let's see what's going on. So are you able to connect to
+[03:28.780 --> 03:31.680]  the controller at all now? Yeah.
+[03:34.780 --> 03:36.480]  No drive for three hours?
+[03:36.480 --> 03:36.720]  That's weird.
+[03:39.040 --> 03:42.220]  They're in town anyway so it's not the end of the world if I go to go to site.
+[03:43.220 --> 03:46.940]  It is this guy. It's showing 791
+[03:47.660 --> 03:49.600]  even though it didn't really send anything.
+[03:50.320 --> 03:53.260]  Alright, well we'll try it again just to make sure I guess.
+[03:54.240 --> 03:57.080]  And you got a panel file backup and everything from that controller?
+[03:57.820 --> 03:58.920]  I do, yeah.
+[03:58.920 --> 04:00.540]  Perfect. Good work.
+[04:02.880 --> 04:04.660]  Yeah, step one. Check.
+[04:06.140 --> 04:09.080]  You'd be surprised how many times people fail on that one.
+[04:11.060 --> 04:12.500]  Yeah, fair enough.
+[04:14.000 --> 04:16.440]  Okay, so I got 791 there on my desktop.
+[04:23.360 --> 04:25.940]  Go to web, 791.
+[04:29.980 --> 04:31.340]  And panel one.
+[04:33.660 --> 04:35.660]  I didn't see what you connected to
+[04:35.660 --> 04:38.040]  but you connected RCP, right? Not BACnet?
+[04:38.960 --> 04:43.800]  I did, yeah. Okay, good. Yeah, it looks like the RCP screen but I just wanted to make sure.
+[04:47.890 --> 04:50.010]  At least I believe I did. It was in my brain that
+[04:50.010 --> 04:53.570]  that's what it looks like. No, no, the screen looks correct.
+[04:55.170 --> 04:55.810]  Okay, good.
+[04:59.710 --> 05:04.470]  So it just times out here. I've tried it about three times now. It times out and just says failed.
+[05:14.540 --> 05:15.560]  And then I did
+[05:15.560 --> 05:19.240]  a warm start afterwards and that didn't seem to help.
+[05:24.440 --> 05:25.620]  There you go.
+[05:51.440 --> 05:53.380]  Remember what these folders were called.
+[05:54.240 --> 05:58.020]  Let's just try this one. Bottom. It goes to that one. Perfect.
+[05:58.600 --> 06:01.340]  This was a Procom web, okay?
+[06:25.010 --> 06:26.370]  What do you think we should try?
+[06:29.920 --> 06:32.340]  I don't know, like when I
+[06:32.340 --> 06:36.500]  had an issue with a much older panel, Liam sent me
+[06:37.460 --> 06:40.340]  7.78. Yeah, let's try that.
+[06:40.480 --> 06:44.500]  Do you have it on you still? Well, I've got
+[06:44.500 --> 06:48.460]  I don't have the web version. I've got the Procom sys
+[06:48.460 --> 06:52.040]  7.78 but not the Procom web sys.
+[06:52.680 --> 06:54.800]  Let me see if I can find it.
+[07:27.210 --> 07:29.150]  I don't think I have the right folder
+[07:29.150 --> 07:32.050]  because I don't see all the versions of firmware.
+[07:44.500 --> 07:45.540]  That one.
+[08:02.280 --> 08:03.860]  So which one did it give you?
+[08:03.940 --> 08:04.800]  1.70.
+[08:07.260 --> 08:08.300]  7.78.
+[08:11.140 --> 08:15.560]  You've got the web version of that. That's what I'm looking for.
+[08:38.940 --> 08:39.500]  80.
+[08:41.140 --> 08:45.080]  Oh, there it is. No, that's not the right file.
+[09:00.420 --> 09:02.580]  Okay, let's try
+[09:07.120 --> 09:08.880]  find a better one than that.
+[09:21.020 --> 09:22.080]  Putting it on your desktop.
+[09:25.160 --> 09:26.440]  Or in that folder.
+[09:27.380 --> 09:28.320]  In that folder.
+[09:33.340 --> 09:33.900]  Okay,
+[09:34.120 --> 09:36.580]  back to toolkit. Let's give that a shot.
+[09:40.290 --> 09:41.290]  Where was that folder?
+[09:41.930 --> 09:42.990]  Right there. Perfect.
+[09:44.690 --> 09:46.290]  Let's try that.
+[09:50.390 --> 09:52.670]  And they should downgrade it too.
+[09:53.050 --> 09:55.450]  If it is at 7.91.
+[10:07.040 --> 10:07.640]  Thinking.
+[10:35.700 --> 10:37.580]  What do you think?
+[10:39.580 --> 10:41.040]  Something is just being blocked.
+[10:43.160 --> 10:44.020]  Could be.
+[10:44.960 --> 10:48.660]  It is a V7, so it could be trying to push it with FTP.
+[10:50.260 --> 10:51.140]  Let's find out.
+[10:55.660 --> 10:57.440]  This isn't the same one, is it?
+[10:58.340 --> 10:59.580]  It is, yep.
+[10:59.820 --> 11:03.520]  And it's this guy right here? Yep.
+[11:08.320 --> 11:10.400]  It still has all its programming and stuff.
+[11:12.720 --> 11:16.160]  Oh, it doesn't tell us if it's FTP.
+[11:16.480 --> 11:18.420]  Oh, because it is. Oh, yeah.
+[11:21.780 --> 11:24.200]  I haven't saved.
+[11:26.040 --> 11:28.680]  I have a secret firmware I'm not allowed to send
+[11:28.680 --> 11:31.740]  anybody, and that's probably what the issue is.
+[11:34.540 --> 11:36.720]  So what it is, is in the older
+[11:36.720 --> 11:40.580]  versions we did FTP, and then later on we changed
+[11:40.580 --> 11:44.640]  to BFS, so back net file
+[11:44.640 --> 11:48.940]  service. And this is an older version,
+[11:49.020 --> 11:52.660]  so it's probably still an FTP. But you'll notice that
+[11:52.660 --> 11:56.780]  I'm not actually getting into the resources stuff, so it's probably because the
+[11:56.780 --> 12:00.880]  FTP is probably blocked. So there is a version of
+[12:00.880 --> 12:04.980]  it, and I need to find it, because if I was smart, I didn't put it
+[12:04.980 --> 12:08.680]  in my downloads folder and not deleted it 500 times.
+[12:09.500 --> 12:13.020]  Special firmware. Hello, what are you?
+[12:21.040 --> 12:21.520]  I'm gonna
+[12:21.520 --> 12:23.300]  have to delete that one after.
+[12:26.720 --> 12:29.580]  But for now, let's see if we can get
+[12:29.580 --> 12:36.020]  this to work. Because yeah, you don't want this.
+[12:36.880 --> 12:40.160]  I don't want anything
+[12:40.160 --> 12:42.720]  I don't know how to use, that's for sure.
+[12:58.240 --> 12:59.980]  Look at the other version, it says it's
+[12:59.980 --> 13:07.930]  170 for what the controller has on it.
+[13:10.530 --> 13:11.010]  0778?
+[13:13.410 --> 13:15.290]  Yeah, 178 for the
+[13:15.290 --> 13:17.310]  firmware on the top.
+[13:21.180 --> 13:25.260]  What started as 768,
+[13:25.340 --> 13:27.060]  and I tried to go to 791.
+[13:29.020 --> 13:30.660]  And then it was set, it was 791.
+[13:34.660 --> 13:36.760]  Select the correct one.
+[13:43.220 --> 13:45.620]  You want the ProWeb 778, or
+[13:45.620 --> 13:48.440]  which one do you want? Nope, I want straight to the top one.
+[13:50.200 --> 13:52.700]  Oh, that's on my desktop, yeah.
+[13:52.900 --> 13:54.300]  Nope, that's an old one.
+[13:55.880 --> 13:57.940]  I think it was one below where you were.
+[14:00.760 --> 14:02.120]  791, there you go.
+[14:12.730 --> 14:15.870]  It might not work, I might have to change the setting in Studio.
+[14:18.790 --> 14:19.670]  Failed, okay.
+[14:20.850 --> 14:23.670]  I'm going to refresh this.
+[14:25.670 --> 14:26.730]  Close all that.
+[14:27.830 --> 14:30.810]  Because it's in a really weird state right now.
+[14:41.630 --> 14:43.830]  It still doesn't give me the option.
+[14:49.010 --> 14:50.650]  Okay, let's disconnect.
+[14:51.130 --> 14:53.570]  We'll reconnect. Which one is it?
+[14:53.570 --> 14:55.750]  PG Dental.
+[14:57.250 --> 15:01.010]  You may have to search it. I've got quite a few on here.
+[15:04.540 --> 15:05.540]  Space D.
+[15:14.500 --> 15:18.920]  Long view? I'll let you do it.
+[15:25.900 --> 15:27.680]  Went to long view, changed.
+[15:33.640 --> 15:34.340]  Gotta be honest,
+[15:34.380 --> 15:38.180]  that's been a spell since I've done this.
+[15:43.890 --> 15:46.590]  Yeah, I can imagine.
+[15:48.410 --> 15:50.790]  And those Prince George guys in their old
+[15:50.790 --> 15:53.870]  versions. Oh my god.
+[15:56.610 --> 15:58.710]  We've got some customers that are
+[15:58.710 --> 16:02.310]  ancient. There's still the odd Easter link out there.
+[16:02.590 --> 16:05.170]  Oh, you're not the other ones, dude.
+[16:08.590 --> 16:10.910]  Oh, even like
+[16:10.910 --> 16:14.750]  across Canada and the states and stuff. It's the problem when you have reliable
+[16:14.750 --> 16:19.110]  hardware that works. And they get so angry. They're like, oh yeah,
+[16:19.330 --> 16:22.890]  the tech updated the firmware and the thing
+[16:22.890 --> 16:26.210]  wouldn't come back on. I'm like, well, it is 20 years old.
+[16:27.570 --> 16:29.110]  Like, I don't know what to say.
+[16:30.650 --> 16:34.750]  I've got a few customers that just don't believe in fixing it if it's not broke.
+[16:35.810 --> 16:39.210]  But any time that something does crash, it's still hard to work on it.
+[16:39.210 --> 16:41.490]  Okay, let's try the other one then.
+[16:52.120 --> 16:56.280]  I don't know if I have to do something special to change it to BFS.
+[16:57.860 --> 17:00.380]  I thought that the firmware just did it. We'll find
+[17:01.140 --> 17:06.740]  out. Yeah, it's been a while since I've come across
+[17:06.740 --> 17:10.720]  that option to change it. I forget. I think it was
+[17:10.720 --> 17:14.840]  under properties just like you are in the resource manager somewhere. Yeah, but that might be only in
+[17:14.840 --> 17:15.460]  the VA.
+[17:17.760 --> 17:18.640]  Maybe, eh?
+[17:21.760 --> 17:23.860]  Well, it looks like it's doing better now.
+[17:24.320 --> 17:27.420]  It was looking for space. We didn't see that with the other one.
+[18:00.880 --> 18:01.760]  No, it just failed.
+[18:08.370 --> 18:11.270]  I wonder if there's someone to locate you can change it.
+[18:43.190 --> 18:56.740]  One sec here. I broke it.
+[18:59.220 --> 19:00.900]  I pull Liam in the
+[19:00.900 --> 19:03.740]  call and all I get back is I broke it.
+[19:04.280 --> 19:08.740]  I'm just in time. Okay, so it was version
+[19:10.380 --> 19:11.780]  7.3.8.
+[19:12.280 --> 19:16.160]  Oh yeah, I know the problem here.
+[19:16.460 --> 19:19.780]  This is actually really straightforward. It's an old bug.
+[19:20.480 --> 19:23.600]  It's this guy, except it needs to be the pro web version of whatever that is.
+[19:23.600 --> 19:24.200]  I did.
+[19:26.380 --> 19:30.160]  That one right there? Yeah, and I just tried to do it. It just failed.
+[19:31.320 --> 19:31.900]  Okay.
+[19:33.440 --> 19:38.160]  I don't believe you, boys. That's not great, boys.
+[19:39.860 --> 19:43.040]  But I did the no software one before
+[19:43.040 --> 19:45.600]  because that's the one that... That shouldn't affect it.
+[19:48.000 --> 19:51.280]  But I'm wondering if it's FTP and that's why it's failing
+[19:51.280 --> 19:55.420]  because we're now sending it not FTP. But I mean the other one sent, so that should
+[19:55.420 --> 19:59.180]  be fine. Sorry, the
+[19:59.180 --> 20:02.360]  no software version sent? That one worked? Yep.
+[20:04.140 --> 20:07.400]  Oh. Okay, then yeah, you're probably right. Probably FTP
+[20:07.400 --> 20:11.620]  being blocked. Are you connected just like cable to cable
+[20:11.620 --> 20:14.940]  type thing or is this somewhere across the network?
+[20:16.020 --> 20:17.760]  Oh yeah, there. Right there.
+[20:19.740 --> 20:21.340]  It's across town.
+[20:22.060 --> 20:25.260]  Yeah, I see this connected on blah, blah, blah. Yep.
+[20:26.440 --> 20:29.920]  Okay. But we did earlier ones and they worked too.
+[20:31.640 --> 20:32.640]  Like firmware?
+[20:33.680 --> 20:38.000]  FTP? So what did you get it up to?
+[20:39.060 --> 20:39.860]  It was 7.
+[20:42.640 --> 20:46.100]  It failed for $7.91 but
+[20:46.100 --> 20:50.100]  it's status said that it worked $7.91 so something took.
+[20:50.880 --> 20:54.120]  That sounds about right. So the reason why I'm saying that is
+[20:54.120 --> 20:56.960]  because there was an issue somewhere around
+[20:56.960 --> 21:02.040]  $7.89 or so. I don't remember. There was like
+[21:02.040 --> 21:06.120]  the slightest change to the size of our firmware package and it seemed to have like just
+[21:06.120 --> 21:10.340]  broken some sends over the internet and I don't know why. And that's
+[21:10.340 --> 21:13.920]  probably what we're running into here. So I'm going to try this
+[21:13.920 --> 21:18.040]  version right here. Oh, actually, I think you tried that
+[21:18.040 --> 21:25.490]  one. Oh, we'll see. Watch it will work for
+[21:25.490 --> 21:25.830]  Liam.
+[21:31.630 --> 21:33.730]  I'm not going to say anything because whatever
+[21:33.730 --> 21:37.590]  I say, they'll just do the opposite. Now I am noticing that with all the
+[21:37.590 --> 21:42.010]  firmware versions here. So I'm just going through the list because I've got a whole bunch of them.
+[21:42.290 --> 21:45.330]  It goes 2.4, 2.5,
+[21:45.330 --> 21:49.410]  2.6. It jumps up to 2.9
+[21:49.410 --> 21:52.210]  with 7.68
+[21:53.250 --> 21:57.570]  and then once we get to 7.78
+[21:57.570 --> 22:01.270]  it jumps up to 4.8
+[22:01.270 --> 22:06.410]  instead of 3, 3 megabytes. So it jumps up by about 50 percent
+[22:06.410 --> 22:08.930]  in terms of overall size. So
+[22:08.930 --> 22:12.790]  if it's kind of part way through the send and then it fails,
+[22:13.490 --> 22:16.730]  that's one thing. But if it just fails in the beginning. It does that.
+[22:16.990 --> 22:20.870]  Exactly that. Nothing sent and then
+[22:22.350 --> 22:22.970]  yeah.
+[22:25.290 --> 22:28.510]  Now it says it's 7.89 but obviously...
+[22:28.510 --> 22:32.030]  Is that resource port correct? Okay, I've got an idea.
+[22:32.630 --> 22:35.270]  Is it possible that this was 80.21 before?
+[22:36.450 --> 22:40.910]  Well, that's FTP. Right. And we were able to
+[22:40.910 --> 22:46.770]  send some files. Right.
+[22:48.930 --> 22:53.050]  Do you think it's possible that was 80.21
+[22:53.050 --> 22:54.270]  before?
+[22:57.910 --> 23:00.410]  Do you know if it was that
+[23:00.410 --> 23:04.290]  before? No. Of course not.
+[23:05.490 --> 23:08.130]  No. No one's been on this
+[23:08.130 --> 23:12.310]  changing firmware about us. And we haven't done it since it was 7.68.
+[23:13.110 --> 23:15.110]  Well, Liam, load the resource manager.
+[23:18.170 --> 23:20.250]  Resource manager takes the other ports.
+[23:22.190 --> 23:22.750]  Oh.
+[23:23.590 --> 23:28.130]  I thought when you send it... I don't need to do that.
+[23:28.490 --> 23:31.950]  Silly thing. PowerShell. Oh, I'm already
+[23:31.950 --> 23:35.790]  in PowerShell. TNC port 21
+[23:37.550 --> 23:41.170]  and 5069.246.86.
+[23:44.610 --> 23:46.570]  Is it just the port that's being blocked, you think?
+[23:47.230 --> 23:51.790]  Well, I'm just checking. Because if it was 80.21 before...
+[23:53.070 --> 23:55.490]  Oh, there we go. Test
+[23:55.490 --> 23:59.610]  succeeded. I can also check 80.21
+[23:59.610 --> 24:06.740]  but it's probably going to fail. That's a dentist office. I'm not
+[24:06.740 --> 24:08.860]  holding my breath that it will.
+[24:25.450 --> 24:25.630]  Yeah.
+[24:28.470 --> 24:31.590]  Yeah, that's what I'd expect. Okay, so 21 seems right.
+[24:32.730 --> 24:35.890]  So the next question is, how do we go about solving this
+[24:37.250 --> 24:40.170]  conundrum? There's only a couple possibilities. One of them
+[24:40.170 --> 24:43.610]  is that the control is in a funny state. In which case, why don't I just warm start it?
+[24:43.610 --> 24:46.610]  Let's try that a bunch of times, too.
+[24:46.810 --> 24:51.730]  Yeah, and it didn't help. But now we have different firmware packages, so
+[24:51.730 --> 24:55.640]  maybe. And Liam. Yeah, I could try
+[24:56.130 --> 24:58.350]  sending it from my end.
+[24:59.610 --> 25:03.820]  Yeah. Oh, it says I've got two versions of Toolkit Open. Ah, there it is.
+[25:05.670 --> 25:07.590]  Although I think they white listed
+[25:07.590 --> 25:11.650]  our IP. Well, we'll find out how good their
+[25:11.650 --> 25:15.430]  IT security is in about two seconds here.
+[25:17.030 --> 25:19.030]  Five if they have a white list.
+[25:21.110 --> 25:22.730]  Five if they have a white list?
+[25:24.090 --> 25:27.850]  Oh, man. Yeah, it fails right away, so
+[25:27.850 --> 25:29.330]  they probably got it white listed.
+[25:32.170 --> 25:35.690]  Do you happen to have Toolkit 2? We could try
+[25:35.690 --> 25:39.390]  from there. Oh, my God. It's been a while.
+[25:39.390 --> 25:43.390]  I don't check my desktop. I may have it.
+[25:44.130 --> 25:46.270]  I was hanging on to it for a while.
+[25:47.130 --> 25:51.130]  I haven't used it for two or three years now.
+[25:53.340 --> 25:56.780]  Let me know if I can install it without getting
+[25:56.780 --> 26:00.780]  my IT involved. Oh, it's the first time I've seen an error. It usually comes up.
+[26:04.520 --> 26:07.080]  I don't think it ever got the software package part. No, it didn't.
+[26:07.080 --> 26:10.180]  And it didn't get the firmware either, but it says it sure got the firmware.
+[26:12.100 --> 26:14.240]  Yeah, I've never seen this before. That's why
+[26:14.240 --> 26:14.620]  I phoned.
+[26:19.820 --> 26:22.360]  So, I can
+[26:24.400 --> 26:26.500]  certainly get you a version
+[26:26.500 --> 26:30.280]  of the firmware that doesn't have the software portion for the
+[26:30.280 --> 26:34.100]  latest version and see if we can get from there. But I
+[26:34.100 --> 26:38.260]  don't know if that's going to do anything different. I feel like we're just going to get stuck in the
+[26:38.260 --> 26:39.220]  same place.
+[26:43.500 --> 26:46.180]  We're stuck. I can go to site too.
+[26:46.520 --> 26:50.200]  No question. For the controller,
+[26:50.660 --> 26:52.480]  we're wanting to be version
+[26:53.760 --> 26:58.220]  7 correctives, isn't it? I want to update the version 8
+[26:58.220 --> 27:02.360]  typing. No, I've got no plans to go to
+[27:02.360 --> 27:06.280]  version 8. Like, they got old mock stats there. The reason I'm asking
+[27:06.280 --> 27:10.450]  is because I absolutely could send it all the way up to version 8
+[27:11.220 --> 27:14.340]  from here and then you wouldn't have an issue with FTP
+[27:14.340 --> 27:15.080]  anymore.
+[27:19.100 --> 27:22.440]  Communication with mock stats? Probably.
+[27:24.140 --> 27:26.600]  Yeah, that would be problematic.
+[27:27.880 --> 27:30.420]  I'm not saying that I'd like that idea. It's just
+[27:30.420 --> 27:34.380]  if you were looking to do that anyways, then you're going to make
+[27:34.380 --> 27:38.600]  some changes to your system groups or whatever it is to make the links
+[27:38.600 --> 27:42.120]  work and programming work, whatever it is, whatever change needs to be done,
+[27:42.660 --> 27:46.580]  then great. But if you weren't expecting to, then you
+[27:46.580 --> 27:48.000]  probably don't want it.
+[27:51.560 --> 27:52.600]  Let's see...
+[27:52.600 --> 28:01.360]  I haven't heard of that software package yet.
+[28:01.740 --> 28:01.980]  There it is.
+[28:03.300 --> 28:05.100]  VMRC, whatever it's called.
+[28:06.080 --> 28:10.080]  Alright. Only a select few get it.
+[28:26.850 --> 28:29.330]  I'm going to try it on my controller before I
+[28:30.090 --> 28:33.510]  do it to yours because I feel like it's going to be horrible.
+[28:37.510 --> 28:39.110]  I know, right?
+[28:40.350 --> 28:43.430]  It's why I test these things on my controller first.
+[28:43.930 --> 28:45.110]  The noble sacrifice.
+[28:45.610 --> 28:49.650]  If you ever see me pushing a weird thing, just know that I already
+[28:49.650 --> 28:52.710]  tried it and it didn't blow up, so it's probably fine.
+[28:53.990 --> 28:55.410]  Yeah, it worked once before.
+[28:59.670 --> 29:01.810]  I'm going to do that right now.
+[29:01.810 --> 29:03.410]  I'm going to connect to reliable.
+[29:14.800 --> 29:18.700]  Does sending the latest version 8 firmware also send it
+[29:18.700 --> 29:20.420]  the latest version 7 firmware?
+[29:21.500 --> 29:21.960]  No.
+[29:25.960 --> 29:30.060]  It can send the latest version 8 firmware from the version 7, but not the other way around.
+[29:30.880 --> 29:35.340]  The RCP devices do understand the
+[29:36.220 --> 29:36.600]  word.
+[29:39.630 --> 29:41.970]  I can't think of the word.
+[29:42.970 --> 29:47.130]  RCP does understand the backup traffic, but the BACnet stuff does not understand RCP
+[29:47.130 --> 29:47.670]  traffic.
+[29:52.030 --> 29:55.210]  Alright, we're going to try this again here.
+[29:57.290 --> 29:58.690]  There it is.
+[29:59.830 --> 30:01.250]  That looked like that worked.
+[30:04.410 --> 30:06.950]  And send. Even better, this is a downgrade from
+[30:06.950 --> 30:10.950]  the version I was running, so if it goes badly, it will go extra bad.
+[30:14.300 --> 30:14.880]  Yay.
+[30:19.500 --> 30:21.360]  Sending packet 1.
+[30:24.960 --> 30:25.880]  Getting shivers.
+[30:28.520 --> 30:29.820]  This is Spencer.
+[30:39.620 --> 30:42.260]  If anybody can screw it up,
+[30:43.420 --> 30:43.800]  it's Liam.
+[30:43.800 --> 30:46.480]  Me? I thought you were going to say it's Spencer.
+[30:47.460 --> 30:49.000]  No, Spencer is a good boy.
+[30:50.660 --> 30:50.880]  No.
+[30:53.180 --> 30:58.940]  I was like, oh, these guys are in town. I'll just upgrade their firmware as a value added,
+[30:59.060 --> 31:00.240]  and then crash.
+[31:05.620 --> 31:08.980]  I'm getting more and more leery about sending firmware these days.
+[31:19.860 --> 31:20.800]  I might have found something
+[31:20.800 --> 31:24.200]  unrelated to this test, something else.
+[31:40.070 --> 31:42.170]  I'm starting to wonder if
+[31:43.010 --> 31:46.570]  broke backwards like downgrading in
+[31:46.570 --> 31:50.290]  7.9. Not in that version, but
+[31:50.290 --> 31:52.490]  the version I'm testing. I wonder if that's the case.
+[31:56.260 --> 31:59.760]  I have a pre-release version on my controller of the next release.
+[32:02.220 --> 32:04.520]  Seems to be unhappy with the idea
+[32:04.520 --> 32:05.920]  of doing a downgrade.
+[32:07.500 --> 32:08.440]  That's new.
+[32:15.100 --> 32:16.940]  This is very strange.
+[32:27.770 --> 32:30.010]  I've got an oscilloscope on my MSTP net.
+[32:31.430 --> 32:32.930]  I'm thinking of live streaming.
+[32:38.230 --> 32:40.650]  Dealers can sit there and watch you live stream.
+[32:41.350 --> 32:44.070]  Be like, oh yeah, I've tested that. It just goes blank.
+[32:44.910 --> 32:45.870]  Solid live.
+[32:46.210 --> 32:48.750]  I did something.
+[32:55.160 --> 32:57.660]  Alright, trying again.
+[33:10.220 --> 33:11.880]  I don't know why toolkit is so slow
+[33:11.880 --> 33:12.740]  in this firmware.
+[33:16.240 --> 33:20.520]  Oh, yours. Don't know.
+[33:22.100 --> 33:24.080]  That's like absurdly slow.
+[33:24.080 --> 33:26.600]  Normally I just send it and it's like done.
+[33:31.580 --> 33:33.060]  Oh, it's sending.
+[33:34.540 --> 33:38.900]  I got 7 packets. 13, 14. Yes!
+[33:39.340 --> 33:40.200]  There it goes.
+[33:43.200 --> 33:47.000]  In my case I did actually have to power cycle mine for it to start taking it.
+[33:47.640 --> 33:49.860]  Hopefully that's not required for yours.
+[33:51.560 --> 33:53.860]  Once I finish sending this...
+[33:57.020 --> 33:57.300]  Yeah.
+[33:57.960 --> 34:00.520]  It's usually on site until about 3 PM.
+[34:02.340 --> 34:04.480]  That's all it needs. Great.
+[34:05.800 --> 34:09.400]  Once I finish sending this, I will try the other package
+[34:09.400 --> 34:11.680]  and see if that works.
+[34:14.120 --> 34:18.100]  The other package being 7.91
+[34:18.100 --> 34:20.380]  without the software portion.
+[34:22.540 --> 34:25.820]  Yeah, this is strangely sending a lot slower than Enoma does.
+[34:26.360 --> 34:30.320]  I must have something horrible on my network, which wouldn't surprise me.
+[34:30.960 --> 34:32.600]  Probably slamming it with traffic.
+[34:33.680 --> 34:36.800]  Sometimes I'll just set up tests and I'll forget about them.
+[34:39.740 --> 34:41.860]  That doesn't sound like you.
+[34:42.900 --> 34:45.780]  I'll do things like I'll absolutely
+[34:45.780 --> 34:49.440]  destroy my network. I will do horrible things to it.
+[34:50.100 --> 34:53.300]  And forget about it. And later on I go to do something like,
+[34:53.360 --> 34:56.920]  that's weird, I can't find my... Oh, right, I unplugged it.
+[34:57.040 --> 35:00.480]  Then I plug it back in, waiting for it to discover.
+[35:01.700 --> 35:04.720]  That's weird, I still can't find it. Oh, right, I changed the port.
+[35:05.740 --> 35:09.300]  Now on its own network. I'll put that back on. Then I get all these alarms
+[35:09.300 --> 35:12.020]  with duplicate networks. Oh, right, I changed its other...
+[35:12.020 --> 35:17.960]  It's just like that. It gets to the point where I sometimes
+[35:17.960 --> 35:19.480]  change everything back to default.
+[35:23.260 --> 35:29.680]  Okay, everything is back to normal. I'm going to send it...
+[35:29.680 --> 35:31.060]  Where'd it go?
+[35:33.120 --> 35:34.840]  Also, I hear my emails going.
+[35:35.380 --> 35:38.840]  Oh, it's unrelated. Okay, good. I thought that might have been the phone alert.
+[35:42.160 --> 35:42.760]  Okay.
+[35:46.310 --> 35:49.430]  There it is.
+[35:50.130 --> 35:50.570]  Send.
+[35:53.490 --> 35:55.570]  Sending packet 1.
+[36:21.110 --> 36:23.410]  Do I want to know what you're laughing about?
+[36:25.670 --> 36:28.550]  Am I laughing? You did, yeah.
+[36:30.450 --> 36:32.910]  I mean, I can. Right now it's just
+[36:32.910 --> 36:34.550]  sending packet 1.
+[36:36.890 --> 36:38.270]  Give me a second.
+[36:41.450 --> 36:44.670]  I might break my controller at this rate. We'll see.
+[36:46.770 --> 36:48.910]  This is why I test things on my controller, because it's
+[36:48.910 --> 36:52.910]  right next to me. You can do horrible things to it.
+[36:53.010 --> 36:55.630]  You can just be like, ha, sucks to be you.
+[37:01.800 --> 37:03.880]  Alright, try this again. Sending packets
+[37:05.540 --> 37:06.060]  1.
+[37:08.920 --> 37:10.780]  Yeah, I'm not getting anywhere with that.
+[37:12.040 --> 37:13.680]  Good to try toolkit 2.
+[37:16.180 --> 37:19.200]  If that doesn't work, then...
+[37:19.880 --> 37:23.900]  I mean, you can still try it. If you have toolkit
+[37:24.660 --> 37:26.860]  2, go ahead and pull that up.
+[37:27.640 --> 37:30.300]  Doesn't look like I have it installed.
+[37:30.300 --> 37:33.120]  No, I see studio 2.
+[37:35.620 --> 37:38.580]  You always got to come prepared.
+[37:40.980 --> 37:42.560]  I don't know if I still have that.
+[37:43.960 --> 37:46.420]  It's probably stuffed in a folder somewhere.
+[37:49.590 --> 37:52.090]  I'm going to give up on studio and
+[37:52.090 --> 38:02.660]  toolkit 2. Alright.
+[38:05.180 --> 38:05.820]  Downloads.
+[38:05.820 --> 38:10.020]  Firmware. I did not like that firmware file. Let's see.
+[38:10.480 --> 38:13.080]  Oh, that's because I copied the wrong one.
+[38:18.810 --> 38:24.010]  Okay, toolkit
+[38:24.010 --> 38:28.190]  2 actually is sending the horrible version that
+[38:28.190 --> 38:29.030]  I made.
+[38:31.710 --> 38:35.930]  If we're going to do toolkit 2, we might as well try the
+[38:35.930 --> 38:36.910]  original one.
+[38:36.910 --> 38:38.690]  Yeah, the legitimate one. Yeah, exactly.
+[38:40.410 --> 38:41.590]  I'd suggest that.
+[38:43.630 --> 38:48.630]  Should I just stick a zipped version of toolkit 2 onto his computer?
+[38:48.830 --> 38:49.790]  Because that's what I'm thinking.
+[38:52.130 --> 38:55.610]  I don't know if it will work, but I'm willing to try.
+[38:56.950 --> 38:59.510]  I don't know if I'm allowed to install it, but we could try.
+[39:00.150 --> 39:01.190]  Did you say anything about installing?
+[39:02.750 --> 39:05.350]  Oh, nice. I like the way
+[39:05.350 --> 39:09.290]  you're thinking. Well, I don't know if it would work.
+[39:09.430 --> 39:10.770]  I've never done this before.
+[39:13.070 --> 39:17.390]  We're going to find out together. What horribleness are you doing?
+[39:18.990 --> 39:20.170]  You know, nothing much.
+[39:22.710 --> 39:25.530]  Can we delete that crappy firmware that I
+[39:25.530 --> 39:26.850]  installed on this machine?
+[39:28.970 --> 39:30.850]  Oh, yeah, it's in the other window.
+[39:33.650 --> 39:33.930]  Here.
+[39:34.750 --> 39:39.070]  Which one is it? This one. The one that's highlighted. This one in the middle.
+[39:39.710 --> 39:41.010]  Oh, go ahead.
+[39:42.430 --> 39:50.590]  Hey, go. Carry on. Alright, so I have
+[39:50.590 --> 39:54.650]  never tried to just unzip this. You might have to install some other
+[39:54.650 --> 39:57.350]  dependencies, but we'll see.
+[40:07.450 --> 40:10.210]  Still copying
+[40:12.820 --> 40:16.820]  I think.
+[40:17.360 --> 40:19.740]  Oh, that's an icon. Derp.
+[40:23.160 --> 40:23.900]  Amateur.
+[40:26.480 --> 40:27.540]  Assistance required.
+[40:28.800 --> 40:35.600]  Apparently, yep.
+[40:36.320 --> 40:40.260]  Let's see if
+[40:41.820 --> 40:43.700]  contact is available.
+[40:50.410 --> 40:54.030]  It's supposed to be here anyway, so might as well put it there.
+[41:01.150 --> 41:05.010]  You want me to reach out to my IT? Yep, that would be great.
+[41:06.490 --> 41:09.030]  Okay, I'll see if he's able to answer
+[41:09.030 --> 41:10.430]  showing he's away.
+[42:24.120 --> 42:26.040]  I'm going to phone IT.
+[42:40.970 --> 42:41.370]  Maybe
+[42:48.640 --> 42:49.200]  Hey, Curry.
+[43:00.610 --> 43:00.790]  Any
+[43:00.790 --> 43:01.770]  contacts at IT?
+[43:04.070 --> 43:06.250]  I need Toolkit 2 installed.
+[43:09.170 --> 43:12.570]  Well, we're going to try it. With high likelihood it will work.
+[43:22.620 --> 43:23.440]  I'm sorry,
+[43:23.480 --> 43:24.600]  you want to install what?
+[43:28.460 --> 43:29.660]  I'm on tech support
+[43:29.660 --> 43:30.720]  right now too.
+[43:33.540 --> 43:36.200]  You're on speaker phone, Kalen.
+[43:37.660 --> 43:38.220]  Adil?
+[43:42.880 --> 43:45.640]  Hey, maybe she has Toolkit 2.
+[43:47.800 --> 43:49.480]  You don't have Toolkit 2, do you?
+[43:49.600 --> 43:51.500]  You don't have Toolkit 2, do you?
+[43:52.080 --> 43:55.500]  It's old. Probably invented before you were born.
+[44:05.100 --> 44:06.220]  She's the youngest.
+[44:07.760 --> 44:11.260]  I mean, you're probably not wrong. I bet you most of this is written in assembly.
+[44:11.460 --> 44:15.720]  My goodness. See the size of the entire thing here?
+[44:16.800 --> 44:19.580]  The entire thing, including all the images, is like 9
+[44:19.580 --> 44:21.880]  gigabytes when it's compressed.
+[44:23.680 --> 44:27.720]  There, so when it's uncompressed, it's Toolkit 2. The entire thing.
+[44:28.020 --> 44:31.600]  The entire thing. Studio is like
+[44:31.600 --> 44:33.420]  1.5 gigabytes now.
+[44:35.840 --> 44:38.600]  You could almost set that old version on a floppy disk.
+[44:39.380 --> 44:42.100]  Yeah, it's almost like it were made around that time, eh?
+[44:43.800 --> 44:44.400]  Yeah.
+[44:45.640 --> 44:47.600]  Oh, did you mean the save icon?
+[44:51.800 --> 44:55.280]  Wow, that's so cool. You got a 3D printed save icon.
+[45:00.760 --> 45:02.520]  Stop making me feel old.
+[45:04.020 --> 45:08.420]  Hey, I did a lot of stuff with floppy disks. My dad had an Amiga.
+[45:09.040 --> 45:11.600]  Of course, I was like 3 years old, so I didn't know what I was doing.
+[45:13.340 --> 45:15.280]  You know they made 8.5?
+[45:15.280 --> 45:18.940]  I had an 8.5 disk drive and floppy disk.
+[45:19.640 --> 45:23.880]  I'm only aware of one size of floppy disk, and it's the one that fit in the floppy disk slot.
+[45:24.500 --> 45:26.380]  No, there's two before that.
+[45:26.760 --> 45:28.520]  I know there's other sizes, yep.
+[45:30.380 --> 45:33.120]  Oh, do you remember the mini disk format?
+[45:35.920 --> 45:36.340]  Yep.
+[45:39.020 --> 45:40.560]  I think there was a
+[45:40.560 --> 45:41.700]  mini disk player, right?
+[45:41.820 --> 45:48.020]  Was it DVDs, or was it CDs? I can't remember.
+[45:50.060 --> 45:52.320]  Awful format, though. I hated it.
+[45:54.120 --> 45:55.980]  Okay, so I got my IT...
+[45:55.980 --> 45:58.160]  I'm going to do a remote session with me.
+[46:02.140 --> 46:05.040]  You've got the install file right there.
+[46:05.040 --> 46:09.020]  I don't even know if it's going to work.
+[46:09.080 --> 46:10.860]  I might have to actually just run the installer.
+[46:23.180 --> 46:24.060]  Let's see.
+[46:28.160 --> 46:29.440]  I didn't see the download.
+[46:43.580 --> 46:44.580]  That's this one, right?
+[46:52.310 --> 46:55.630]  Yeah, that's it. I don't even know if it's going to run.
+[46:56.590 --> 46:58.190]  We're going to find out together.
+[46:58.190 --> 47:01.230]  On Windows 11.
+[47:04.880 --> 47:07.960]  We might need to install a couple dependencies.
+[47:29.320 --> 47:30.260]  Password 123.
+[47:34.840 --> 47:35.460]  Password
+[47:35.460 --> 47:37.320]  one exclamation mark.
+[47:38.400 --> 47:41.500]  Paste somewhere else. Paste in the notepad.
+[47:42.660 --> 47:45.120]  Don't scare them like that.
+[47:49.140 --> 47:50.480]  Oh, that's funny.
+[47:52.060 --> 47:54.200]  Can I run two copies? Yeah, that's unfortunate.
+[47:54.580 --> 47:57.600]  Sorry, got to do this all over again.
+[48:05.360 --> 48:06.560]  Paste, paste, paste.
+[48:06.840 --> 48:07.360]  Yeah.
+[48:09.860 --> 48:10.380]  No.
+[48:12.320 --> 48:12.860]  No.
+[48:13.480 --> 48:15.120]  Gosh, dang it.
+[48:20.100 --> 48:20.840]  It was a trial.
+[48:21.020 --> 48:21.880]  You can just continue.
+[48:25.360 --> 48:29.100]  It said you have 60 days. You can use the thing.
+[48:29.760 --> 48:33.360]  I'll find you your license thing.
+[48:33.500 --> 48:34.360]  Give me a second.
+[48:34.360 --> 48:38.740]  If you have Toolkit, you can just copy over the file.
+[48:39.840 --> 48:42.560]  Cool. Alright, so there's a couple
+[48:42.560 --> 48:46.000]  of tools. I'm looking for Prince George.
+[48:48.640 --> 48:49.340]  That's one.
+[48:49.420 --> 48:51.640]  I've probably got one buried on this machine.
+[48:56.160 --> 48:57.600]  Are we good?
+[48:59.420 --> 49:00.920]  Alright, there we go. Perfect.
+[49:00.920 --> 49:05.040]  Okay. What in the world is
+[49:05.040 --> 49:05.620]  the connection?
+[49:10.320 --> 49:12.960]  It's PG space dental.
+[49:17.320 --> 49:20.560]  That is not at all what I thought it would do.
+[49:26.560 --> 49:28.160]  There we go.
+[49:29.700 --> 49:32.540]  And we want it to be dual. Yep.
+[49:33.720 --> 49:37.440]  Okay. So first we're going to try the official one.
+[49:38.580 --> 49:39.140]  And let's see how that goes.
+[49:45.700 --> 49:46.640]  It's probably
+[49:46.640 --> 49:48.900]  long view at this point. Yep.
+[49:50.740 --> 49:54.040]  Alright, the latest version is not in there.
+[49:58.040 --> 49:58.760]  Wait, were we trying
+[49:58.760 --> 50:02.120]  to say send 7.7?
+[50:02.120 --> 50:05.640]  Oh. He's like, okay, I'm done here.
+[50:07.360 --> 50:08.320]  I mean, he's confident.
+[50:14.150 --> 50:16.610]  It says it has the firmware, so I'm going to
+[50:16.610 --> 50:20.030]  believe it and I'm not going to downgrade. No, it's wrong.
+[50:20.230 --> 50:23.570]  Because it's never sent the firmware. It never changes anything.
+[50:24.270 --> 50:28.550]  It can send the firmware but not send the software. No, it does
+[50:28.550 --> 50:32.250]  nothing. It just sits there and then it just
+[50:32.250 --> 50:36.250]  crashes out. Crashes out? You mean like...
+[50:36.250 --> 50:40.490]  Well, like, fails. Okay, because I'm thinking of the other
+[50:40.490 --> 50:42.450]  method of crash out.
+[50:44.030 --> 50:46.790]  Crash out! Oh, not that.
+[50:50.770 --> 50:52.410]  I just hated myself
+[50:52.410 --> 50:53.870]  again, didn't I?
+[50:57.430 --> 50:58.270]  I know that one.
+[50:58.270 --> 51:19.960]  You know, how far does this usually get?
+[51:21.940 --> 51:22.320]  Oh!
+[51:25.320 --> 51:27.620]  Progress! Success! Yeah!
+[51:33.420 --> 51:33.900]  Um...
+[51:33.900 --> 51:38.160]  So, this is where we say when we're going to fix this. We're going to release the sixth version,
+[51:38.260 --> 51:44.040]  right? Oh, maybe it didn't.
+[51:46.280 --> 51:48.640]  It might have just done the thing where it just sent
+[51:48.640 --> 51:52.440]  things and it's waiting for a response and hasn't received a response yet.
+[51:55.530 --> 51:58.490]  Oh, there's no program. Yeah, that's kind of what I expect.
+[52:01.530 --> 52:02.930]  Okay, let's try this again.
+[52:04.170 --> 52:07.170]  Send. I don't know why there's such a
+[52:07.170 --> 52:11.030]  major delay between...
+[52:11.030 --> 52:14.230]  Yeah, I don't know. Did it fail probably through this time?
+[52:14.950 --> 52:16.770]  Yeah, it failed at 19 packets.
+[52:20.010 --> 52:20.610]  Uh...
+[52:20.610 --> 52:24.770]  I mean, it did spring storage. Because it didn't fail at
+[52:25.750 --> 52:28.790]  like seven packets, I think it actually is sending
+[52:28.790 --> 52:32.830]  it to it, which is good. It's not great that it's stopping
+[52:32.830 --> 52:34.690]  partway through, but still.
+[52:44.140 --> 52:47.420]  If it fails again, I'll try the strange thing.
+[52:50.080 --> 52:51.840]  Seven to eight first, maybe.
+[52:53.740 --> 52:55.980]  This time it didn't even get that far
+[52:55.980 --> 52:59.680]  for it to do this thing. It's like you're losing
+[52:59.680 --> 53:03.860]  connection to it repeatedly. So it feels like, at least.
+[53:05.600 --> 53:07.120]  Yeah. Alright.
+[53:09.340 --> 53:11.580]  There we go. Do you think it needs a
+[53:11.580 --> 53:15.540]  power cycle? Maybe.
+[53:15.540 --> 53:16.360]  I mean, maybe.
+[53:28.610 --> 53:29.130]  Now,
+[53:29.150 --> 53:32.390]  if it's actually running 7.76 or whatever version,
+[53:33.050 --> 53:36.990]  we still might have a problem here. But at least I've got a path forward.
+[53:40.820 --> 53:42.880]  Sure. Toolkit 2 is a path forward.
+[53:48.880 --> 53:51.280]  I'm sure our newer toolkit is just
+[53:51.280 --> 53:55.320]  making the full use of the bandwidth, and that controller is probably on like
+[53:55.320 --> 53:59.040]  4G internet or something. And the larger packets are getting
+[53:59.040 --> 54:00.540]  fragmented and getting dropped.
+[54:06.520 --> 54:07.040]  That's success.
+[54:13.600 --> 54:14.560]  I don't know if
+[54:15.240 --> 54:18.000]  it's actually successful, because like you were saying earlier,
+[54:18.120 --> 54:21.360]  it's just kind of like lying to us, but we'll find out.
+[54:22.540 --> 54:26.580]  No, it actually did something. The other one didn't.
+[54:26.580 --> 54:30.100]  Yeah. Could actually see the packets go this time.
+[54:30.720 --> 54:34.000]  Yeah. And we didn't see that before.
+[54:36.570 --> 54:38.250]  By the time it like failed right away.
+[54:49.400 --> 54:51.320]  Send it. Send it.
+[54:56.390 --> 55:00.410]  How come you're doing it again? This is with the
+[55:00.410 --> 55:05.110]  actual software package with it. Oh, I see.
+[55:05.630 --> 55:08.730]  Which is going to be much bigger and why we think it might be failing.
+[55:12.750 --> 55:14.670]  Earlier it did get to,
+[55:14.670 --> 55:15.750]  was it 19?
+[55:17.170 --> 55:21.070]  So it might just be drop packets, like unstable connection type
+[55:21.070 --> 55:24.990]  thing. If that's the case, yes,
+[55:24.990 --> 55:28.430]  it might have to go to site to actually send it, which is a bit unfortunate.
+[55:29.470 --> 55:32.930]  Unless there's some other method to send it from
+[55:32.930 --> 55:33.810]  a local computer.
+[55:36.690 --> 55:38.070]  Maybe. I could
+[55:38.070 --> 55:41.490]  maybe remote onto the guy's computer on site.
+[55:45.790 --> 55:46.350]  And you can copy
+[55:46.350 --> 55:49.790]  TOCA 2 there. Yeah.
+[55:57.910 --> 55:59.350]  I'm sure if I just keep hitting
+[55:59.350 --> 56:02.150]  send, eventually it will take, right? That's how it works.
+[56:30.060 --> 56:31.440]  So that's what I was
+[56:31.440 --> 56:35.480]  doing before. And then after a while it just say failed. But then it would
+[56:35.480 --> 56:37.520]  say that the version was upgraded.
+[56:46.980 --> 56:49.820]  Possibly power cycles needed, but I'm not sure.
+[56:51.900 --> 56:54.740]  What I find interesting, it seems like the controller goes offline
+[56:54.740 --> 56:58.260]  to accept the packets. And when it goes offline to accept the packets,
+[56:58.320 --> 57:02.360]  it just goes offline. It doesn't
+[57:05.200 --> 57:06.620]  do what you'd think.
+[57:07.860 --> 57:10.620]  Let's try another warm start on this guy.
+[57:12.420 --> 57:14.600]  I hope that's right. No, the right thing.
+[57:15.840 --> 57:18.940]  This time with feeling. This time with feeling, yeah.
+[57:39.170 --> 57:39.610]  Alrighty.
+[57:45.930 --> 57:49.430]  Well, if this doesn't work, your only other option
+[57:49.430 --> 57:53.230]  is to have me send version 8 firmware and then you get the pro web back.
+[57:55.970 --> 57:57.370]  Because otherwise you're going to have to go
+[57:57.370 --> 58:02.960]  to site. Well, thank goodness this isn't
+[58:02.960 --> 58:07.300]  four hours out. No, like I can go to
+[58:07.300 --> 58:11.260]  site if I can just... if you figure that's going to do it. But like what
+[58:11.260 --> 58:13.720]  help would it be to send version 8 to it?
+[58:15.320 --> 58:19.240]  If you send version 8, it would send it over back then instead of FTP.
+[58:20.020 --> 58:21.360]  And that's the part that's getting stuck.
+[58:22.840 --> 58:25.120]  So it should be fine over back then.
+[58:25.120 --> 58:32.240]  Yeah. I just don't know how that's going to
+[58:32.240 --> 58:34.360]  affect. It would have to stay that way then, right?
+[58:36.220 --> 58:39.000]  Yeah, I think so. I don't think that...
+[58:40.220 --> 58:43.960]  Wow. I mean, I can try. Like on mine
+[58:43.960 --> 58:47.140]  before testing with yours. I don't mind doing that.
+[58:49.100 --> 58:52.540]  But yeah, I think it would have to stay like that. It's possible
+[58:52.540 --> 58:56.080]  that this would change back afterwards might be fine.
+[58:56.080 --> 58:59.420]  But I don't know.
+[59:00.000 --> 59:04.300]  Might be fine. I'm okay with it going to version 8, but I don't know how that
+[59:04.300 --> 59:07.800]  affects the connection to the mock stats that are on site.
+[59:08.700 --> 59:12.360]  As long as you've got that... well, they're already backed at main, so that shouldn't be a problem.
+[59:14.300 --> 59:16.400]  The bigger issue is
+[59:16.400 --> 59:20.060]  if we're connected over backnets, we're connected over RCP.
+[59:20.140 --> 59:24.420]  I know RCP works, but I don't know if backnet works. Backnet works, but I'm not worried.
+[59:26.740 --> 59:28.500]  If it's only RCP that
+[59:28.500 --> 59:33.840]  works, then we won't be able to do it.
+[59:36.940 --> 59:38.140]  Right, I'm doing a test.
+[59:40.540 --> 59:40.880]  Alright.
+[59:41.880 --> 59:45.660]  So first, I'm sending the bottomized version.
+[59:47.500 --> 59:48.640]  Am I allowed to say that?
+[59:49.640 --> 01:00:03.780]  I don't know. Alright, so after I send this,
+[01:00:03.780 --> 01:00:07.440]  it should have no more software package on it.
+[01:00:07.680 --> 01:00:11.980]  And with no more software package, I will send the version 8 firmware
+[01:00:12.420 --> 01:00:14.620]  that will kind of force it to upgrade.
+[01:00:17.760 --> 01:00:19.880]  Do you want me to get this guy to power cycle
+[01:00:19.880 --> 01:00:23.780]  the controller? He's right there. Do you have it a shot? Yep.
+[01:00:23.920 --> 01:00:27.940]  We can try it before doing this other message, and that will give me enough time.
+[01:01:11.840 --> 01:01:13.100]  Okay, he's going to do that.
+[01:01:23.050 --> 01:01:26.270]  I forgot the port that I can trigger my controller on.
+[01:01:33.580 --> 01:01:33.660]  Oops.
+[01:02:10.710 --> 01:02:13.310]  It's weird. I totally put in the right
+[01:02:13.310 --> 01:02:14.470]  UDB port.
+[01:02:17.030 --> 01:02:17.930]  Can you hit discover?
+[01:02:23.760 --> 01:02:27.780]  Oh, I'm just dumb.
+[01:02:28.660 --> 01:02:30.780]  That's what it is.
+[01:02:42.510 --> 01:02:46.870]  Want me to try sending firmware again? Yep, send the
+[01:02:46.870 --> 01:02:49.610]  normal firmware package. Yep.
+[01:03:24.460 --> 01:03:26.780]  What in the world?
+[01:03:52.130 --> 01:03:53.490]  Program failed.
+[01:04:05.610 --> 01:04:05.770]  Unfortunately,
+[01:04:05.790 --> 01:04:11.110]  I have to do something very mean to my controller to do this
+[01:04:11.110 --> 01:04:14.970]  test, because I'm not having problems with the sending of the firmware.
+[01:04:15.210 --> 01:04:18.710]  I have to intentionally interrupt
+[01:04:18.710 --> 01:04:21.570]  my connection part way through the firmware send.
+[01:04:25.030 --> 01:04:27.090]  And then it should appropriately
+[01:04:28.130 --> 01:04:30.510]  knock its software off.
+[01:04:56.830 --> 01:04:57.350]  Alright.
+[01:04:58.910 --> 01:05:01.310]  Checking in with studio here.
+[01:05:08.830 --> 01:05:10.990]  I guess I have to send a different version of firmware.
+[01:05:15.790 --> 01:05:18.890]  I wonder if going to version A would be just fine, because
+[01:05:18.890 --> 01:05:22.190]  like you said, mock steps are back capable.
+[01:05:23.430 --> 01:05:26.570]  They show up under the BACnet tab, so they should still
+[01:05:26.570 --> 01:05:36.630]  share all their points, right? It should be fine.
+[01:05:37.250 --> 01:05:40.590]  We just want to make sure we have a backup of your panel
+[01:05:40.590 --> 01:05:42.110]  file before we do the send.
+[01:05:43.530 --> 01:05:45.890]  And we will need to use Toolkit
+[01:05:45.890 --> 01:05:50.090]  3.4. So as long as you got the panel file
+[01:05:50.090 --> 01:05:54.170]  backup, let's do it. YOLO!
+[01:06:00.040 --> 01:06:00.600]  And actually
+[01:06:00.600 --> 01:06:04.360]  right after this, I need to call someone else about sending firmware as well.
+[01:06:05.400 --> 01:06:07.440]  It's just one of those days.
+[01:06:10.200 --> 01:06:11.280]  Firmware Mondays.
+[01:06:11.280 --> 01:06:13.300]  Other than Firmware Friday.
+[01:06:14.940 --> 01:06:16.000]  PD?
+[01:06:19.100 --> 01:06:21.960]  Oh, PG. That's it.
+[01:06:23.280 --> 01:06:27.140]  Dental. There we go. We are going to connect
+[01:06:27.140 --> 01:06:28.700]  BACnet.
+[01:06:36.340 --> 01:06:37.400]  Alright.
+[01:06:59.140 --> 01:07:00.000]  So, first
+[01:07:00.000 --> 01:07:03.100]  I'm going to send it a version
+[01:07:06.080 --> 01:07:07.900]  that doesn't use
+[01:07:22.680 --> 01:07:23.180]  ProWeb.
+[01:07:25.240 --> 01:07:25.740]  Alright.
+[01:07:25.940 --> 01:07:29.420]  I'm going to ask you guys, when you download that firmware bundle,
+[01:07:29.500 --> 01:07:33.000]  how do you pull out the firmware that you need? You don't.
+[01:07:34.060 --> 01:07:36.080]  Oh, really? Yep.
+[01:07:37.140 --> 01:07:41.180]  Really, really. You just select what you need. The only problem is it doesn't do any
+[01:07:41.180 --> 01:07:45.080]  conversions for you. And the reason for that is you don't want to accidentally convert all your version 7
+[01:07:45.080 --> 01:07:55.400]  stuff because you select it all. There we go.
+[01:07:58.060 --> 01:07:58.440]  Alright.
+[01:08:04.200 --> 01:08:07.600]  So, after it comes back, I'll be able to
+[01:08:07.600 --> 01:08:11.480]  send it properly with the firmware bundle. And it should include the software
+[01:08:11.480 --> 01:08:14.160]  portion, sending over the BACnet side.
+[01:08:15.260 --> 01:08:19.000]  And then maybe when we switch it back to version 7, it will have the software.
+[01:08:19.340 --> 01:08:23.200]  If that works, that's going to be the weirdest, wildest thing I've ever done to get
+[01:08:23.200 --> 01:08:25.100]  the software on there.
+[01:08:28.100 --> 01:08:29.360]  That's what I'm here for.
+[01:08:31.760 --> 01:08:40.240]  There's some boundaries. Time to update
+[01:08:40.740 --> 01:08:44.020]  the dentist office with some ProViews.
+[01:08:46.660 --> 01:08:48.220]  They just spent a whole bunch
+[01:08:48.220 --> 01:08:52.400]  of money because they had an expansion tank bladder
+[01:08:52.400 --> 01:08:56.260]  blow right before they were already
+[01:08:56.260 --> 01:08:57.800]  committed to upgrading their boilers.
+[01:09:00.480 --> 01:09:02.700]  Just because it got older?
+[01:09:04.260 --> 01:09:08.100]  Expanded too big. Yeah, it's about that 15 year mark.
+[01:09:12.040 --> 01:09:13.680]  I think just
+[01:09:13.680 --> 01:09:15.520]  lots of use in it.
+[01:09:16.980 --> 01:09:19.640]  It's a geo...
+[01:09:19.640 --> 01:09:24.440]  It's actually a ground pump that pumps ground water through a heat exchanger
+[01:09:24.440 --> 01:09:27.400]  for the heat pump. Heat pumps in the building.
+[01:09:28.840 --> 01:09:32.540]  It's really weird. It's using ground water, not a closed loop.
+[01:09:33.860 --> 01:09:35.140]  It's pumping out of a well.
+[01:09:35.820 --> 01:09:39.300]  I don't know what any of that means, so I'm glad you know.
+[01:09:39.540 --> 01:09:40.000]  I do!
+[01:09:42.100 --> 01:09:43.920]  I don't know why I know.
+[01:09:44.000 --> 01:09:50.980]  They've got a seven foot tall expansion tank just to take whatever the extra pressure.
+[01:09:51.520 --> 01:09:55.040]  It's got a big rubber bladder inside which expands when it
+[01:09:55.040 --> 01:09:59.260]  pressurizes. Every time this ground pump starts up
+[01:09:59.260 --> 01:10:03.360]  it will expand that bladder and it ruptured
+[01:10:03.360 --> 01:10:07.420]  all the time. Yeah, I don't like it when my bladder ruptures
+[01:10:09.260 --> 01:10:11.480]  either. Well you can't hold it in, Liam.
+[01:10:12.860 --> 01:10:13.420]  I know!
+[01:10:14.780 --> 01:10:16.400]  That's what happens when you get old.
+[01:10:17.360 --> 01:10:18.960]  Don't remind me.
+[01:10:22.880 --> 01:10:27.780]  We're not that old yet. The older I get, the further the bathroom is away.
+[01:10:31.640 --> 01:10:33.180]  At one point the bathroom
+[01:10:33.180 --> 01:10:35.160]  will always be with you, don't worry.
+[01:10:36.140 --> 01:10:39.100]  Yeah, when I get old enough I don't have to worry.
+[01:10:42.220 --> 01:10:43.580]  I have an expansion tank
+[01:10:43.580 --> 01:10:44.740]  built in.
+[01:10:48.300 --> 01:10:51.220]  Good news, it's in the software portion.
+[01:10:53.480 --> 01:10:55.080]  That's good to see.
+[01:10:56.660 --> 01:10:59.020]  Once it's done I should be able to just do a button
+[01:10:59.020 --> 01:11:03.360]  to switch it back to version 7 and hopefully we can restore the MPW file.
+[01:11:03.760 --> 01:11:07.160]  If we can't, we'll have to switch it back to version 8 and you'll have to
+[01:11:07.160 --> 01:11:09.740]  rejigger a couple things. Or just go to site.
+[01:11:12.240 --> 01:11:13.440]  Whichever one is your favorite.
+[01:11:15.300 --> 01:11:19.420]  When we convert it back to version 7, which
+[01:11:19.420 --> 01:11:22.860]  firmware bundle is it going to have? It won't have a firmware bundle.
+[01:11:22.860 --> 01:11:27.240]  For the version of firmware
+[01:11:27.240 --> 01:11:30.460]  it should have 7.91.
+[01:11:30.880 --> 01:11:35.100]  For the software portion, I'm hoping it keeps whatever it had from the version
+[01:11:35.100 --> 01:11:35.980]  8.1.
+[01:11:40.360 --> 01:11:43.040]  I don't think it keeps two copies of
+[01:11:43.040 --> 01:11:47.320]  the software portion. No, the software gets upgraded with the versions.
+[01:11:47.960 --> 01:11:51.120]  Yeah, but I don't know if the controller actually stores both.
+[01:11:51.120 --> 01:11:53.420]  Because that's a lot of things to store.
+[01:11:57.100 --> 01:11:59.140]  It should just switch to the firmware
+[01:11:59.140 --> 01:12:03.300]  version and leave the software version. But we'll see. I actually do not
+[01:12:03.300 --> 01:12:06.540]  know this. We're going to learn together.
+[01:12:11.490 --> 01:12:12.610]  I think it's tied with the
+[01:12:12.610 --> 01:12:13.010]  firmware.
+[01:12:19.350 --> 01:12:21.010]  Where would they store all that data?
+[01:12:24.310 --> 01:12:25.190]  I mean
+[01:12:25.190 --> 01:12:29.030]  I guess it could fit in there. It's not that big. It's only like 10 megabytes or something.
+[01:12:29.630 --> 01:12:30.690]  In your trend logs.
+[01:12:32.630 --> 01:12:37.010]  Your trend logs don't even...
+[01:12:52.640 --> 01:12:53.080]  Hooray!
+[01:12:58.300 --> 01:12:59.880]  Brought up to the current decade.
+[01:13:01.520 --> 01:13:06.940]  Alright, and then I'm just going to go
+[01:13:06.940 --> 01:13:09.180]  send certificate package, because why not?
+[01:13:09.740 --> 01:13:12.020]  And switch.
+[01:13:17.800 --> 01:13:23.520]  It'll be fine. If it's anything like my controller,
+[01:13:23.740 --> 01:13:26.300]  it'll survive one way or the other.
+[01:13:28.820 --> 01:13:31.140]  My controller, but not my control.
+[01:13:34.060 --> 01:13:35.640]  We don't talk about that.
+[01:13:43.480 --> 01:13:44.500]  It's back.
+[01:13:44.980 --> 01:13:46.040]  Look at that.
+[01:13:46.460 --> 01:13:50.060]  Okay, now will it be complaining? We'll find out.
+[01:13:50.980 --> 01:13:51.780]  Come on, finish spinning.
+[01:13:55.800 --> 01:13:58.080]  Yeah, I already know about that. Okay.
+[01:13:59.180 --> 01:14:03.620]  We shall find out with properties...
+[01:14:03.620 --> 01:14:07.220]  Oh, I clicked on the wrong thing somehow? How did that happen?
+[01:14:08.580 --> 01:14:11.180]  Look at that. It has the firmware. It's software.
+[01:14:11.980 --> 01:14:14.500]  Yay! For all the things.
+[01:14:18.090 --> 01:14:21.650]  Alright, restore. Yes siree, I would like to do the restore.
+[01:14:22.030 --> 01:14:22.930]  That'd be wonderful.
+[01:14:24.970 --> 01:14:26.190]  Please do the needful.
+[01:14:32.770 --> 01:14:37.030]  So now the important thing is, Spencer, do you remember all the steps?
+[01:14:37.270 --> 01:14:39.090]  And later, can you do it on your own?
+[01:14:39.950 --> 01:14:40.970]  No way.
+[01:14:45.050 --> 01:14:46.790]  Come on, Thomas, do you remember all the steps?
+[01:14:47.990 --> 01:14:48.850]  I think so.
+[01:14:51.450 --> 01:14:52.790]  I don't remember all the steps.
+[01:14:55.510 --> 01:14:56.630]  Error, no password.
+[01:15:00.910 --> 01:15:04.730]  791 because we sent it 8, whatever 31.5.
+[01:15:05.790 --> 01:15:07.950]  Apparently it did it. Look at that.
+[01:15:09.730 --> 01:15:11.210]  It erred with the
+[01:15:11.210 --> 01:15:14.010]  passive port momentarily and then it just kind of kept going.
+[01:15:14.830 --> 01:15:16.830]  I don't know if he can load it. Maybe.
+[01:15:18.550 --> 01:15:21.910]  We're going to find out. It's whitelisted, so hopefully.
+[01:15:28.070 --> 01:15:28.590]  5069
+[01:15:31.150 --> 01:15:31.670]  dot
+[01:15:35.130 --> 01:15:35.650]  24686
+[01:15:43.070 --> 01:15:45.090]  We will never know.
+[01:15:45.890 --> 01:15:48.470]  Oh, wait. Oh, cool.
+[01:15:52.150 --> 01:15:53.990]  Victory. Our work here is
+[01:15:53.990 --> 01:15:54.370]  done.
+[01:15:58.030 --> 01:15:59.670]  Now, never try this.
+[01:16:03.930 --> 01:16:05.960]  As long as you have...
+[01:16:07.350 --> 01:16:08.430]  Oh yeah, FTP.
+[01:16:08.430 --> 01:16:11.010]  Yeah, so FTP.
+[01:16:12.350 --> 01:16:16.490]  Perfectly fine protocol. However, it had been used
+[01:16:16.490 --> 01:16:20.390]  many times within organizations to transfer files.
+[01:16:20.990 --> 01:16:24.190]  So, anything that's useful, hackers will try and take advantage of.
+[01:16:24.750 --> 01:16:28.210]  And what they did is they looked for anything that has FTP and just grabbed all your data.
+[01:16:30.290 --> 01:16:32.570]  So, IT shut down a lot of
+[01:16:32.570 --> 01:16:36.670]  things. Now, people moved on from FTP, which meant that nothing really
+[01:16:36.670 --> 01:16:40.810]  changed as far as FTP is concerned, right? Whatever problems it had just kind of continued being
+[01:16:40.810 --> 01:16:44.830]  problems. And once people start doing a lot more of the
+[01:16:44.830 --> 01:16:48.710]  4G type communication of networks, it can't handle a lot
+[01:16:48.710 --> 01:16:52.770]  of other things. So, here's an example. This loading page
+[01:16:52.770 --> 01:16:55.250]  is taking longer than normal to whatever.
+[01:17:00.520 --> 01:17:02.960]  Job dot JSON is a problem. Looks like we're missing
+[01:17:02.960 --> 01:17:06.060]  a couple of details, but don't worry. We can fix that.
+[01:17:17.300 --> 01:17:19.360]  Also, I think we can clear that alarm.
+[01:17:34.120 --> 01:17:55.820]  Alrighty. Oh, it's missing a couple
+[01:17:55.820 --> 01:17:59.900]  of things. No connection found to controller. Well, dang it.
+[01:18:00.000 --> 01:18:02.660]  You know what that means. It's still using FTP.
+[01:18:03.920 --> 01:18:07.840]  Well, of course it's using FTP. It's just, I don't know if we can actually send
+[01:18:07.840 --> 01:18:11.420]  any of the things. Oh! Oh, okay.
+[01:18:12.080 --> 01:18:12.900]  I guess we're good.
+[01:18:15.580 --> 01:18:16.980]  Crowbar technique works.
+[01:18:18.140 --> 01:18:20.520]  Just keep pushing it.
+[01:18:21.520 --> 01:18:22.500]  I'm just waiting to get through.
+[01:18:25.220 --> 01:18:29.080]  With FTP, there's different ways to do security. In our
+[01:18:29.080 --> 01:18:32.980]  case, we do it in like a time rotation type thing. So, you
+[01:18:32.980 --> 01:18:36.840]  get a key, and it's good for like 3 seconds, and then it's invalid.
+[01:18:37.300 --> 01:18:40.560]  So, if it takes too long to complete the whole FTP thing, it just fails.
+[01:18:42.580 --> 01:18:43.700]  All the time.
+[01:18:46.280 --> 01:18:48.620]  So, I see no passport retrying, and then it retries,
+[01:18:48.880 --> 01:18:50.840]  and then it announces found a found.
+[01:18:53.120 --> 01:18:57.020]  Sounds like it failed to load for the end user on site as well.
+[01:18:58.540 --> 01:18:59.480]  Did they just call you?
+[01:19:01.220 --> 01:19:03.360]  Yeah, he just messaged me.
+[01:19:06.550 --> 01:19:10.430]  Well, it's definitely going to fail while we're trying to send things to it, so that's not really
+[01:19:10.430 --> 01:19:10.890]  surprising.
+[01:19:15.110 --> 01:19:17.310]  Come on, send it.
+[01:19:18.850 --> 01:19:22.550]  Taking so long to do a lot of the sending, I think that's the problem here.
+[01:19:32.400 --> 01:19:34.540]  I don't know why the passport is being a
+[01:19:34.540 --> 01:19:37.140]  problem. Do they only allow like one passport or something?
+[01:19:38.680 --> 01:19:41.560]  That would be weird, but I could see that happening.
+[01:19:43.740 --> 01:19:46.440]  So, if they allowed 3000, then that's it.
+[01:19:47.320 --> 01:19:50.080]  That would explain almost all of our problems.
+[01:19:57.780 --> 01:19:59.160]  Unknown error? Oh, that's different.
+[01:20:16.590 --> 01:20:19.050]  I'm going to have to reload descriptors, is that the problem here?
+[01:20:21.710 --> 01:20:23.630]  Ah, alright, let's go by.
+[01:20:24.850 --> 01:20:28.690]  Reconnect. If this doesn't work, we can switch to version 7
+[01:20:28.690 --> 01:20:32.450]  or version 8 again, and you'll have to put in the password
+[01:20:32.450 --> 01:20:32.910]  thing.
+[01:20:32.910 --> 01:20:36.910]  Oh, it should just be long, do you know?
+[01:20:39.090 --> 01:20:40.770]  Whatever is on the panel file.
+[01:20:42.630 --> 01:20:43.570]  There we go.
+[01:20:50.920 --> 01:20:51.960]  Okie dokie.
+[01:20:54.750 --> 01:20:56.150]  Try this again.
+[01:21:11.100 --> 01:21:12.220]  Really weird behavior.
+[01:21:13.000 --> 01:21:16.720]  Well, if you want to send anything to it, it looks like it's going to
+[01:21:16.720 --> 01:21:18.700]  have to be backnet. That's the answer.
+[01:21:20.780 --> 01:21:24.380]  So, do you want to go to site? Do you want to switch to version 8?
+[01:21:27.340 --> 01:21:28.820]  Well, I'm all for going to
+[01:21:28.820 --> 01:21:33.040]  version 8 as long as everything still works and we can leave it that way.
+[01:21:33.480 --> 01:21:34.660]  I don't know one way to find out.
+[01:21:37.220 --> 01:21:40.140]  How well does it talk to mock stats?
+[01:21:41.480 --> 01:21:43.680]  That way. Should I?
+[01:21:43.680 --> 01:21:47.760]  It'll talk. The problem is the other direction. That's the problem.
+[01:21:48.540 --> 01:21:51.760]  The mock stats will probably have issues talking
+[01:21:51.760 --> 01:21:55.680]  to the controller, because if you try to write the programming in
+[01:21:56.360 --> 01:21:59.800]  backnet, it will straight up not process
+[01:21:59.800 --> 01:22:03.980]  the control basic, because it doesn't know what backnet is
+[01:22:03.980 --> 01:22:07.840]  inside of the programming. There is a translation that happens on
+[01:22:07.840 --> 01:22:11.920]  the network side, sure, but no, it doesn't know what the backnet actually
+[01:22:11.920 --> 01:22:16.300]  is in the control basic. So any backnet stuff probably has to be written
+[01:22:16.300 --> 01:22:20.340]  and read from the host controller. Not a huge deal.
+[01:22:22.040 --> 01:22:24.000]  Depending on how much reading and writing you're
+[01:22:24.000 --> 01:22:26.360]  doing, but yeah, not a huge deal.
+[01:22:32.210 --> 01:22:40.920]  Another case of what's faster.
+[01:22:42.340 --> 01:22:43.460]  Another case of what's faster.
+[01:22:45.280 --> 01:22:45.500]  Another case of what's faster.
+[01:22:47.720 --> 01:22:50.500]  I had it restored with errors. Okay, well apparently
+[01:22:50.500 --> 01:22:56.040]  didn't like the data in there in the first place, so it is
+[01:22:56.040 --> 01:22:57.020]  what it is.
+[01:22:59.660 --> 01:23:04.080]  Is there a backup for the MPW file? Yep, there is, but I didn't like it.
+[01:23:26.410 --> 01:23:27.850]  There we are.
+[01:23:34.800 --> 01:23:37.780]  Hooray! We got the pro web users.
+[01:23:40.620 --> 01:23:42.240]  So it's complaining because it doesn't have
+[01:23:43.180 --> 01:23:46.900]  any system groups, particularly system groups on panel one,
+[01:23:47.060 --> 01:23:51.700]  group one, which doesn't exist anymore. Now it's 1,000, group one.
+[01:23:52.880 --> 01:23:54.040]  Panel file utility time.
+[01:24:01.540 --> 01:24:03.320]  Also, Thomas, do you want to
+[01:24:03.320 --> 01:24:05.000]  keep running with this or do you want me to run with it?
+[01:24:07.180 --> 01:24:11.320]  Oh, there's another guy that I should probably get a hold of.
+[01:24:12.040 --> 01:24:15.240]  He's probably losing his mind right now. He's like, I broke something! It's on
+[01:24:15.240 --> 01:24:15.500]  the fire!
+[01:24:19.360 --> 01:24:23.320]  I mean, I don't want to be an ass, but can we just go to site
+[01:24:23.320 --> 01:24:27.380]  and update it? No, we're already this far.
+[01:24:28.080 --> 01:24:31.320]  Oh, you're so deep in. Okay, well, do you want to
+[01:24:31.320 --> 01:24:33.180]  save with this one then and not drop out?
+[01:24:34.880 --> 01:24:36.640]  Sure, I guess.
+[01:24:39.220 --> 01:24:39.700]  Liam?
+[01:24:40.780 --> 01:24:44.140]  What? I don't know.
+[01:24:44.240 --> 01:24:45.300]  Deep in.
+[01:24:47.360 --> 01:24:50.820]  Alright. This is the fun part.
+[01:24:50.840 --> 01:24:52.920]  I'm going to drop out.
+[01:24:54.780 --> 01:24:58.900]  The good news is this is all straightforward of 2,000, 3,000, 4,000.
+[01:24:59.720 --> 01:25:02.260]  Yeah, it's pretty straightforward.
+[01:25:22.520 --> 01:25:24.600]  95? That seems like a mistake.
+[01:25:26.020 --> 01:25:28.040]  I think it is a mistake.
+[01:25:30.720 --> 01:25:31.720]  There's no 95.
+[01:25:33.080 --> 01:25:36.060]  You can just make up whatever you want. I'll just do that.
+[01:25:37.380 --> 01:25:40.740]  Now, for these ins and outs, guess what we'll have
+[01:25:40.740 --> 01:25:44.080]  to do is either pull up... is it reference details?
+[01:25:45.140 --> 01:25:50.050]  Tell me. Oh, what screen is that in?
+[01:25:53.650 --> 01:25:54.150]  Well,
+[01:25:54.150 --> 01:25:58.090]  that doesn't really help me either. Alright, what we can do
+[01:25:58.090 --> 01:26:00.110]  is over in Studio Land
+[01:26:01.690 --> 01:26:06.470]  and just read the inputs. And those are both
+[01:26:06.470 --> 01:26:09.970]  analog. So, EI1
+[01:26:11.670 --> 01:26:13.910]  and that should be the same for all of them, right?
+[01:26:15.390 --> 01:26:17.610]  It should be, yeah.
+[01:26:22.110 --> 01:26:23.250]  Makes things easy.
+[01:26:23.250 --> 01:26:32.300]  Da, da, da, da, da.
+[01:26:42.090 --> 01:26:42.390]  Oh,
+[01:26:42.770 --> 01:26:45.250]  weekly schedule. That's just schedule, eh?
+[01:27:16.180 --> 01:27:17.640]  Alright, did I get the other schedules?
+[01:27:18.500 --> 01:27:19.800]  Gotta get that one.
+[01:27:21.700 --> 01:27:22.680]  That one.
+[01:27:25.720 --> 01:27:28.320]  Alright, outputs are next.
+[01:27:37.040 --> 01:27:38.860]  Okay, so real straightforward.
+[01:27:39.720 --> 01:27:40.640]  Yep, exactly.
+[01:27:46.340 --> 01:27:47.780]  That's not what I wanted.
+[01:28:08.930 --> 01:28:10.590]  I sure wish it was autofilled.
+[01:28:10.910 --> 01:28:14.790]  That would be nice. Actually, I would like it even more
+[01:28:14.790 --> 01:28:19.150]  if I could just be like, oh, hey, I have the panel file for these things. Why don't you
+[01:28:19.150 --> 01:28:21.130]  just read that and now you know.
+[01:28:22.330 --> 01:28:24.990]  That would be even better.
+[01:28:32.690 --> 01:28:34.770]  Alright, now it's just the variables.
+[01:28:37.290 --> 01:28:38.410]  They all have variables?
+[01:28:38.790 --> 01:28:41.450]  Yeah, looks like they do. Alright.
+[01:28:49.780 --> 01:28:52.660]  Okay, so it's analog and then binary.
+[01:28:59.890 --> 01:29:02.030]  Four, maybe
+[01:29:02.030 --> 01:29:04.190]  five, maybe six.
+[01:29:06.550 --> 01:29:08.330]  Maybe one, maybe
+[01:29:08.330 --> 01:29:11.530]  two, maybe three, maybe four,
+[01:29:12.230 --> 01:29:15.130]  maybe five, maybe six.
+[01:29:16.570 --> 01:29:20.110]  Maybe one, maybe, oh,
+[01:29:20.810 --> 01:29:23.610]  maybe four, five,
+[01:29:24.450 --> 01:29:35.590]  maybe six. I'm gonna double check
+[01:29:35.590 --> 01:29:37.710]  that those ones actually are in fact.
+[01:29:38.970 --> 01:29:41.010]  I'm gonna number five.
+[01:29:54.850 --> 01:29:56.250]  You don't do this a whole lot, eh?
+[01:29:57.810 --> 01:30:06.020]  Not a whole lot if I can help it. If I have to do it,
+[01:30:07.060 --> 01:30:10.180]  if I had to do this more than
+[01:30:10.180 --> 01:30:13.760]  three times, I would have already written something like a
+[01:30:14.340 --> 01:30:18.440]  macro type thing that would just kind of go through and spit it all out or something.
+[01:30:19.200 --> 01:30:20.540]  Based on an excel sheet.
+[01:30:23.680 --> 01:30:25.800]  What am I doing?
+[01:30:27.320 --> 01:30:28.940]  Maybe one, maybe
+[01:30:28.940 --> 01:30:32.760]  four, maybe five, maybe six.
+[01:30:33.780 --> 01:30:36.560]  Alright. If this crashes now, I'm gonna be so mad.
+[01:30:38.700 --> 01:30:39.700]  That's the worst.
+[01:30:41.000 --> 01:30:43.060]  Do all the stuff and it's like, ah, I'm dead.
+[01:30:47.780 --> 01:30:48.200]  Alright.
+[01:30:50.760 --> 01:30:51.320]  Studio.
+[01:31:13.050 --> 01:31:58.180]  There we go. That was kind of funny.
+[01:32:01.640 --> 01:32:03.880]  I said earlier and it just like kind of froze.
+[01:32:04.480 --> 01:32:07.620]  Now I'm doing it and it's like, oh yeah, there's all the stuff.
+[01:32:08.840 --> 01:32:11.380]  I could just select things like that.
+[01:32:31.590 --> 01:32:41.180]  Alright. So the trickier thing
+[01:32:41.180 --> 01:32:45.300]  is correcting all of the links. Cause the links to
+[01:32:45.300 --> 01:32:47.980]  the other stuff is gonna be a little bit wrong.
+[01:33:08.890 --> 01:33:11.990]  Alright. So now, you've got a login, right?
+[01:33:13.970 --> 01:33:16.990]  I think so. I can try it.
+[01:33:35.180 --> 01:33:36.700]  Everything looks good so far.
+[01:33:37.680 --> 01:33:40.280]  So, all these links are probably completely broken.
+[01:33:43.400 --> 01:33:43.440]  Yeah.
+[01:33:45.580 --> 01:33:49.400]  Oh. I can fix that as long as...
+[01:33:49.400 --> 01:33:52.800]  Look at that. Nope. But actually, so as long as it's not going to like
+[01:33:52.800 --> 01:33:55.040]  three, actually that still might work.
+[01:33:56.400 --> 01:34:00.820]  Look at that. So those guys will probably
+[01:34:00.820 --> 01:34:03.940]  work. But anything that's local, oh no, local should work too.
+[01:34:03.940 --> 01:34:08.080]  Yeah. Most of the stuff should work. As long as it's not going between, from here
+[01:34:08.080 --> 01:34:11.820]  back to the home page. Then we're gonna be having a problem. Yeah.
+[01:34:11.820 --> 01:34:15.900]  You see that one right there? So you're gonna have to fix all the ones that go back to the
+[01:34:15.900 --> 01:34:18.760]  home page. Those will have to be 1000.
+[01:34:19.920 --> 01:34:23.360]  This will probably just kind of sit there and spin. But
+[01:34:23.360 --> 01:34:26.240]  seems to be working. So, hooray.
+[01:34:27.880 --> 01:34:30.840]  So, do you want to leave it like this or do you want to switch it all back?
+[01:34:35.420 --> 01:34:35.900]  Well,
+[01:34:36.960 --> 01:34:40.020]  yeah, I'd like to leave it like this. But I don't know if there's anything
+[01:34:40.020 --> 01:34:43.640]  else that doesn't work between the version 8 controller
+[01:34:43.640 --> 01:34:47.600]  and version 6 mock stat. The only thing
+[01:34:47.600 --> 01:34:51.840]  else to worry about, and luckily all of the mock stats seem to be the exact
+[01:34:51.840 --> 01:34:55.860]  same as far as the panel file is concerned. We can just take a look at the
+[01:34:55.860 --> 01:34:59.120]  programs and see how they're trying to communicate with the host.
+[01:34:59.120 --> 01:35:03.320]  Anytime they're trying to do a read or write to the host, do it
+[01:35:03.320 --> 01:35:07.180]  from the host instead and that should fix it. If that makes
+[01:35:07.180 --> 01:35:11.100]  sense. Yeah, I'm not exactly sure what you mean. Okay, so if
+[01:35:11.100 --> 01:35:15.440]  2000 is trying to... you have a program in 2000 trying to access panel
+[01:35:15.440 --> 01:35:19.160]  one. Well, you can't do 1000 because that's back that
+[01:35:19.160 --> 01:35:23.420]  it's an RCP device. Even though it can respond to back that request,
+[01:35:23.740 --> 01:35:27.580]  its programming is still RCP. So,
+[01:35:28.580 --> 01:35:31.700]  we'll just take a look. Looks fine. What's
+[01:35:31.700 --> 01:35:35.300]  the way around it then? Well, it's running the other way. So,
+[01:35:35.300 --> 01:35:36.660]  1000 pushing down.
+[01:35:40.060 --> 01:35:42.880]  So, like you see how it says two var. If this is one var,
+[01:35:44.080 --> 01:35:45.360]  yeah, we have a problem.
+[01:35:47.540 --> 01:35:49.800]  Oh, that's not what I wanted to do. Oh, my goodness.
+[01:35:53.100 --> 01:35:54.520]  Pneumonic, that's it.
+[01:35:56.000 --> 01:35:56.460]  Yeah.
+[01:35:58.240 --> 01:36:00.540]  So, what I have to put the program on? No, this one right here.
+[01:36:01.960 --> 01:36:06.500]  So, this is not going to work right here. It'll never
+[01:36:06.500 --> 01:36:10.480]  succeed. So, all you have to do is for
+[01:36:10.480 --> 01:36:14.200]  each of these guys, you'll just need to add one variable
+[01:36:14.200 --> 01:36:18.660]  that you can represent for var 7 and just do a swap out.
+[01:36:20.840 --> 01:36:21.300]  So,
+[01:36:23.160 --> 01:36:25.060]  let's see our variables.
+[01:36:31.960 --> 01:36:34.700]  Oh, there's a number 7 right there. It doesn't look like anything is using it.
+[01:36:36.320 --> 01:36:37.540]  What do they say?
+[01:36:42.320 --> 01:36:42.640]  Okay,
+[01:36:42.740 --> 01:36:49.080]  I need to find out what that's supposed to be. Ah, lockout.
+[01:36:57.260 --> 01:36:58.840]  And would you call that
+[01:36:58.840 --> 01:37:03.220]  HP 0, HP 1, or just HP?
+[01:37:04.080 --> 01:37:06.220]  Whatever this pro web is called.
+[01:37:08.100 --> 01:37:10.680]  I'll just do HP, it's fine. Oh,
+[01:37:10.820 --> 01:37:13.100]  it disappeared. That was really weird.
+[01:37:14.440 --> 01:37:17.580]  It might not like it because it's already being used.
+[01:37:20.400 --> 01:37:23.060]  Where else would it be used? Used in a
+[01:37:23.060 --> 01:37:27.830]  program or something? Ah.
+[01:37:28.470 --> 01:37:33.040]  It's on panel 1000, right? Yeah, it shouldn't
+[01:37:33.040 --> 01:37:37.160]  conflict with anything else unless there is something else on the same device
+[01:37:37.160 --> 01:37:40.340]  that's using that as a descriptor.
+[01:37:40.940 --> 01:37:43.020]  I don't see it.
+[01:37:47.590 --> 01:38:00.280]  Binary. It seems to be fine with that.
+[01:38:03.240 --> 01:38:04.820]  I don't know. That's really weird.
+[01:38:06.380 --> 01:38:10.740]  It's probably fine. Whatever. Okay, so all we need to do
+[01:38:11.440 --> 01:38:13.320]  is do a periodic
+[01:38:13.320 --> 01:38:17.460]  write or just a write to those controllers.
+[01:38:18.420 --> 01:38:21.020]  So, write HP lockout.
+[01:38:28.180 --> 01:38:30.760]  Oh, maybe it didn't like the fact that I put that in there without
+[01:38:30.760 --> 01:38:34.760]  also changing the name or the type.
+[01:38:36.620 --> 01:38:39.000]  Ah, something else is already using 7. Ah, fine.
+[01:38:39.020 --> 01:38:44.600]  I'll use 17. Yeah, I'll do that.
+[01:38:49.380 --> 01:38:50.020]  Empty.
+[01:38:50.020 --> 01:38:52.580]  Don't. Do not.
+[01:38:53.890 --> 01:38:55.700]  Not being used.
+[01:39:02.150 --> 01:39:05.550]  Alright. Try this again.
+[01:39:08.530 --> 01:39:09.790]  HP lockout.
+[01:39:18.650 --> 01:39:19.950]  That's really weird.
+[01:39:28.460 --> 01:39:29.020]  17.
+[01:39:37.500 --> 01:39:38.040]  17.
+[01:39:50.870 --> 01:39:52.530]  I've never seen that done before.
+[01:39:54.970 --> 01:39:58.450]  That's super weird. Maybe when I pasted it in earlier
+[01:39:58.450 --> 01:40:01.650]  something funny happened. Whatever.
+[01:40:19.490 --> 01:40:20.570]  Yep, okay.
+[01:40:22.810 --> 01:40:26.770]  Should work here now. I'm going to try one more time
+[01:40:26.770 --> 01:40:29.210]  and if this doesn't work, it's not a fluke.
+[01:40:31.050 --> 01:40:33.450]  No, it's done this to me before and I
+[01:40:33.450 --> 01:40:37.190]  forget why it does that. It's probably our connection type.
+[01:40:37.230 --> 01:40:40.830]  It's probably because we're connected back and it's a RCP. There's some weird stuff
+[01:40:40.830 --> 01:40:42.010]  that has to do with compatibility.
+[01:40:44.730 --> 01:40:48.630]  And object, binary object, specific object,
+[01:40:48.730 --> 01:40:55.740]  17, object name. Well, luckily
+[01:40:55.740 --> 01:40:59.540]  it's not that painful. Just sort of a little bit annoying.
+[01:41:37.180 --> 01:41:37.820]  Oh.
+[01:41:39.460 --> 01:41:40.840]  Trying to zone out.
+[01:41:52.080 --> 01:41:54.620]  Okay, they all have a binary
+[01:41:54.620 --> 01:41:58.500]  value that we can write to from
+[01:41:58.500 --> 01:42:06.530]  over here. So it's pretty straightforward.
+[01:42:07.990 --> 01:42:11.190]  2000. There's two ways you can do it. You can either do
+[01:42:11.190 --> 01:42:13.970]  a write command or you can just do 2000.
+[01:42:17.690 --> 01:42:18.990]  We can also
+[01:42:18.990 --> 01:42:22.170]  put it between a statement that checks
+[01:42:22.170 --> 01:42:25.570]  to see if anything is updated so we don't keep slamming it with writes.
+[01:42:26.110 --> 01:42:28.850]  So for example, I can go if
+[01:42:31.190 --> 01:42:33.470]  AV17, or BV17
+[01:42:35.510 --> 01:42:37.850]  not equal to
+[01:42:38.870 --> 01:42:41.710]  BV7, which I think is what ours is.
+[01:42:43.130 --> 01:42:44.530]  Yep.
+[01:42:48.380 --> 01:42:50.560]  Then write
+[01:42:51.380 --> 01:42:54.640]  2000 BV17 equals
+[01:42:55.460 --> 01:43:01.540]  BV7. Now
+[01:43:01.540 --> 01:43:03.760]  it's cumbersome, but
+[01:43:03.760 --> 01:43:04.480]  doable.
+[01:43:21.450 --> 01:43:25.210]  Four, five,
+[01:43:25.210 --> 01:43:28.970]  six, seven, eight, nine.
+[01:43:31.850 --> 01:43:32.890]  All right.
+[01:43:39.590 --> 01:43:42.430]  We'll look at this in two years and go, why did I do that?
+[01:43:43.670 --> 01:43:44.490]  Something like that, yep.
+[01:43:46.790 --> 01:43:50.830]  Now part of the problem is because of this particular
+[01:43:50.830 --> 01:43:54.750]  setup, we probably don't want to do lockout and
+[01:43:54.750 --> 01:43:56.390]  just a test to see if it works.
+[01:43:58.650 --> 01:44:00.630]  If it's okay, then
+[01:44:00.630 --> 01:44:04.750]  yeah, we can go ahead and test it. But I feel like if I do that, something bad is going to happen.
+[01:44:08.380 --> 01:44:10.600]  Because if I do that, it'll shut everything off.
+[01:44:12.040 --> 01:44:13.120]  Right? To test it?
+[01:44:14.480 --> 01:44:18.760]  I guess I could try it on one without... yeah, I think I could try it with one
+[01:44:18.760 --> 01:44:21.620]  without. So is there one I could try it with?
+[01:44:24.500 --> 01:44:26.540]  Honestly, pick any of them. Try
+[01:44:26.540 --> 01:44:30.680]  one, because I think one is probably in the basement. Heat pump one, which is
+[01:44:30.680 --> 01:44:31.240]  two thousand.
+[01:44:32.440 --> 01:44:38.460]  Right. Well, first I'm going to do this.
+[01:44:38.580 --> 01:44:41.220]  Make sure I can actually read it.
+[01:44:48.650 --> 01:44:50.010]  It's not going to be that variable.
+[01:44:50.110 --> 01:44:53.650]  It's going to be something else. Because I need it to be something that's true.
+[01:44:54.130 --> 01:44:56.990]  If it's false, then how does it work?
+[01:44:59.730 --> 01:45:00.210]  Everything's off.
+[01:45:01.390 --> 01:45:04.390]  Empty, not being used. Perfect. Use that.
+[01:45:08.590 --> 01:45:09.010]  Alright.
+[01:45:12.410 --> 01:45:15.170]  2000BV7. So if this is working,
+[01:45:15.650 --> 01:45:17.770]  then that should come up as one.
+[01:45:22.370 --> 01:45:24.750]  No, it's never going to go that far in the program.
+[01:45:27.110 --> 01:45:30.010]  No, I put the end at the end, so it should be fine.
+[01:45:36.370 --> 01:45:37.250]  Um, number...
+[01:45:37.250 --> 01:45:40.310]  Should be getting that. When it melts over top, it gets it.
+[01:45:46.930 --> 01:45:47.370]  Um...
+[01:45:49.670 --> 01:45:50.550]  Let's see.
+[01:46:06.670 --> 01:46:09.110]  Alright. I didn't do what I
+[01:46:09.110 --> 01:46:15.930]  want. Let me try doing this. Just want to see
+[01:46:15.930 --> 01:46:19.370]  what I've got at the moment. That's currently set to off. Okay.
+[01:46:25.920 --> 01:46:29.180]  There we go. That actually did set it.
+[01:46:29.620 --> 01:46:32.900]  Okay. What happens if I set this back? So here's the big question for me.
+[01:46:32.920 --> 01:46:36.240]  What happens if I set this back to being off again?
+[01:46:42.900 --> 01:46:45.620]  So here's the problem with not doing a write
+[01:46:45.620 --> 01:46:49.420]  command. When you do a write command, it keeps sending
+[01:46:49.420 --> 01:46:53.580]  whatever it is. When you just do an regular equals, it only does a change of value.
+[01:46:53.600 --> 01:46:57.480]  Because this one here never changed. And these ones here
+[01:46:57.480 --> 01:47:01.580]  never get the message. So that's why I want to do the write command. But I didn't
+[01:47:01.580 --> 01:47:05.600]  want to keep writing all the time. That seems unnecessary.
+[01:47:06.660 --> 01:47:08.920]  I can do that. It's fine.
+[01:47:11.460 --> 01:47:13.500]  But yeah, it means that I
+[01:47:13.500 --> 01:47:17.740]  can't use this because the initial read doesn't seem to be working.
+[01:47:20.500 --> 01:47:21.060]  So...
+[01:47:22.260 --> 01:47:25.480]  Yeah, I'll just do write, I guess, and add an interval
+[01:47:25.480 --> 01:47:26.100]  at the beginning.
+[01:47:30.700 --> 01:47:33.220]  So I can make it write
+[01:47:33.220 --> 01:47:35.600]  once every 30 seconds.
+[01:47:38.560 --> 01:47:40.060]  Assuming it's fast enough.
+[01:47:45.330 --> 01:47:48.510]  I don't understand how it's reading task line 20 if you had end there though.
+[01:47:48.870 --> 01:47:50.910]  It wasn't.
+[01:47:57.640 --> 01:47:59.820]  If not, interval
+[01:48:08.490 --> 01:48:09.450]  All right.
+[01:48:12.590 --> 01:48:13.890]  That'll do it.
+[01:48:16.330 --> 01:48:20.830]  All right. So now the last thing is on each of these here, the programming for comp
+[01:48:20.830 --> 01:48:24.710]  control is going to be referring to
+[01:48:24.710 --> 01:48:28.790]  one bear seven, like this. So what we should be able to do is a
+[01:48:28.790 --> 01:48:32.690]  one bear seven and replace it with a one thousand
+[01:48:32.690 --> 01:48:36.270]  a v... not one thousand, sorry. This will be a var
+[01:48:36.270 --> 01:48:38.310]  17. Right?
+[01:48:51.940 --> 01:48:53.800]  Programs... oh, I cleared it out.
+[01:48:54.720 --> 01:48:57.760]  Well, I can just do var 17
+[01:48:57.760 --> 01:49:00.040]  like that.
+[01:49:10.390 --> 01:49:12.230]  That's a faster way to do this.
+[01:49:16.090 --> 01:49:18.070]  A star program
+[01:49:20.410 --> 01:49:20.850]  three.
+[01:49:27.540 --> 01:49:39.060]  A little faster. The other thing I don't
+[01:49:39.060 --> 01:49:43.060]  know is if they can talk to each other. I'm assuming they can, because they're
+[01:49:43.060 --> 01:49:46.300]  kind of local on the same network, but
+[01:49:46.860 --> 01:50:04.510]  something to be aware of. Well, if we have issues and we have
+[01:50:04.510 --> 01:50:08.150]  to go back to version seven, I have to go to site and send that firmware?
+[01:50:09.830 --> 01:50:11.750]  Yeah, you would have to go to site.
+[01:50:13.850 --> 01:50:15.850]  Yeah, to do all the
+[01:50:15.850 --> 01:50:16.410]  things.
+[01:50:19.590 --> 01:50:23.710]  Now, I don't think you'll have any problem. I already tested the communication, so
+[01:50:23.710 --> 01:50:27.530]  I know the communication is going to work between them. Get the right command
+[01:50:27.530 --> 01:50:29.350]  and that worked.
+[01:50:36.140 --> 01:50:37.320]  That looks good.
+[01:50:46.080 --> 01:50:46.620]  Um...
+[01:50:46.620 --> 01:50:48.680]  Did I check? Actually, there's one thing
+[01:50:48.680 --> 01:50:55.160]  I don't remember if I checked, which is
+[01:50:55.160 --> 01:50:59.340]  I know I tested the regular write. Did I ever test the write write command?
+[01:51:01.060 --> 01:51:03.420]  If that makes sense. Test write
+[01:51:03.420 --> 01:51:09.650]  command. And write
+[01:51:12.950 --> 01:51:13.490]  2000BV7
+[01:51:13.490 --> 01:51:17.830]  equals one. Yep.
+[01:51:20.150 --> 01:51:21.670]  I want to make sure that works.
+[01:51:23.770 --> 01:51:25.490]  Yep, that worked. And I want to make sure
+[01:51:25.490 --> 01:51:29.730]  after I switch this back to off on this side, it will continue to
+[01:51:29.730 --> 01:51:33.610]  write to it. Because a concern
+[01:51:33.610 --> 01:51:37.330]  that can happen, from my point of view, is
+[01:51:37.330 --> 01:51:41.490]  if something were to lock it out,
+[01:51:42.110 --> 01:51:44.310]  I want it to write to it again.
+[01:51:45.710 --> 01:51:47.550]  There it is. Yep. See?
+[01:51:49.430 --> 01:51:53.610]  Yep. So, perfect. That's exactly
+[01:51:53.610 --> 01:52:03.220]  what I want to see. But yeah, the write
+[01:52:03.220 --> 01:52:07.300]  is working just fine. The last question is whether or not
+[01:52:07.300 --> 01:52:11.500]  these guys can talk to each other. If they can talk to each other, then I think you're golden.
+[01:52:12.700 --> 01:52:15.260]  Aside from the... what's it called?
+[01:52:18.980 --> 01:52:20.060]  Test program
+[01:52:20.060 --> 01:52:23.020]  write. The
+[01:52:23.640 --> 01:52:24.920]  system group links.
+[01:52:27.740 --> 01:52:31.420]  Just a bit of a minor thing. Alright, so I'm going to try
+[01:52:31.420 --> 01:52:35.520]  and read from 2000BV10 to
+[01:52:37.540 --> 01:52:38.080]  VAR7.
+[01:52:51.460 --> 01:52:52.460]  Oh, I have it set to.
+[01:53:00.120 --> 01:53:01.360]  It should be on.
+[01:53:06.690 --> 01:53:09.050]  Yep. Okay. It did actually finally read from it.
+[01:53:09.050 --> 01:53:12.930]  So that part is good. Now I'm going to try doing the opposite. So I'm going to say
+[01:53:14.130 --> 01:53:15.690]  VAR7 is equal to zero.
+[01:53:22.240 --> 01:53:23.260]  Did I do something wrong?
+[01:53:27.000 --> 01:53:29.740]  VAR7 is equal to zero.
+[01:53:38.110 --> 01:53:41.250]  Syntax error? Right.
+[01:53:44.250 --> 01:53:45.310]  Another syntax error?
+[01:53:46.090 --> 01:53:46.470]  What?
+[01:53:56.750 --> 01:54:00.950]  Okay, how about stop to VAR7?
+[01:54:04.530 --> 01:54:06.930]  I'm guessing this is a weird studio quirk?
+[01:54:14.550 --> 01:54:14.790]  Huh.
+[01:54:17.630 --> 01:54:20.250]  I'm just covering all sorts of things, aren't I?
+[01:54:23.050 --> 01:54:24.510]  Well, anyways.
+[01:54:26.590 --> 01:54:28.370]  Rem. This does nothing
+[01:54:28.370 --> 01:54:34.170]  anymore. Alright.
+[01:54:39.570 --> 01:54:41.910]  I'm assuming the read is working. Is there another
+[01:54:41.910 --> 01:54:45.910]  way that we could confirm that that's working based on the programming without me
+[01:54:45.910 --> 01:54:48.550]  having to resend something or opening up Studio 2?
+[01:54:50.350 --> 01:54:52.510]  I guess you could open up Studio 2.
+[01:54:54.550 --> 01:54:56.230]  Yeah, it looks like it's installed.
+[01:55:02.370 --> 01:55:05.110]  Are they even referencing each other? They might not be
+[01:55:05.110 --> 01:55:06.190]  referencing each other.
+[01:55:07.210 --> 01:55:11.410]  Ooh, I think three of them do actually. I think three of them work together.
+[01:55:12.110 --> 01:55:14.170]  I don't remember which three it was.
+[01:55:16.250 --> 01:55:19.490]  You mentioned it. Oh, right. Yeah, you're right.
+[01:55:22.250 --> 01:55:24.390]  It's probably this one.
+[01:55:25.310 --> 01:55:28.490]  Yep, there we go. So, it's taking the
+[01:55:28.490 --> 01:55:32.090]  average of these values. Okay, that's a pretty good test here.
+[01:55:32.930 --> 01:55:35.510]  Its average is 224
+[01:55:37.130 --> 01:55:40.270]  and 223 or 23...
+[01:55:41.470 --> 01:55:43.790]  It looks like it's taking the average.
+[01:55:51.090 --> 01:55:54.270]  Okay, so that's 23.3
+[01:55:57.980 --> 01:55:58.620]  plus
+[01:56:04.420 --> 01:56:05.290]  21.4
+[01:56:08.950 --> 01:56:10.910]  plus 22.6
+[01:56:10.910 --> 01:56:14.810]  divided by 3. I get 22.43
+[01:56:14.810 --> 01:56:18.870]  repeating. That's exactly what this is. So, that's
+[01:56:18.870 --> 01:56:22.690]  perfect. It is, in fact, reading from the other controllers. And we know it writes to the other
+[01:56:22.690 --> 01:56:26.570]  controllers, so we're good. Communication between the controllers is good.
+[01:56:27.770 --> 01:56:30.730]  So long as there aren't any other programs that refer to panel
+[01:56:30.730 --> 01:56:35.070]  one, you shouldn't have any issues there.
+[01:56:35.410 --> 01:56:38.790]  So, it looks like all of the other things that refer to panel one are
+[01:56:38.790 --> 01:56:40.010]  there.
+[01:56:43.950 --> 01:56:47.090]  I don't know how the
+[01:56:47.090 --> 01:56:50.910]  web, or the schedule object, weekly schedule object
+[01:56:50.910 --> 01:56:53.570]  got put into here. Looks like it worked.
+[01:56:54.750 --> 01:56:57.010]  So, yeah, I think it's good.
+[01:56:59.790 --> 01:57:00.310]  Cool.
+[01:57:03.250 --> 01:57:05.130]  Hello, descriptor. Send the descriptors to
+[01:57:05.130 --> 01:57:08.950]  it when it's done. And, yeah, fix the
+[01:57:08.950 --> 01:57:11.670]  couple of system group links. Good luck!
+[01:57:13.450 --> 01:57:15.350]  Thanks, man. Appreciate it.
+[01:57:16.230 --> 01:57:16.310]  Okay, bye.

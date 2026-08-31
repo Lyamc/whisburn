@@ -1,0 +1,246 @@
+[00:03.000 --> 00:05.680]  Reliable Controls, Technical Support, Neem speaking.
+[00:09.090 --> 00:12.770]  Hi, my name is Troy. I'm with Yale Mechanical out of Minneapolis, Minnesota.
+[00:14.170 --> 00:17.670]  We are migrating our...oh, can you hear me?
+[00:18.090 --> 00:22.290]  Yep. Sorry, it's a big delay, so don't worry about it. Let's go for it.
+[00:22.370 --> 00:31.270]  We're migrating our RC Remote Access Server to a new computer.
+[00:31.910 --> 00:37.570]  I have some issues with the software, so I have both servers running side-by-side right now.
+[00:38.610 --> 00:51.270]  One I can probably get you remote access into, the other one is a domain PC that's probably not going to let you in, but I installed the new software on our...
+[00:55.160 --> 01:02.980]  The new one I installed the software on is not working. I'm getting an internal server error when I try to boot up the software.
+[01:04.640 --> 01:12.160]  Okay. It's probably to do with the .NET Framework. Is the software running, but you just can't load the configuration page?
+[01:16.340 --> 01:18.220]  Does it run as a service or something?
+[01:19.080 --> 01:26.800]  No, I'm saying, if you're going to open up Task Manager and go into the services, you'll see if it's running or not.
+[01:27.660 --> 01:42.680]  So the service, the part that does the actual network connection, is probably running just fine, but the web configuration page where you add the settings and all that, that's probably not working.
+[01:46.360 --> 01:49.980]  Okay. You're saying it's in the task scheduler?
+[01:52.220 --> 02:04.200]  No. If you open up Task Manager, so that's how you would end tasks, you would right-click the start menu, and you should see it as an option. You can also press Control-Shift-Shift.
+[02:04.200 --> 02:05.740]  I'm sorry. Yeah, Task Manager.
+[02:07.120 --> 02:13.000]  If you don't see the tab of services, expand details, and then you'll see the tabs.
+[02:14.260 --> 02:18.860]  But yeah, go to services, and see if the RC Remote Access service is running.
+[02:33.340 --> 02:44.020]  Looking here. Remote access is...
+[02:48.660 --> 02:56.100]  By the way, if it's crashing, every time you'd start it or run it, it would, like, you'd see it starting, running, and then stopped.
+[03:01.990 --> 03:16.240]  I'm not sure why I can't find it in services here. Remote access connection manager.
+[03:17.160 --> 03:19.500]  No, it'll be RC Remote Access.
+[03:19.800 --> 03:20.720]  Not seeing anything.
+[03:23.260 --> 03:29.720]  I'm not seeing that. Oh, RC Remote Access facilities QTS. It's running.
+[03:31.300 --> 03:42.820]  So that's kind of what I figured. If it was crashing, like, due to an internal error, I would see that it would be stopped right away after you run it.
+[03:43.540 --> 03:48.880]  It'd start up again, and then it would stop. So it's probably a .NET issue.
+[03:49.360 --> 03:54.300]  Now, to resolve the .NET issue, first, what version of remote access is installed?
+[03:58.550 --> 04:05.610]  It would have been... check. It should have been the latest and greatest. I got it. 3.7.
+[04:06.390 --> 04:12.290]  Okay. 3.7 depends on .NET 8.
+[04:13.370 --> 04:18.330]  I'm going to guess that it's not installed or that any different IES dependency is not installed.
+[04:18.930 --> 04:22.990]  When it says internal server error, is it more specific about the type of error?
+[04:25.900 --> 04:33.360]  Let me pull it back open. HTTP error 500.19, internal service error.
+[04:33.900 --> 04:41.360]  The requested page could not be accessed because the related configuration data for this page is invalid.
+[04:42.800 --> 04:47.760]  IES module, IES WebCore, unknown, not... Yeah.
+[04:48.020 --> 04:51.580]  It doesn't say a ton of things. The config file gives me a path.
+[04:51.580 --> 04:58.560]  Yeah. Can you open up the... It's very likely it's a .NET thing.
+[04:58.640 --> 05:06.860]  So can you open up your control panel on Windows? Go to the add, remove programs and features.
+[05:08.940 --> 05:19.520]  So what we're going to do is we're going to remove all of the existing .NET 8 installs and then install the latest .NET 8.
+[05:22.980 --> 05:31.100]  Got it. Uninstall. How about the ASP.NET stuff?
+[05:32.240 --> 05:36.400]  Yep. That would be part of it. I would uninstall that along with it.
+[05:41.930 --> 05:42.970]  It's gone.
+[05:55.540 --> 06:05.610]  Perfect. It's gone. I'm going to reboot the computer.
+[06:06.390 --> 06:13.010]  You don't have to reboot it yet. It's fine if you reboot it, but you don't have to necessarily do it yet.
+[06:16.310 --> 06:19.690]  I did. It boots up in less than 30 seconds.
+[06:20.310 --> 06:26.330]  Perfect. Do a search for .NET 8.
+[06:26.330 --> 06:26.890]  Do I run the install again?
+[06:28.590 --> 06:32.110]  You don't have to run the reporter install. We're just going to install the dependencies.
+[06:32.790 --> 06:36.510]  I don't think there's anything wrong with remote access side.
+[06:36.810 --> 06:41.310]  I don't think there's anything wrong with remote access side. I think that the issue is with the .NET framework.
+[06:42.930 --> 06:46.690]  I don't know why, but that's what I think is happening.
+[06:48.050 --> 06:54.690]  I've seen a number of reasons for the .NET libraries to not be properly installed.
+[06:55.410 --> 07:03.530]  Whether it wasn't run from the installer, or something prevented parts of it from running, or it didn't properly overwrite existing versions.
+[07:03.910 --> 07:06.170]  It could be anything like that.
+[07:12.970 --> 07:17.710]  Do you think we should just go on and Google search for something?
+[07:18.290 --> 07:23.090]  Search for .NET. Literally like the dot key.
+[07:25.390 --> 07:33.670]  .NET 8. The first result should be .NET.Microsoft.com or something like that.
+[07:35.410 --> 07:39.090]  What you want to do is find the hosting bundle.
+[07:43.030 --> 07:46.550]  Ok. Hosting bundle.
+[07:48.490 --> 07:52.890]  It will be on the right hand side under ASP.NET.
+[07:59.020 --> 08:05.320]  Right hand side under apps net hosting bundle. Got it. Downloading.
+[08:05.320 --> 08:14.180]  That should include both the components within IAS that we care about, as well as the run times that's required for the software to work correctly.
+[08:15.860 --> 08:17.680]  It should have everything we need.
+[08:21.680 --> 08:31.640]  My experience has been if I run that and there is an existing .NET 8 that's still there, for whatever reason, it doesn't seem to overwrite it.
+[08:31.640 --> 08:36.380]  It does, but it doesn't. And there is a weird different issue that happens.
+[08:36.840 --> 08:44.380]  Basically, as far as I can tell, what happens is it doesn't write the actual information. It doesn't overwrite the existing installs.
+[08:44.540 --> 08:51.040]  But then it says it did. So the software looks for the new version. Can't find the new version. Problems.
+[08:53.560 --> 08:56.440]  Oh, my gosh. Okay. Yeah.
+[08:57.660 --> 09:03.000]  Okay, I installed it. It is installed. I see it in my programs and features. Should I reboot now?
+[09:04.160 --> 09:08.200]  I wouldn't say reboot. Just see if you can open up the configuration page now.
+[09:09.280 --> 09:12.280]  It still doesn't work. Then I'm going to look at the IAS side.
+[09:17.740 --> 09:19.800]  It did not work.
+[09:19.800 --> 09:22.080]  Okay, is it the same error?
+[09:25.300 --> 09:28.220]  No, it is different.
+[09:29.180 --> 09:31.360]  It might not have started up the services.
+[09:36.380 --> 09:37.440]  Okay, services.
+[09:41.590 --> 09:44.550]  RC remote access says running.
+[09:45.690 --> 09:57.170]  Okay. Yep, it says it's running automatically. Yep, it says it's running.
+[10:00.140 --> 10:03.700]  Try clearing the cache of the browser. Nothing.
+[10:04.340 --> 10:06.480]  Nope, didn't work. Okay.
+[10:09.000 --> 10:10.940]  That should have done it.
+[10:13.560 --> 10:18.940]  So back in the control panel, can you make sure that you see .NET 8
+[10:18.940 --> 10:23.980]  for both the ASP.NET and also for the desktop runtime?
+[10:24.780 --> 10:27.100]  Because it should be in there multiple times.
+[10:30.120 --> 10:35.500]  Oh, I only see one. It just says Microsoft.NET 8.0.18 Windows hosting.
+[10:36.040 --> 10:37.180]  Windows server hosting.
+[10:41.720 --> 10:45.680]  Is that the ASP one or is there...
+[10:45.680 --> 10:47.540]  You mean you don't see that one?
+[10:50.250 --> 10:51.750]  That's the only one.
+[10:52.590 --> 10:56.150]  Can you rerun that .NET installer and choose repair?
+[10:59.840 --> 11:00.560]  Absolutely.
+[11:11.840 --> 11:12.940]  It's running.
+[11:13.800 --> 11:14.520]  Okay.
+[11:33.460 --> 11:37.220]  Oh, you must restart your computer now, it's telling me.
+[11:37.720 --> 11:40.160]  Alright, I guess restart it.
+[11:47.500 --> 12:09.940]  I wonder if it's because the
+[12:09.940 --> 12:11.260]  ASP server wasn't running.
+[12:11.260 --> 12:11.760]  Okay.
+[12:35.900 --> 12:38.700]  We'll check the
+[12:38.700 --> 12:40.780]  control panel.
+[12:43.940 --> 12:47.000]  It might be fine, I don't know.
+[12:47.160 --> 12:51.820]  It might be fine.
+[12:51.820 --> 12:53.220]  I only see the one.
+[12:53.920 --> 12:58.300]  Does the remote access configuration page load?
+[13:06.700 --> 13:07.820]  Maybe.
+[13:09.760 --> 13:10.820]  Loading.
+[13:19.170 --> 13:20.170]  Yep, it loaded.
+[13:20.870 --> 13:21.450]  Perfect.
+[13:24.970 --> 13:29.210]  Note to self, it has to reboot after it. When you install it,
+[13:29.310 --> 13:33.850]  it actually says you have to reboot and it turns out you do actually have to reboot.
+[13:40.750 --> 13:41.330]  Okay.
+[13:41.830 --> 13:45.350]  My next question is how do I move the license,
+[13:45.350 --> 13:50.270]  the configurations of all my BSNs from server A to server B?
+[13:51.310 --> 13:54.090]  Okay. There's a couple ways to go about it.
+[13:54.290 --> 13:56.750]  Is there a good way to do it?
+[14:01.970 --> 14:02.530]  The
+[14:04.210 --> 14:09.310]  transfer over is actually relatively straightforward, especially if it's
+[14:09.310 --> 14:14.070]  if the version you're migrating from is at least 3.6.1.
+[14:14.290 --> 14:18.090]  If it's newer, that's fine. But if it's at least 3.6.1,
+[14:18.470 --> 14:20.850]  it should be straightforward to do the migration.
+[14:26.650 --> 14:28.430]  The configuration file
+[14:28.430 --> 14:31.730]  that you'll want to transfer and overwrite,
+[14:32.890 --> 14:36.810]  it'll be in the program data directory on the old server.
+[14:37.010 --> 14:40.670]  You'll need to put it on the same directory on the new server.
+[14:43.150 --> 14:46.190]  Okay, so I have that. I copied that over.
+[14:46.510 --> 14:50.290]  It's on a USB drive on my new server.
+[14:50.910 --> 14:56.730]  So you want to replace the existing one on yours and then restart the remote access service
+[14:56.730 --> 15:00.650]  to apply that change. Once it has that,
+[15:01.150 --> 15:06.110]  it's ready to accept the connections except for one
+[15:06.410 --> 15:11.550]  detail. The connections to remote access, are they all
+[15:11.550 --> 15:16.110]  full controllers or are they controllers on the internet type thing?
+[15:20.540 --> 15:22.840]  I'm sorry. Ask your question one more time.
+[15:22.840 --> 15:28.040]  So you migrated to a new server. That new server,
+[15:29.220 --> 15:32.940]  I'm assuming it's local to the same remote access server.
+[15:33.000 --> 15:38.280]  So my question is, are the devices that are connecting to remote access, are they local
+[15:38.280 --> 15:41.940]  or are they from the internet or somewhere else, right?
+[15:44.300 --> 15:46.080]  From the internet, somewhere else.
+[15:46.080 --> 15:51.480]  Okay, the easiest way to do the migration then is once the configuration is
+[15:51.480 --> 15:56.360]  loaded in remote access, change your port forward rules so it ports
+[15:56.360 --> 16:01.100]  forwards to your new server. That's it. If you have local devices,
+[16:01.120 --> 16:05.740]  you can connect to those and point them to the new local IP address.
+[16:09.630 --> 16:13.310]  Got it. Okay, so when I'm moving over...
+[16:13.310 --> 16:18.630]  So I go into reliable controls under program data,
+[16:18.730 --> 16:21.550]  RC remote access. There's three files in there.
+[16:21.910 --> 16:28.170]  Just the config and just remote
+[16:28.170 --> 16:33.390]  RC remote access. Well, I mean, you can do the entirety of the config folder. That's perfectly fine.
+[16:34.090 --> 16:38.450]  You're not using BFC right now, so it probably doesn't matter if you
+[16:38.450 --> 16:42.930]  are missing the other files. But yeah, the one that you really
+[16:42.930 --> 16:46.370]  care about is the RC remote access.xml file.
+[16:48.110 --> 16:52.650]  That's the one you want to overwrite. Once it's overwritten, restart the service.
+[16:52.810 --> 16:56.690]  It will be applied. You just have to do a port forward change and you should be good to go.
+[16:59.860 --> 17:03.460]  Okay, so hit close, close, close that.
+[17:03.460 --> 17:06.340]  Go into services.
+[17:09.240 --> 17:13.700]  Find RC remote access and hit
+[17:13.700 --> 17:18.400]  restart on the service.
+[17:21.020 --> 17:23.760]  Restarting the RC remote access
+[17:23.760 --> 17:27.740]  service. That's done.
+[17:32.810 --> 17:36.750]  I guess I'm confused why I need to change the port.
+[17:37.510 --> 17:42.330]  Okay, so right now you have internet connections
+[17:42.330 --> 17:47.710]  going to your old server, right? The way that they're going to that
+[17:47.710 --> 17:52.570]  server is controllers on the other side have a IP address
+[17:52.570 --> 17:56.950]  import. From their perspective, the IP address isn't going to change.
+[17:56.950 --> 18:01.990]  So the easiest way to migrate all those connections
+[18:01.990 --> 18:06.390]  is just change your port forwarding rules. Suddenly all your connections will go to the new server.
+[18:06.910 --> 18:11.690]  There's no need to send any new information to the controllers, right? The same certificate.
+[18:13.190 --> 18:14.270]  Same IP address.
+[18:16.310 --> 18:21.430]  And it's the same port. It's just a matter of where does that port go
+[18:21.430 --> 18:25.770]  inside your network. Now, it's different if you want to do a failover connection.
+[18:26.530 --> 18:29.990]  Going to do a failover connection, you'd want to add a new port.
+[18:31.070 --> 18:36.130]  So if you're not doing that, then don't worry about that part. Now, before doing all the
+[18:36.130 --> 18:41.090]  connection migration, you're asking about a license. Just return the license
+[18:41.090 --> 18:45.590]  on the... there's a couple ways to do it.
+[18:47.410 --> 18:51.270]  It depends on how long you need to maintain existing connections, I guess,
+[18:51.530 --> 18:56.830]  is what the answer would be. In this case, it should be really straightforward because, again,
+[18:57.450 --> 19:01.970]  you can just do a port forwarding. Normally what we would do is you'd do a migration.
+[19:02.090 --> 19:06.810]  There's a BSN migration tool. Then you would remove the license and then you'd
+[19:06.810 --> 19:12.030]  activate it on the new server. If you still need the old server to work for a while, you generate a temporary license.
+[19:13.610 --> 19:17.030]  But in your case...
+[19:18.670 --> 19:21.670]  and returning the license, activating the license.
+[19:22.330 --> 19:27.870]  Simple as that. When you return the license and RC license manager on the old server,
+[19:27.990 --> 19:31.430]  it should free up the authorization and it should be good.
+[19:34.640 --> 19:38.780]  Okay, so I see. I've got to open up the RC license manager.
+[19:41.640 --> 19:44.500]  And return it from the manager.
+[19:46.300 --> 19:48.700]  on the old server. Okay, okay.
+[19:49.680 --> 19:53.400]  This could be a little bit of a problem because...
+[19:53.400 --> 19:57.880]  So what you can do is if you're worried about knocking down all the connections,
+[19:59.700 --> 20:05.440]  before you remove it, unless you've already done it, if you've already done it, just be quick about it,
+[20:05.440 --> 20:10.710]  go to allowablecontrols.com, software, license report, let me know when you're there.
+[20:14.210 --> 20:17.070]  Software, license report,
+[20:18.570 --> 20:22.130]  and there. Okay, find the license
+[20:22.130 --> 20:27.590]  and you will need to download the license on the new server.
+[20:27.790 --> 20:32.520]  But on the old server, click the license name itself. It should be
+[20:32.520 --> 20:35.260]  new. So you can click it and it should open up a window.
+[20:39.460 --> 20:43.900]  Inside the license manager? Nope, on the website.
+[20:44.140 --> 20:49.520]  So that's under software and license report. Oh, yep, I clicked inside of it. Yep.
+[20:50.260 --> 20:54.060]  Okay, so after you click on the license itself, it should pop up a window.
+[20:54.720 --> 20:59.460]  Inside this window, you have the capability to A, return a
+[20:59.460 --> 21:04.640]  authorization so you can activate the license elsewhere, and B, generate
+[21:04.640 --> 21:09.540]  a temporary license. So this is extremely
+[21:09.540 --> 21:14.000]  useful in the case of you need to go on site to commission something on an on-site computer,
+[21:14.540 --> 21:19.600]  but they don't have a license. You can just generate a temporary one of whatever it is.
+[21:19.920 --> 21:23.740]  Or you're doing a migration. So if you've got WebView,
+[21:24.560 --> 21:28.900]  remote access, whatever, I would suggest doing the temporary license on the
+[21:28.900 --> 21:34.120]  old server. So do like a return license and then you load up
+[21:34.120 --> 21:37.660]  the temp one. But it doesn't matter.
+[21:38.800 --> 21:43.560]  Point is, you have a temporary license there. If you need to run it for some time while you're getting IT,
+[21:43.820 --> 21:50.430]  do you get the reporting thing sorted out? That's what I was going to ask you.
+[21:50.430 --> 21:54.190]  Is there any way to do this where I don't have to change the ports?
+[21:55.590 --> 22:00.570]  There's not that many connections on here. Yep, it is
+[22:00.570 --> 22:05.590]  possible. The problem here is
+[22:05.590 --> 22:10.450]  it gets a little bit more advanced. Well, sort of advanced. It depends
+[22:10.450 --> 22:15.270]  on the setup. I don't know how complex your guys' setup is, but
+[22:15.270 --> 22:20.790]  the way to do what you're asking, you have to take the old server
+[22:20.790 --> 22:25.530]  offline. Or change its IP address, I should say. Change its IP address
+[22:25.530 --> 22:30.250]  and then on the new server, change its IP address to be the same as what the old one used to be.
+[22:30.410 --> 22:35.330]  We're doing a swap of the IP addresses. Once that's done, it's effectively the same
+[22:35.330 --> 22:39.510]  thing I was talking about before. From everyone else's perspective, they're now connected on a new server.
+[22:42.630 --> 22:43.410]  Okay.
+[22:46.490 --> 22:50.970]  I wonder how they did that because our IT department
+[22:50.970 --> 22:54.730]  set up this computer and it runs
+[22:55.870 --> 23:00.590]  DHCP. Yep. And I don't know.
+[23:00.730 --> 23:05.090]  Is it just a reserved IP address to this NIC card? However,
+[23:05.090 --> 23:10.310]  that's why I was saying it's kind of complicated. It's better if you were to
+[23:10.310 --> 23:13.710]  just get IT to do the port forward change.
+[23:16.650 --> 23:18.670]  You can leave the server running with the temporary lightning.
+[23:20.030 --> 23:25.030]  Yeah, that's the whole
+[23:25.030 --> 23:29.630]  reason we were doing this is to get it off of a domain PC.
+[23:31.570 --> 23:32.170]  Okay.
+[23:33.690 --> 23:36.510]  It's been a pain, you know what I mean? Yeah.
+[23:38.430 --> 23:41.430]  Do you know where the port forwarding rules are?
+[23:45.230 --> 23:50.190]  Can't get at them. No, I don't, honestly.
+[23:50.470 --> 23:54.550]  But I'm like 99% sure there's no way I could access them.
+[23:58.450 --> 23:59.630]  Let me do
+[23:59.630 --> 24:02.450]  some digging. Maybe it'll just work. I don't know.
+[24:06.090 --> 24:10.490]  From my experience, anything IT related...
+[24:10.490 --> 24:11.850]  That's it.
+[24:19.990 --> 24:23.710]  I don't know the environment. I'm having a really hard time hearing you.
+[24:24.830 --> 24:26.690]  Oh, sorry. Is that better?
+[24:29.150 --> 24:32.330]  Yeah, that's better. You were just cutting out really bad.
+[24:35.870 --> 24:36.090]  Yeah.
+[24:38.830 --> 24:43.070]  I'll try to figure that out. Yeah, it's just depending on the
+[24:43.070 --> 24:47.910]  environment, it might work perfectly fine or you might cause terrible issues that cause
+[24:47.910 --> 24:52.170]  everything to drop offline. And then now you really have to contact IT.
+[24:55.090 --> 24:56.330]  Yeah, exactly.
+[24:58.210 --> 25:02.870]  Let me do some digging and see what I can come up with.
+[25:03.410 --> 25:04.770]  Sounds good.
+[25:07.150 --> 25:12.950]  Thank you for your help today. Yeah, you're welcome. Bye-bye.
+[25:12.950 --> 25:14.510]  Happy day. Bye-bye.

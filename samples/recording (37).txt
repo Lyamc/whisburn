@@ -1,0 +1,989 @@
+[00:04.000 --> 00:06.400]  [SPEAKER_01]: Reliable Controls, Technical Support,
+Liam speaking.
+[00:08.220 --> 00:09.180]  [SPEAKER_05]: Hey Liam, it's Derek Collin.
+[00:09.240 --> 00:09.660]  [SPEAKER_05]: How are you today?
+[00:10.640 --> 00:11.000]  [SPEAKER_01]: I'm okay.
+[00:13.040 --> 00:15.940]  [SPEAKER_05]: I've got an issue with a customer site.
+[00:17.160 --> 00:23.520]  [SPEAKER_05]: WebView is connecting to a building
+perfectly fine, and RCStudio cannot.
+[00:24.060 --> 00:27.760]  [SPEAKER_05]: And they both reside on the same computer,
+the same server, same everything.
+[00:28.640 --> 00:29.480]  [SPEAKER_05]: What version of Studio?
+[00:29.480 --> 00:30.480]  [SPEAKER_05]: I'm stumped as to why.
+[00:32.680 --> 00:34.240]  [SPEAKER_05]: Pretty new, let me check.
+[00:35.580 --> 00:36.800]  [SPEAKER_05]: 3.11.1.
+[00:38.900 --> 00:41.280]  [SPEAKER_01]: Okay, is there a VPN involved at all?
+[00:43.920 --> 00:44.400]  [SPEAKER_05]: No.
+[00:48.480 --> 00:49.560]  [SPEAKER_01]: So they're on the same machine.
+[00:50.300 --> 00:52.140]  [SPEAKER_01]: Two things I want you to check.
+[00:52.240 --> 00:57.500]  [SPEAKER_01]: One of them is going to be really weird,
+but can you find your system list file?
+[00:57.500 --> 01:01.240]  [SPEAKER_01]: It's going to be in the C drive,
+Program Data, Reliable Controls,
+[01:01.240 --> 01:01.920]  [SPEAKER_01]: RCStudio.
+[01:22.370 --> 01:26.630]  [SPEAKER_05]: I have two buildings on the same computer
+that are doing the exact same thing.
+[01:29.830 --> 01:30.350]  Okay.
+[01:35.020 --> 01:35.620]  [SPEAKER_05]: Okay.
+[01:38.680 --> 01:44.700]  [SPEAKER_01]: Okay, open it in Notepad or something,
+and see if for the entry that you were
+[01:44.700 --> 01:50.660]  [SPEAKER_01]: trying to connect with, see if there's
+something entered in a field called second
+[01:50.660 --> 01:51.740]  [SPEAKER_01]: UDP port.
+[02:00.830 --> 02:01.430]  [SPEAKER_05]: No.
+[02:02.290 --> 02:04.850]  [SPEAKER_05]: Value equals quote, quote, slash.
+[02:05.030 --> 02:05.730]  [SPEAKER_01]: Okay, perfect.
+[02:05.930 --> 02:07.190]  [SPEAKER_01]: That's the first thing I want to make
+sure.
+[02:08.050 --> 02:08.750]  [SPEAKER_01]: Second thing.
+[02:08.870 --> 02:09.050]  [SPEAKER_05]: Okay.
+[02:09.690 --> 02:10.590]  [SPEAKER_01]: Is this on a server?
+[02:12.970 --> 02:13.450]  [SPEAKER_05]: Yes.
+[02:17.810 --> 02:22.250]  [SPEAKER_01]: Check to make sure that there's firewall
+rules that will allow RCStudio to connect
+[02:22.250 --> 02:25.390]  [SPEAKER_01]: on all networks.
+[02:30.270 --> 02:33.930]  [SPEAKER_05]: It's working for the other... well,
+we've got, what, 24 buildings,
+[02:34.110 --> 02:35.790]  [SPEAKER_05]: I think.
+[02:37.670 --> 02:39.250]  [SPEAKER_01]: Oh, distance one isn't working.
+[02:39.450 --> 02:40.350]  [SPEAKER_01]: Did you try hitting discover?
+[02:40.350 --> 02:41.070]  [SPEAKER_01]: Yeah.
+[02:42.390 --> 02:50.070]  [SPEAKER_05]: Yeah, I even tried grabbing the site INI
+file from WebView and bringing it back
+[02:50.070 --> 02:50.210]  [SPEAKER_05]: over.
+[02:50.210 --> 02:53.170]  [SPEAKER_01]: Do you have to know the firmware version
+of the controller you're trying to connect
+[02:53.170 --> 02:53.350]  [SPEAKER_01]: to?
+[03:00.070 --> 03:00.670]  Potentially...
+[03:00.670 --> 03:01.810]  [SPEAKER_05]: 829.1?
+[03:07.980 --> 03:15.650]  [SPEAKER_01]: Sorry, 8 point... 8 point what?
+[03:17.490 --> 03:18.850]  [SPEAKER_05]: 29.1.
+[03:19.990 --> 03:20.350]  [SPEAKER_01]: Okay.
+[03:21.350 --> 03:26.830]  [SPEAKER_01]: It's possible the controller is affected
+by an issue that could prevent foreign
+[03:26.830 --> 03:28.030]  [SPEAKER_01]: device registration from working.
+[03:28.630 --> 03:31.610]  [SPEAKER_01]: I'm assuming the device, it's a BVMD
+connection, right?
+[03:33.310 --> 03:34.770]  [SPEAKER_05]: Yeah, we're crossing subnets.
+[03:35.670 --> 03:35.930]  [SPEAKER_01]: Yeah.
+[03:36.850 --> 03:40.190]  [SPEAKER_01]: Are you able to update the firmware using
+Toolkit?
+[03:42.830 --> 03:43.810]  [SPEAKER_05]: Unfortunately, no.
+[03:43.850 --> 03:44.750]  [SPEAKER_05]: It's not connecting with that.
+[03:45.870 --> 03:47.090]  [SPEAKER_01]: That's what I kind of figured.
+[03:48.250 --> 03:48.730]  [SPEAKER_01]: Yeah.
+[03:51.370 --> 03:53.070]  [SPEAKER_01]: So, oh, let's see.
+[03:53.910 --> 03:55.850]  [SPEAKER_01]: Can I do a thing?
+[03:55.930 --> 03:57.930]  [SPEAKER_01]: I can probably do a thing that would make
+it work, yeah?
+[03:59.310 --> 04:00.910]  [SPEAKER_01]: Can we do a ScreenConnect session?
+[04:02.830 --> 04:03.090]  [SPEAKER_05]: Yeah.
+[04:04.030 --> 04:04.230]  [SPEAKER_01]: Okay.
+[04:04.270 --> 04:06.790]  [SPEAKER_01]: Go to rcsupport.screenconnect.com.
+[04:08.630 --> 04:12.470]  [SPEAKER_05]: I'm going to put you right directly on
+that server this time instead of on my
+[04:12.470 --> 04:12.830]  [SPEAKER_05]: computer.
+[04:20.150 --> 04:20.550]  [SPEAKER_05]: Okay.
+[04:20.750 --> 04:21.170]  [SPEAKER_05]: The code?
+[04:24.180 --> 04:24.880]  [SPEAKER_03]: Just a moment.
+[04:30.390 --> 04:33.290]  [SPEAKER_04]: Code is 20564.
+[05:03.680 --> 05:06.100]  [SPEAKER_05]: Can we put in a request for some fresh
+hold music?
+[05:06.440 --> 05:09.300]  [SPEAKER_05]: I've been calling you guys too often
+lately and it's getting old.
+[05:13.870 --> 05:14.770]  [SPEAKER_01]: You know what I could do?
+[05:14.910 --> 05:17.670]  [SPEAKER_01]: I could give you a link for a TeamSing.
+[05:18.990 --> 05:22.110]  [SPEAKER_01]: You can do it for like a book time with
+me, TeamSing.
+[05:24.150 --> 05:26.270]  [SPEAKER_01]: I've got some for like short calls.
+[05:27.990 --> 05:28.430]  [SPEAKER_05]: Okay.
+[05:28.570 --> 05:32.430]  [SPEAKER_05]: I'm hoping I don't have to call you guys
+so often here soon.
+[05:33.470 --> 05:36.410]  [SPEAKER_01]: What I mean is then you can avoid the hold
+entirely, right?
+[05:38.150 --> 05:38.590]  [SPEAKER_01]: Yeah.
+[05:39.490 --> 05:40.470]  [SPEAKER_01]: What was I doing?
+[05:40.910 --> 05:41.350]  [SPEAKER_01]: Right.
+[05:41.450 --> 05:41.630]  [SPEAKER_01]: Okay.
+[05:41.690 --> 05:42.450]  [SPEAKER_01]: So, this connection here.
+[05:42.850 --> 05:43.110]  [SPEAKER_01]: Right.
+[05:43.230 --> 05:47.690]  [SPEAKER_01]: So, I have an idea to get us connected.
+[05:48.290 --> 05:55.530]  [SPEAKER_01]: It's going to be a very strange thing,
+but I'm going to abuse the BACnet protocol
+[05:55.530 --> 05:59.510]  [SPEAKER_01]: in order to connect to this site.
+[06:00.090 --> 06:01.750]  [SPEAKER_01]: So, which one is it here?
+[06:04.030 --> 06:07.570]  [SPEAKER_05]: I've got two of them, but we'll try with
+this one first because that's what I
+[06:07.570 --> 06:08.190]  [SPEAKER_05]: was...
+[06:08.190 --> 06:08.610]  [SPEAKER_01]: That one?
+[06:08.750 --> 06:09.010]  [SPEAKER_01]: Okay.
+[06:09.910 --> 06:13.890]  [SPEAKER_01]: And you're just unsuccessful connection to
+that, right?
+[06:15.350 --> 06:15.870]  [SPEAKER_05]: Yeah.
+[06:40.540 --> 06:42.140]  [SPEAKER_01]: And port is 47808?
+[06:47.490 --> 06:48.450]  [SPEAKER_03]: Yeah, it looks like it.
+[06:58.560 --> 06:58.960]  [SPEAKER_01]: Okay.
+[06:59.020 --> 07:01.000]  [SPEAKER_01]: We're going to try something really weird.
+[07:02.680 --> 07:03.080]  Okay.
+[07:03.640 --> 07:08.260]  [SPEAKER_05]: I've insanity checked with WebView just to
+make sure I don't have something weird
+[07:08.260 --> 07:08.700]  [SPEAKER_05]: going on.
+[07:08.760 --> 07:09.160]  [SPEAKER_05]: You know what I mean?
+[07:09.240 --> 07:12.180]  [SPEAKER_05]: Some weird setting, but yeah, it's 47808
+and the IP is right.
+[07:13.660 --> 07:14.060]  [SPEAKER_04]: Yeah.
+[07:47.150 --> 07:50.430]  [SPEAKER_05]: That specific controller we're trying to
+connect to is 8000 if that makes a
+[07:50.430 --> 07:50.810]  [SPEAKER_05]: difference.
+[07:52.910 --> 07:55.050]  [SPEAKER_01]: Oh, 8000 is actually what we're trying to
+connect to.
+[07:55.150 --> 07:55.410]  [SPEAKER_01]: Okay.
+[07:56.290 --> 07:57.630]  [SPEAKER_01]: It does actually make a difference.
+[07:59.290 --> 07:59.530]  Okay.
+[08:02.530 --> 08:03.010]  Let's
+[08:18.490 --> 08:18.970]  try...
+[08:18.970 --> 08:21.130]  [SPEAKER_01]: Wait for it to finish doing its own.
+[08:22.930 --> 08:24.610]  [SPEAKER_01]: Parsing should be back.
+[08:24.810 --> 08:25.050]  [SPEAKER_01]: Okay.
+[08:40.450 --> 08:41.150]  [SPEAKER_03]: Try it again.
+[08:50.960 --> 08:52.280]  [SPEAKER_01]: We're sure it's...
+[08:52.280 --> 08:55.120]  [SPEAKER_01]: Let's see how to make sure that the...
+[08:55.120 --> 08:56.560]  [SPEAKER_01]: What one was it again?
+[08:56.780 --> 08:57.200]  [SPEAKER_01]: 45?
+[08:58.100 --> 08:58.620]  [SPEAKER_01]: 42.
+[09:27.290 --> 09:28.330]  [SPEAKER_01]: All right.
+[09:28.380 --> 09:28.860]  [SPEAKER_01]: What are we doing?
+[09:29.020 --> 09:30.570]  [SPEAKER_01]: We are doing...
+[09:30.570 --> 09:30.980]  [SPEAKER_01]: Right.
+[09:31.160 --> 09:31.460]  [SPEAKER_01]: Ping.
+[09:31.830 --> 09:32.720]  [SPEAKER_01]: Does ping work?
+[09:34.080 --> 09:34.460]  [SPEAKER_01]: Okay.
+[09:34.570 --> 09:35.940]  [SPEAKER_01]: That seems to work just fine.
+[09:36.070 --> 09:37.360]  [SPEAKER_01]: Let's try 45 then.
+[09:38.340 --> 09:39.400]  [SPEAKER_01]: 45 doesn't work.
+[09:39.480 --> 09:40.940]  [SPEAKER_01]: Is that what I currently have set up?
+[09:47.060 --> 09:47.580]  [SPEAKER_01]: 45.
+[09:47.920 --> 09:48.860]  [SPEAKER_01]: I have 42.
+[09:49.260 --> 09:49.560]  [SPEAKER_01]: Okay.
+[09:50.640 --> 09:51.840]  [SPEAKER_01]: I can try doing 47808.
+[09:51.840 --> 09:56.120]  [SPEAKER_01]: Do you happen to know the network number
+it would be under?
+[10:00.580 --> 10:01.600]  [SPEAKER_01]: I'm assuming 20.
+[10:01.660 --> 10:02.640]  [SPEAKER_05]: 20 or 30.
+[10:04.420 --> 10:05.780]  [SPEAKER_01]: I'll try 20 first.
+[10:06.120 --> 10:06.860]  [SPEAKER_05]: It could be 30.
+[10:07.340 --> 10:10.820]  [SPEAKER_01]: If it's 30, then is it possible it's using
+a different port?
+[10:16.360 --> 10:17.660]  [SPEAKER_04]: I did that.
+[10:19.220 --> 10:20.920]  [SPEAKER_05]: No, it must be 20 then.
+[10:21.640 --> 10:22.380]  [SPEAKER_05]: Now that you say it.
+[10:23.620 --> 10:25.640]  [SPEAKER_05]: Because it's definitely 47808 in WebView.
+[10:29.930 --> 10:30.310]  [SPEAKER_01]: All right.
+[10:30.390 --> 10:31.210]  [SPEAKER_01]: Let's see here.
+[10:32.650 --> 10:37.370]  [SPEAKER_01]: I'm going to adjust the port forwarding
+rule, which might disconnect my phone.
+[10:37.470 --> 10:37.790]  [SPEAKER_01]: We'll see.
+[10:38.090 --> 10:39.950]  [SPEAKER_01]: If it does, I'll just give you a call back
+right away.
+[10:41.550 --> 10:41.830]  Okay.
+[10:46.460 --> 10:49.920]  [SPEAKER_05]: Do you have my cell number handy instead
+of trying to call the landline?
+[10:50.940 --> 10:51.880]  [SPEAKER_01]: I think so.
+[10:54.460 --> 10:55.580]  [SPEAKER_01]: I'll check in a moment.
+[10:57.480 --> 10:59.240]  [SPEAKER_01]: Okay, before I hit...
+[10:59.240 --> 11:00.560]  [SPEAKER_01]: I'm in the wrong machine.
+[11:02.360 --> 11:04.280]  [SPEAKER_01]: I've got too many windows open.
+[11:11.380 --> 11:12.140]  [SPEAKER_01]: 9622334?
+[11:14.960 --> 11:17.060]  [SPEAKER_05]: Call me back in my cell, 613922.
+[11:22.600 --> 11:23.360]  [SPEAKER_01]: 613922?
+[11:25.500 --> 11:26.260]  [SPEAKER_05]: 92996.
+[11:29.880 --> 11:31.880]  [SPEAKER_01]: 929... oh my goodness, I missed that up.
+[11:37.110 --> 11:38.350]  [SPEAKER_05]: 2996 is the last one.
+[11:39.410 --> 11:39.850]  [SPEAKER_01]: 2996.
+[11:39.930 --> 11:40.190]  [SPEAKER_01]: Okay.
+[11:40.530 --> 11:42.530]  [SPEAKER_01]: So it's 613922.
+[11:43.730 --> 11:43.990]  [SPEAKER_05]: Yep.
+[11:44.990 --> 11:45.430]  [SPEAKER_01]: 2996.
+[11:46.850 --> 11:47.290]  [SPEAKER_05]: Yep.
+[11:48.530 --> 11:48.970]  [SPEAKER_01]: Okay.
+[11:49.130 --> 11:51.490]  [SPEAKER_01]: If we get disconnected, then I'll call
+that.
+[11:51.910 --> 11:52.130]  [SPEAKER_05]: Yeah.
+[11:52.190 --> 11:52.470]  [SPEAKER_01]: All right.
+[11:53.250 --> 11:56.170]  [SPEAKER_05]: Yeah, that'll be easier because it's
+landline extensions and all the nonsense.
+[11:56.730 --> 11:57.250]  [SPEAKER_01]: Yeah.
+[11:58.730 --> 12:00.270]  [SPEAKER_01]: I'll find out in a moment here.
+[12:12.510 --> 12:13.650]  [SPEAKER_04]: Okay, I should be back now.
+[12:15.930 --> 12:16.450]  [SPEAKER_04]: Yep.
+[12:17.510 --> 12:18.030]  [SPEAKER_04]: Awesome.
+[12:22.510 --> 12:23.860]  [SPEAKER_01]: Wait, that's 8,000.
+[12:24.860 --> 12:26.480]  [SPEAKER_01]: Are you sure that's 8,000 for that one?
+[12:26.750 --> 12:27.250]  [SPEAKER_01]: The 42?
+[12:27.940 --> 12:28.460]  [SPEAKER_01]: Yes.
+[12:29.270 --> 12:29.560]  [SPEAKER_05]: Yep.
+[12:29.920 --> 12:30.200]  [SPEAKER_01]: Yep.
+[12:30.480 --> 12:31.380]  [SPEAKER_01]: Looks like it.
+[12:39.430 --> 12:41.890]  [SPEAKER_03]: On-device registration has failed,
+really?
+[12:55.470 --> 13:00.350]  [SPEAKER_05]: Now, I don't have, like, a full-on BBMD
+set up.
+[13:00.390 --> 13:02.190]  [SPEAKER_05]: I just have it enabled under the port.
+[13:04.230 --> 13:05.110]  [SPEAKER_05]: That's all that I need.
+[13:05.170 --> 13:07.490]  [SPEAKER_05]: That's all that needs to be done for what
+you're trying, right?
+[13:08.810 --> 13:13.310]  [SPEAKER_01]: Yeah, what I'm trying to do is abuse how
+foreign device registration works.
+[13:13.370 --> 13:17.390]  [SPEAKER_01]: So what I'm having it do is when you
+connect to my controller, which is what
+[13:17.390 --> 13:23.290]  [SPEAKER_01]: I'm pointing it to right now, it will then
+follow up with, oh, my actual IP address
+[13:23.290 --> 13:24.370]  [SPEAKER_01]: is located here.
+[13:31.060 --> 13:34.800]  [SPEAKER_01]: It should work.
+[13:35.440 --> 13:39.240]  [SPEAKER_01]: I've used it before to make it work,
+so it should work.
+[13:42.200 --> 13:46.560]  [SPEAKER_05]: Now, this network that we're on is pretty
+locked down.
+[13:48.120 --> 13:49.500]  [SPEAKER_01]: Oh, that might be our problem.
+[13:50.740 --> 13:52.640]  [SPEAKER_05]: Where things go and not go?
+[13:52.640 --> 13:55.360]  [SPEAKER_01]: Okay, well, in that case, I've got another
+idea.
+[13:55.880 --> 14:01.600]  [SPEAKER_01]: Instead of that, is there a controller
+that we can access with Toolkit that we
+[14:01.600 --> 14:05.860]  [SPEAKER_01]: can add a second VIP port just for doing a
+connection test, essentially?
+[14:13.380 --> 14:15.500]  [SPEAKER_05]: Does the IP matter?
+[14:18.020 --> 14:19.740]  [SPEAKER_05]: I'm just trying to remember here.
+[14:26.350 --> 14:29.610]  [SPEAKER_05]: Theoretically, that's on the same subnet.
+[14:39.640 --> 14:40.580]  [SPEAKER_05]: That's new.
+[14:51.360 --> 14:54.390]  I wonder...
+[15:01.380 --> 15:03.920]  [SPEAKER_05]: I wasn't aware of this connection being
+down.
+[15:06.100 --> 15:11.340]  [SPEAKER_05]: And I wonder, do we just have a
+straight-up problem with their IT at this
+[15:11.340 --> 15:11.640]  [SPEAKER_05]: point?
+[15:15.580 --> 15:16.600]  [SPEAKER_01]: It's possible.
+[15:16.600 --> 15:17.660]  [SPEAKER_01]: This site was...
+[15:19.580 --> 15:25.080]  [SPEAKER_05]: The way it ended up happening was City
+Hall was the first one we did.
+[15:25.720 --> 15:28.780]  [SPEAKER_05]: The police station was directly across the
+road, and they put it on the same subnet,
+[15:28.880 --> 15:33.060]  [SPEAKER_05]: and then we isolated them with ports,
+just using different backnet ports.
+[15:35.540 --> 15:39.600]  [SPEAKER_05]: And I wonder if maybe they've done
+something like that.
+[15:39.680 --> 15:41.720]  [SPEAKER_05]: Does this daycare... does this one work?
+[15:47.770 --> 15:52.070]  [SPEAKER_05]: I wonder if maybe he's closed the tunnel
+for that?
+[15:55.010 --> 15:59.350]  [SPEAKER_01]: Well, one way to find out is if we go over
+into here.
+[15:59.550 --> 16:01.730]  [SPEAKER_01]: So, do we have Wireshark by any chance?
+[16:02.270 --> 16:03.510]  [SPEAKER_01]: We don't, but that's fine.
+[16:03.650 --> 16:05.630]  [SPEAKER_01]: What I can do is enable capture here.
+[16:09.170 --> 16:15.030]  [SPEAKER_01]: Then I can try any one of these that we
+know ping works, but otherwise is not
+[16:15.030 --> 16:15.550]  [SPEAKER_01]: communicating.
+[16:15.550 --> 16:18.610]  [SPEAKER_01]: So, 42, right?
+[16:19.230 --> 16:20.070]  [SPEAKER_01]: So, ping works.
+[16:21.270 --> 16:22.930]  [SPEAKER_01]: Therefore, connection should work.
+[16:23.770 --> 16:26.810]  [SPEAKER_01]: So, let's go to 42 right there.
+[16:48.380 --> 16:49.560]  [SPEAKER_01]: Let me connect anyways.
+[16:54.030 --> 16:57.390]  [SPEAKER_01]: You can try punching in whatever you think
+the master password should be.
+[16:58.390 --> 17:00.530]  [SPEAKER_01]: The username and password don't work.
+[17:00.570 --> 17:01.230]  [SPEAKER_01]: It'll have to be that.
+[17:01.410 --> 17:03.610]  [SPEAKER_01]: Okay, so let's see if this will actually
+load.
+[17:03.610 --> 17:05.930]  [SPEAKER_01]: I don't think we're actually actually
+connected.
+[17:08.950 --> 17:10.590]  [SPEAKER_01]: Oh, the behavior is really weird.
+[17:17.670 --> 17:19.270]  [SPEAKER_01]: What am I connected to?
+[17:21.970 --> 17:22.770]  [SPEAKER_05]: The ether?
+[17:24.770 --> 17:26.610]  [SPEAKER_01]: Apparently, I can talk to this just fine.
+[17:26.710 --> 17:30.730]  [SPEAKER_01]: I just loaded this value, like real time,
+just loaded just now.
+[17:32.210 --> 17:32.770]  [SPEAKER_05]: Yeah.
+[17:33.850 --> 17:42.410]  [SPEAKER_05]: I mean, I've done that before where you
+can fire in an unused IP address and be
+[17:42.410 --> 17:44.010]  [SPEAKER_05]: able to do more of a network scan with
+Studio.
+[17:48.310 --> 17:50.250]  [SPEAKER_01]: I've got an idea there.
+[18:02.830 --> 18:03.690]  [SPEAKER_03]: Just a moment.
+[18:33.440 --> 18:34.260]  [SPEAKER_03]: Just a moment.
+[18:34.420 --> 18:37.660]  [SPEAKER_03]: I have to grab a thing.
+[18:37.820 --> 18:38.880]  [SPEAKER_03]: There we go.
+[18:56.300 --> 18:58.400]  [SPEAKER_01]: Okay, and then over here.
+[19:01.350 --> 19:05.450]  [SPEAKER_01]: I'm going to try and do a trick to make it
+work.
+[19:05.590 --> 19:05.910]  [SPEAKER_01]: We'll see.
+[19:07.150 --> 19:10.830]  [SPEAKER_01]: Almost certainly, the control is behaving
+badly, but I don't know.
+[19:20.220 --> 19:22.380]  [SPEAKER_03]: So, the IP address is...
+[19:31.870 --> 19:32.350]  [SPEAKER_03]: 1000...
+[19:35.730 --> 19:36.210]  8000...
+[19:36.210 --> 19:38.670]  [SPEAKER_03]: I don't care about the GMS3 networks,
+although it should.
+[19:46.410 --> 19:48.010]  [SPEAKER_03]: Let's see, what else?
+[19:48.110 --> 19:48.910]  [SPEAKER_03]: What else?
+[20:01.180 --> 20:03.920]  [SPEAKER_01]: This one is not a place where the device
+ID is entered.
+[20:04.040 --> 20:04.260]  [SPEAKER_01]: Whatever.
+[20:05.700 --> 20:06.660]  [SPEAKER_01]: I'm going to save that.
+[20:07.760 --> 20:10.340]  [SPEAKER_01]: I'm going to set this to manual tree.
+[20:18.550 --> 20:19.600]  [SPEAKER_04]: And I'll hit connect.
+[20:20.910 --> 20:22.470]  [SPEAKER_01]: It's going to do the same thing as before.
+[20:22.910 --> 20:24.730]  [SPEAKER_01]: Ooh, I might have done a thing I'm not
+supposed to.
+[20:27.150 --> 20:28.310]  [SPEAKER_01]: The error message.
+[20:28.430 --> 20:31.490]  [SPEAKER_01]: I don't think I'm supposed to hit connect
+without clearing that first.
+[20:43.480 --> 20:45.360]  [SPEAKER_04]: Punch in the master password again.
+[20:59.490 --> 21:01.270]  [SPEAKER_04]: I'm very curious if this will actually
+work.
+[21:08.980 --> 21:10.760]  [SPEAKER_01]: I'm trying to think of ideas.
+[21:10.760 --> 21:11.760]  [SPEAKER_01]: This is how to...
+[21:14.020 --> 21:16.960]  [SPEAKER_01]: I wonder if I can send enough traffic to
+it that it just breaks.
+[21:17.280 --> 21:18.860]  [SPEAKER_01]: As in, like, it resets itself.
+[21:19.640 --> 21:21.220]  [SPEAKER_01]: Being able to physically reset it.
+[21:23.900 --> 21:24.740]  [SPEAKER_01]: I know, right?
+[21:25.560 --> 21:28.640]  [SPEAKER_01]: Like, unironically, that's actually where
+my mind is going.
+[21:49.330 --> 21:53.190]  [SPEAKER_05]: It's too bad we can't do a...
+[21:54.510 --> 21:56.890]  [SPEAKER_05]: an initialized device from WebView.
+[21:58.470 --> 22:00.290]  [SPEAKER_01]: That would be very nice, wouldn't it?
+[22:01.750 --> 22:03.450]  [SPEAKER_01]: Ooh, can we?
+[22:04.190 --> 22:05.390]  [SPEAKER_01]: Can we, though?
+[22:07.030 --> 22:07.990]  [SPEAKER_01]: I wonder.
+[22:12.370 --> 22:17.810]  [SPEAKER_01]: You've actually made me think of something
+that might actually work.
+[22:18.730 --> 22:19.970]  [SPEAKER_01]: Let's see here.
+[22:22.730 --> 22:25.250]  [SPEAKER_05]: Maybe we could do a backup and restore of
+the panel file.
+[22:25.410 --> 22:27.090]  [SPEAKER_05]: That would do a...
+[22:29.400 --> 22:31.360]  [SPEAKER_01]: Well, we still have to...
+[22:31.860 --> 22:34.280]  [SPEAKER_01]: I don't know if it would be...
+[22:34.280 --> 22:35.040]  [SPEAKER_01]: I mean, maybe.
+[22:35.900 --> 22:36.760]  [SPEAKER_01]: Maybe that would work.
+[22:36.860 --> 22:37.700]  [SPEAKER_01]: That's not a bad idea.
+[22:39.120 --> 22:39.340]  [SPEAKER_01]: Yeah.
+[22:43.600 --> 22:44.940]  [SPEAKER_05]: Let's just see if the backup works.
+[22:49.180 --> 22:50.220]  [SPEAKER_01]: Okay, I've got...
+[22:51.480 --> 22:53.820]  [SPEAKER_01]: I have an idea I want to try first.
+[22:55.320 --> 22:55.720]  [SPEAKER_05]: Okay.
+[22:57.520 --> 23:01.020]  [SPEAKER_01]: I'm just going to make sure it won't do
+anything horrible to the device first.
+[23:02.340 --> 23:03.500]  [SPEAKER_01]: So, I'm testing it on mine.
+[23:05.880 --> 23:07.700]  [SPEAKER_05]: So, you know, there's that.
+[23:07.960 --> 23:08.820]  [SPEAKER_04]: Let's see which...
+[23:33.880 --> 23:36.860]  [SPEAKER_01]: Looks like it worked just fine.
+[23:38.560 --> 23:39.620]  [SPEAKER_01]: Yeah, reset soft.
+[23:39.740 --> 23:41.080]  [SPEAKER_01]: Okay, yeah, that looks like that worked.
+[23:41.660 --> 23:43.360]  [SPEAKER_01]: We're able to get into it with WebView,
+right?
+[23:45.340 --> 23:49.540]  [SPEAKER_01]: There is a lesser known feature inside of
+WebView that we can use.
+[23:50.960 --> 23:51.980]  [SPEAKER_03]: Oh, okay.
+[24:13.850 --> 24:15.470]  [SPEAKER_05]: I'll let you do your thing.
+[24:17.170 --> 24:17.610]  [SPEAKER_01]: All right.
+[24:59.300 --> 25:00.120]  [SPEAKER_03]: Who's this?
+[25:03.190 --> 25:03.790]  [SPEAKER_01]: Art Gallery?
+[25:03.830 --> 25:04.790]  [SPEAKER_01]: I feel like it's Art Gallery.
+[25:05.150 --> 25:05.690]  [SPEAKER_01]: I can't remember.
+[25:07.170 --> 25:08.530]  [SPEAKER_01]: City Hall, that's what it is.
+[25:10.550 --> 25:12.070]  [SPEAKER_01]: City Hall, City Hall.
+[25:13.050 --> 25:13.850]  [SPEAKER_01]: Oh, it's right at the top.
+[25:16.950 --> 25:18.390]  [SPEAKER_01]: Let's see if it'll actually work,
+though.
+[25:18.450 --> 25:19.790]  [SPEAKER_01]: I don't even know if it will work.
+[25:28.050 --> 25:30.730]  [SPEAKER_01]: This is not valid, but I'm going to see if
+I can make it work anyways.
+[25:46.640 --> 25:47.960]  [SPEAKER_04]: Oh, it looks like it's going to work.
+[25:54.860 --> 25:56.040]  [SPEAKER_05]: How did you even get to this?
+[25:59.410 --> 26:00.130]  [SPEAKER_01]: I'm magical.
+[26:02.070 --> 26:03.030]  [SPEAKER_03]: New weapon!
+[26:14.670 --> 26:15.630]  [SPEAKER_03]: Okay, that seems to work.
+[26:15.890 --> 26:16.590]  [SPEAKER_03]: Does this work?
+[26:18.170 --> 26:18.890]  [SPEAKER_03]: Dang it!
+[26:58.880 --> 27:01.060]  [SPEAKER_01]: We can try the backup restore.
+[27:01.600 --> 27:03.180]  [SPEAKER_01]: I tried the other thing, it doesn't seem
+to be working.
+[27:34.020 --> 27:35.160]  [SPEAKER_04]: Let's try Studio now.
+[27:36.080 --> 27:37.160]  [SPEAKER_01]: Is there a toolkit now?
+[27:37.460 --> 27:38.380]  [SPEAKER_01]: Yeah, it's our toolkit now.
+[27:40.680 --> 27:42.600]  [SPEAKER_05]: I think that usually does a...
+[27:43.200 --> 27:45.580]  [SPEAKER_01]: It does a warm start after you...
+[27:48.640 --> 27:49.760]  [SPEAKER_01]: That's a good sign.
+[27:56.960 --> 28:01.380]  [SPEAKER_01]: No, changing to auto won't improve things.
+[28:02.040 --> 28:03.340]  [SPEAKER_01]: We know it's 8000.
+[28:17.620 --> 28:19.980]  [SPEAKER_01]: Let's try something else.
+[28:20.080 --> 28:21.080]  [SPEAKER_01]: I've got another idea.
+[28:23.660 --> 28:25.120]  [SPEAKER_01]: Oh, actually, wait a minute.
+[28:25.180 --> 28:26.140]  [SPEAKER_01]: I wonder if this will work now.
+[28:28.760 --> 28:30.160]  [SPEAKER_01]: Oh, look at that.
+[28:30.260 --> 28:32.700]  [SPEAKER_01]: That looks like that is loading in here
+now.
+[28:34.020 --> 28:37.480]  [SPEAKER_01]: So, I should be able to do the other
+commands.
+[29:14.600 --> 29:16.020]  [SPEAKER_01]: There we go.
+[29:17.220 --> 29:18.840]  [SPEAKER_01]: Oh, sorry, go ahead, punch in the thing.
+[29:22.600 --> 29:24.740]  [SPEAKER_01]: What a wild ride here.
+[29:29.590 --> 29:30.550]  [SPEAKER_05]: So, do we have any idea?
+[29:32.670 --> 29:33.770]  [SPEAKER_01]: Got some idea.
+[29:34.950 --> 29:36.610]  [SPEAKER_01]: Okay, you got the firmware file somewhere.
+[29:36.750 --> 29:37.610]  [SPEAKER_01]: It looks like you do.
+[29:44.430 --> 29:45.570]  [SPEAKER_01]: And we're good to send it?
+[29:45.750 --> 29:47.950]  [SPEAKER_01]: Or do you want to do another backup with
+Studio first?
+[29:49.750 --> 29:50.350]  [SPEAKER_05]: No, that should be fine.
+[29:51.750 --> 29:53.790]  [SPEAKER_05]: Nothing's really changed with that
+controller, to be honest.
+[29:54.770 --> 29:58.690]  [SPEAKER_05]: It's a ProWeb we used as a gateway,
+so I don't really think there's anything
+[29:58.690 --> 30:00.710]  [SPEAKER_05]: on there, like program-wise, as much on
+it.
+[30:18.130 --> 30:25.950]  [SPEAKER_01]: So, there was an issue before 8.31.5 where
+foreign device registration would say
+[30:25.950 --> 30:27.950]  [SPEAKER_01]: success, but never actually succeeded.
+[30:30.410 --> 30:32.710]  [SPEAKER_01]: And that is the issue that I believe you
+were having.
+[30:33.070 --> 30:37.510]  [SPEAKER_01]: If you had already established a
+connection, then you could continue
+[30:37.510 --> 30:39.650]  [SPEAKER_01]: communicating to it, which is why WebView
+is still working.
+[30:43.080 --> 30:50.020]  [SPEAKER_05]: Yeah, but this site is, like, that
+specific one we've used for years.
+[30:51.520 --> 30:52.900]  [SPEAKER_01]: Yeah, I know.
+[30:52.900 --> 30:56.020]  [SPEAKER_01]: The issue has actually been around for a
+long time.
+[30:59.300 --> 31:04.460]  [SPEAKER_01]: Yeah, I'm not really sure what makes it or
+seems to have made it a little bit more
+[31:04.460 --> 31:06.620]  [SPEAKER_01]: frequent, but that's why it's happening.
+[31:07.380 --> 31:11.960]  [SPEAKER_01]: And it's why sometimes it's like,
+they can't connect to device, power cycle
+[31:11.960 --> 31:12.100]  [SPEAKER_01]: it.
+[31:12.180 --> 31:13.260]  [SPEAKER_01]: Oh, now I can connect to it.
+[31:13.300 --> 31:16.040]  [SPEAKER_01]: I'm pretty sure that's the cause of those
+ones.
+[31:18.120 --> 31:18.640]  [SPEAKER_05]: Okay.
+[31:19.600 --> 31:23.560]  [SPEAKER_01]: So, there's sometimes these phantom issues
+that come up, and it seems like
+[31:23.560 --> 31:26.800]  [SPEAKER_01]: controllers are acting weird, and that's
+because of this particular issue.
+[31:27.100 --> 31:27.220]  [SPEAKER_01]: Yeah.
+[31:29.040 --> 31:31.980]  [SPEAKER_01]: So, it was fixed in 8.31.5.
+[31:36.810 --> 31:37.890]  [SPEAKER_01]: Funny story, though.
+[31:38.910 --> 31:43.750]  [SPEAKER_01]: The issue was originally found on the
+version 7 controller, and it was fixed a
+[31:43.750 --> 31:47.870]  [SPEAKER_01]: long time ago, but the fix was never
+brought over to the version 8 controller.
+[31:48.250 --> 31:48.490]  [SPEAKER_04]: Oops!
+[31:51.980 --> 31:52.260]  [SPEAKER_01]: Yeah.
+[31:52.560 --> 31:52.960]  [SPEAKER_01]: All right.
+[31:53.040 --> 31:54.720]  [SPEAKER_01]: So, now that we've got that...
+[31:55.580 --> 31:58.800]  [SPEAKER_01]: I was going to say, now that we've got
+that, you should update the other ones as
+[31:58.800 --> 31:59.100]  [SPEAKER_01]: well.
+[32:01.120 --> 32:04.820]  [SPEAKER_05]: I want to try your theory here,
+because this one here, we weren't able to
+[32:04.820 --> 32:05.360]  [SPEAKER_05]: connect to.
+[32:07.840 --> 32:10.100]  [SPEAKER_05]: And unless our...
+[32:16.860 --> 32:18.460]  [SPEAKER_05]: Oh, we can't get more properties off
+these.
+[32:25.890 --> 32:33.510]  [SPEAKER_01]: Before we do that, can we do the send to
+the other controllers?
+[32:35.710 --> 32:36.950]  [SPEAKER_01]: So, like in here?
+[32:38.810 --> 32:39.690]  [SPEAKER_05]: Oh, yeah.
+[32:41.230 --> 32:41.630]  [SPEAKER_01]: Oh.
+[32:47.040 --> 32:49.360]  [SPEAKER_01]: And now we can go back to whatever it is
+you're doing.
+[32:50.900 --> 32:56.340]  [SPEAKER_05]: Well, I'm just... I'm wondering if this
+one will connect, because according to...
+[32:56.340 --> 33:04.600]  [SPEAKER_05]: well, I can't tell if this is an 8.31.3 or
+8.31.5 that we're connecting to.
+[33:08.090 --> 33:09.330]  [SPEAKER_05]: It's having the same...
+[33:10.010 --> 33:14.010]  [SPEAKER_01]: Let's do yes, and then just punch in what
+you think the master password should be.
+[33:20.400 --> 33:26.620]  [SPEAKER_01]: So, if it's the same issue, then what I
+think will happen is, I think we'll be
+[33:26.620 --> 33:28.080]  [SPEAKER_01]: able to still find other devices.
+[33:33.080 --> 33:33.920]  [SPEAKER_01]: Device offline.
+[33:34.260 --> 33:34.460]  [SPEAKER_01]: Okay.
+[33:36.080 --> 33:38.080]  [SPEAKER_01]: Can we find other things like this?
+[33:40.760 --> 33:41.880]  [SPEAKER_01]: Yeah, that loaded just fine.
+[33:42.880 --> 33:43.720]  [SPEAKER_01]: Okay.
+[33:44.580 --> 33:49.100]  [SPEAKER_05]: I'm just trying to see what specifically
+firmware is in that panel.
+[33:50.840 --> 33:55.280]  [SPEAKER_01]: It might say in the INI file.
+[33:55.480 --> 33:57.800]  [SPEAKER_01]: This is Peterborough Police,
+[34:06.580 --> 34:10.920]  [SPEAKER_03]: and we want that file.
+[34:27.110 --> 34:29.550]  [SPEAKER_05]: I'm just thinking of it as 8.31.3.
+[34:30.170 --> 34:31.130]  [SPEAKER_05]: Okay.
+[34:33.490 --> 34:33.890]  [SPEAKER_01]: Yeah.
+[34:34.930 --> 34:36.050]  [SPEAKER_05]: Let's try the same thing.
+[34:36.490 --> 34:43.430]  [SPEAKER_05]: No, it was a specific kind of 3 that we
+were having trouble connecting to,
+[34:43.530 --> 34:46.290]  [SPEAKER_05]: so maybe... I just couldn't tell if it was
+a 3 or a 5.
+[34:50.350 --> 34:51.490]  [SPEAKER_05]: Does that make sense?
+[34:51.490 --> 34:51.730]  [SPEAKER_01]: Right?
+[34:52.230 --> 34:53.630]  [SPEAKER_01]: Seems like it worked just fine.
+[34:54.890 --> 34:56.970]  [SPEAKER_01]: So, I should be able to do a restore then.
+[35:03.470 --> 35:07.930]  [SPEAKER_05]: So, I guess likely what's happened is,
+in the event of a power outage or
+[35:07.930 --> 35:14.470]  [SPEAKER_05]: whatever, WebView would connect up quick,
+and then because we're not connecting with
+[35:14.470 --> 35:17.630]  [SPEAKER_05]: Studio, it's lasting long enough that
+we're not able to connect, basically.
+[35:18.510 --> 35:19.770]  [SPEAKER_05]: That's probably what's happened.
+[35:44.140 --> 35:44.620]  [SPEAKER_03]: Hmm.
+[35:50.080 --> 35:51.640]  [SPEAKER_03]: That didn't work in this case.
+[35:53.360 --> 35:54.880]  [SPEAKER_03]: Let's try the other thing here.
+[36:24.880 --> 36:29.420]  [SPEAKER_01]: The act of me even using this is what
+caused it to start working.
+[37:06.220 --> 37:07.860]  [SPEAKER_04]: Mention the master password?
+[37:13.880 --> 37:14.400]  [SPEAKER_01]: Okay.
+[37:18.050 --> 37:21.590]  [SPEAKER_01]: Well, I don't think it's going to come up,
+but we should be able to do now.
+[37:22.570 --> 37:28.390]  [SPEAKER_01]: There's these additional options like
+that, and if I double-click up here...
+[37:28.390 --> 37:29.010]  [SPEAKER_01]: Yeah.
+[38:08.210 --> 38:08.810]  [SPEAKER_01]: Hang on.
+[38:08.850 --> 38:10.190]  [SPEAKER_01]: I just need to read that one thing.
+[38:10.730 --> 38:11.430]  [SPEAKER_01]: Still sending?
+[38:12.930 --> 38:14.930]  [SPEAKER_05]: I'm kind of hung up.
+[38:20.710 --> 38:22.510]  [SPEAKER_05]: I don't know why it's been doing that to
+me lately.
+[38:28.200 --> 38:29.060]  [SPEAKER_03]: Unfortunately, right?
+[38:32.750 --> 38:33.610]  [SPEAKER_03]: If I've got one.
+[38:39.580 --> 38:42.020]  [SPEAKER_05]: It's been a real struggle trying to do
+flex errors.
+[38:57.740 --> 38:58.220]  [SPEAKER_03]: Hmm.
+[38:58.640 --> 38:59.600]  [SPEAKER_03]: Thinking, thinking.
+[39:55.090 --> 40:00.640]  [SPEAKER_01]: What I think I could do for your other
+issues with, like, when you're trying to
+[40:00.640 --> 40:06.020]  [SPEAKER_01]: send it to flex error and it gets kind of
+hung up, I can give you a configuration
+[40:06.020 --> 40:07.840]  [SPEAKER_01]: file to stick into Toolkit.
+[40:07.920 --> 40:13.000]  [SPEAKER_01]: So if it happens again, we can grab the
+network capture from the attempted
+[40:13.000 --> 40:16.760]  [SPEAKER_01]: firmware send, and then we can hopefully
+figure out what happened.
+[40:18.050 --> 40:19.680]  [SPEAKER_01]: It's something that has been reported.
+[40:19.680 --> 40:23.100]  [SPEAKER_01]: But the problem is it's super
+intermittent.
+[40:24.820 --> 40:29.520]  [SPEAKER_01]: So we could try over and over and over
+again, and we'd never recreate the issue
+[40:29.520 --> 40:29.900]  [SPEAKER_01]: type thing.
+[40:29.980 --> 40:30.260]  [SPEAKER_01]: You know what I mean?
+[40:31.140 --> 40:33.540]  [SPEAKER_05]: Too bad I didn't have that issue on
+Monday.
+[40:34.240 --> 40:34.840]  [SPEAKER_01]: I know, right?
+[40:36.680 --> 40:42.920]  [SPEAKER_05]: Because it took me... it honestly took me
+two days to update ten flex errors.
+[40:43.700 --> 40:44.180]  [SPEAKER_01]: Yeah.
+[40:45.440 --> 40:50.680]  [SPEAKER_01]: Is there a site that has a single
+controller on it or something like that?
+[40:51.000 --> 40:53.220]  [SPEAKER_01]: When I say single, I mean, like,
+single BIP controller.
+[41:02.340 --> 41:04.060]  [SPEAKER_05]: I think I seen one the other day.
+[41:13.470 --> 41:15.650]  [SPEAKER_05]: Like, it's... yeah, there we go.
+[41:17.770 --> 41:18.730]  [SPEAKER_01]: Oh, interesting.
+[41:18.870 --> 41:19.490]  [SPEAKER_01]: This one should also...
+[41:21.830 --> 41:23.190]  [SPEAKER_05]: Am I able to update this one?
+[41:26.490 --> 41:29.090]  [SPEAKER_05]: I would want to do backup first.
+[41:29.210 --> 41:30.650]  [SPEAKER_05]: I don't know if I've done one.
+[41:30.890 --> 41:31.470]  [SPEAKER_05]: That's all.
+[41:37.250 --> 41:42.370]  [SPEAKER_05]: I'm basically working my way through all
+of them, doing a full... updating
+[41:42.370 --> 41:42.790]  [SPEAKER_05]: everybody.
+[41:44.030 --> 41:47.330]  [SPEAKER_01]: Is it possible that someone could just go
+to the device and power cycle it?
+[41:47.590 --> 41:49.330]  [SPEAKER_01]: That's probably the easiest thing at the
+moment.
+[41:49.330 --> 41:55.690]  [SPEAKER_01]: But what I was hoping to do is... sorry,
+not the mechanical room thing.
+[41:55.790 --> 41:56.510]  [SPEAKER_01]: I was thinking of the...
+[41:59.110 --> 42:01.870]  [SPEAKER_01]: Peterborough daycare, Peterborough
+daycare, that's the one.
+[42:01.910 --> 42:06.530]  [SPEAKER_05]: Well, actually, if you go to... actually,
+I've got an even better idea than that
+[42:06.530 --> 42:06.730]  [SPEAKER_05]: one.
+[42:08.310 --> 42:16.270]  [SPEAKER_05]: I was going to back it up just because
+we're looking at it, but...
+[42:16.270 --> 42:21.930]  [SPEAKER_05]: So, this one, back to City Hall,
+because we can get in there now.
+[42:33.850 --> 42:42.650]  [SPEAKER_05]: And to go with your idea earlier with that
+ProWeb, if I change this port...
+[42:46.480 --> 42:48.720]  [SPEAKER_01]: So, we don't have to change anything.
+[42:49.940 --> 42:51.140]  [SPEAKER_01]: Yeah, yeah, 47810, yeah.
+[42:53.220 --> 42:54.420]  [SPEAKER_01]: No network number 30.
+[43:00.320 --> 43:02.780]  [SPEAKER_05]: No, that should be fine.
+[43:03.120 --> 43:04.380]  [SPEAKER_01]: Yeah, there shouldn't be any issue.
+[43:09.320 --> 43:10.920]  [SPEAKER_01]: Yeah, yeah, it can be.
+[43:13.000 --> 43:15.160]  [SPEAKER_01]: Yeah, there's no real issue with it.
+[43:15.220 --> 43:16.360]  [SPEAKER_01]: You just have to know what you're doing.
+[43:16.800 --> 43:19.780]  [SPEAKER_01]: A lot of people don't know what they're
+doing, and they cause horrible routing
+[43:19.780 --> 43:20.060]  [SPEAKER_01]: loops.
+[43:20.880 --> 43:23.160]  [SPEAKER_01]: On that note, I'm going to intentionally
+create one.
+[43:34.820 --> 43:35.220]  [SPEAKER_01]: YOLO.
+[43:35.220 --> 43:35.360]  [SPEAKER_01]: YOLO.
+[43:40.480 --> 43:42.620]  [SPEAKER_01]: Okay, so we got that.
+[43:42.900 --> 43:43.260]  [SPEAKER_01]: Oh, sorry.
+[43:44.040 --> 43:47.060]  [SPEAKER_01]: I just remembered something I wanted to
+do, which is...
+[43:47.880 --> 43:51.040]  [SPEAKER_01]: I wanted to get the... which one was the
+one we were trying to connect to that
+[43:51.040 --> 43:51.620]  [SPEAKER_01]: wasn't working?
+[43:52.720 --> 43:53.680]  [SPEAKER_01]: The police one?
+[43:54.380 --> 43:56.040]  [SPEAKER_01]: Okay, down right there.
+[43:59.900 --> 44:01.440]  [SPEAKER_01]: So, I have a wild idea.
+[44:01.660 --> 44:02.720]  [SPEAKER_01]: I think it'll work.
+[44:03.360 --> 44:04.200]  [SPEAKER_01]: We're going to find out.
+[44:09.650 --> 44:13.190]  [SPEAKER_05]: I was going to try the slightly less YOLO
+version, but I like it.
+[44:15.930 --> 44:19.310]  [SPEAKER_01]: Okay, so I should be able to punch in
+that.
+[44:19.630 --> 44:21.830]  [SPEAKER_01]: And is it 47810 for that one as well?
+[44:24.830 --> 44:27.390]  [SPEAKER_05]: Yeah, that's the one we were trying to
+connect to.
+[44:28.190 --> 44:28.970]  [SPEAKER_01]: Look at that.
+[44:29.410 --> 44:33.550]  [SPEAKER_01]: I am connected to it, which means I can
+add some static routes.
+[44:34.770 --> 44:39.670]  [SPEAKER_01]: Now, normally, this wouldn't suddenly
+start working, except...
+[44:45.030 --> 44:46.290]  [SPEAKER_01]: Now, let's see.
+[44:46.350 --> 44:47.390]  [SPEAKER_01]: What's our IP address?
+[44:50.880 --> 44:54.560]  [SPEAKER_03]: Oh, look at that.
+[44:54.620 --> 44:55.060]  [SPEAKER_03]: It's right there.
+[45:02.000 --> 45:05.460]  [SPEAKER_01]: I'm going to pick a port, 44444,
+like that.
+[45:06.400 --> 45:07.080]  [SPEAKER_01]: Send to connected.
+[45:07.080 --> 45:13.320]  [SPEAKER_01]: Okay, so now what has happened is I've
+told it, for all your broadcast stuff,
+[45:13.480 --> 45:15.380]  [SPEAKER_01]: send a version to Studio, right?
+[45:18.020 --> 45:21.070]  [SPEAKER_01]: And in Studio, I'm going to add a...
+[45:22.040 --> 45:26.040]  [SPEAKER_01]: Remember that thing I was showing you
+before, like there's this super secret
+[45:26.040 --> 45:30.280]  [SPEAKER_01]: setting in the file I thought might have
+been the issue?
+[45:31.120 --> 45:32.240]  [SPEAKER_01]: Well, I can abuse that.
+[45:33.900 --> 45:35.280]  [SPEAKER_01]: I can tell Studio.
+[45:35.680 --> 45:37.340]  [SPEAKER_01]: That's actually what we're going to listen
+on.
+[45:39.320 --> 45:40.440]  [SPEAKER_01]: And then...
+[45:41.360 --> 45:42.160]  [SPEAKER_01]: So, let's see.
+[45:42.180 --> 45:44.300]  [SPEAKER_01]: This is for the police.
+[45:46.560 --> 45:47.700]  [SPEAKER_01]: There it is.
+[45:49.180 --> 45:51.060]  [SPEAKER_05]: I have to remember to undo it.
+[45:51.660 --> 45:52.280]  [SPEAKER_05]: Yeah, exactly.
+[45:54.500 --> 45:55.060]  [SPEAKER_05]: Gotcha.
+[45:57.300 --> 45:58.960]  [SPEAKER_01]: Now, I open up Studio.
+[46:10.920 --> 46:11.660]  [SPEAKER_01]: All right.
+[46:12.760 --> 46:14.720]  [SPEAKER_01]: So, now when I connect to this...
+[46:19.050 --> 46:20.010]  [SPEAKER_01]: Look at that.
+[46:20.910 --> 46:21.410]  [SPEAKER_01]: Oh, sorry.
+[46:21.510 --> 46:22.390]  [SPEAKER_01]: I just did the typing.
+[46:23.470 --> 46:24.730]  [SPEAKER_01]: I keep doing it.
+[46:27.030 --> 46:32.290]  [SPEAKER_01]: And then from here, I should be able to
+do...
+[46:34.170 --> 46:34.730]  2000...
+[46:35.970 --> 46:37.050]  [SPEAKER_04]: Read that.
+[46:39.590 --> 46:45.050]  [SPEAKER_01]: And then now Toolkit should be able to
+connect here.
+[46:50.740 --> 46:51.600]  [SPEAKER_01]: Look at that.
+[46:52.620 --> 46:53.020]  [SPEAKER_01]: Amazing.
+[46:55.360 --> 46:57.820]  [SPEAKER_01]: We have to do all this because we don't
+support Unicast.
+[46:57.900 --> 46:58.440]  [SPEAKER_01]: Isn't that awesome?
+[46:59.500 --> 47:01.520]  [SPEAKER_01]: It's like a straight Unicast connection.
+[47:02.520 --> 47:05.900]  [SPEAKER_01]: I would love it if we could just do a
+straight Unicast connection, because if
+[47:05.900 --> 47:09.840]  [SPEAKER_01]: you ever screwed up your BBMD,
+had the wrong NAT, whatever, you could
+[47:09.840 --> 47:10.340]  [SPEAKER_01]: still connect.
+[47:12.200 --> 47:14.720]  [SPEAKER_01]: Connect long enough to fix your settings.
+[47:15.420 --> 47:17.680]  [SPEAKER_01]: But we don't have that feature,
+so...
+[47:17.680 --> 47:18.900]  [SPEAKER_01]: Yeah, it is what it is.
+[47:19.380 --> 47:21.620]  [SPEAKER_05]: Now, is that a security thing,
+or is that a...
+[47:21.620 --> 47:21.940]  [SPEAKER_01]: No.
+[47:22.060 --> 47:24.240]  [SPEAKER_05]: Just a nobody ever put it in thing?
+[47:24.840 --> 47:25.980]  [SPEAKER_01]: No one ever put it in.
+[47:26.120 --> 47:26.280]  [SPEAKER_01]: Yeah.
+[47:27.420 --> 47:27.960]  [SPEAKER_05]: Oh, okay.
+[47:28.800 --> 47:30.620]  [SPEAKER_01]: I understand the initial rationale.
+[47:32.200 --> 47:34.360]  [SPEAKER_01]: The initial rationale is...
+[47:38.320 --> 47:41.640]  [SPEAKER_01]: If you're connecting with Studio,
+you want to see broadcast, you want to see
+[47:41.640 --> 47:42.940]  [SPEAKER_01]: alarms, stuff like that.
+[47:43.580 --> 47:48.060]  [SPEAKER_01]: If we gave people the ability to connect
+to systems using Studio that way,
+[47:48.640 --> 47:51.080]  [SPEAKER_01]: then it would...
+[47:51.080 --> 47:53.480]  [SPEAKER_01]: They would connect and not realize there
+was alarms.
+[47:53.960 --> 47:55.860]  [SPEAKER_01]: And then other big problems would happen,
+right?
+[47:57.520 --> 47:59.420]  [SPEAKER_01]: But I think Toolkit should have the
+ability.
+[48:00.580 --> 48:01.760]  [SPEAKER_01]: As far as I'm concerned.
+[48:01.760 --> 48:03.940]  [SPEAKER_01]: But, anyways...
+[48:05.840 --> 48:08.980]  [SPEAKER_01]: It's one thing to say it should have,
+and another one to implement it.
+[48:11.200 --> 48:13.560]  [SPEAKER_05]: Now, can you...
+[48:13.560 --> 48:18.740]  [SPEAKER_05]: Is there ever a reason for the design
+choice on the Flex controllers behind
+[48:18.740 --> 48:20.640]  [SPEAKER_05]: using a USB-A port on that?
+[48:21.540 --> 48:24.960]  [SPEAKER_01]: I think it had to do with complexity and
+part availability.
+[48:25.440 --> 48:26.980]  [SPEAKER_01]: Remember, it was during the whole COVID
+stuff.
+[48:28.700 --> 48:29.220]  [SPEAKER_05]: Oh, okay.
+[48:29.620 --> 48:31.360]  [SPEAKER_05]: So instead of just using like a USB-C
+port.
+[48:32.060 --> 48:35.760]  [SPEAKER_01]: Yeah, USB-C is a little bit more
+complicated to implement.
+[48:36.500 --> 48:39.180]  [SPEAKER_01]: Both in terms of if you're designing a
+board with it.
+[48:39.360 --> 48:46.260]  [SPEAKER_01]: It's got like 24 pins, or up to 24 pins,
+versus like 4 on regular USB.
+[48:46.620 --> 48:48.720]  [SPEAKER_01]: So complexity is much higher immediately.
+[48:50.080 --> 48:53.840]  [SPEAKER_01]: There are versions, I think there's a
+16-pin version.
+[48:55.620 --> 48:57.680]  [SPEAKER_01]: Anyways, it's more complex.
+[48:57.680 --> 49:02.680]  [SPEAKER_01]: And then, additionally, you have to handle
+a lot more potential voltages.
+[49:04.560 --> 49:07.720]  [SPEAKER_01]: With regular USB Type-A, it's 5 volts.
+[49:08.340 --> 49:08.660]  [SPEAKER_01]: Easy.
+[49:09.640 --> 49:13.540]  [SPEAKER_01]: If you're talking about USB Type-C,
+do you have any idea how many different
+[49:13.540 --> 49:15.160]  [SPEAKER_01]: types of voltages you can send it?
+[49:16.740 --> 49:21.480]  [SPEAKER_05]: Oh, well, we're at like 20 volts and,
+I don't know, 7 amps or something for my
+[49:21.480 --> 49:22.260]  [SPEAKER_05]: computer, I think.
+[49:23.100 --> 49:24.940]  [SPEAKER_01]: Yeah, if you screw up the...
+[49:24.940 --> 49:26.420]  [SPEAKER_05]: I've read the side of my...
+[49:27.020 --> 49:29.260]  [SPEAKER_01]: Yeah, if you screw up the...
+[49:29.260 --> 49:34.460]  [SPEAKER_01]: When you're designing a board and you're
+putting in a controller to do USB Type-C
+[49:34.460 --> 49:40.620]  [SPEAKER_01]: power, if you screw up the way that it at
+all, or if it interprets, let's say,
+[49:40.680 --> 49:42.620]  [SPEAKER_01]: a spike as being like a...
+[49:45.020 --> 49:50.480]  [SPEAKER_01]: If it sends something down the USB Type-C
+that makes the power adapters connected to
+[49:50.480 --> 49:55.280]  [SPEAKER_01]: think it can take a higher power than it
+can, it will blow itself up.
+[49:57.700 --> 49:59.080]  [SPEAKER_01]: That's kind of what I'm getting at.
+[50:03.360 --> 50:06.840]  [SPEAKER_01]: Now, I don't know if I've ever seen that
+happen, but I'm just saying as far as
+[50:06.840 --> 50:09.080]  [SPEAKER_01]: implementing it, it's...
+[50:09.080 --> 50:11.740]  [SPEAKER_01]: Like, from board complexity standpoint,
+it's higher.
+[50:12.240 --> 50:15.440]  [SPEAKER_01]: From a power system...
+[50:20.900 --> 50:23.560]  [SPEAKER_01]: power supply standpoint, it's also more
+complicated.
+[50:26.480 --> 50:28.040]  [SPEAKER_01]: I'm not saying it's not possible.
+[50:28.180 --> 50:36.930]  [SPEAKER_01]: I think that's in the plans, like in the
+works, but it just means that they had to
+[50:36.930 --> 50:42.010]  [SPEAKER_01]: pivot really quickly because of part
+shortages preventing us from being able to
+[50:42.010 --> 50:42.830]  [SPEAKER_01]: sell the ProAirs.
+[50:44.190 --> 50:49.210]  [SPEAKER_01]: So, a number of design decisions weren't
+necessarily made because we're like,
+[50:49.290 --> 50:50.450]  [SPEAKER_01]: this is the best way to do it.
+[50:50.530 --> 50:52.410]  [SPEAKER_01]: It was like, this is how we can do it
+right now.
+[50:53.790 --> 50:54.150]  [SPEAKER_05]: Yeah.
+[50:54.450 --> 50:56.990]  [SPEAKER_05]: No, now that you mention that,
+because, yeah, we had the same kind of
+[50:56.990 --> 51:00.450]  [SPEAKER_05]: thing happen with the ProViews for a
+while, too.
+[51:01.150 --> 51:01.870]  [SPEAKER_01]: Yeah, exactly.
+[51:02.190 --> 51:02.550]  [SPEAKER_01]: Yeah.
+[51:03.510 --> 51:04.830]  [SPEAKER_05]: That was a fun one for a minute.
+[51:06.110 --> 51:06.670]  [SPEAKER_01]: Oh, yeah.
+[51:07.690 --> 51:08.410]  [SPEAKER_01]: Okay, and then...
+[51:10.750 --> 51:11.110]  [SPEAKER_03]: Oh,
+[51:20.310 --> 51:20.830]  [SPEAKER_01]: wait, I forgot.
+[51:21.190 --> 51:26.650]  [SPEAKER_01]: I want to go back into here, and I want to
+remove the entry I added.
+[51:26.650 --> 51:31.280]  [SPEAKER_05]: Did you do it in here?
+[51:31.380 --> 51:33.760]  [SPEAKER_05]: Did we do it in the City Hall?
+[51:34.780 --> 51:35.220]  [SPEAKER_05]: We did it here.
+[51:35.340 --> 51:35.580]  [SPEAKER_05]: Okay.
+[51:36.440 --> 51:38.660]  [SPEAKER_01]: Yeah, I did a trickety-trick to make it
+work.
+[51:41.400 --> 51:45.440]  [SPEAKER_01]: And then we should connect to that other
+one and turn off the BIP...
+[51:47.440 --> 51:48.620]  [SPEAKER_01]: Should we turn off BIP2?
+[51:48.760 --> 51:49.960]  [SPEAKER_01]: No, you can leave it.
+[51:50.080 --> 51:50.560]  [SPEAKER_01]: It's fine.
+[51:50.600 --> 51:51.160]  [SPEAKER_01]: You can leave it.
+[51:52.980 --> 51:55.780]  [SPEAKER_01]: It might be useful to have a secondary
+method to connect in.
+[51:58.800 --> 52:02.940]  [SPEAKER_05]: Because I'd be seeing... we'd have overlap
+in the two buildings, wouldn't we,
+[52:03.100 --> 52:03.520]  [SPEAKER_05]: currently?
+[52:03.800 --> 52:04.060]  [SPEAKER_05]: Yeah.
+[52:09.530 --> 52:10.630]  [SPEAKER_03]: Which one is this?
+[52:14.460 --> 52:14.940]  Interesting.
+[52:18.960 --> 52:22.220]  [SPEAKER_01]: Am I thinking of the right system?
+[52:26.040 --> 52:26.920]  [SPEAKER_05]: Oh, it's right here.
+[52:27.380 --> 52:27.860]  Yep.
+[52:28.640 --> 52:29.560]  [SPEAKER_03]: Oh, yeah, there we go.
+[52:40.230 --> 52:41.990]  [SPEAKER_01]: You're going to be very confused for a
+little bit.
+[52:43.710 --> 52:44.310]  [SPEAKER_05]: Yeah.
+[52:46.490 --> 52:50.330]  [SPEAKER_05]: Well, I mean, things are starting to work,
+I guess.
+[53:04.230 --> 53:04.830]  [SPEAKER_03]: Yeah.
+[53:09.890 --> 53:11.250]  [SPEAKER_01]: I guess keep going.
+[53:11.390 --> 53:16.830]  [SPEAKER_01]: So, if you encounter this again for
+another one, we can just do that same
+[53:16.830 --> 53:19.630]  [SPEAKER_01]: trick with the system list here that I
+did.
+[53:22.170 --> 53:23.590]  [SPEAKER_01]: That should work.
+[53:24.710 --> 53:25.990]  [SPEAKER_05]: Wait, we've got to take that back out,
+right?
+[53:27.090 --> 53:28.510]  [SPEAKER_01]: Yeah, we should take it back out.
+[53:28.630 --> 53:30.270]  [SPEAKER_01]: It'll still work, even with it in.
+[53:30.770 --> 53:34.170]  [SPEAKER_01]: The concern is usually that people will
+have something like, let's say,
+[53:34.230 --> 53:39.170]  [SPEAKER_01]: they'll have 47810 here, then put 47810
+here, which will do some funny things.
+[53:40.050 --> 53:41.050]  [SPEAKER_01]: Normally, it's fine.
+[53:41.810 --> 53:43.830]  [SPEAKER_01]: Turns out, not always is fine.
+[53:47.210 --> 53:58.070]  [SPEAKER_05]: Now, with the BBMD side of things,
+because, like, which one was the other
+[53:58.070 --> 53:58.610]  [SPEAKER_05]: one?
+[54:02.860 --> 54:03.420]  [SPEAKER_05]: Kinsman.
+[54:05.420 --> 54:07.680]  [SPEAKER_05]: Because we have one more that's not
+connecting.
+[54:07.980 --> 54:15.700]  [SPEAKER_05]: Now, because it's not...
+[54:16.860 --> 54:18.000]  [SPEAKER_01]: So, which one is that?
+[54:18.280 --> 54:18.620]  [SPEAKER_01]: Kinsman?
+[54:20.300 --> 54:21.020]  [SPEAKER_05]: Line 3.
+[54:21.840 --> 54:22.740]  [SPEAKER_01]: Line 3, okay.
+[54:25.680 --> 54:26.600]  [SPEAKER_01]: And 47809.
+[54:29.260 --> 54:30.620]  [SPEAKER_01]: Yeah, it looks like the same problem.
+[54:30.760 --> 54:31.060]  [SPEAKER_01]: All right.
+[54:50.760 --> 54:53.940]  [SPEAKER_01]: There's actually two ways to do it.
+[54:53.940 --> 54:56.320]  [SPEAKER_01]: What's interesting is you can see the
+foreign device table is loading.
+[54:58.340 --> 54:58.800]  [SPEAKER_01]: Yes.
+[54:59.600 --> 55:01.660]  [SPEAKER_01]: Oh, sorry.
+[55:01.760 --> 55:02.020]  [SPEAKER_01]: Go ahead.
+[55:02.100 --> 55:02.680]  [SPEAKER_01]: I keep typing.
+[55:05.760 --> 55:08.240]  [SPEAKER_05]: There we go.
+[55:12.720 --> 55:15.720]  [SPEAKER_01]: Looks like it did actually come up now.
+[55:15.940 --> 55:16.840]  [SPEAKER_01]: That's interesting.
+[55:17.560 --> 55:18.880]  [SPEAKER_01]: Maybe because I went here?
+[55:24.080 --> 55:25.660]  [SPEAKER_05]: I have no idea.
+[55:25.660 --> 55:26.780]  [SPEAKER_05]: That was just enough to wake it up?
+[55:28.420 --> 55:29.940]  [SPEAKER_01]: Yeah, that was really weird.
+[55:30.640 --> 55:31.680]  [SPEAKER_01]: Kinsman, there we go.
+[55:38.770 --> 55:39.530]  [SPEAKER_01]: Oh, maybe not.
+[55:41.070 --> 55:42.590]  [SPEAKER_01]: All right, and then I'll do this.
+[56:05.630 --> 56:06.270]  [SPEAKER_03]: There you go.
+[56:18.100 --> 56:22.900]  [SPEAKER_01]: And it is a Pro... ProWeb, okay.
+[56:31.820 --> 56:32.260]  [SPEAKER_04]: Cool.
+[56:32.260 --> 56:33.240]  [SPEAKER_05]: This is interesting.
+[56:33.660 --> 56:41.260]  [SPEAKER_05]: It's just weird we've had these three
+specific sites that are acting up like
+[56:41.260 --> 56:43.420]  [SPEAKER_05]: this out of a whole bunch.
+[56:44.760 --> 56:47.120]  [SPEAKER_01]: Yeah, and like I said, the issue has been
+around forever.
+[56:47.400 --> 56:50.960]  [SPEAKER_01]: It just doesn't always hit people.
+[56:51.060 --> 56:52.020]  [SPEAKER_05]: Yeah, it sets itself in weird ways.
+[56:54.840 --> 56:58.080]  [SPEAKER_05]: Now, do we need to take that BBMD out of
+the other...
+[57:02.820 --> 57:06.180]  [SPEAKER_01]: I don't think I even put in any BBMD this
+time, right?
+[57:07.940 --> 57:09.240]  [SPEAKER_01]: I don't think I did anything.
+[57:09.260 --> 57:10.720]  [SPEAKER_01]: It just worked.
+[57:11.040 --> 57:14.900]  [SPEAKER_05]: It hit connect and it said it pulled it.
+[57:15.080 --> 57:16.460]  [SPEAKER_05]: I don't know how that all worked.
+[57:16.500 --> 57:19.640]  [SPEAKER_01]: Yeah, Studio connected for some reason and
+it was able to actually communicate.
+[57:20.420 --> 57:23.400]  [SPEAKER_01]: So, very weird either way.
+[57:25.300 --> 57:29.940]  [SPEAKER_05]: Okay, so I'm fixing myself a whole bunch
+of problems by doing this giant firmware
+[57:29.940 --> 57:30.240]  [SPEAKER_05]: update.
+[57:30.240 --> 57:31.760]  [SPEAKER_05]: So, that's nice to actually know for a
+change.
+[57:34.200 --> 57:34.520]  [SPEAKER_01]: Yeah.
+[57:35.320 --> 57:39.060]  [SPEAKER_05]: I've been around long enough for the days
+that we do firmware updates and we break
+[57:39.060 --> 57:39.880]  [SPEAKER_05]: things that used to work.
+[57:41.440 --> 57:43.240]  [SPEAKER_01]: Okay, so I'm just going to add the steps
+that I did.
+[57:43.240 --> 57:52.320]  [SPEAKER_01]: So, one, connect to some site that we can,
+in fact, connect to with RC toolkit.
+[57:54.420 --> 58:03.400]  [SPEAKER_01]: Add BDT entry that has computer IP address
+and some port.
+[58:07.490 --> 58:11.730]  [SPEAKER_01]: Edit system list on XML for that
+connection.
+[58:12.730 --> 58:29.920]  [SPEAKER_03]: So, that second JREDP port is instead of
+that.
+[58:33.460 --> 58:34.360]  [SPEAKER_03]: Save.
+[58:36.240 --> 58:38.300]  [SPEAKER_03]: Open RC Studio.
+[58:45.260 --> 58:47.200]  [SPEAKER_03]: If it is open,
+[58:50.280 --> 58:52.060]  [SPEAKER_03]: connect to.
+[58:58.190 --> 58:59.570]  [SPEAKER_03]: Use F12.
+[58:59.710 --> 59:00.330]  [SPEAKER_03]: Read.
+[59:01.270 --> 59:02.010]  [SPEAKER_03]: Write.
+[59:03.870 --> 59:06.690]  [SPEAKER_03]: Enter device ID.
+[59:07.710 --> 59:08.710]  [SPEAKER_03]: Object.
+[59:09.830 --> 59:11.070]  [SPEAKER_03]: Instance 1.
+[59:11.810 --> 59:12.550]  [SPEAKER_03]: Property.
+[59:14.190 --> 59:14.890]  [SPEAKER_03]: 2093.
+[59:16.950 --> 59:17.510]  [SPEAKER_03]: 7.
+[59:23.100 --> 59:23.820]  [SPEAKER_03]: 8.
+[59:23.940 --> 59:24.520]  [SPEAKER_03]: Property.
+[59:29.130 --> 59:29.830]  [SPEAKER_03]: 6P.
+[59:30.930 --> 59:32.330]  [SPEAKER_03]: 4.
+[59:32.330 --> 59:33.570]  [SPEAKER_03]: 5.
+[59:40.210 --> 59:41.610]  [SPEAKER_03]: Enter.
+[59:48.870 --> 59:49.550]  [SPEAKER_03]: Write.
+[59:58.420 --> 59:59.100]  [SPEAKER_03]: Property.
+[01:00:05.810 --> 01:00:06.510]  Connect.
+[01:00:07.770 --> 01:00:09.670]  [SPEAKER_03]: With RC toolkit.
+[01:00:11.370 --> 01:00:12.770]  [SPEAKER_03]: Controller.
+[01:00:13.390 --> 01:00:16.370]  [SPEAKER_03]: Update the firmware.
+[01:00:19.400 --> 01:00:20.100]  [SPEAKER_03]: F12.
+[01:00:20.880 --> 01:00:22.680]  [SPEAKER_03]: Close RC Studio.
+[01:00:40.240 --> 01:00:41.440]  [SPEAKER_04]: Oh, isn't that fun?
+[01:00:45.980 --> 01:00:48.360]  [SPEAKER_05]: You should just save that for yourself for
+another day.
+[01:00:49.440 --> 01:00:49.680]  [SPEAKER_01]: Yeah.
+[01:00:50.440 --> 01:00:59.140]  [SPEAKER_01]: Now, I think this would also work – you
+can try doing – try a warm start.
+[01:01:04.860 --> 01:01:06.580]  [SPEAKER_03]: That doesn't work.
+[01:01:30.280 --> 01:01:32.660]  [SPEAKER_01]: Isn't that ridiculous, just the amount of
+steps?
+[01:01:32.860 --> 01:01:33.800]  [SPEAKER_01]: All right, there we go.
+[01:01:34.640 --> 01:01:35.700]  [SPEAKER_01]: That's how you do it.
+[01:01:37.440 --> 01:01:37.900]  [SPEAKER_05]: Yeah.
+[01:01:39.400 --> 01:01:44.260]  [SPEAKER_05]: Yeah, save that for yourself for the next
+person that runs into this problem I'm
+[01:01:44.260 --> 01:01:44.620]  [SPEAKER_05]: having.
+[01:01:45.700 --> 01:01:46.200]  [SPEAKER_01]: I know, right.
+[01:01:50.020 --> 01:01:52.300]  [SPEAKER_05]: Then you'll come back to, I wrote that
+down somewhere.
+[01:01:53.120 --> 01:01:54.040]  [SPEAKER_05]: Where did I save that?
+[01:01:58.120 --> 01:01:58.820]  [SPEAKER_03]: Pretty much.
+[01:01:59.960 --> 01:02:00.800]  [SPEAKER_03]: There we go.
+[01:02:05.420 --> 01:02:05.880]  [SPEAKER_01]: Okay.
+[01:02:06.600 --> 01:02:09.100]  [SPEAKER_01]: Right, that should be sufficient.
+[01:02:09.340 --> 01:02:11.540]  [SPEAKER_01]: So, I need to grab some other calls.
+[01:02:12.080 --> 01:02:15.980]  [SPEAKER_01]: So, let me know if you have any other
+issues.
+[01:02:17.780 --> 01:02:18.260]  [SPEAKER_05]: Absolutely.
+[01:02:18.640 --> 01:02:19.140]  [SPEAKER_05]: Thank you very much.
+[01:02:20.620 --> 01:02:21.360]  [SPEAKER_01]: Yeah, you're welcome.
+[01:02:21.940 --> 01:02:22.080]  [SPEAKER_01]: Yeah.
+[01:02:22.720 --> 01:02:22.960]  [SPEAKER_01]: Bye.
+[01:02:23.120 --> 01:02:23.300]  [SPEAKER_05]: Bye.

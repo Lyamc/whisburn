@@ -1,0 +1,109 @@
+[00:03.470 --> 00:06.810]  Reliable Controls Technical Support, Veeam speaking.
+[00:08.930 --> 00:11.250]  Hey, Lin. This is Sean with Comfort. How are you doing?
+[00:12.230 --> 00:12.570]  Good.
+[00:13.690 --> 00:23.970]  Yeah. So, I wanted to reset my RC Reporter. I installed the RC Reporter on a custom site,
+[00:24.610 --> 00:30.870]  but I kind of forgot the password. But when I reset the password, it says,
+[00:30.870 --> 00:36.770]  a reset token is required. What does that mean?
+[00:38.130 --> 00:39.570]  Sorry, for what? This is for the website?
+[00:42.490 --> 00:49.550]  No, I installed the RC Reporter on the site, on the computer on site.
+[00:50.690 --> 00:56.030]  Okay. Did you set up some sort of like two-factor? Like a reset password path?
+[00:58.370 --> 01:00.090]  Being like to an email address?
+[01:00.090 --> 01:09.310]  No, no. Yes, I basically triggered a password reset email. I received it.
+[01:09.310 --> 01:09.530]  Okay.
+[01:09.850 --> 01:13.890]  And then it gave me the link. Yeah, it gave me the link to reset the password.
+[01:15.030 --> 01:19.090]  Oh, right, right, right. No, I think I know what you're talking about.
+[01:19.230 --> 01:20.750]  Give me a second. What version of Reporter?
+[01:23.650 --> 01:29.370]  I think I recently just installed, so it's the latest version, I believe.
+[01:29.870 --> 01:38.730]  Let me double check. How do I check the version now? I cannot log in.
+[01:42.210 --> 01:47.250]  Oh, that's a good question. If you're on the server itself, you can check the control panel.
+[01:47.890 --> 01:52.910]  Oh, okay. I see. So I see. On the page, it says version 3.9.
+[01:58.590 --> 02:08.620]  Oh, 3.9, okay. That should work.
+[02:18.300 --> 02:22.240]  What happens if you copy the reset password link and just paste it inside there?
+[02:25.500 --> 02:36.080]  Yeah, because you're right. Yeah, I type it in basically, right? Because I have to type it in the computer.
+[02:38.000 --> 02:40.100]  Hold on. Let me just get the email again.
+[02:43.730 --> 02:50.770]  Yes, I basically, yes, use that. Type the link, right? Type the link in the browser.
+[02:51.310 --> 02:58.150]  And I'm on the reset page, password reset page. And then I put in a new password.
+[02:58.690 --> 03:09.540]  When I hit set, it says a reset token is required. Validation arrow.
+[03:11.820 --> 03:14.780]  Yeah, so it doesn't like the reset token that you typed in.
+[03:14.780 --> 03:18.380]  Either it expired or you entered it in wrong.
+[03:21.620 --> 03:25.220]  When you say the token, do you mean the new password?
+[03:25.820 --> 03:27.520]  No. No, no, no.
+[03:28.400 --> 03:35.080]  No, when you follow the reset password URL, there's a token attached to the URL, correct?
+[03:38.280 --> 03:41.100]  Oh, hold on. Hold on. There's a token? Hold on.
+[03:48.260 --> 03:54.580]  There's no token. I just received this email. It has no token. It's just a link.
+[04:01.120 --> 04:07.800]  It just says, use the following link to open the set password page. Enter your new password and click OK.
+[04:08.360 --> 04:15.940]  And then it gives me the link, which is localhost 8080v2 set password.
+[04:17.440 --> 04:19.020]  Right. There should be a token attached to it.
+[04:19.020 --> 04:20.020]  Type this in.
+[04:22.760 --> 04:24.120]  Open attached to it.
+[04:25.700 --> 04:27.240]  Like at the end of the URL or something.
+[04:31.180 --> 04:32.540]  No, there's no token.
+[04:37.090 --> 04:43.170]  I can maybe type the message to you on Teams, but there's no token.
+[05:07.380 --> 05:10.900]  There's no attachment or anything.
+[05:15.930 --> 05:18.130]  Yeah, it's in the URL. What are you talking about?
+[05:18.130 --> 05:20.130]  Mouse over top the link you just sent me.
+[05:24.890 --> 05:27.130]  Yes, this link, because...
+[05:28.650 --> 05:32.850]  No, I'm just saying mouse over top of it. You see it has the question mark token equals.
+[05:36.840 --> 05:40.420]  Oh, okay. So, okay. So this is the thing though.
+[05:41.480 --> 05:51.440]  This is on a side computer, right? So, but I received this email. So are you saying I have to open this email?
+[05:52.440 --> 06:02.660]  No, I'm saying that the entire URL is required. Everything, including the question mark token equals blah, blah, blah, blah, blah.
+[06:03.280 --> 06:05.700]  I see. I see. Okay. Okay. Okay. Yes.
+[06:06.740 --> 06:12.520]  I'll try to get... I'll just try to copy that long link to the side computer.
+[06:13.800 --> 06:16.440]  Yeah, I think that's probably why. Got it.
+[06:17.520 --> 06:17.820]  Right.
+[06:17.820 --> 06:22.380]  Okay, I will do that. But...
+[06:22.380 --> 06:28.320]  Is there no way to access the reporter server outside of the system itself?
+[06:31.700 --> 06:39.700]  I have to think of a way. Think of a way. Because last time I used my own teams, the company teams on it.
+[06:39.800 --> 06:47.180]  And that worked for me to transfer some files. So I'm going to do the same here.
+[06:48.460 --> 06:58.580]  So that seems to be the only way. Or I can try to log into my account over the computer, but I don't feel comfortable doing that.
+[06:58.940 --> 07:00.260]  But yeah, I'll figure out a way.
+[07:01.880 --> 07:04.500]  So thank you for the tip.
+[07:05.220 --> 07:12.460]  But I have another question. There was another site. It has a bunch of old RCP, like the mark zones.
+[07:13.340 --> 07:15.460]  So now we...
+[07:16.500 --> 07:24.580]  Some of the mark zones, we land them on a newly installed mark pro com.
+[07:25.420 --> 07:32.480]  And then we want to put a schedule on that mark pro com for those mark zones to follow.
+[07:33.220 --> 07:41.300]  But I know this technician didn't know. I assume that mark pro com has to use version 7.
+[07:42.460 --> 07:47.020]  Version 7 firmware, correct? Because those mark zones, they are all RCP.
+[07:49.240 --> 07:53.680]  You should probably use version 7, yeah. Unless you want to do some programming changes.
+[07:57.350 --> 08:06.710]  Right, yeah. Because right now it's version 8. And then I created a schedule. And I even linked that schedule to a controlled variable.
+[08:08.170 --> 08:12.410]  But it's very weird. That schedule is not even able to turn the...
+[08:13.530 --> 08:20.150]  Controlled variable on and off. And also, when I try to have the mark zone...
+[08:21.770 --> 08:30.250]  To reference that variable on the mark pro com, it couldn't find it. It says arrow.
+[08:30.370 --> 08:36.750]  So I feel like, yes, I have to downgrade it, convert it to version 7 for it to work.
+[08:37.570 --> 08:42.370]  I'm not quite sure about that one. I'd have to take a look at that particular one for me to give you a better answer.
+[08:43.170 --> 08:50.870]  Sounds like something is either wrong, or you can just downgrade to version 7.
+[08:54.360 --> 09:03.100]  Okay, okay. Yes, I will do that. But then I have another question. This technician, he likes to make graphics.
+[09:03.520 --> 09:10.200]  So he wanted to use enhanced system groups on this mark pro com.
+[09:10.200 --> 09:17.220]  But if it's version 7, then it doesn't support the enhanced groups.
+[09:18.380 --> 09:24.540]  So essentially, what he wanted to do is to change the large font.
+[09:26.500 --> 09:34.460]  Because I remember he told me the non-enhanced groups, it doesn't support larger font.
+[09:34.460 --> 09:45.220]  But he wanted to use a larger font because there's a scaling problem with the non-enhanced groups.
+[09:46.280 --> 09:56.280]  So essentially, he wanted to adjust the font to be able to show the right size on the screen, on the on-site screen.
+[09:56.700 --> 10:01.320]  So he wanted to use larger font and only enhanced groups can do larger fonts.
+[10:01.320 --> 10:11.420]  So now I wanted to see if he cannot do that on version 7 mark pro com.
+[10:11.520 --> 10:12.320]  You can't do it on version 7.
+[10:12.320 --> 10:16.680]  If it's possible for him to... you cannot do it on version 7.
+[10:16.700 --> 10:18.320]  It has to be enhanced system group.
+[10:21.000 --> 10:26.820]  Right, okay. So we still have a mark pro web on-site, which is version 8.
+[10:26.820 --> 10:34.540]  So he now plans to have all the graphics done in that mark pro web, version 8 mark pro web.
+[10:35.020 --> 10:45.620]  But I remember he should have no problem referencing a mark zone point on this version 8 mark pro web, correct?
+[10:46.060 --> 10:54.900]  Because I saw him reference a point, like a mark zone point on the version 8 mark pro com already.
+[10:54.900 --> 11:01.300]  Because he already made graphics on the version 8 mark pro com, and then looks to me...
+[11:01.300 --> 11:06.760]  So long as the mark pro com is represented as a back-net object, yes.
+[11:08.800 --> 11:19.240]  Right, okay. So it sounds like he has to, in this case, we have to downgrade the mark pro com that hosts the mark zones.
+[11:20.400 --> 11:24.600]  Downgrade that to version 7, and then he has to do the graphics.
+[11:24.900 --> 11:36.200]  Either way, that controller should still work with version 8. There is no difference there. It should still work.
+[11:37.400 --> 11:41.180]  Version 7 is necessary for certain RCP actions.
+[11:43.380 --> 11:50.380]  So, for example, the mark zones themselves do not really understand back-net in terms of control basics.
+[11:52.460 --> 12:00.560]  So, if you are trying to write a program that says, I want to read or write this back-net value, it probably won't work.
+[12:02.040 --> 12:09.920]  Now, the host controller, it can do a write saying, 1001 AV1 equals something. That works just fine.
+[12:11.340 --> 12:11.900]  So...
+[12:14.390 --> 12:27.330]  Oh, so you are saying we could, because right now what we are trying to do is have all the zones, mark zones, to listen to a schedule that we are going to host on the mark pro com.
+[12:28.190 --> 12:35.250]  Right, and I am saying that the mark pro zones probably can't read the values. Instead of reading it, push it from the controller.
+[12:37.430 --> 12:43.210]  Push it from the controller, okay, I see. So that's... okay, I think I can do that.
+[12:43.650 --> 12:53.830]  If that is the case, then we can still keep the host in the mark pro zone to be version 8. Because it is able to push, but the mark pro zone cannot read.
+[12:54.290 --> 12:58.370]  So that way we don't have to downgrade to version 7.
+[13:02.590 --> 13:15.550]  Okay, okay. We will try that route then. Sounds like that is easy. And it is just a bunch of write programs on the mark pro com then. That should be just fine.
+[13:17.610 --> 13:27.590]  Yeah, it is actually easier because you can do all the programs in one place. Otherwise we have to open up every mark zone and then add something.
+[13:28.610 --> 13:34.170]  Okay, thank you for that tip. Yes, that is great. Great to know.
+[13:36.330 --> 13:44.950]  Thank you. That is all my questions. Yeah, thank you. Awesome. Yep, you are welcome. Yep, have a good day. Bye. Yep, bye.

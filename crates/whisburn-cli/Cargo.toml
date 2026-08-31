@@ -1,0 +1,24 @@
+[package]
+name = "whisburn-cli"
+description = "Command-line interface for whisburn speech server and tools"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "whisburn"
+path = "src/main.rs"
+
+[dependencies]
+whisburn-core = { workspace = true }
+whisburn-audio = { workspace = true }
+whisburn-engine = { workspace = true }
+whisburn-models = { workspace = true }
+whisburn-server = { workspace = true }
+whisburn-app = { workspace = true }
+burn = { workspace = true }
+clap = { workspace = true }
+anyhow = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }

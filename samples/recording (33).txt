@@ -1,0 +1,288 @@
+[00:01.160 --> 00:04.840]  This is Reliable Control Support, Philip speaking. How can I help you?
+[00:06.480 --> 00:14.480]  Thank you, Philip. I just wanted to... So, I'm having some issues with graphics displaying
+[00:15.620 --> 00:24.760]  on ProWeb, and I was trying to mainly figure out, like, whether it was a... like, the
+[00:24.760 --> 00:29.400]  graphics weren't able to be used on ProWeb, or if it was just an issue with the actual
+[00:29.400 --> 00:36.940]  animation. Okay, I see. Yeah. Most of the graphics will work on the ProWeb. It's only
+[00:36.940 --> 00:42.120]  really the ProView where you start to get the ones where they have to be, like, specific to that.
+[00:45.620 --> 00:51.160]  Okay. Would you be able to remote? And I can maybe show you what I'm seeing?
+[00:52.000 --> 00:57.260]  Yeah, definitely. Just a moment here. Yeah. All right, so if you want to go
+[00:57.260 --> 01:04.280]  rcsupport.screenconnect.com, it's going to prompt you for a code. Yep. And I've got one here.
+[01:07.080 --> 01:08.760]  Yep, hang on a second.
+[01:11.240 --> 01:16.780]  It is rcsupport.screenconnect.com.
+[01:22.340 --> 01:51.760]  And the code is 213066. Give me one second. It's...
+[01:51.760 --> 02:08.360]  All right, you should see me connecting now.
+[02:11.540 --> 02:16.120]  Give me one second. I'm trying to pull it up for you. Okay. Okay, I've got a bunch of
+[02:16.120 --> 02:32.470]  screens. Yeah, I'm just trying to... So we're just pulling up on both sides because I'm like,
+[02:32.710 --> 02:35.870]  I'm still in the process of building this out. So... Okay, no worries.
+[02:39.150 --> 02:47.000]  That way you can kind of see what the issue is. So I don't know which screen you're
+[02:47.000 --> 02:54.600]  viewing. I've got the studio one right now and then I'm just toggling over to the
+[02:54.600 --> 03:00.500]  ProWeb one. Yeah, looks... Is it still loading or is this actually just how it loads in?
+[03:01.940 --> 03:10.690]  That's how it's been doing all day since I pushed it. Oh, man. But that's just...
+[03:10.690 --> 03:13.390]  I mean, that is literally... That's not even the animation. That's just the graphic
+[03:13.390 --> 03:18.110]  on the background. Yeah, that's kind of... So I wasn't sure if it was because of the
+[03:18.110 --> 03:23.610]  size thing because it's... I mean, it's pretty large. It's for a newer iPad.
+[03:24.870 --> 04:05.640]  Okay. Let me just check something here. Okay, it's this image here?
+[04:08.590 --> 04:13.750]  Yes. I'm just going to try overwriting it just to see if it makes a difference.
+[04:17.350 --> 04:22.430]  Yeah. And then on this side, we'll do a hard refresh.
+[04:30.580 --> 05:16.100]  Oh, now you can... Oh, looks like it just timed out.
+[05:19.400 --> 06:48.690]  Yeah. Now, this here, like the red in the... Like these colors here, are these just the
+[06:48.690 --> 06:51.210]  landing pad or is this bits and pieces of the background loading?
+[06:54.310 --> 06:55.790]  No, those are the landing pads.
+[06:55.790 --> 07:01.890]  Okay. And like the temp spots. So like if you go look back at the studio,
+[07:01.910 --> 07:05.890]  you can see how it should look. And those are animations, the temps.
+[07:06.690 --> 08:10.710]  Okay, perfect. Which one? Sorry, go ahead.
+[08:11.170 --> 08:15.290]  The thumb that's making noise? Oh, yeah, I just haven't...
+[08:15.290 --> 08:29.560]  Yeah. I'm just going to check out the actual job folder here. Is this
+[08:29.560 --> 08:31.840]  where it's pulling the resources from?
+[08:32.820 --> 08:35.960]  Here, I can go... I can get you to it real quick. Just give me a second.
+[08:35.960 --> 08:38.100]  Okay, thanks. I'll try it for a moment.
+[08:56.940 --> 08:58.300]  There we go.
+[09:20.600 --> 09:25.840]  Can you go to the other? Oh, yeah, way over here.
+[09:27.180 --> 09:29.360]  There we go. Yeah.
+[09:36.900 --> 09:42.200]  Oh, is it the U2013?
+[09:44.140 --> 09:48.360]  It might be. Let me just check. That's kind of strange. Well,
+[09:48.360 --> 09:50.440]  yeah, we'll try moving that and then just see if it makes a difference.
+[09:53.850 --> 09:57.290]  Well, I need to change the name of the thing then probably.
+[09:58.170 --> 10:00.110]  Yeah, the actual file name might be the problem.
+[10:01.670 --> 10:05.450]  Here, give me a second. I can change that real quick.
+[10:50.500 --> 10:55.300]  I don't know. That seems like not the right way to do it.
+[10:57.560 --> 10:59.760]  Yeah, it might just be the file name that needs to be changed.
+[11:04.790 --> 11:10.110]  It should be in this folder. Well, maybe not.
+[11:16.080 --> 11:17.360]  I changed the underscore.
+[11:18.260 --> 11:31.520]  One. Sorry, where is it?
+[11:33.640 --> 11:36.200]  Oh, here. It's right here.
+[11:47.840 --> 11:48.720]  Oh, there we go.
+[11:52.220 --> 11:56.780]  Okay, what I'll try is I'm going to just take out a bunch of this.
+[11:57.760 --> 11:59.400]  Actually, I'll totally rename it.
+[12:08.660 --> 12:12.740]  And then we'll jump back over to Studio. We'll probably have to relink that.
+[12:20.200 --> 12:20.680]  Yeah.
+[12:44.920 --> 12:46.260]  Okay, this looks pretty good.
+[12:58.170 --> 13:00.170]  They've been taking that one offline lately.
+[13:01.750 --> 13:06.850]  Okay. Now, I'm just going to move one of these like just a couple pixels
+[13:07.430 --> 13:09.970]  just to get to redo the file sync.
+[13:19.040 --> 13:19.500]  There we go.
+[13:57.440 --> 13:59.440]  Oh, I may have to real quick. Hold on.
+[14:00.720 --> 14:03.000]  Yeah, take over for just one second.
+[14:03.040 --> 14:05.220]  I don't know if it's going to work for me.
+[14:19.710 --> 14:24.090]  I don't know why it's still going to work, but I mean, I can log in over there.
+[14:25.370 --> 14:25.810]  Perfect.
+[14:35.190 --> 14:41.990]  Okay, I guess that was it. I guess the file name just had an unusual character in there.
+[14:44.790 --> 14:51.590]  Yeah, it's weird. It's not. See how those animations are kind of weird?
+[14:53.590 --> 14:59.190]  Oh, yeah, these here. Yeah. Yeah, they weren't like that before.
+[15:02.110 --> 15:10.090]  No, I mean, they're sized the same width on as the landing pads above them.
+[15:20.380 --> 15:55.310]  Hmm. If you don't put that iPad back, I'm going to lose the leg of my scissors or my puzzle.
+[16:00.490 --> 16:02.970]  I apologize. No worries.
+[16:07.480 --> 16:11.260]  Well, I'm on the phone doing actual work. People are taking things off my desk.
+[16:11.760 --> 16:13.120]  It's all good.
+[16:17.630 --> 16:19.350]  I hope somebody's going to shut down your account.
+[16:21.090 --> 16:22.630]  I'm getting under a lot of skills now.
+[16:29.700 --> 16:31.800]  Yeah, just the resizing on it. It's like real weird.
+[16:57.110 --> 17:00.070]  Just checking to see if there have been any changes to that animation.
+[17:05.980 --> 17:07.080]  Oh, like a more updated version?
+[17:08.140 --> 17:21.890]  Yeah. No, that's the most up-to-date one.
+[17:25.330 --> 17:25.690]  Yeah.
+[17:42.760 --> 17:45.200]  I'm just going to check with one of my colleagues to see if he's seen this before.
+[17:48.120 --> 24:16.180]  Yeah, no problem. I don't have any logistic again.
+[24:18.420 --> 26:24.670]  Okay, thanks. Sorry, just talking at the level to you guys right now.
+[26:27.830 --> 26:28.390]  You're okay, folks.
+[31:54.700 --> 31:58.480]  You might see Thomas clicking around on the screen. He's just taking a look at this as well.
+[32:02.140 --> 32:02.880]  What did you say, folks?
+[32:03.360 --> 32:07.200]  You might see Thomas clicking around on the screen. He's just taking a look at this as well.
+[32:09.980 --> 32:13.180]  Yeah. No problem.
+[34:08.390 --> 34:13.210]  Just a question. When we first looked at this animation, were those 10th boxes the correct width?
+[34:19.330 --> 34:19.890]  No.
+[34:21.650 --> 34:24.330]  Okay, so they're initially too small as well, right?
+[34:26.910 --> 34:30.410]  Well, yeah. So, I mean, they've been this way on...
+[34:34.320 --> 34:40.720]  Yeah, it's like the translation between Studio and the actual ProWeb is where it lives in size.
+[34:40.820 --> 34:48.180]  And yeah, they were too small when it went on, or before we fixed the graphic.
+[34:49.280 --> 34:54.480]  Okay. Yeah, we're thinking that there's probably something wrong with the animation.
+[34:58.640 --> 35:02.060]  So what I'm going to do is I'm going to grab some info here.
+[35:03.580 --> 35:06.620]  And then I'll see if we can get them to adjust that.
+[35:49.790 --> 35:54.530]  And I do have another one if I can show you to...
+[35:54.530 --> 35:56.570]  Yeah, definitely. Same sort of problem on the other one?
+[35:59.130 --> 36:00.630]  Well, this one's an actual animation.
+[36:01.690 --> 36:02.390]  Okay, I see.
+[36:03.010 --> 36:04.570]  And it's just not displaying at all.
+[36:08.700 --> 36:11.120]  I see. We're just grabbing some info here.
+[36:17.280 --> 36:18.200]  You said what? Sorry.
+[36:18.700 --> 36:20.660]  We're just grabbing some info here from the browser.
+[36:22.420 --> 36:23.560]  Oh, yeah.
+[36:24.500 --> 37:06.420]  All right, let's take a look at this other animation you mentioned.
+[37:07.180 --> 37:10.680]  Yeah. So we're going to second...
+[37:43.780 --> 37:50.640]  So I have it up on both of them so you can see what it's supposed to look like.
+[37:52.660 --> 37:54.080]  Oh yeah, it's totally gone on this one.
+[38:00.660 --> 38:02.300]  Okay, so is it just...
+[38:02.300 --> 38:10.880]  And that's where I wasn't sure whether it was just an issue with the pro web.
+[38:14.080 --> 38:16.660]  Is this here just an image or is this all an animation?
+[38:19.680 --> 38:20.220]  It's an animation.
+[38:22.140 --> 38:23.020]  Oh, okay, I see.
+[38:24.180 --> 38:26.040]  Even the background here, like the outline of the building?
+[38:26.140 --> 38:27.640]  And then there is a...
+[38:27.640 --> 38:32.960]  The background is in size exactly the same, but that is also...
+[38:32.960 --> 38:33.740]  That's an image.
+[38:34.800 --> 38:36.020]  Oh, okay, I see.
+[38:46.800 --> 38:52.440]  I wonder if this is another case of the image file name having a...
+[38:56.300 --> 38:59.380]  Yeah, I'm wondering on that one.
+[39:06.410 --> 39:07.790]  See if we can take a look at that.
+[39:08.550 --> 39:10.130]  I just need to find the JSON.
+[39:16.940 --> 39:19.940]  Group 12, 11,000.
+[39:25.380 --> 39:27.560]  No, sorry, 11,000.
+[39:28.200 --> 39:29.470]  Oh, my bad, my bad.
+[39:40.260 --> 39:45.020]  I'm just going to open this with notepad. It's sometimes easier.
+[39:54.900 --> 39:56.360]  It opened up way over.
+[40:00.510 --> 40:03.480]  Yeah, I'm just going to move these dev tools back. We need those over there.
+[41:46.160 --> 41:48.620]  So the background image actually looks okay on this one.
+[41:51.560 --> 41:52.040]  Yeah.
+[41:54.600 --> 41:57.840]  What we could do is just try resending these things.
+[42:01.500 --> 42:03.600]  Yeah, because I did that a few times.
+[42:04.680 --> 42:05.840]  Oh, with the overwrite and everything?
+[42:08.460 --> 42:08.940]  Yeah.
+[42:17.060 --> 42:19.360]  Yeah, there it is.
+[42:23.980 --> 42:27.480]  I'll try one more time sending specifically just the image on its own.
+[42:29.300 --> 42:30.600]  Yeah, we'll try.
+[42:34.580 --> 42:35.100]  Yeah.
+[42:44.780 --> 42:46.300]  It might log us out again.
+[42:49.380 --> 42:49.940]  Yeah, bro.
+[42:53.590 --> 42:58.350]  Is there a way, by the way, to not have that happen?
+[43:00.250 --> 43:03.990]  I think there is a setting you can adjust the timeout.
+[43:05.950 --> 43:07.230]  Let me just check in the studio here.
+[43:07.430 --> 43:07.950]  Okay.
+[43:39.290 --> 43:45.190]  Well, because I know it happens when you send. Basically, it restarts the pro web server.
+[43:47.310 --> 43:48.970]  No, I don't know if there's a way around that.
+[43:51.050 --> 43:52.410]  Yeah, unfortunately not with that.
+[43:55.290 --> 43:59.030]  Okay, that's fine. I can log back in quick.
+[44:01.110 --> 44:02.610]  Oops, sorry, I'll steal the mouse.
+[44:02.610 --> 44:03.050]  No worries.
+[47:08.730 --> 47:11.990]  These first two controllers here, are these offline at the moment?
+[47:15.030 --> 47:15.510]  Yeah.
+[47:16.230 --> 47:39.060]  Okay. Could we try removing those first two?
+[47:45.290 --> 47:46.310]  Yeah, that's completely fine.
+[47:47.410 --> 47:50.290]  All right, we'll give it a try. I don't know if it's the culprit behind everything,
+[47:50.290 --> 47:50.970]  but it might help.
+[47:54.680 --> 48:00.910]  Yeah, it's completely fine to remove those.
+[48:15.100 --> 48:17.040]  You'll have to send it, I think.
+[49:45.660 --> 49:47.180]  I can try. Here, hold on.
+[49:49.060 --> 49:53.120]  It logged me out, so it might just refresh the actual server instance.
+[49:54.700 --> 49:55.340]  Oh, yeah.
+[49:56.060 --> 49:58.080]  Sorry, I can log it back in over here.
+[49:58.180 --> 49:59.100]  Thank you.
+[52:25.180 --> 52:26.520]  Wait a second, hold on.
+[52:30.280 --> 52:33.880]  Could you... where's that notepad document? Did you close it?
+[52:34.900 --> 52:38.880]  The JSON? Let me pull it up here. It's over here on this part.
+[52:39.700 --> 52:42.260]  Yeah, because I just thought about something.
+[52:43.200 --> 52:43.760]  What's that?
+[52:47.900 --> 52:48.940]  It may...
+[52:48.940 --> 52:49.740]  Is it group 12?
+[52:50.740 --> 52:51.260]  Yeah.
+[53:01.430 --> 53:05.710]  I think I might have an idea. Well, why the animation is messed up?
+[53:07.490 --> 53:13.770]  It has an EN in it, or it has an A%.
+[53:16.450 --> 53:16.990]  Oh.
+[53:21.650 --> 53:23.870]  Because it's not part of the background. That's where we're looking.
+[53:24.850 --> 53:25.230]  Yeah.
+[53:25.270 --> 53:28.110]  Look at the background, not the...
+[53:32.350 --> 53:33.510]  not that part.
+[53:39.480 --> 53:41.980]  So, if you want, I can rename it real quick.
+[53:43.100 --> 53:44.660]  Yeah, let's give that a try just to see.
+[53:47.420 --> 53:49.020]  Yeah, let me see if I can...
+[54:01.230 --> 54:02.910]  Yeah, like three things in here.
+[54:53.410 --> 54:54.310]  Did I just make everything?
+[54:58.170 --> 54:59.890]  I definitely lost some of the colors here.
+[55:17.460 --> 55:18.260]  There it is.
+[55:20.000 --> 55:24.020]  So now, if we push this, will that work?
+[55:57.610 --> 55:59.770]  Yeah, it can be.
+[56:05.530 --> 56:08.130]  Is that a hard refresh or just a normal one?
+[56:10.390 --> 56:12.470]  I did an empty cache and hard refresh.
+[56:16.910 --> 56:19.570]  It hasn't logged us out yet, which makes me think it hasn't, you know,
+[56:20.990 --> 56:21.870]  re-initialized.
+[56:23.710 --> 56:24.810]  There it is.
+[56:25.110 --> 56:25.650]  Here, sorry.
+[56:25.990 --> 56:26.510]  Oh, yeah.
+[56:26.510 --> 56:27.010]  No worries.
+[56:27.310 --> 56:29.350]  I'm just resetting the support files as well.
+[56:29.590 --> 56:30.490]  Let's try logging in.
+[56:30.490 --> 56:31.690]  We'll see if anything has changed.
+[56:44.590 --> 56:47.450]  Yeah, it's the main line sub 2.
+[56:49.590 --> 56:49.770]  No.
+[01:00:38.930 --> 01:00:41.310]  Yeah, it looks like it's still having trouble with some of these images here.
+[01:00:48.170 --> 01:00:48.630]  What do you think?
+[01:00:49.450 --> 01:00:51.930]  It looks like it's still having trouble with some of these images here.
+[01:00:52.230 --> 01:00:56.170]  So, see over in the DevTools, this one here, the...
+[01:00:57.610 --> 01:00:58.210]  Supply.
+[01:00:58.830 --> 01:01:00.110]  It's still upset about that.
+[01:01:04.320 --> 01:01:05.380]  Oh, it's weird.
+[01:01:05.600 --> 01:01:06.400]  I mean, it's literally...
+[01:01:09.960 --> 01:01:13.620]  None of those are down at its bottom, right?
+[01:01:15.160 --> 01:01:15.920]  Oh, yeah.
+[01:01:17.140 --> 01:01:17.860]  That's not...
+[01:01:18.320 --> 01:01:19.440]  There's nothing about that.
+[01:01:19.620 --> 01:01:25.220]  They should be an improper naming or anything, you know.
+[01:01:25.840 --> 01:01:26.440]  Yeah.
+[01:01:27.100 --> 01:01:31.620]  I'm going to try and underscore just to see if maybe it's upset about the space, but...
+[01:01:31.620 --> 01:01:33.820]  I mean, these are pretty normal file names.
+[01:01:33.840 --> 01:01:34.810]  Because I can understand the...
+[01:01:36.480 --> 01:01:38.560]  Yeah, I mean, I can understand the ampersand.
+[01:01:40.360 --> 01:01:40.780]  Yeah.
+[01:01:48.910 --> 01:01:50.690]  You'd have to change on the animation.
+[01:01:52.450 --> 01:01:56.110]  If you just click main one sub 2, down at the bottom left.
+[01:01:57.230 --> 01:01:58.050]  Oh, it's already open.
+[01:02:01.810 --> 01:02:03.350]  I need to send a link on the front page.
+[01:02:04.050 --> 01:02:04.990]  Oh, I see, I see.
+[01:02:54.040 --> 01:02:57.320]  Yeah, you know, like send and close out of that window and then reopen it.
+[01:02:58.960 --> 01:02:59.480]  It's weird.
+[01:03:03.220 --> 01:03:03.900]  There it is.
+[01:03:03.940 --> 01:03:04.760]  Yeah, it is strange.
+[01:05:09.620 --> 01:05:11.860]  I'm just going to try something kind of crazy here.
+[01:05:12.320 --> 01:05:14.000]  I'm just going to totally rename this image.
+[01:06:45.560 --> 01:06:48.200]  If we can't get this work, we must always circle back to tomorrow.
+[01:06:51.400 --> 01:06:52.480]  Yeah, it's kind of...
+[01:06:52.480 --> 01:06:53.460]  I guess it's kind of going that way.
+[01:06:54.340 --> 01:06:55.600]  Spend a lot of time on this.
+[01:06:58.220 --> 01:06:58.580]  Yeah.
+[01:07:01.940 --> 01:07:05.120]  We'll try this last thing and then, worst case, we can circle back.
+[01:07:08.220 --> 01:07:09.100]  Yeah, that we do.
+[01:07:12.480 --> 01:07:13.380]  Hey, that's fine.
+[01:07:15.480 --> 01:07:16.760]  Things are moving in the right direction.
+[01:07:17.060 --> 01:07:18.260]  Yeah, whatever you did forced it.
+[01:07:19.360 --> 01:07:19.700]  Yeah.
+[01:07:22.480 --> 01:07:25.600]  And the other ones have an ampersand in them, so that's probably why the...
+[01:07:27.620 --> 01:07:29.860]  You still have that broken image right there.
+[01:07:30.540 --> 01:07:33.380]  Yeah, it's got to be the name, then.
+[01:07:36.000 --> 01:07:36.640]  Yeah.
+[01:07:38.240 --> 01:07:40.820]  So the same works on WebView and...
+[01:07:42.600 --> 01:07:47.760]  Because I've used it before, it works on WebView and Studio doesn't work on ProWeb.
+[01:07:50.700 --> 01:07:52.540]  Yeah, awesome. Thanks.
+[01:07:54.020 --> 01:07:56.080]  The background image, then, is...
+[01:07:57.080 --> 01:08:00.180]  Is PNP no pipe, or is it just PNP?
+[01:08:33.330 --> 01:08:33.770]  PNP...
+[01:08:33.770 --> 01:08:36.250]  And that's just the background image for the whole group, right?
+[01:08:36.250 --> 01:08:37.030]  Yeah, you're gonna have to find...
+[01:08:39.370 --> 01:08:44.070]  No, no, that's actually a static image.
+[01:08:45.010 --> 01:08:45.450]  Oh.
+[01:08:49.880 --> 01:08:52.980]  You'd have to bring it all the way to the...
+[01:08:53.520 --> 01:08:55.140]  You'd have to bring it all the way to the front.
+[01:08:56.040 --> 01:09:00.100]  Oh, yeah. I think I also just... I messed it up by closing that.
+[01:09:02.500 --> 01:09:04.850]  Yeah, it's not a big deal. I can fix that.
+[01:09:07.120 --> 01:09:08.560]  Yeah, let's see if we can, I guess...
+[01:09:08.560 --> 01:09:09.640]  Here, give me one second.
+[01:09:10.240 --> 01:09:10.660]  Okay.
+[01:09:12.240 --> 01:09:15.480]  Oh. Yeah, here's where I can do this. There you go.
+[01:09:49.460 --> 01:09:51.360]  And, yeah. Okay, hold on.
+[01:10:05.260 --> 01:10:06.880]  Let's see if I can find something here.
+[01:10:39.940 --> 01:10:40.660]  There you go.
+[01:10:42.920 --> 01:10:47.780]  All right. Perfect. So, we'll check to see if this comes through.
+[01:12:01.020 --> 01:12:07.220]  All right. It's displaying. There is still something in the background.
+[01:12:07.220 --> 01:12:09.740]  There's one more image, but we don't have to worry about that one.
+[01:12:10.080 --> 01:12:10.720]  Okay, I see.
+[01:12:11.600 --> 01:12:15.420]  Yeah, the pink pipes, the return is also named in that same scheme.
+[01:12:16.080 --> 01:12:16.720]  Oh, I see.
+[01:12:16.940 --> 01:12:19.420]  But I can deal with that later now that we know what the issue is.
+[01:12:19.420 --> 01:12:24.420]  Yeah, exactly. And then the last thing is just that animation appearing at half width.
+[01:12:25.020 --> 01:12:29.300]  I think that's an actual bug, though, and I'll have to check with the devs about that one.
+[01:12:32.060 --> 01:12:33.940]  Okay. Well, awesome. I appreciate it, though.
+[01:12:34.740 --> 01:12:38.140]  Hey, no worries. We'll keep you posted. I'll do it in the email here,
+[01:12:38.380 --> 01:12:39.540]  and we'll see what we can find.
+[01:12:42.600 --> 01:12:43.760]  Perfect. Thanks so much again.
+[01:12:44.720 --> 01:12:45.980]  Hey, no worries. Happy to help.
+[01:12:48.140 --> 01:12:49.400]  All right. Thanks. Have a good night.
+[01:12:49.420 --> 01:12:51.640]  Thanks, you too. Bye.
+[01:12:53.040 --> 01:12:53.420]  Bye.

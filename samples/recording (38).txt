@@ -1,0 +1,510 @@
+[00:01.510 --> 00:03.210]  [SPEAKER_00]: This is reliable control support,
+Philip speaking.
+[00:03.350 --> 00:03.810]  [SPEAKER_00]: How can I help you?
+[00:05.410 --> 00:07.890]  [SPEAKER_03]: Hey Philip, it's Derek Culling from EMCS.
+[00:08.650 --> 00:12.670]  [SPEAKER_03]: We talked last night about WebView install
+crashing.
+[00:13.970 --> 00:17.130]  [SPEAKER_03]: And so I got in touch with our IT company.
+[00:17.490 --> 00:20.250]  [SPEAKER_03]: They weren't able to do anything for me
+until this morning.
+[00:20.430 --> 00:22.190]  [SPEAKER_03]: So the antivirus is off now.
+[00:22.750 --> 00:26.390]  [SPEAKER_03]: But the WebView install is still crashing
+out.
+[00:27.470 --> 00:28.030]  [SPEAKER_00]: Okay.
+[00:28.930 --> 00:32.370]  [SPEAKER_03]: And I'm not sure really where to go from
+here.
+[00:32.970 --> 00:34.910]  [SPEAKER_00]: Yeah, I was talking to Level 2 guys
+yesterday.
+[00:35.030 --> 00:36.370]  [SPEAKER_00]: There is one idea that we have.
+[00:36.710 --> 00:41.670]  [SPEAKER_00]: You could try uninstalling the current
+installation.
+[00:41.950 --> 00:44.230]  [SPEAKER_00]: Make sure you keep the database installed
+though.
+[00:44.930 --> 00:48.410]  [SPEAKER_00]: And then do a totally fresh install from
+that point.
+[00:49.990 --> 00:50.790]  [SPEAKER_03]: I did that.
+[00:51.610 --> 00:52.970]  [SPEAKER_00]: Oh, it's still crashing, eh?
+[00:54.050 --> 00:54.610]  [SPEAKER_03]: Yeah.
+[00:56.970 --> 00:59.010]  [SPEAKER_00]: Okay, let me see if I can grab more of the
+Level 2 guys.
+[01:04.880 --> 01:09.720]  [SPEAKER_03]: Yeah, I've had issues in the past where
+sometimes things just don't install nicely
+[01:09.720 --> 01:13.460]  [SPEAKER_03]: when we do an update.
+[01:14.780 --> 01:18.060]  [SPEAKER_03]: So there are a lot of times I've just
+resorted to doing an uninstalled install.
+[02:40.650 --> 02:42.930]  [SPEAKER_00]: Alright, let's see if we can jump on
+Screen Connect here.
+[02:46.250 --> 02:47.950]  [SPEAKER_00]: Oh, actually it looks like it's still
+running from yesterday.
+[02:47.950 --> 02:50.830]  [SPEAKER_00]: Are you still on the same computer and
+everything?
+[03:00.540 --> 03:02.460]  [SPEAKER_02]: Alright, you should see me connecting now.
+[03:10.030 --> 03:11.150]  [SPEAKER_03]: Uninstaller just because.
+[03:12.230 --> 03:12.830]  [SPEAKER_03]: Who knows?
+[03:13.770 --> 03:14.270]  [SPEAKER_00]: Fair enough.
+[03:17.290 --> 03:20.650]  [SPEAKER_00]: Alright, so there is a folder hidden away
+here that I'm going to try to get to.
+[03:59.690 --> 04:02.450]  [SPEAKER_00]: I'm just going to move all these files out
+of here for a moment.
+[04:04.150 --> 04:06.790]  [SPEAKER_00]: Most likely we can delete them,
+but I don't want to do that in case we
+[04:06.790 --> 04:07.290]  [SPEAKER_00]: need them still.
+[04:24.450 --> 04:27.630]  [SPEAKER_02]: Alright, and now let's try the installer
+again.
+[06:18.520 --> 06:20.700]  [SPEAKER_00]: Are you okay to do a reboot as well as
+part of this?
+[06:22.240 --> 06:22.820]  [SPEAKER_03]: Yeah, absolutely.
+[08:18.840 --> 08:21.020]  [SPEAKER_00]: Okay, so it might be a different issue
+than in that case.
+[08:24.600 --> 08:31.980]  [SPEAKER_00]: They're thinking it could be a file path
+length issue here.
+[08:42.610 --> 08:46.990]  [SPEAKER_00]: So there might be a folder over here.
+[08:47.210 --> 08:48.050]  [SPEAKER_00]: Let's see if we can find it.
+[08:56.750 --> 09:03.830]  [SPEAKER_00]: There's a command that we can run here
+that should give us some info.
+[09:38.210 --> 09:41.330]  [SPEAKER_03]: Would RcStudio be affecting it versus the
+RcWebView folder?
+[09:44.150 --> 09:47.690]  [SPEAKER_00]: If the file sync is grabbing stuff from
+here, the problem would be originating
+[09:47.690 --> 09:48.110]  [SPEAKER_00]: from here.
+[09:49.310 --> 09:50.290]  [SPEAKER_00]: Gotcha, okay.
+[10:40.490 --> 10:41.810]  [SPEAKER_03]: Oh, are you trying to copy and paste?
+[10:43.010 --> 10:47.130]  [SPEAKER_00]: Yeah, there's a small thing that we can
+run here that I'm trying to copy over.
+[10:48.330 --> 10:49.770]  [SPEAKER_00]: Let me just...
+[10:51.310 --> 10:53.730]  [SPEAKER_03]: Computer's on the computer's on the
+computer's here, so let's just...
+[10:53.730 --> 10:54.530]  [SPEAKER_00]: Oh, I see.
+[10:55.890 --> 10:57.950]  [SPEAKER_03]: If you want to paste it into there,
+I might be able to help.
+[10:58.950 --> 11:00.370]  [SPEAKER_00]: Yeah, let's see if it works.
+[11:00.470 --> 11:00.930]  [SPEAKER_00]: There it is.
+[11:01.570 --> 11:02.650]  [SPEAKER_00]: Yeah, that's what we're trying to move
+over.
+[11:02.730 --> 11:03.290]  [SPEAKER_00]: I should be able to.
+[11:04.330 --> 11:05.550]  [SPEAKER_03]: At least I should be able to.
+[11:09.210 --> 11:10.270]  [SPEAKER_03]: Okay, then.
+[11:51.210 --> 11:52.290]  [SPEAKER_02]: Here we go.
+[11:52.670 --> 11:53.550]  [SPEAKER_02]: Thank you.
+[12:02.700 --> 12:06.220]  [SPEAKER_02]: Okay, that doesn't seem too bad.
+[12:08.580 --> 12:12.940]  [SPEAKER_03]: I mean, everything was working before
+yesterday.
+[16:11.340 --> 16:16.040]  [SPEAKER_03]: And I'm pretty sure this error log is the
+one from...
+[16:16.040 --> 16:20.260]  [SPEAKER_03]: Like, it's from this morning, but I think
+it's after I had done an uninstall,
+[16:20.880 --> 16:21.700]  [SPEAKER_03]: reinstall.
+[16:22.800 --> 16:24.220]  [SPEAKER_03]: I'm trying to do a version scratch.
+[16:25.340 --> 16:26.260]  [SPEAKER_00]: Oh, okay, I see.
+[19:39.710 --> 19:42.550]  [SPEAKER_00]: Alright, looks like there might be a
+certificate missing, potentially,
+[19:42.670 --> 19:42.850]  [SPEAKER_00]: here.
+[19:43.330 --> 19:45.290]  [SPEAKER_00]: I was just messaging the Level 2 guys
+about this.
+[19:46.030 --> 19:48.710]  [SPEAKER_00]: There are three different potential issues
+that we thought it could be.
+[19:48.830 --> 19:50.770]  [SPEAKER_00]: We're down to the... I think this is the
+last potential one.
+[19:51.770 --> 19:53.870]  [SPEAKER_00]: You might see someone else join the screen
+connect here.
+[19:53.930 --> 19:55.650]  [SPEAKER_00]: You'll see Liam taking a look at things.
+[19:56.150 --> 19:57.210]  [SPEAKER_02]: Oh, yeah, yep.
+[23:10.840 --> 23:11.680]  [SPEAKER_03]: Did I lose you guys?
+[23:12.640 --> 23:14.280]  [SPEAKER_00]: Yeah, I think we lost the connection
+there.
+[23:26.030 --> 23:30.650]  [SPEAKER_00]: It should re-establish it on its own,
+but if you notice that the screen connect
+[23:30.650 --> 23:34.670]  [SPEAKER_00]: software has stopped running, if you
+reopen it, it should bring it back up.
+[23:38.150 --> 23:40.490]  [SPEAKER_03]: No, it's still here, just saying
+connecting.
+[23:57.150 --> 24:00.570]  [SPEAKER_03]: What if we just re-created it?
+[24:01.350 --> 24:06.150]  [SPEAKER_03]: Restart it all together and I put it right
+directly onto that other computer?
+[24:08.830 --> 24:10.570]  [SPEAKER_00]: That could be...
+[24:12.550 --> 24:13.970]  [SPEAKER_00]: Yeah, that could be a possibility.
+[24:15.490 --> 24:17.530]  [SPEAKER_03]: Just to save a jump, you know?
+[24:17.990 --> 24:22.470]  [SPEAKER_00]: Yeah, if you take the screen connect file
+that downloaded and open it from that
+[24:22.470 --> 24:24.530]  [SPEAKER_00]: other computer, that might do it.
+[26:05.490 --> 26:07.730]  [SPEAKER_00]: Yeah, I might have to just open up a new
+screen connect.
+[26:09.890 --> 26:10.530]  [SPEAKER_03]: Yeah, sure.
+[26:22.640 --> 26:25.240]  [SPEAKER_03]: Is rcsupport.screenconnect.ca or .com?
+[26:25.860 --> 26:26.220]  [SPEAKER_00]: .com.
+[26:26.800 --> 26:28.200]  [SPEAKER_00]: Oh, actually, it just came back.
+[26:28.260 --> 26:28.760]  [SPEAKER_03]: There it goes.
+[26:31.100 --> 26:32.620]  [SPEAKER_00]: I didn't realize we were going to start a
+new one.
+[26:35.580 --> 26:35.900]  [SPEAKER_03]: Yeah.
+[26:36.960 --> 26:41.360]  [SPEAKER_03]: I wonder if that computer just,
+I don't know, lost the internet for a
+[26:41.360 --> 26:43.420]  [SPEAKER_03]: minute or I don't know what the hell just
+happened there.
+[26:53.380 --> 26:56.360]  [SPEAKER_00]: Yeah, I'm going to see if I can grab Liam
+and get him on the call here.
+[26:59.280 --> 27:00.460]  [SPEAKER_00]: All right, just hang on a moment.
+[27:06.590 --> 27:07.590]  [SPEAKER_01]: Hey, you got Liam.
+[27:09.090 --> 27:09.970]  [SPEAKER_03]: Hey, how's it going?
+[27:12.890 --> 27:15.290]  [SPEAKER_01]: This is the GIF that keeps on giving,
+apparently.
+[27:17.730 --> 27:20.550]  [SPEAKER_03]: Yeah, more head scratchers for you.
+[27:20.630 --> 27:21.330]  [SPEAKER_03]: I keep finding them.
+[27:23.210 --> 27:23.810]  [SPEAKER_01]: All right.
+[27:28.140 --> 27:30.480]  [SPEAKER_01]: Is this the one where we're not removing
+it?
+[27:38.230 --> 27:39.570]  [SPEAKER_03]: I'd have to look at the timestamp.
+[27:41.110 --> 27:45.190]  [SPEAKER_01]: Because all of these are removing it,
+unless it's all these temp ones.
+[27:48.630 --> 27:49.890]  [SPEAKER_01]: Or maybe it's in a folder.
+[27:51.430 --> 27:52.870]  [SPEAKER_01]: It might be in one of these folders,
+actually.
+[27:56.020 --> 27:57.380]  [SPEAKER_01]: Oh, how do I know which one's right?
+[27:57.540 --> 27:58.180]  [SPEAKER_01]: I don't.
+[27:58.300 --> 27:59.040]  [SPEAKER_01]: That's the magic.
+[28:00.160 --> 28:01.660]  [SPEAKER_01]: They're all randomly generated.
+[28:02.000 --> 28:02.860]  [SPEAKER_01]: Oh, this looks good.
+[28:03.880 --> 28:04.520]  [SPEAKER_03]: Oh, I see.
+[28:04.780 --> 28:04.940]  [SPEAKER_03]: Okay.
+[28:28.490 --> 28:29.190]  [SPEAKER_01]: Okay, so that's right.
+[28:29.430 --> 28:30.550]  [SPEAKER_01]: Yes, I don't care about that.
+[28:32.270 --> 28:36.030]  [SPEAKER_03]: I think my root originally, so it was
+running an older version.
+[28:36.390 --> 28:37.290]  [SPEAKER_03]: I tried to do an update.
+[28:38.590 --> 28:39.630]  [SPEAKER_03]: This interrupt happened.
+[28:40.830 --> 28:46.350]  [SPEAKER_03]: So I did an uninstall, reinstall to try
+and just wipe it out.
+[28:46.550 --> 28:48.710]  [SPEAKER_03]: And it hasn't been happy since.
+[28:50.630 --> 28:54.070]  [SPEAKER_03]: So we currently have antivirus disabled.
+[28:56.250 --> 28:58.390]  [SPEAKER_03]: Just to make life a little bit easier.
+[29:16.760 --> 29:20.140]  [SPEAKER_03]: That version of that remove program is not
+well.
+[29:31.240 --> 29:31.840]  [SPEAKER_01]: Binding?
+[29:37.870 --> 29:38.750]  [SPEAKER_01]: Look at that.
+[29:43.320 --> 29:45.720]  [SPEAKER_01]: You did do a remove, like an uninstall.
+[29:47.420 --> 29:48.020]  [SPEAKER_03]: Yeah.
+[29:51.940 --> 29:56.460]  [SPEAKER_01]: I have no idea why there was a binding on
+a dynamic port.
+[29:56.550 --> 29:57.480]  [SPEAKER_01]: That was really weird.
+[29:58.570 --> 29:59.900]  [SPEAKER_01]: I don't know if I've ever seen that
+before.
+[30:15.070 --> 30:17.130]  [SPEAKER_01]: Problem is a lot of these get error
+things.
+[30:17.410 --> 30:20.890]  [SPEAKER_01]: Often it's like, get error, and then this
+message means there's no error.
+[30:22.850 --> 30:24.350]  [SPEAKER_01]: So, try to find it.
+[30:25.870 --> 30:29.210]  [SPEAKER_01]: So, for example, here, condition is false,
+so there is no SQL error, right?
+[30:29.310 --> 30:29.910]  [SPEAKER_01]: Et cetera, et cetera.
+[30:35.820 --> 30:37.160]  [SPEAKER_01]: I'm wondering if the uninstall...
+[30:38.840 --> 30:42.860]  [SPEAKER_01]: I actually think I know what the issue is,
+and it's really silly.
+[30:43.080 --> 30:47.280]  [SPEAKER_01]: But I hope I'm right, because it means
+that just running the install one more
+[30:47.280 --> 30:48.300]  [SPEAKER_01]: time would fix it.
+[30:52.860 --> 30:55.560]  [SPEAKER_01]: Oh, there's no certs.
+[30:56.780 --> 30:57.860]  [SPEAKER_02]: Where did the certs go?
+[31:02.990 --> 31:03.810]  [SPEAKER_01]: Oh, whatever.
+[31:05.330 --> 31:05.950]  [SPEAKER_03]: Hang on.
+[31:06.090 --> 31:06.810]  [SPEAKER_03]: He might have...
+[31:07.870 --> 31:09.450]  [SPEAKER_01]: I saw there was a backup zip.
+[31:09.590 --> 31:09.750]  [SPEAKER_01]: Yeah.
+[31:11.690 --> 31:12.830]  [SPEAKER_03]: Well, he had...
+[31:15.170 --> 31:15.970]  [SPEAKER_03]: Was it...
+[31:15.970 --> 31:16.830]  [SPEAKER_03]: Oh, that was in there.
+[31:18.090 --> 31:23.290]  [SPEAKER_03]: He had pulled some stuff out of documents,
+so I don't know if that was the certs
+[31:23.290 --> 31:24.810]  [SPEAKER_03]: you're looking for he had pulled out,
+or...
+[31:25.810 --> 31:26.690]  [SPEAKER_03]: I don't exactly remember.
+[31:38.520 --> 31:39.100]  [SPEAKER_03]: Hang on.
+[31:40.520 --> 31:41.160]  [SPEAKER_01]: Well, let's...
+[31:41.160 --> 31:42.500]  [SPEAKER_01]: We can leave it as a default.
+[31:42.660 --> 31:43.860]  [SPEAKER_01]: We can add the bindings later.
+[31:44.400 --> 31:48.560]  [SPEAKER_01]: Is there any reason for not having 8180,
+like you want custom bindings?
+[31:50.480 --> 31:51.840]  [SPEAKER_03]: Well, I've used a custom port.
+[31:54.160 --> 31:55.220]  [SPEAKER_03]: So, all of our...
+[31:55.220 --> 31:58.600]  [SPEAKER_03]: Like, our customers are using port 57680,
+I think it is.
+[31:59.320 --> 32:00.280]  [SPEAKER_01]: Yeah, that should be fine.
+[32:00.360 --> 32:02.540]  [SPEAKER_01]: What we can do is we can just add another
+port binding.
+[32:09.130 --> 32:10.650]  [SPEAKER_01]: I think that might be our issue.
+[32:10.650 --> 32:14.150]  [SPEAKER_01]: Every time you did that, you did do the
+custom binding, right?
+[32:16.170 --> 32:16.670]  [SPEAKER_03]: Yeah.
+[32:17.330 --> 32:19.530]  [SPEAKER_01]: So, if this works, that was probably it
+then.
+[32:19.630 --> 32:20.190]  [SPEAKER_01]: Oh, we'll see.
+[32:20.890 --> 32:21.590]  [SPEAKER_01]: We will see.
+[32:30.930 --> 32:41.270]  [SPEAKER_01]: Before that, I want to restore from when
+the initial thing was done.
+[32:42.270 --> 32:45.710]  [SPEAKER_01]: Is that the first time you tried the
+upgrade, or is that a different one?
+[32:47.190 --> 32:49.590]  [SPEAKER_03]: No, that was...
+[32:49.590 --> 32:52.910]  [SPEAKER_03]: I started trying it yesterday.
+[32:57.660 --> 32:58.820]  [SPEAKER_02]: Bunch of backups.
+[33:02.620 --> 33:03.980]  [SPEAKER_01]: That one right there.
+[33:04.620 --> 33:06.600]  [SPEAKER_01]: So, yesterday around 3.20?
+[33:08.600 --> 33:09.940]  [SPEAKER_03]: That's probably close, yeah.
+[33:13.670 --> 33:19.790]  [SPEAKER_01]: Because I think every time that the backup
+was done, it then did a whole...
+[33:23.190 --> 33:24.170]  [SPEAKER_01]: What do you call it?
+[33:31.040 --> 33:33.980]  [SPEAKER_03]: Yeah, I just kept hitting, you know,
+do you want to do a backup?
+[33:34.120 --> 33:34.320]  [SPEAKER_03]: Yes.
+[33:34.500 --> 33:34.920]  [SPEAKER_03]: Just to...
+[33:35.800 --> 33:39.020]  [SPEAKER_03]: I didn't realize it was actually saving it
+somewhere versus, like, a temp file,
+[33:39.140 --> 33:39.340]  [SPEAKER_03]: you know?
+[33:40.440 --> 33:40.740]  [SPEAKER_01]: Yeah.
+[33:49.920 --> 33:50.800]  [SPEAKER_02]: Closing this thing.
+[33:55.310 --> 33:56.030]  [SPEAKER_01]: There we go.
+[33:57.730 --> 33:58.830]  [SPEAKER_01]: Such a silly thing.
+[33:58.910 --> 34:02.470]  [SPEAKER_01]: It's like, oh, you're accessing the
+database right now you're trying to
+[34:02.470 --> 34:03.110]  [SPEAKER_01]: restore to.
+[34:03.190 --> 34:04.310]  [SPEAKER_01]: So, I'm not going to let it...
+[34:04.310 --> 34:08.170]  [SPEAKER_01]: I have to tell it to close the connection
+so you can restore to it.
+[34:08.630 --> 34:09.390]  [SPEAKER_01]: So silly.
+[34:16.070 --> 34:16.950]  dpi.systems.
+[34:29.810 --> 34:31.010]  [SPEAKER_01]: Hmm.
+[34:33.610 --> 34:37.850]  [SPEAKER_01]: I need an even older database backup than
+this one, looks like.
+[34:45.130 --> 34:46.490]  [SPEAKER_03]: I may have...
+[34:53.140 --> 34:55.100]  [SPEAKER_01]: Let me just check in the directory.
+[34:55.280 --> 34:59.280]  [SPEAKER_01]: Because there's a timeline thing,
+but I can also just pick an actual file.
+[35:02.500 --> 35:04.940]  [SPEAKER_01]: Okay, so that's the first one.
+[35:05.580 --> 35:06.520]  [SPEAKER_01]: I'm going to do that one.
+[35:20.020 --> 35:21.000]  [SPEAKER_02]: There we go.
+[35:21.600 --> 35:22.840]  [SPEAKER_02]: That should be better.
+[35:24.060 --> 35:24.220]  [SPEAKER_01]: Yep.
+[35:24.540 --> 35:24.840]  [SPEAKER_01]: Oh, wait.
+[35:25.920 --> 35:26.380]  [SPEAKER_01]: Excellent.
+[35:27.820 --> 35:28.840]  [SPEAKER_01]: That is correct.
+[35:29.820 --> 35:31.400]  [SPEAKER_01]: And I'll do the same thing with this guy.
+[35:33.660 --> 35:38.760]  [SPEAKER_01]: What had happened is, when the first
+database backup happened, it started this
+[35:38.760 --> 35:41.940]  [SPEAKER_01]: whole, like, kind of historical thing.
+[35:42.280 --> 35:47.130]  [SPEAKER_01]: But it started with the version after the
+upgrade, which is why I couldn't find...
+[35:48.180 --> 35:50.400]  [SPEAKER_01]: It didn't look right when I was checking.
+[35:51.280 --> 35:51.700]  Oh.
+[35:52.860 --> 35:54.440]  [SPEAKER_01]: There's way too many files in there.
+[35:54.900 --> 35:58.600]  [SPEAKER_01]: Once you did the first backup,
+you didn't have to hit yes on every other
+[35:58.600 --> 35:58.920]  [SPEAKER_01]: thing.
+[35:59.180 --> 36:01.080]  [SPEAKER_01]: I guess it's more of a fill up thing,
+but whatever.
+[36:01.240 --> 36:02.220]  [SPEAKER_03]: Yeah, I didn't realize that.
+[36:03.020 --> 36:03.260]  [SPEAKER_03]: Yeah.
+[36:04.920 --> 36:05.340]  [SPEAKER_03]: Now,
+[36:09.060 --> 36:14.040]  [SPEAKER_01]: it's a little bit important, because if I
+didn't do that step, you wouldn't have had
+[36:14.040 --> 36:15.960]  [SPEAKER_01]: your job files in the right locations.
+[36:16.360 --> 36:18.900]  [SPEAKER_01]: And we would have had to manually copy
+everything back over.
+[36:20.660 --> 36:31.280]  [SPEAKER_03]: I think I have backup running,
+but I could be wrong on that.
+[36:33.080 --> 36:36.900]  [SPEAKER_01]: No, that's not automatic backup that we
+were looking at in there.
+[36:37.740 --> 36:38.700]  [SPEAKER_01]: That was something else.
+[36:39.100 --> 36:41.000]  [SPEAKER_03]: No, I think...
+[36:43.840 --> 36:44.810]  [SPEAKER_03]: I'll show you what I mean.
+[36:44.850 --> 36:47.860]  [SPEAKER_03]: I think I might have to back up those
+databases, but I could be mistaken.
+[36:48.980 --> 36:52.900]  [SPEAKER_01]: The reason why I know that is because of
+the names that they're using, the names
+[36:52.900 --> 36:54.450]  [SPEAKER_01]: that our installer generates.
+[36:56.400 --> 36:56.760]  [SPEAKER_03]: Yep.
+[36:57.480 --> 37:00.080]  [SPEAKER_03]: No, if I had one going, it would be in a
+different spot.
+[37:01.140 --> 37:03.220]  [SPEAKER_03]: That's why I say that.
+[37:04.240 --> 37:05.860]  [SPEAKER_01]: I don't need any of these newer ones.
+[37:05.930 --> 37:07.200]  [SPEAKER_01]: I just need those two older ones.
+[38:21.520 --> 38:22.300]  [SPEAKER_02]: First time.
+[39:13.330 --> 39:17.890]  [SPEAKER_03]: Now, is there a way to... other than
+third-party software, is there a way to
+[39:17.890 --> 39:23.030]  [SPEAKER_03]: run an auto-backup of these SQL databases,
+even if it's weekly or something?
+[39:23.750 --> 39:33.790]  [SPEAKER_01]: So, SQL has this... if you purchase the
+full SQL license thing, they do have a
+[39:33.790 --> 39:35.530]  [SPEAKER_01]: management tool that will do that.
+[39:35.630 --> 39:42.310]  [SPEAKER_01]: But all you would need to do is set up a
+task scheduler that would regularly backup
+[39:42.310 --> 39:43.310]  [SPEAKER_01]: the database.
+[39:44.630 --> 39:48.110]  [SPEAKER_01]: Now, there's a second problem,
+which is that every time you back it up,
+[39:48.130 --> 39:50.550]  [SPEAKER_01]: these files are actually a decent size,
+right?
+[39:52.490 --> 39:52.930]  [SPEAKER_01]: Yep.
+[39:52.930 --> 39:53.730]  [SPEAKER_01]: About a quarter of a gig.
+[39:54.610 --> 39:58.030]  [SPEAKER_01]: So, as part of the process, here's what I
+would do.
+[39:58.190 --> 40:01.710]  [SPEAKER_01]: If it was me, I would tell it to backup
+the database.
+[40:02.790 --> 40:07.490]  [SPEAKER_01]: Once the backup is complete, zip up the
+database and delete the original.
+[40:07.950 --> 40:08.570]  [SPEAKER_02]: Yeah, yep.
+[40:09.270 --> 40:10.750]  [SPEAKER_01]: Because, like, if I zip this...
+[40:10.750 --> 40:10.950]  Okay.
+[40:11.790 --> 40:13.290]  [SPEAKER_01]: Just as an example, like 7-zip.
+[40:13.370 --> 40:13.550]  [SPEAKER_01]: 7-zip drill.
+[40:14.550 --> 40:15.370]  [SPEAKER_01]: Yeah, exactly.
+[40:15.590 --> 40:18.770]  [SPEAKER_01]: So, if I do that, yeah, 5% the size.
+[40:19.550 --> 40:21.290]  [SPEAKER_01]: Right now, it's not as much of a problem.
+[40:21.670 --> 40:25.170]  [SPEAKER_01]: And even then, I would still probably have
+some sort of a cleanup logic.
+[40:25.930 --> 40:26.820]  [SPEAKER_01]: So, let's say...
+[40:28.830 --> 40:29.770]  [SPEAKER_01]: I would have...
+[40:32.510 --> 40:34.470]  [SPEAKER_01]: Let's say you want to backup weekly,
+right?
+[40:34.790 --> 40:38.510]  [SPEAKER_01]: You don't necessarily want to have the
+weekly backups from six months ago.
+[40:38.970 --> 40:41.830]  [SPEAKER_01]: You might want to have a backup from six
+months ago.
+[40:43.250 --> 40:47.610]  [SPEAKER_01]: And same thing about, like, if it was,
+like, three years ago, you probably don't
+[40:47.610 --> 40:50.330]  [SPEAKER_01]: want to have the weekly or monthly
+backups.
+[40:50.550 --> 40:55.010]  [SPEAKER_01]: You'd probably be fine with just a couple,
+let's say one per quarter.
+[40:55.470 --> 40:56.210]  [SPEAKER_01]: You know what I mean?
+[40:56.550 --> 41:00.870]  [SPEAKER_01]: Like, as you go back further and further,
+the specificity doesn't matter as much.
+[41:04.070 --> 41:04.990]  [SPEAKER_03]: Yeah, like...
+[41:04.990 --> 41:06.710]  [SPEAKER_03]: I think this has it on it.
+[41:08.390 --> 41:15.940]  [SPEAKER_03]: I do have a third-party software that...
+[41:15.940 --> 41:16.740]  [SPEAKER_03]: I love Windows.
+[41:23.840 --> 41:26.400]  [SPEAKER_01]: This is a different thing.
+[41:28.220 --> 41:28.860]  [SPEAKER_03]: Oh, there we go.
+[41:30.940 --> 41:31.380]  Sorry,
+[41:36.200 --> 41:37.180]  [SPEAKER_01]: I want to see what the install is doing.
+[41:39.280 --> 41:39.700]  [SPEAKER_03]: Oh, yeah.
+[41:39.900 --> 41:42.040]  [SPEAKER_03]: It's waiting for a...
+[41:42.640 --> 41:44.680]  [SPEAKER_01]: You got a remote PC software?
+[41:44.820 --> 41:45.480]  [SPEAKER_01]: Is that what you're talking about?
+[41:48.280 --> 41:49.080]  [SPEAKER_03]: No, it's...
+[41:49.080 --> 41:51.680]  [SPEAKER_03]: Yeah, let's just reboot that.
+[41:53.960 --> 41:55.280]  [SPEAKER_03]: Since we're talking about something else.
+[41:55.980 --> 41:57.680]  [SPEAKER_01]: It says we need to, but I'm just going to
+hit no.
+[41:58.900 --> 42:04.700]  [SPEAKER_01]: So, it looks like it installed without any
+errors, which is awesome, because it means
+[42:04.700 --> 42:06.660]  [SPEAKER_01]: that I have no idea what...
+[42:06.660 --> 42:08.060]  [SPEAKER_01]: It didn't happen this time.
+[42:08.160 --> 42:09.980]  [SPEAKER_03]: Like, could it have been...
+[42:09.980 --> 42:11.520]  [SPEAKER_03]: Could it have been...
+[42:11.520 --> 42:12.420]  [SPEAKER_03]: Because I had...
+[42:12.420 --> 42:14.800]  [SPEAKER_03]: Like, obviously, I had antivirus running
+in the first place.
+[42:16.200 --> 42:17.120]  [SPEAKER_01]: I don't know.
+[42:17.300 --> 42:18.800]  [SPEAKER_01]: Like, it could have been almost anything.
+[42:18.920 --> 42:19.940]  [SPEAKER_01]: Like, I really don't know.
+[42:20.860 --> 42:21.300]  [SPEAKER_01]: Port.
+[42:21.460 --> 42:22.900]  [SPEAKER_01]: What's the custom port you guys use?
+[42:26.270 --> 42:28.970]  [SPEAKER_03]: Let me double-check, just to make sure I
+don't lie to you.
+[42:34.150 --> 42:34.590]  [SPEAKER_03]: 57680.
+[42:38.960 --> 42:39.400]  [SPEAKER_01]: 57680.
+[42:41.260 --> 42:42.880]  [SPEAKER_01]: Okay, and that's just regular HTTP?
+[42:45.120 --> 42:45.560]  Yes.
+[42:46.280 --> 42:46.680]  [SPEAKER_01]: Okay.
+[42:47.080 --> 42:48.960]  [SPEAKER_01]: So, try the connection.
+[42:49.700 --> 42:51.260]  [SPEAKER_01]: See if it loads.
+[43:13.890 --> 43:14.830]  [SPEAKER_03]: Happily over here.
+[43:37.840 --> 43:39.230]  [SPEAKER_03]: It did load there, at least.
+[44:04.180 --> 44:04.980]  [SPEAKER_03]: Still...
+[44:08.740 --> 44:10.000]  [SPEAKER_03]: Still here.
+[44:23.100 --> 44:25.000]  [SPEAKER_03]: Maybe we need that reboot?
+[44:30.320 --> 44:32.220]  [SPEAKER_01]: Did I put in the number correct?
+[44:34.760 --> 44:35.560]  [SPEAKER_01]: 57680.
+[44:35.560 --> 44:40.500]  [SPEAKER_01]: I feel like that's not the same port
+number that I put in.
+[44:44.270 --> 44:44.670]  [SPEAKER_01]: 57680.
+[44:46.330 --> 44:48.750]  [SPEAKER_01]: Yeah, that looks correct.
+[44:50.390 --> 44:51.450]  [SPEAKER_01]: Yeah, we should be good.
+[44:51.590 --> 44:52.530]  [SPEAKER_01]: It's just...
+[44:52.530 --> 44:53.150]  [SPEAKER_01]: It's a matter of...
+[44:53.830 --> 44:57.030]  [SPEAKER_01]: If it's not working from your location,
+is it like a VPN thing?
+[45:01.160 --> 45:01.740]  [SPEAKER_03]: Well, no.
+[45:01.900 --> 45:03.000]  [SPEAKER_03]: Like, we're port forwarded.
+[45:03.080 --> 45:04.220]  [SPEAKER_03]: Like, we're just using port forwarding.
+[45:20.460 --> 45:20.860]  [SPEAKER_02]: Sorry.
+[45:25.400 --> 45:26.940]  [SPEAKER_02]: That looks correct.
+[45:33.650 --> 45:34.210]  [SPEAKER_02]: Okay.
+[45:38.720 --> 45:40.400]  [SPEAKER_01]: Sentinel-1's screwing with us?
+[45:42.500 --> 45:44.940]  [SPEAKER_03]: I mean, shouldn't be?
+[45:46.140 --> 45:48.240]  [SPEAKER_01]: Probably says it's disabled, but I don't
+know.
+[45:53.780 --> 45:55.140]  [SPEAKER_01]: Well, I'll try reboot.
+[45:55.640 --> 45:59.940]  [SPEAKER_01]: I don't think it should affect anything,
+but...
+[46:17.230 --> 46:19.350]  [SPEAKER_02]: I can add a port, I guess.
+[46:21.710 --> 46:22.610]  [SPEAKER_01]: Let's see.
+[46:22.690 --> 46:23.850]  [SPEAKER_01]: TCD port.
+[46:24.390 --> 46:24.890]  [SPEAKER_01]: Because...
+[46:24.890 --> 46:25.250]  [SPEAKER_01]: I'm sorry.
+[46:27.150 --> 46:27.870]  [SPEAKER_01]: 57680?
+[46:31.870 --> 46:35.290]  [SPEAKER_03]: Could it have been because we didn't find
+it during the...
+[46:35.290 --> 46:35.750]  [SPEAKER_01]: No.
+[46:36.730 --> 46:37.950]  [SPEAKER_01]: No, it'll still work.
+[46:45.230 --> 46:45.630]  [SPEAKER_02]: All right.
+[46:46.550 --> 46:47.310]  [SPEAKER_02]: Try that again.
+[46:48.990 --> 46:49.710]  [SPEAKER_01]: Oh.
+[46:50.770 --> 46:54.610]  [SPEAKER_01]: Did that just happen now, or...
+[46:55.450 --> 46:56.170]  [SPEAKER_01]: Okay.
+[46:56.170 --> 46:58.070]  [SPEAKER_01]: Let me just do disable.
+[46:58.290 --> 46:58.910]  [SPEAKER_03]: Or did you fix it?
+[46:59.350 --> 46:59.870]  [SPEAKER_01]: Right.
+[47:00.150 --> 47:01.330]  [SPEAKER_01]: I'm going to disable that rule.
+[47:01.410 --> 47:02.230]  [SPEAKER_01]: I'm going to hit refresh.
+[47:03.730 --> 47:04.410]  [SPEAKER_01]: Endless spinning.
+[47:04.990 --> 47:06.530]  [SPEAKER_01]: And enable rule.
+[47:06.910 --> 47:07.050]  [SPEAKER_03]: Yeah.
+[47:09.110 --> 47:10.070]  [SPEAKER_01]: And now we're...
+[47:10.070 --> 47:11.090]  [SPEAKER_01]: Okay.
+[47:12.250 --> 47:12.770]  [SPEAKER_01]: Awesome.
+[47:12.990 --> 47:14.230]  [SPEAKER_01]: So, for some reason, IIS...
+[47:16.430 --> 47:21.490]  [SPEAKER_01]: Yeah, I think IIS didn't automatically add
+the port, or it's not enabled in here.
+[47:21.490 --> 47:26.450]  [SPEAKER_01]: There's probably a one for IIS itself.
+[47:28.450 --> 47:30.510]  [SPEAKER_01]: It's probably just disabled by default.
+[47:31.990 --> 47:32.990]  [SPEAKER_01]: Which is fine.
+[47:33.610 --> 47:34.630]  [SPEAKER_01]: As long as you know.
+[47:37.590 --> 47:38.690]  [SPEAKER_01]: Anyways, we can reboot.
+[47:39.410 --> 47:42.350]  [SPEAKER_01]: But we shouldn't need to for you to
+navigate this stuff.
+[47:43.490 --> 47:44.730]  [SPEAKER_01]: I'm on the wrong computer again.
+[47:45.430 --> 47:45.790]  [SPEAKER_01]: Like so.
+[47:47.310 --> 47:49.230]  [SPEAKER_03]: Well, now you're back on the right.
+[47:50.370 --> 47:50.790]  [SPEAKER_01]: All right.
+[47:53.530 --> 47:53.970]  [SPEAKER_01]: Yeah.
+[47:54.330 --> 47:55.950]  [SPEAKER_01]: So, that should have resolved it.
+[47:56.290 --> 47:56.450]  [SPEAKER_03]: All right.
+[47:57.750 --> 47:58.090]  [SPEAKER_03]: Yeah.
+[47:58.210 --> 47:58.470]  [SPEAKER_03]: Okay.
+[47:58.710 --> 47:59.690]  [SPEAKER_03]: Who knows what happened, though.
+[48:01.930 --> 48:05.770]  [SPEAKER_03]: Probably a failed install and then a
+corrupted database that I kept trying to
+[48:05.770 --> 48:06.470]  [SPEAKER_03]: reuse or something.
+[48:07.950 --> 48:08.970]  [SPEAKER_01]: I have no idea.
+[48:09.290 --> 48:09.590]  [SPEAKER_01]: Yeah.
+[48:10.850 --> 48:11.290]  [SPEAKER_03]: Yeah.
+[48:11.990 --> 48:12.430]  [SPEAKER_03]: Yeah.
+[48:12.890 --> 48:14.230]  [SPEAKER_03]: Well, we've got to figure it out anyways.
+[48:14.370 --> 48:15.190]  [SPEAKER_03]: So, that's good.
+[48:16.850 --> 48:17.190]  [SPEAKER_01]: Yeah.
+[48:17.670 --> 48:19.110]  [SPEAKER_03]: Now we can just be stumped for the rest of
+the day.
+[48:20.090 --> 48:20.390]  [SPEAKER_03]: Okay.
+[48:21.490 --> 48:22.290]  [SPEAKER_01]: As long as it's working.
+[48:22.470 --> 48:22.770]  [SPEAKER_03]: Thanks very much for your help.
+[48:23.470 --> 48:24.030]  [SPEAKER_01]: Yeah, you're welcome.
+[48:24.290 --> 48:24.990]  [SPEAKER_03]: Yeah, absolutely.
+[48:26.010 --> 48:26.350]  [SPEAKER_03]: Bye.

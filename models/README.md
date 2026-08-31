@@ -3,13 +3,13 @@
 Downloaded and converted models are stored here by default. Override the location with:
 
 ```bash
-export O3WHISBURN_MODELS_DIR=/path/to/models
+export WHISBURN_MODELS_DIR=/path/to/models
 ```
 
 ## Prepare a model
 
 ```bash
-cargo run -p o3whisburn-cli -- models download tiny_en --verbose
+cargo run -p whisburn-cli -- models download tiny_en --verbose
 ```
 
 Use `--force` to clear stale conversion artifacts and rebuild the Burn bundle.
@@ -32,22 +32,22 @@ Intermediate files (`model.safetensors`, `encoder/*.npy`, `decoder/*.npy`) are r
 ### Whisper example
 
 ```bash
-cargo run -p o3whisburn-cli -- models download tiny_en --verbose
-cargo run -p o3whisburn-cli -- transcribe -i samples/jfk.wav -m tiny_en -v
+cargo run -p whisburn-cli -- models download tiny_en --verbose
+cargo run -p whisburn-cli -- transcribe -i samples/jfk.wav -m tiny_en -v
 ```
 
 ### Parakeet example
 
 ```bash
-cargo run -p o3whisburn-cli -- models download parakeet-tdt-0.6b-v3 --verbose
-cargo run -p o3whisburn-cli -- transcribe -i samples/jfk.wav -m parakeet-tdt-0.6b-v3 -v
+cargo run -p whisburn-cli -- models download parakeet-tdt-0.6b-v3 --verbose
+cargo run -p whisburn-cli -- transcribe -i samples/jfk.wav -m parakeet-tdt-0.6b-v3 -v
 ```
 
 ### Qwen3-ASR example
 
 ```bash
-cargo run -p o3whisburn-cli -- models download qwen3-asr-0.6b --verbose
-cargo run -p o3whisburn-cli -- transcribe -i samples/jfk.wav -m qwen3-asr-0.6b --language auto -v
+cargo run -p whisburn-cli -- models download qwen3-asr-0.6b --verbose
+cargo run -p whisburn-cli -- transcribe -i samples/jfk.wav -m qwen3-asr-0.6b --language auto -v
 ```
 
 See [MODELS.md](../MODELS.md) for the full pipeline.

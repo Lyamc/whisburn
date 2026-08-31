@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = ROOT / "benchmark.csv"
 AUDIO = ROOT / "samples" / "jfk.wav"
 MODELS_DIR = ROOT / "models"
-BIN = ROOT / "target" / "release" / "o3whisburn"
+BIN = ROOT / "target" / "release" / "whisburn"
 
 VRAM_ESTIMATE_MB = {
     "tiny": 400,
@@ -44,7 +44,7 @@ VRAM_ESTIMATE_MB = {
 }
 
 # Burn-ready ASR models to include. Already-downloaded ones are reused;
-# missing ones are fetched via `o3whisburn models download`.
+# missing ones are fetched via `whisburn models download`.
 BENCHMARK_MODELS = [
     "tiny_en",
     "tiny",

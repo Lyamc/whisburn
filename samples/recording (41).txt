@@ -1,0 +1,186 @@
+[00:02.100 --> 00:04.730]  [SPEAKER_00]: Hey, this is Liam from Reliable Controls
+Technical Support.
+[00:10.240 --> 00:10.980]  [SPEAKER_01]: Hello?
+[00:19.260 --> 00:22.160]  [SPEAKER_00]: Hey, this is Liam from Reliable Controls
+Technical Support.
+[00:28.790 --> 00:29.530]  [SPEAKER_00]: Hello?
+[00:30.310 --> 00:30.710]  [SPEAKER_02]: Hello?
+[00:31.710 --> 00:36.230]  [SPEAKER_02]: Hi, I'm talking to Reliable Controls,
+right?
+[00:37.180 --> 00:38.130]  [SPEAKER_00]: That's right, it's Liam.
+[00:39.190 --> 00:41.310]  [SPEAKER_02]: Hi Liam, we are Solmatec.
+[00:41.710 --> 00:44.510]  [SPEAKER_02]: You remember us from last...
+[00:45.050 --> 00:45.670]  [SPEAKER_01]: Yep.
+[00:47.830 --> 00:56.550]  [SPEAKER_02]: So, yeah, we're encouraging some other
+problems with Archive and also the
+[00:56.550 --> 00:57.670]  [SPEAKER_02]: WebView.
+[00:58.870 --> 00:59.390]  [SPEAKER_01]: Okay.
+[01:01.950 --> 01:03.670]  [SPEAKER_02]: Can you see our screen?
+[01:06.990 --> 01:08.590]  [SPEAKER_00]: Nope, nothing at the moment.
+[01:08.710 --> 01:10.510]  [SPEAKER_00]: I haven't even pulled up the screen
+connect.
+[01:11.370 --> 01:11.970]  [SPEAKER_02]: Okay, okay.
+[01:15.250 --> 01:17.210]  [SPEAKER_00]: Is this going to be someone else's
+computer?
+[01:17.210 --> 01:19.870]  [SPEAKER_00]: Like, whose name would it be under?
+[01:20.350 --> 01:22.210]  [SPEAKER_00]: Because I just see Alvaro here,
+so...
+[01:23.170 --> 01:25.530]  [SPEAKER_02]: Yeah, it's just that one.
+[01:27.750 --> 01:30.630]  [SPEAKER_00]: Okay, none of them are currently active,
+so I'll have to give you a code.
+[01:31.190 --> 01:34.690]  [SPEAKER_00]: Can you go to rcsupport.screenconnect.com?
+[01:36.330 --> 01:36.750]  [SPEAKER_01]: Okay.
+[01:43.220 --> 01:43.640]  rcsupport...
+[01:43.640 --> 01:46.220]  [SPEAKER_00]: Yep, .screenconnect.com.
+[01:47.380 --> 01:49.400]  [SPEAKER_00]: I can also just send you an email with the
+link.
+[01:50.280 --> 01:51.240]  [SPEAKER_02]: Okay, okay.
+[01:52.020 --> 01:55.740]  [SPEAKER_02]: We're going to go there.
+[01:56.260 --> 01:57.160]  [SPEAKER_02]: Just give me a second.
+[02:27.320 --> 02:29.660]  [SPEAKER_02]: Yeah, can you send us the email?
+[02:30.560 --> 02:30.940]  [SPEAKER_00]: Sure.
+[02:31.220 --> 02:34.780]  [SPEAKER_00]: Can I send it to asolis at solmatec.cr?
+[02:48.780 --> 02:49.520]  [SPEAKER_01]: Just a moment.
+[02:51.420 --> 02:52.100]  [SPEAKER_01]: Okay.
+[02:52.100 --> 02:52.160]  Thank you.
+[03:03.460 --> 03:05.860]  [SPEAKER_00]: It should be getting an email any moment
+now.
+[03:09.310 --> 03:09.870]  [SPEAKER_01]: Okay.
+[03:25.970 --> 03:27.330]  [SPEAKER_02]: Yep, it arrived.
+[03:37.770 --> 03:39.130]  [SPEAKER_02]: Just give us a second.
+[03:40.430 --> 03:40.650]  [SPEAKER_01]: Yep.
+[03:49.220 --> 03:50.220]  [SPEAKER_02]: So, yep.
+[03:51.140 --> 03:58.920]  [SPEAKER_02]: We have to run the screen connect client
+back exe, right?
+[04:00.160 --> 04:00.580]  [SPEAKER_01]: Yep.
+[04:24.020 --> 04:27.180]  [SPEAKER_02]: Yep, we already did that.
+[04:28.420 --> 04:28.600]  [SPEAKER_01]: Great.
+[04:35.030 --> 04:36.690]  [SPEAKER_02]: Yes, there we are.
+[04:37.770 --> 04:43.070]  [SPEAKER_02]: So, I'm going to explain to you what we
+discovered.
+[04:43.830 --> 04:55.510]  [SPEAKER_02]: Last time that we do the changing on
+rcWebView, and I think that we changed the
+[04:55.510 --> 04:57.910]  [SPEAKER_02]: port when rcWebView was.
+[05:00.160 --> 05:10.740]  [SPEAKER_02]: I think that now there is some problem
+because we cannot upload the graphic
+[05:10.740 --> 05:22.860]  [SPEAKER_02]: changes by the directory because some kind
+of permission or I don't know what.
+[05:23.600 --> 05:26.220]  [SPEAKER_02]: But yeah, we can do it that way.
+[05:26.360 --> 05:32.540]  [SPEAKER_02]: We cannot do it like the way that you
+tried last time because there is cyber
+[05:32.540 --> 05:36.900]  [SPEAKER_02]: security issues with that and also it's so
+big the site.
+[05:38.460 --> 05:44.860]  [SPEAKER_02]: So yeah, we encourage that problem and
+another with rcArchive.
+[05:46.280 --> 05:48.120]  [SPEAKER_00]: Okay, let's do the rcArchive one first.
+[05:48.220 --> 05:48.720]  [SPEAKER_00]: What's this one?
+[05:48.720 --> 05:59.740]  [SPEAKER_02]: Okay, the rcArchive is like we mounted
+like we migrate the server like 20,
+[06:00.560 --> 06:12.920]  [SPEAKER_02]: I don't know, 20 December and when we
+mounted it wasn't like getting the points.
+[06:12.920 --> 06:21.700]  [SPEAKER_02]: Now that we put the points on rcArchive,
+it doesn't seem like it is getting the
+[06:21.700 --> 06:23.180]  [SPEAKER_02]: data from the controllers.
+[06:24.040 --> 06:29.260]  [SPEAKER_02]: And we know they are functioning,
+like the controllers are functioning
+[06:29.260 --> 06:32.120]  [SPEAKER_02]: because you can see...
+[06:32.120 --> 06:33.660]  [SPEAKER_00]: According to this, it's getting the data.
+[06:34.020 --> 06:35.560]  [SPEAKER_00]: According to these logs, it's getting the
+data.
+[06:35.560 --> 06:38.780]  [SPEAKER_00]: So the question becomes, how are you
+trying to view the data?
+[06:39.000 --> 06:42.620]  [SPEAKER_00]: Are you looking at the database itself or
+are you trying to view it through trend
+[06:42.620 --> 06:42.960]  [SPEAKER_00]: logs?
+[06:44.840 --> 06:52.660]  [SPEAKER_02]: I think they are trying to... I think they
+are trying to see it by, you know,
+[06:53.980 --> 06:55.620]  [SPEAKER_02]: rcReporter.
+[06:57.100 --> 06:58.580]  [SPEAKER_00]: Oh, rcReporter, okay.
+[06:59.400 --> 07:00.160]  [SPEAKER_02]: So, yeah.
+[07:00.700 --> 07:06.520]  [SPEAKER_02]: And they also told me that when you go...
+let me ask because I don't know what tool
+[07:06.520 --> 07:06.780]  [SPEAKER_02]: was...
+[07:09.560 --> 07:11.800]  [SPEAKER_00]: So, let me just back up a little bit here.
+[07:12.640 --> 07:15.600]  [SPEAKER_00]: You guys migrated, right?
+[07:16.060 --> 07:16.840]  [SPEAKER_02]: Yeah, yeah.
+[07:17.280 --> 07:21.520]  [SPEAKER_00]: The database is now not at the same
+location and rcReporter has not yet picked
+[07:21.520 --> 07:22.540]  [SPEAKER_00]: up the new information.
+[07:22.820 --> 07:23.220]  [SPEAKER_00]: Is that right?
+[07:24.500 --> 07:25.580]  [SPEAKER_02]: Ah, okay, okay.
+[07:26.720 --> 07:30.800]  [SPEAKER_02]: So we have to change it from there,
+right?
+[07:32.200 --> 07:33.700]  [SPEAKER_00]: Is this the old server or the new server?
+[07:37.400 --> 07:38.520]  [SPEAKER_02]: I don't know.
+[07:40.100 --> 07:40.600]  [SPEAKER_00]: Let's check.
+[07:41.700 --> 07:43.240]  [SPEAKER_00]: So, we can check right in here.
+[07:44.120 --> 07:45.680]  [SPEAKER_00]: So we can find out which server it's going
+to.
+[08:05.540 --> 08:06.460]  [SPEAKER_00]: Not a great sign.
+[08:24.550 --> 08:26.230]  [SPEAKER_00]: Oh, all the data is there.
+[08:26.290 --> 08:27.650]  [SPEAKER_00]: It just hasn't been going anywhere.
+[08:30.070 --> 08:31.150]  [SPEAKER_02]: Ah, okay, okay.
+[08:31.730 --> 08:32.090]  [SPEAKER_02]: So, yeah.
+[08:32.310 --> 08:33.890]  [SPEAKER_02]: They are explaining to me...
+[08:33.890 --> 08:42.570]  [SPEAKER_02]: They go to database utility and they saw
+that from 20th December there is no data
+[08:42.570 --> 08:45.150]  [SPEAKER_02]: coming from...
+[08:46.410 --> 08:47.090]  [SPEAKER_00]: That's the problem.
+[08:47.430 --> 08:48.750]  [SPEAKER_00]: See, it's not going to the right location.
+[08:50.210 --> 08:50.950]  [SPEAKER_01]: Ah, okay, okay.
+[08:50.950 --> 08:53.590]  [SPEAKER_00]: All right.
+[09:15.680 --> 09:17.320]  [SPEAKER_00]: Do you know what the password is?
+[09:19.760 --> 09:20.740]  [SPEAKER_02]: Let me ask.
+[09:24.180 --> 09:26.720]  [SPEAKER_00]: Well, while you ask, I'll see if I can
+find it.
+[09:28.020 --> 09:28.340]  [SPEAKER_01]: Okay.
+[09:56.490 --> 10:00.750]  [SPEAKER_02]: Yeah, we can actually search it.
+[10:00.850 --> 10:02.810]  [SPEAKER_02]: I think we have it.
+[10:04.150 --> 10:05.170]  [SPEAKER_00]: If you have it, great.
+[10:05.370 --> 10:05.890]  [SPEAKER_00]: Let's get it.
+[10:06.470 --> 10:06.830]  Yeah.
+[10:19.950 --> 10:21.250]  [SPEAKER_02]: Do you see the password?
+[10:23.010 --> 10:23.730]  [SPEAKER_00]: Is that it?
+[10:24.290 --> 10:24.970]  [SPEAKER_00]: That right there?
+[10:26.170 --> 10:26.770]  [SPEAKER_02]: Yeah, yeah.
+[10:27.350 --> 10:29.030]  [SPEAKER_02]: Let me just pull out the...
+[10:29.470 --> 10:30.330]  [SPEAKER_00]: Oh, I see it.
+[10:30.390 --> 10:30.790]  [SPEAKER_00]: Yeah, yeah, yeah.
+[10:30.910 --> 10:31.350]  [SPEAKER_00]: I see it.
+[10:31.450 --> 10:31.850]  [SPEAKER_00]: I see it.
+[10:31.910 --> 10:32.250]  [SPEAKER_00]: Yeah, yeah.
+[10:32.350 --> 10:32.770]  [SPEAKER_00]: I got it.
+[10:34.290 --> 10:34.570]  [SPEAKER_00]: All right.
+[10:35.070 --> 10:37.950]  [SPEAKER_00]: I'm just waiting for the thing to finish
+dragging across the screen.
+[10:39.310 --> 10:41.870]  [SPEAKER_00]: On my side, it's still on the left side.
+[10:45.390 --> 10:45.670]  [SPEAKER_02]: Yeah.
+[10:47.770 --> 10:50.330]  [SPEAKER_02]: Should we change the other way?
+[10:50.690 --> 10:51.050]  [SPEAKER_02]: Like this?
+[10:51.650 --> 10:51.890]  [SPEAKER_00]: No, no.
+[10:51.930 --> 10:53.470]  [SPEAKER_00]: Just don't click anything else.
+[10:53.590 --> 10:54.570]  [SPEAKER_00]: I've just got to wait for it to load.
+[10:55.450 --> 10:55.650]  [SPEAKER_02]: Okay.
+[11:03.750 --> 11:07.750]  [SPEAKER_00]: The problem with some of the remote
+desktop software... Oh, you moved it back.
+[11:09.630 --> 11:10.270]  [SPEAKER_02]: Yeah, sorry.
+[11:10.270 --> 11:14.490]  [SPEAKER_00]: So, with remote desktop software,
+when you move a window around,
+[11:14.570 --> 11:15.770]  [SPEAKER_00]: it has to send every frame.
+[11:16.570 --> 11:21.250]  [SPEAKER_00]: And the larger and more complex the thing
+is, the more it has to send every frame.
+[11:22.210 --> 11:26.230]  [SPEAKER_00]: And that just puts me, like, in the past
+while it tries to catch up.
+[11:27.110 --> 11:28.250]  [SPEAKER_00]: Anyways, I got it.
+[11:29.470 --> 11:29.670]  [SPEAKER_01]: Okay.
+[11:30.750 --> 11:31.430]  [SPEAKER_00]: I think.
+[11:35.290 --> 11:36.390]  [SPEAKER_00]: Still doesn't like something.
+[11:36.790 --> 11:38.010]  [SPEAKER_00]: Let's go back over to here.
+[11:46.000 --> 11:50.460]  [SPEAKER_02]: I actually view that, you know,
+the user is not Solmatec.
+[11:50.740 --> 11:54.680]  [SPEAKER_02]: It's Somaltec, because they put it wrong.
+[11:54.860 --> 11:54.980]  [SPEAKER_00]: Oh.
+[12:01.040 --> 12:01.600]  [SPEAKER_00]: Sorry.
+[12:02.780 --> 12:06.320]  [SPEAKER_00]: Yeah, can you just put in the correct
+wrong way?
+[12:06.320 --> 12:06.400]  [SPEAKER_00]: Okay.

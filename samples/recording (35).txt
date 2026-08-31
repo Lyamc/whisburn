@@ -1,0 +1,76 @@
+[00:00.350 --> 00:06.110]  Hi, this is Mike Buchanan at Reliable Controls. How can I help you? Hi Mike,
+[00:06.110 --> 00:13.110]  Grant here with Webber Automation. How you doing? Doing good. How are you? Oh, not too
+[00:13.110 --> 00:25.130]  bad. I do have a question for you. And that is actually related to a ticket I
+[00:25.970 --> 00:34.680]  emailed about. I think Sam had responded to me. Okay, yeah. Do you see the one about...
+[00:36.130 --> 00:53.030]  actually, maybe I should go there. The RC Studio template? Yeah. Okay. And I'm just
+[00:54.890 --> 01:01.710]  I'm kind of pushed for time right now, but it's... so I don't want to take a lot of time on it,
+[01:02.350 --> 01:14.430]  but it is getting to be a pain in my side here. What happens is, basically, I have these...
+[01:14.430 --> 01:18.750]  I had this subnet, you know, I had these flex errors that were labeled in the 1000s,
+[01:18.750 --> 01:25.090]  and then I brought in a whole subnet of other controllers that were 1000s as well. So,
+[01:25.130 --> 01:32.870]  now somehow they've had duplicate addresses. So, I got the flex errors onto 12 addresses
+[01:32.870 --> 01:37.010]  with 1200, but I still have all these other old mock ones that are on 1000s.
+[01:40.110 --> 01:45.250]  And the network, everything's working fine. The template is the part that's not working.
+[01:45.250 --> 01:51.870]  And so, if I go to associate template, I don't see anything. I don't see any of the 1000s,
+[01:51.870 --> 01:56.970]  but if I go to... I mean, I can send you screenshots if you want, but if I go to like
+[01:56.970 --> 02:03.070]  set parent device, you know, if I set parent device, I've still got the 1000s in the parent
+[02:03.070 --> 02:12.010]  device. But if I right click on my template file and say associate template, I don't see
+[02:12.010 --> 02:23.230]  those 1000s, those mock ones. My question is just, is there some file inside there where
+[02:23.230 --> 02:33.950]  these little gremlins are hiding? The hitch is that when I run the template, sometimes
+[02:33.950 --> 02:39.550]  like if I associate or dissociate or whatever, it always goes through and hunts for these
+[02:41.290 --> 02:51.650]  1000 numbers, which aren't valid. Like the template is a flex air template. So if it ever
+[02:51.650 --> 02:59.450]  tries to load the template onto a mock one, it fails, which thankfully is so. Otherwise,
+[02:59.450 --> 03:09.010]  my lighting system would be in complete disarray right now. But it's like, it's just
+[03:09.010 --> 03:16.670]  like some file has all these entries of 1000 and I can't, you know, sometimes they show
+[03:16.670 --> 03:22.310]  up and sometimes they don't, depending on what procedure I'm doing. Yeah. Have you
+[03:22.310 --> 03:29.710]  done a full rediscovery of the system after updating? I did a full rediscover. I did,
+[03:29.730 --> 03:37.300]  you know, I even blew away my descriptors, which I think was probably even
+[03:37.940 --> 03:41.420]  more an issue. But anyways, yeah, I've done that.
+[03:44.880 --> 03:48.600]  Have you tried discovering from a new line in RC Studio?
+[03:50.860 --> 03:58.340]  I haven't. Well, okay, I do. I have about four or five systems that I use. So yes,
+[03:58.840 --> 04:10.120]  the issue is that, and I can if I have to, I can, but I have points reports, I have templates,
+[04:10.960 --> 04:16.100]  I have, you know, all these JSON files and everything that are on this system
+[04:16.100 --> 04:24.440]  that if I go to another one, I don't have it. And I can copy those files over manually.
+[04:26.240 --> 04:31.440]  I'm just trying to avoid that. Would it be possible for you to send
+[04:31.440 --> 04:36.620]  the screenshots through and also zip and send your job folder? How big is the job folder?
+[04:42.550 --> 04:45.930]  Like basically, what you want is what's in the root directory. Don't you like
+[04:45.930 --> 04:51.510]  the INI files and all that? And then maybe the DES folder?
+[04:52.350 --> 04:59.190]  Well, I'll tell you what, I'll check in with software and see because it sounds like, I mean,
+[05:01.110 --> 05:06.750]  it sounds like you shouldn't have anything that says like there's a device 1000
+[05:10.390 --> 05:15.310]  that would be concerned with that template. Like it should, your system should know now
+[05:15.310 --> 05:23.770]  there's no device 1000. So I'm not really sure where that remnant would be.
+[05:25.710 --> 05:30.110]  So I might have to check with software on that and then follow up with you again,
+[05:30.550 --> 05:36.310]  see if there's a file that they know of that wouldn't have been dealt with by a new
+[05:36.310 --> 05:44.350]  rediscovery. Okay, so then that's great. Now then the other question is, so let's say I went
+[05:44.350 --> 05:55.670]  and I created a whole new folder or system. If I would bring all my JSON files over,
+[05:56.930 --> 06:01.350]  like there shouldn't be anything in the PIC folder that would be, like if I would just
+[06:01.350 --> 06:08.690]  copy my PIC folder from one to the other, I should be good, shouldn't I? Yeah, yeah,
+[06:08.690 --> 06:13.530]  that should be fine. Like there should be no gremlins in the PIC folder. It would either
+[06:13.530 --> 06:19.490]  be in the root or in the desk descriptor folder or something like that probably, right?
+[06:19.930 --> 06:25.130]  I would think so, but I'll double check with software on that because, you know,
+[06:26.030 --> 06:30.630]  okay, logically intuitively there wouldn't be, but I'm not sure if there's like an old
+[06:32.070 --> 06:39.850]  JSON that maybe an XML or some... Yeah, I don't know where Studio is getting this
+[06:39.850 --> 06:44.920]  information from and, you know, it could be potentially anything like that, right? Right.
+[06:47.630 --> 06:57.750]  Okay, I'll send you a few shots and we'll go from there. If it is just a matter of
+[06:57.750 --> 07:04.600]  copying that PIC folder over, I mean that might not be too bad, like that might be the
+[07:04.600 --> 07:12.560]  option for me right now. I mean, if you wanted to test, like you could, if you do a
+[07:12.560 --> 07:18.780]  new line with a new job folder, right, and see if it works around it.
+[07:19.900 --> 07:26.140]  Yeah, and where is the information for the points report and the template stored? Like
+[07:26.140 --> 07:33.790]  I know the template, so let's say I take the PIC folder over, then I'd also have to copy the
+[07:33.790 --> 07:44.210]  nd folder over as well because it's got the template file. But the information for, you know, like,
+[07:47.970 --> 07:55.750]  well, I guess, I guess I could just recreate a template using the template file. That wouldn't
+[07:55.750 --> 08:00.690]  be so hard. But how about the points report? It'd be nice to bring those things over. But
+[08:00.690 --> 08:03.870]  I mean, I could recreate them all again. It's just a pain.
+[08:04.350 --> 08:07.730]  Yeah, let me just check real quick if I can find one of mine.
+[08:09.410 --> 08:09.870]  Okay.
+[08:12.570 --> 08:15.830]  I'm not sure I've had where that directory is, but I'll see if I can...
+[08:15.830 --> 08:22.090]  Sure, sure, I don't expect you to remember. Oh, what did I do?
+[08:24.930 --> 08:28.270]  Oh, that's bad. I just interrupted my template.
+[08:35.010 --> 08:36.810]  It looks like they're in the DAT folder.
+[08:39.710 --> 08:44.170]  Oh, okay. So the points report?
+[08:45.150 --> 08:50.730]  Yeah, they're in the DAT folder. That's also where your, you know,
+[08:50.930 --> 08:55.690]  custom UTL JSONs are and your simulator info.
+[08:57.470 --> 08:59.850]  So you probably want to bring that DAT folder over as well.
+[09:01.070 --> 09:11.970]  Okay, I'll try that. Okay. Excellent. Okay, I'll try that. And yeah, if there's anything else
+[09:11.970 --> 09:16.170]  you find out, that'd be great to know, too. Sounds good. Yeah, I'll let you know. Yeah,
+[09:16.170 --> 09:24.490]  and then when you send the screenshot through, just reply to that 209759 ticket with that.
+[09:26.070 --> 09:32.770]  Okay. Yeah. Okay. Okay. All right. Thank you so much, Mike. No problem. Yeah, bye.

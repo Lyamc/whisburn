@@ -1,0 +1,38 @@
+# Cross-compilation and build configuration for whisburn
+#
+# Usage examples:
+#
+#   # Linux x86_64 musl (static, good for containers / minimal envs)
+#   cargo build -p whisburn-cli --target x86_64-unknown-linux-musl --release
+#
+#   # Linux aarch64
+#   cargo build -p whisburn-cli --target aarch64-unknown-linux-gnu --release
+#
+#   # Windows
+#   cargo build -p whisburn-cli --target x86_64-pc-windows-msvc --release
+#
+#   # macOS arm64
+#   cargo build -p whisburn-cli --target aarch64-apple-darwin --release
+#
+# Prerequisites for musl:
+#   rustup target add x86_64-unknown-linux-musl
+#   # Often needs: apk add musl-dev / apt install musl-tools
+#
+# GPU / wgpu cross-compilation notes:
+#   - wgpu links to system graphics APIs at runtime (Vulkan, Metal, DX12, or CPU fallback).
+#   - For true CPU-only / no-GPU targets use:
+#       WHISBURN_DEVICE=cpu cargo run ...
+#   - Cross compiling with CUDA/Metal enabled requires matching sysroots/toolchains.
+#   - For minimal / server deploys prefer CPU or ensure the target has the right graphics stack.
+
+[target.x86_64-unknown-linux-musl]
+# If you need a specific musl linker:
+# rustflags = ["-C", "target-feature=+crt-static"]
+
+[env]
+# Example: force a default log level when building release tools
+# RUST_LOG = "info"
+
+# You can also set per-target:
+# [target.aarch64-unknown-linux-gnu]
+# linker = "aarch64-linux-gnu-gcc"

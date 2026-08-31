@@ -1,0 +1,495 @@
+[00:02.760 --> 00:17.980]  Reliable controls, technical support, Liam speaking. Good morning, Liam. Hey. How's it going today? Good. That was quick. Just yesterday I was talking with you.
+[00:18.960 --> 00:22.220]  Mm-hmm. Yeah, luck of the draw.
+[00:25.720 --> 00:34.320]  So, I'm still playing around with Uptown, our favorite shopping center.
+[00:36.160 --> 00:40.340]  And I just need to talk over some stuff.
+[00:43.320 --> 00:46.940]  We were getting an issue with spamming of alarms.
+[00:49.020 --> 00:53.920]  Put that whole panel offline, the RCP ones, yeah?
+[00:55.420 --> 01:07.420]  Yeah. And so, today I thought I would roll back panel 1000 to version 7.
+[01:09.600 --> 01:23.420]  Okay. So, that we had panel one. And so, the alarms would all migrate and get distributed normally without having to worry about intrinsic alarms or alarms coming from two different panels and...
+[01:24.520 --> 01:25.740]  Well, wasn't that case before?
+[01:28.140 --> 01:35.600]  Well, panel one, we replaced it because its brain was full.
+[01:36.480 --> 01:49.440]  We couldn't add any more trend logs or anything. And so, I was like, well, let's rev it up. So, we put in a new process and it was a version 8. Well, that created a whole bunch of alarm issues.
+[01:50.460 --> 01:51.900]  Alarms weren't coming out anymore.
+[01:53.360 --> 02:00.820]  We had no more panel one for all of our reliable stuff. It was just a problem, it seemed.
+[02:02.320 --> 02:08.680]  And so, at that time, when we're having issues, the question was raised, well, why didn't you just make it a 7.9.1?
+[02:09.260 --> 02:13.380]  Leave it as a version 7 with a bigger brain and you'd be okay.
+[02:14.180 --> 02:20.250]  Wouldn't have you having all these problems, right?
+[02:22.570 --> 02:23.070]  No?
+[02:24.090 --> 02:30.730]  The whole point of doing the thing was to have a larger, having more trends.
+[02:31.910 --> 02:39.550]  I don't think you can make use of the additional memory that's in the newer controllers with the version 7 firmware.
+[02:40.530 --> 02:43.350]  I'm pretty sure you're limited by how much you can use.
+[02:55.690 --> 02:57.470]  Can you hear me? Is it silent?
+[02:58.250 --> 03:00.010]  Yeah. Yep.
+[03:07.240 --> 03:07.800]  Let's see.
+[03:09.160 --> 03:10.440]  I'm just going to check my controller.
+[03:11.240 --> 03:12.260]  So, is that the case?
+[03:13.280 --> 03:13.840]  Okay.
+[03:25.420 --> 03:33.900]  Alright, so I've got a version 8 controller and it has potentially two megabytes of trend space.
+[03:34.660 --> 03:40.900]  I'm just going to connect to it here and I'm going to do a quick little switch to version 7.
+[03:45.070 --> 03:49.890]  I'm just going to refresh the trend log space thing and let's see what it says.
+[03:50.050 --> 03:53.010]  My guess is it's going to say that has significantly less.
+[03:55.390 --> 04:01.650]  Yeah, it says it only has one megabyte of space you can do stuff with.
+[04:02.150 --> 04:03.010]  So, yeah.
+[04:05.270 --> 04:11.970]  Yeah, if you switch it to version 7, it can only use one megabyte of trend space.
+[04:11.970 --> 04:17.030]  So, even if you gave it a bigger brain, it can't really use it.
+[04:49.950 --> 05:05.370]  What I'm a little bit confused by, is there any reason why 1000, the old panel from before, didn't just stay there and just added a version 8 controller so you'd have room for more trends or whatever it is?
+[05:18.800 --> 05:21.620]  Well, I guess it goes from the old...
+[05:30.890 --> 05:47.290]  programming best practices where you want to trend the values and keep the programming for the values within the same controller.
+[05:48.430 --> 05:56.170]  You don't want to make trend logs on a different controller for the values that are in another controller.
+[05:57.590 --> 05:58.910]  That makes sense.
+[05:59.250 --> 06:02.570]  You want to avoid network points, if at all possible.
+[06:04.570 --> 06:13.530]  Now, I know that in a lot of cases that standard seems to have gone where people just don't seem to care.
+[06:14.970 --> 06:21.470]  I see programs running, trying to control values in other controllers.
+[06:25.610 --> 06:43.300]  So, if you have a controller that's doing stuff, you would want to have it doing the trends for the stuff that it's doing.
+[06:44.440 --> 06:58.060]  As well, when you have a main controller that's doing your cooling tower and a bunch of major pumps, it would probably be a good thing to update it when it gets to be 20 years old.
+[07:01.300 --> 07:02.800]  That does make sense. Yep.
+[07:04.600 --> 07:06.540]  Back to the version 7, version 8 thing.
+[07:08.960 --> 07:09.440]  Yeah.
+[07:16.760 --> 07:19.760]  Change it back to a version 8.
+[07:21.960 --> 07:30.880]  That's just what I'm thinking about, because if the only problem...
+[07:31.540 --> 07:33.440]  That's why I was asking about the other controller thing.
+[07:33.520 --> 07:37.380]  Because if the only problem has to do with trend space, that's the only reason for doing an upgrade.
+[07:37.460 --> 07:40.380]  And I know you said there are other reasons, but that's the only reason.
+[07:40.860 --> 07:48.220]  And I don't see why not just adding another controller or putting trends in a location.
+[07:49.180 --> 07:53.140]  I understand that if you do that a number of times, you add up network points.
+[07:53.560 --> 07:56.760]  But I was thinking more of the long-term stuff.
+[07:57.000 --> 08:00.900]  You could... like the long-term trends, that would make a lot more sense.
+[08:00.920 --> 08:03.940]  Not like the shorter term trend logs.
+[08:08.020 --> 08:13.180]  But to the what do you do with the version 8 stuff.
+[08:14.220 --> 08:18.860]  When I talked about the intrinsic alarms, as far as doing intrinsic alarming,
+[08:21.200 --> 08:26.400]  that would allow the alarms for whatever device to generate alarms to generate alarms.
+[08:28.120 --> 08:29.040]  That would go out.
+[08:31.280 --> 08:35.580]  The other problem is all of these panel references.
+[08:36.420 --> 08:38.360]  And there's going to be so many of them.
+[08:40.320 --> 08:45.140]  The problem you'll end up finding is that the older controllers,
+[08:45.300 --> 08:48.680]  like the mock errors, mock zones, mock ones, et cetera,
+[08:49.720 --> 08:53.580]  they cannot reference a BACnet object within their programs.
+[08:54.800 --> 08:59.480]  So then the question becomes, if I have to read a value from panel one,
+[09:00.260 --> 09:04.180]  how do I do that without referencing a BACnet object?
+[09:05.200 --> 09:07.720]  The answer is you can't. Not from that controller.
+[09:07.720 --> 09:13.720]  You have to do a write from the controller 1000, right?
+[09:14.560 --> 09:20.000]  You have to do a write from there to the mock error, mock zone, mock one, whatever it is.
+[09:20.360 --> 09:29.220]  And I have no idea how much that would add to programming on that controller.
+[09:37.680 --> 09:53.730]  OK, so right now I've got, I guess I've got a decision to make quickly before I get too far into this day,
+[09:53.750 --> 10:01.210]  whether I'm going to roll it back up and put in the program that I backed up at six o'clock this morning back in,
+[10:01.210 --> 10:13.050]  because PanFile Utility does not let you create a version seven process program from a version eight process program.
+[10:17.990 --> 10:26.850]  And I get why, because, you know, just there's too many, too many things, sizes and shit like that, right?
+[10:29.030 --> 10:35.930]  So I've gone and created it by hand. But of course, there's a bunch of things that are broken, links and shit like that.
+[10:36.990 --> 10:44.290]  So and even WebView, you know, WebView now just can't seem to find panel one or 1000.
+[10:44.410 --> 10:55.210]  It's just it's just beside itself, which is another thing that needs to be kind of sorted out because it's an ongoing issue.
+[10:55.210 --> 11:03.910]  When I log on to the Ool Electric Reliable Controls server,
+[11:04.870 --> 11:14.210]  we have a server that runs RC WebView and Remote Access and and a few other programs that we and we and we use this,
+[11:16.210 --> 11:24.530]  you know, to support customers so that they can log in using RC WebView without having to have their own server.
+[11:28.050 --> 11:31.230]  It shows up in the panel tree for uptown.
+[11:32.170 --> 11:40.890]  Okay. And you go and you do your updates and you send a new picture to, you know, a new background image.
+[11:41.770 --> 11:47.550]  And it says, oh, yeah, it's updated. It's got the right date and stuff. And and yet it won't show up in WebView.
+[11:49.870 --> 11:54.570]  So you mean like the new server with the new background won't show it. Yeah.
+[11:54.570 --> 11:56.570]  Won't show the new background. Yeah. Yeah.
+[11:56.830 --> 12:04.850]  It won't update, even though in the pan file directory, it says it's updated, says it is.
+[12:05.390 --> 12:10.310]  Okay. So I've run into this before and you have to do you have to do a hard push.
+[12:10.430 --> 12:13.230]  Right. So log on to the server.
+[12:13.230 --> 12:17.410]  And on the server, we've got a two file directories.
+[12:17.850 --> 12:20.650]  One's RC Studio and the other one's RC WebView.
+[12:20.670 --> 12:25.370]  And you open them up and it's got all the directories inside where the pan files are.
+[12:25.690 --> 12:34.230]  And you open up the directories and there is no uptown pan file.
+[12:35.130 --> 12:38.790]  Or if there is, it doesn't show the updated image.
+[12:38.790 --> 12:44.110]  So I'm sending it and it's confirming it somewhere that doesn't exist.
+[12:44.250 --> 12:47.010]  I mean, things just don't match up. Which version are you running?
+[12:49.490 --> 12:52.170]  Brian just updated it to the latest.
+[12:52.830 --> 12:54.930]  Okay. So it goes into the program data directory.
+[12:54.930 --> 12:58.090]  So I drag Brian in. What's that?
+[12:58.590 --> 13:00.130]  It goes into the program data directory now.
+[13:00.130 --> 13:01.850]  But I think I know what your problem is.
+[13:02.950 --> 13:06.530]  I'm assuming that the send is actually going all the way through, like you're saying.
+[13:07.410 --> 13:13.330]  However, I think the problem is I think the browser has cached the content from before.
+[13:14.370 --> 13:18.970]  It's not requesting the new information because it's thinking, I already have the information.
+[13:20.650 --> 13:24.250]  You can check this. Do you have it happening in the browser right now?
+[13:24.470 --> 13:27.490]  I can show you how to kind of confirm if that's the case.
+[13:29.370 --> 13:35.690]  Well, the issue is the browser can't even open it.
+[13:35.690 --> 13:39.370]  It can't find it. Like right now, right?
+[13:39.850 --> 13:49.690]  I'm afraid the customers at Uptown are going to be trying to log into their system and it's going to come up with, hey, can't find it.
+[13:50.650 --> 13:52.790]  Okay. Yeah. Right.
+[13:52.790 --> 13:59.530]  And yeah, yeah.
+[13:59.530 --> 14:01.810]  Panel 1000.
+[14:01.850 --> 14:18.400]  So I'm wondering, is it better being a version seven panel on this site with the amount of blue steel that we have out there being the main collector
+[14:22.080 --> 14:27.440]  and distributor and alarm enunciation panel? Is it better being a version seven?
+[14:27.600 --> 14:33.680]  Should I leave it there and go and fix the broken links on the graphics?
+[14:34.920 --> 14:40.540]  Because, of course, every annotation on the graphic is back net, which takes up two slots.
+[14:41.120 --> 14:47.820]  So any of the busy graphics, I have to go back and change it to RCP references so that I can get all the shit on there.
+[14:47.820 --> 14:50.340]  Right. Yeah. Which is okay.
+[14:50.460 --> 14:54.740]  There's only three or four of them that are an issue. So it's not the end of the world.
+[14:54.920 --> 15:03.160]  But is it worth it to keep it a version seven because of all the legacy controllers to tidy this up?
+[15:03.160 --> 15:17.760]  I mean, since we changed it to version eight, we've had weird stuff go on like Pro Zone or Mach Zones going offline and taking down their host controller.
+[15:22.320 --> 15:30.060]  And Jamal replaced one with a Pro Zone and sent it in and said, yeah, hey, what's wrong with this Mach Zone?
+[15:30.060 --> 15:34.860]  And the answer was nothing. It's fine.
+[15:36.180 --> 15:40.220]  It's like, oh, my God. And it's happened now.
+[15:40.840 --> 15:44.060]  Every month, there's a new controller that goes offline.
+[15:44.740 --> 15:52.480]  And you can imagine what it's like trying to track it down when you've got 30, 40 controllers all on a network and you're trying to figure out which one it is.
+[15:52.480 --> 16:01.860]  It's knocking it down and not just the subnet, but it takes the main controller offline, too.
+[16:02.020 --> 16:09.460]  And of course, the heat pumps, if there's heat pumps on that loop, they don't know the pumps running, so they won't heat or cool.
+[16:11.140 --> 16:21.760]  Yeah. The thing about them dropping the host panel offline, that seems pretty concerning to me.
+[16:24.500 --> 16:24.980]  Now, back to your question.
+[16:24.980 --> 16:30.240]  This has been going on for a while and there's been a number of calls in to try and sort it out.
+[16:31.800 --> 16:37.560]  So Jamal is trying to get something that will capture the network data.
+[16:37.560 --> 16:40.460]  Yeah, he was actually just calling there.
+[16:42.440 --> 17:08.590]  But my question right now is, should I continue with leaving it as version seven and go through the struggle to try and get WebView to recognize that there's been a change?
+[17:09.970 --> 17:17.530]  And update the files? Or is it all kind of a lost cause?
+[17:18.490 --> 17:20.930]  One of the things is to do it this way.
+[17:21.350 --> 17:28.110]  Anything that was looking, any of the old stuff now can get the information that's looking for without issue.
+[17:29.930 --> 17:36.910]  The alarm from those values will get predictably redistributed.
+[17:38.090 --> 17:41.670]  All that stuff that we caused will go away.
+[17:44.370 --> 17:50.790]  And maybe these panels will stop going offline.
+[17:52.550 --> 17:53.530]  I don't know.
+[17:54.190 --> 17:57.910]  There should be nothing in these controllers that reference...
+[17:58.490 --> 18:04.130]  None of the subcontrollers should be referencing, have anything in them that references panel one.
+[18:04.770 --> 18:09.450]  They all reference values that have been brought to their host controller.
+[18:11.310 --> 18:11.830]  Right.
+[18:15.730 --> 18:20.290]  There's only really two things I could think of where it would knock down the network.
+[18:20.930 --> 18:26.490]  One is spamming traffic. And those controllers, I don't think talk fast enough for that.
+[18:26.930 --> 18:31.090]  The other one would be something like holding the token. That would bring down a network.
+[18:32.090 --> 18:36.650]  I don't think it should stop the host controller from communicating though.
+[18:36.650 --> 18:43.490]  Unless the host controller considers itself maybe the home network is that MSTP network.
+[18:44.590 --> 18:45.430]  Perhaps then.
+[18:48.870 --> 18:51.650]  I mean, I can help you whichever way you want to go.
+[18:51.850 --> 18:55.830]  I think we can get WebView communicating with it just fine.
+[19:01.550 --> 19:05.290]  However, something concerns me a little bit is it feels...
+[19:05.290 --> 19:12.630]  I mean, I feel like what's going to happen is you're going to have to add some more controls to replace these other ones as they age out.
+[19:13.590 --> 19:15.930]  And you're just going to be doing this process again.
+[19:33.940 --> 19:39.220]  Well, yeah, that's right. That's right. We will be doing it again.
+[19:47.250 --> 19:51.750]  And the reason I'm saying that is because whenever I end up having to do something that I really hate,
+[19:52.250 --> 19:55.910]  the only thing I hate more than doing something like that is knowing I'm going to have to do it again.
+[19:57.150 --> 20:05.490]  And now, as far as a data point, maybe it's worth putting on version 7 to see if the networks go offline.
+[20:07.290 --> 20:10.650]  I don't think it's going to make much of a difference. But if it does, awesome.
+[20:10.650 --> 20:19.070]  Data point important, but it doesn't really address your other issues you're talking about still.
+[20:19.630 --> 20:24.210]  So I would only recommend or I guess I would only suggest doing the version 7 thing.
+[20:24.610 --> 20:30.910]  If we have confidence, it will fix your other issues. At the moment, we don't have confidence.
+[20:30.930 --> 20:37.950]  So if you want to do it to gain the confidence, it will fix the issues. And that's that's another good reason to do it. Right.
+[20:38.830 --> 20:49.070]  Well, it's already changed to version 7. I've just got four or five graphics that need some tidying.
+[20:50.830 --> 21:00.170]  Right. The issue you're probably running into is that you're going to have to reload the descriptors and probably rediscover the controller.
+[21:01.230 --> 21:09.070]  If WebView still thinks that it's the... I've done. I've done. I've done a complete discover of the whole site.
+[21:09.650 --> 21:17.410]  And I've sent the file. Yes. Yeah. Okay.
+[21:17.910 --> 21:26.170]  So then the last issue is going to be probably the...
+[21:27.030 --> 21:33.070]  You know, I have to check. It's very possible it could be caching. Try this.
+[21:34.870 --> 21:39.830]  Do you have the web page open that is failing to load the system group?
+[21:41.770 --> 21:48.590]  Yes. Okay. Try this for me. Hit F12 or Ctrl I.
+[21:49.210 --> 21:54.010]  It doesn't really matter to me which one. It should do this thing of like, do you want to open up the DevTools window?
+[21:54.010 --> 21:56.150]  And you say, yes. Yes, I want to.
+[21:57.370 --> 22:01.070]  Then you'll have this little like pane on the right hand side of here.
+[22:02.970 --> 22:07.610]  Yeah. Did you want to look at this? Oh, yeah, we could.
+[22:15.820 --> 22:22.620]  Okay. So I might have a session still going.
+[22:24.240 --> 22:39.260]  Let me look at my download screen connect.
+[22:55.030 --> 22:59.550]  Let's see. Oh, yeah, I see one here. Here's a new one.
+[23:05.110 --> 23:08.230]  I've got a number for you. Oh, no, you got it. Last week.
+[23:11.370 --> 23:17.770]  All right. Which screen am I in? Right hand side?
+[23:18.850 --> 23:24.210]  Here, we'll put this over up here so that you can better read it.
+[23:24.690 --> 23:28.030]  I've got a big enough screen, but yeah, that's fine. All right.
+[23:28.970 --> 23:31.710]  So what happened there? We're good.
+[23:32.310 --> 23:36.470]  All right. So first, I want to see just trying to do here.
+[23:48.120 --> 23:51.820]  All right. So there's two things I care about here.
+[23:51.820 --> 23:55.020]  One of them is the job on there.
+[24:02.120 --> 24:05.740]  Looks like it's not cashed.
+[24:06.300 --> 24:11.020]  And then this one, both of which do not look cashed.
+[24:11.020 --> 24:21.810]  So that's good. Okay. Control. It looks like it's there.
+[24:22.470 --> 24:27.290]  Seven, eight, nine. Yeah. Yeah.
+[24:27.670 --> 24:29.690]  Okay. So that looks good.
+[24:32.570 --> 24:39.650]  The next becomes... So if you go backwards one, it'll open up my home screen.
+[24:40.630 --> 24:43.150]  No, it didn't do that. But anyway.
+[24:43.610 --> 24:47.630]  What's the controller doing the BSN? Is that 1000 or a different controller?
+[24:53.880 --> 24:54.540]  2000.
+[24:57.220 --> 24:59.920]  2000 is a back net controller.
+[25:02.100 --> 25:04.540]  Or a version eight controller.
+[25:07.970 --> 25:10.350]  I have a weird idea.
+[25:13.520 --> 25:14.620]  Give it a shot.
+[25:29.900 --> 25:31.440]  What is it you're doing?
+[25:34.120 --> 25:36.880]  Oh, see this? I'm downloading the job files.
+[25:39.040 --> 25:40.560]  I'm going to upload them again.
+[25:41.740 --> 25:43.560]  That's the weird thing with a try.
+[25:53.140 --> 26:00.540]  So you say the files are not stored in the same spot they used to be?
+[26:01.220 --> 26:02.660]  Yeah, they're now in the...
+[26:03.900 --> 26:07.640]  Yeah, they're now in the program data directory. So see program data.
+[26:07.640 --> 26:12.600]  We're allowed to control the RCWebView. And then you see this number right here of system.
+[26:13.400 --> 26:19.600]  So they would be stored in a folder with that number. So we'd find these files in 56.
+[26:23.960 --> 26:26.320]  Why is that?
+[26:27.040 --> 26:27.960]  Well...
+[26:27.960 --> 26:29.360]  Make that change.
+[26:31.860 --> 26:34.360]  There's some good reasons why.
+[26:39.700 --> 26:41.420]  Part of it is reducing complexity.
+[26:42.180 --> 26:47.260]  Part of it is also this feature of update and export job package.
+[26:47.800 --> 26:54.960]  Because people would want it... wanted a way to update their job files without using file sync.
+[26:56.300 --> 27:00.320]  So file sync is great for making like a small change.
+[27:02.960 --> 27:07.280]  Like I have a system group. I make a change. It sends the change. Right?
+[27:07.660 --> 27:13.740]  Real straightforward. If I were trying to do that with 2,000 files, that's a bit more of a problem. Right?
+[27:13.740 --> 27:21.920]  But putting in the zip file, then saving that as a zip file, then exporting it, whatever. That's great.
+[27:22.800 --> 27:33.490]  Easy. So...
+[27:33.490 --> 27:34.530]  Let's see if it works.
+[27:40.970 --> 27:41.570]  Okay.
+[27:44.850 --> 27:49.690]  Right. Because when you log on to a big site or anything,
+[27:51.490 --> 27:54.350]  and you try to...
+[27:54.350 --> 28:05.430]  Like I'm thinking you, Vic, for example, and you try to synchronize your files sync with what's there.
+[28:06.690 --> 28:13.330]  Not only does it take a chunk out of your day, but it also monopolizes all the resources.
+[28:14.150 --> 28:18.210]  Right. So you're the only one that's able to do it. Right. Exactly.
+[28:18.810 --> 28:24.730]  Right. All of a sudden, everybody else gets an error message saying file sync is not available.
+[28:25.870 --> 28:26.410]  Right.
+[28:28.030 --> 28:29.810]  Yeah. Okay.
+[28:35.360 --> 28:37.840]  Okay. Let's see if that did anything.
+[28:53.160 --> 28:56.920]  Nope. It didn't do anything at all. In fact, I don't see anything.
+[29:09.780 --> 29:13.180]  Sure. I'm seeing the request for the backup stuff.
+[29:31.080 --> 29:33.640]  Are you moving into the server somewhere?
+[29:36.540 --> 29:40.860]  I am not right now, but I think I could.
+[30:12.120 --> 30:16.140]  Okay. Well, you're going to have to close your eyes for a sec.
+[30:16.780 --> 30:17.460]  Okay.
+[30:21.180 --> 30:26.470]  Because it's just the way it is.
+[30:48.130 --> 30:50.050]  Okay. There you go.
+[30:55.620 --> 30:56.420]  That's our server.
+[30:59.060 --> 30:59.900]  Alrighty.
+[31:06.730 --> 31:09.730]  So here's where it is.
+[31:22.800 --> 31:23.640]  There's the stuff.
+[32:27.880 --> 32:31.240]  Hardware support is actually currently discussing your uptown stuff.
+[32:35.480 --> 32:37.880]  Who is? Hardware support.
+[32:39.700 --> 32:40.620]  Oh, okay.
+[32:42.880 --> 32:46.980]  Yeah, it's a real piss cutter.
+[32:47.440 --> 32:51.000]  You know, trying to figure out which one it is.
+[32:51.340 --> 32:55.120]  I think we have, you know...
+[33:00.870 --> 33:04.210]  You know, the customer is going, what the fuck is going on, you guys?
+[33:07.030 --> 33:10.010]  Like, well, we've got to get to each and every controller.
+[33:10.010 --> 33:14.270]  You know, Jamal had to go through the woods at Best Buy.
+[33:14.850 --> 33:16.610]  Well, the ceiling is eight feet high.
+[33:17.670 --> 33:21.630]  You know, you've got to get, now, a ladder in there to try and get up 18 feet.
+[33:22.390 --> 33:26.370]  With all the display shelves and stuff.
+[33:27.690 --> 33:30.050]  This is amazing. They don't want you in there.
+[33:30.330 --> 33:32.530]  It's just a nightmare, right?
+[33:33.530 --> 33:33.870]  Yeah.
+[33:35.730 --> 33:37.670]  Oh, welcome to this one. Okay, on to the next.
+[33:37.670 --> 33:42.090]  All right, well, that's another 45 minutes to get set up over there.
+[33:43.350 --> 33:44.850]  Just like, wow.
+[33:46.850 --> 33:49.170]  And then to get the controller back from you guys.
+[33:49.830 --> 33:51.050]  Oh, yeah, nothing wrong.
+[33:51.830 --> 33:53.270]  Do you know what ticket number that one was?
+[33:55.170 --> 33:58.350]  No. No, I wasn't involved with that, fortunately.
+[34:00.310 --> 34:11.030]  You know, we've got a controller in building J that knocks down the network instantly.
+[34:12.410 --> 34:17.590]  And we've got one in 1300, which is the one with Starbucks in it.
+[34:18.570 --> 34:25.590]  You plug it in and within three, four minutes, boom, the host controller goes back offline.
+[34:27.810 --> 34:30.710]  Unplug it, shows up right away.
+[34:31.890 --> 34:33.230]  That's like, wow.
+[34:47.670 --> 34:50.190]  I don't know if I have a password for this.
+[34:51.330 --> 34:52.470]  I don't think we have a problem.
+[34:53.330 --> 34:55.270]  Sorry, I'm just talking with them.
+[35:28.880 --> 35:31.480]  This was a pro, was it a pro zone that was sent back?
+[35:31.960 --> 35:33.920]  And then you got the controller back again?
+[35:34.300 --> 35:38.400]  No, no, it was just a zone, blue steel.
+[35:40.020 --> 35:42.740]  To the best of my knowledge, actually.
+[35:43.440 --> 35:48.460]  I say that as though I know, but I did not do it.
+[35:48.460 --> 35:52.580]  But I'm sure we were dealing with blue steel at that point.
+[35:54.280 --> 35:54.880]  Yeah.
+[36:00.490 --> 36:02.590]  Or at least I was sure.
+[36:07.720 --> 36:08.440]  Let's see.
+[36:56.780 --> 36:59.360]  Yeah, mock zone. Yeah, you're right, mock zone.
+[36:59.940 --> 37:01.740]  And you guys got the...
+[37:04.670 --> 37:05.830]  Say that again.
+[37:06.470 --> 37:08.930]  You guys got the mock zones back from us?
+[37:11.310 --> 37:15.810]  I believe he got the mock zone back with a clean bill of health.
+[37:17.650 --> 37:20.570]  And the statement was, well, there's nothing wrong with it.
+[37:20.610 --> 37:21.850]  And I was like, oh my God.
+[37:23.650 --> 37:27.030]  Well, it's kind of the case that you go to the doctor,
+[37:27.110 --> 37:28.370]  you're like, doctor, I'm not feeling good.
+[37:28.370 --> 37:31.290]  And you take all the tests and like, yeah, you should be healthy.
+[37:34.130 --> 37:36.090]  Yeah, yeah, I know. I know.
+[37:42.070 --> 37:49.250]  The thing is, you know, we got to answer to the frigging customer.
+[37:49.970 --> 37:53.490]  It's like, well, gee, Scott, I don't know.
+[37:56.750 --> 37:59.870]  And, you know, at the same time, we're going, yeah, you know,
+[38:00.030 --> 38:02.930]  Scott, you should really get some more of this stuff online.
+[38:04.230 --> 38:06.850]  We really need more of it.
+[38:12.490 --> 38:15.110]  Fortunately for me, I don't have to deal with that.
+[38:15.110 --> 38:16.470]  That's Jamal's baby.
+[38:16.470 --> 38:27.680]  So, you know, it's just one of those things.
+[38:28.760 --> 38:29.280]  Yeah.
+[38:54.680 --> 38:55.300]  Are you weird?
+[39:01.920 --> 39:04.820]  So I guess we're going on the theory.
+[39:05.000 --> 39:09.400]  We're just going to leave this as a version seven controller
+[39:10.580 --> 39:14.900]  with the hopes that it's going to that it's going to tidy up
+[39:14.900 --> 39:16.660]  some of this other stuff, right?
+[39:18.100 --> 39:22.600]  And all we need to do now is get WebView and recognize.
+[39:23.780 --> 39:29.960]  Yeah, yeah, exactly. Yeah, yeah.
+[39:30.900 --> 39:32.500]  Is there a panel 100?
+[39:39.790 --> 39:43.370]  Maybe that's what it is.
+[39:43.590 --> 39:45.910]  I need to do another rediscover.
+[39:46.950 --> 39:49.490]  The RCP address initially came up.
+[39:49.950 --> 39:53.110]  So here, let me do another rediscover here.
+[39:55.470 --> 39:58.250]  Oh, just before that, I want to check something.
+[40:00.850 --> 40:02.050]  100,000.
+[40:03.390 --> 40:07.390]  Do you know if there is a panel, either panel on the IP table here,
+[40:08.050 --> 40:10.550]  100 or a device 100?
+[40:11.850 --> 40:14.910]  Because that looks to be what the problem is there.
+[40:15.470 --> 40:17.570]  So what I could probably do is...
+[40:17.570 --> 40:22.570]  Well, when I did my when I did my when I did my discover, OK,
+[40:22.570 --> 40:27.990]  if we just come here for a sec and do a discover,
+[40:28.130 --> 40:32.590]  when I did my discover and push the I&I file over, it was 100.
+[40:32.930 --> 40:38.290]  And I think and because when I when I converted it,
+[40:38.370 --> 40:39.650]  that's what it changed it to.
+[40:39.650 --> 40:42.250]  It didn't change it to one. It changed it to 100.
+[40:42.970 --> 40:43.670]  That's weird.
+[40:47.050 --> 40:50.170]  Well, yeah, there's other weird shit that goes on, too.
+[40:50.170 --> 40:54.750]  Like all those train controllers
+[40:55.790 --> 41:00.370]  that they put in for their heat pumps up in Whole Foods
+[41:01.250 --> 41:09.190]  could only set their IDs to a range between one and 128.
+[41:09.490 --> 41:17.270]  And so all of those have an ID that is, you know, 20 on up.
+[41:17.270 --> 41:24.230]  And so it's not a problem if we have a back net version eight controller
+[41:24.230 --> 41:28.370]  that back that ID is 24.
+[41:28.830 --> 41:37.630]  But if we make it a version seven controller,
+[41:38.130 --> 41:39.730]  all of a sudden now it's a conflict.
+[41:40.730 --> 41:43.710]  And it was all very confusing and all that.
+[41:50.800 --> 41:57.060]  But anyway, it gets to be tricky,
+[41:57.960 --> 41:59.640]  is I guess where I'm going with that.
+[42:00.480 --> 42:01.300]  I think it's easy.
+[42:01.620 --> 42:03.600]  And it's like, oh, wait a second.
+[42:07.470 --> 42:09.390]  People go, well, you're the fucking expert.
+[42:15.650 --> 42:16.810]  Yeah, OK.
+[42:19.650 --> 42:23.870]  Well, in that case, yeah, I was going to say in that case...
+[42:23.870 --> 42:25.410]  So this might solve the problem.
+[42:28.490 --> 42:30.510]  Maybe, but I kind of doubt it.
+[42:30.630 --> 42:33.070]  No, the reason I say I kind of doubt it.
+[42:34.310 --> 42:36.290]  I don't think the issue has anything to do.
+[42:36.410 --> 42:38.290]  I shouldn't say it doesn't have anything to do.
+[42:39.350 --> 42:42.570]  There's two potential issues like I was talking about before.
+[42:42.610 --> 42:45.970]  Either we're sending something that's causing the controller to lock up
+[42:48.410 --> 42:52.790]  or the issue is something more like...
+[42:52.790 --> 42:54.530]  Oh, what's it called?
+[42:55.950 --> 42:57.990]  Great, I'm trying to remember what I was going to say.
+[42:59.550 --> 43:01.430]  Or the issue is that it's holding the token.
+[43:01.710 --> 43:04.730]  Something is holding the token like a mock error somewhere.
+[43:05.250 --> 43:06.110]  That's the case.
+[43:06.430 --> 43:09.010]  I don't know if anything would change.
+[43:19.430 --> 43:21.070]  But, nice.
+[43:21.690 --> 43:23.150]  Well, yeah.
+[43:25.010 --> 43:26.150]  We just needed to stop.
+[43:28.910 --> 43:30.850]  There's some other things that are weird too.
+[43:31.210 --> 43:35.510]  Like we've got BTU meters for each of the buildings.
+[43:37.310 --> 43:41.870]  And we are having them just drop offline.
+[43:42.670 --> 43:44.170]  And you go cycle power on them.
+[43:44.490 --> 43:45.670]  They come back.
+[43:47.510 --> 43:49.470]  Oh my God, really?
+[43:50.570 --> 43:52.310]  Now, is it the individual controller?
+[43:52.990 --> 43:56.090]  It's just like you cycle that controller and everything goes back?
+[43:58.250 --> 44:00.390]  Well, with the BTU meters, yeah.
+[44:03.680 --> 44:05.360]  Are those third party, the BTU meters?
+[44:06.980 --> 44:07.860]  They are.
+[44:10.700 --> 44:13.320]  Do you know if...
+[44:14.700 --> 44:18.020]  I've heard that there was something like a Wireshark capture,
+[44:18.060 --> 44:20.360]  but I didn't actually see it myself.
+[44:29.580 --> 44:31.740]  Jamal may have produced one this morning.
+[44:31.780 --> 44:33.520]  He was on site trying to do that.
+[44:34.320 --> 44:42.960]  But he was having difficulties because our IT department prevents us from installing software.
+[44:44.120 --> 44:46.120]  Oh yeah, that would have been a problem.
+[44:47.820 --> 44:51.040]  Yeah, so for him to do a capture all of a sudden,
+[44:51.300 --> 44:55.340]  it's like, well, you have to wait for somebody from the IT department
+[44:55.340 --> 44:59.620]  to feel like they want to devote some time to helping you out.
+[45:02.690 --> 45:04.570]  And they're good. They're just busy.
+[45:05.410 --> 45:08.170]  And you know, much like yourself,
+[45:08.210 --> 45:10.910]  if I'm occupying your time and somebody else calls,
+[45:10.910 --> 45:12.590]  they're just going to have to wait.
+[45:16.010 --> 45:18.990]  Come on, how long can a discover take, you guys?
+[45:20.430 --> 45:21.870]  Come on already.
+[45:49.810 --> 45:50.630]  All right.
+[45:57.640 --> 46:01.380]  Just a matter of sending the descriptors.
+[46:02.860 --> 46:05.120]  And I think the job config is good.
+[46:05.160 --> 46:07.060]  I think it's the descriptors that's the main problem.
+[46:13.580 --> 46:15.320]  I have to load them now.
+[46:15.320 --> 46:18.720]  Or does the config do that?
+[46:25.130 --> 46:25.690]  No.
+[46:25.890 --> 46:27.170]  Sorry, just a second.
+[46:35.290 --> 46:37.110]  So you got a bigger monitor, did you?
+[46:39.750 --> 46:41.270]  No, I've got two monitors.
+[46:43.190 --> 46:43.850]  Oh, okay.
+[46:56.470 --> 46:58.270]  I like the bigger monitor.
+[46:58.670 --> 47:00.410]  You can see the way it's set up.
+[47:00.570 --> 47:02.430]  It just lets you see everything.
+[47:03.150 --> 47:03.710]  Yeah.
+[47:05.670 --> 47:07.190]  All at once.
+[47:14.940 --> 47:19.420]  So loading all the descriptors is going to take a while as well.
+[47:19.700 --> 47:20.740]  No, you don't have to load them all.
+[47:20.760 --> 47:24.700]  You can just load the one on 1000.
+[47:24.980 --> 47:26.220]  That should be sufficient.
+[47:26.920 --> 47:27.900]  Unless you already started.
+[47:30.480 --> 47:32.300]  No, I can shift.
+[47:33.140 --> 47:35.280]  No, I mean, if you started doing it on all of them,
+[47:35.320 --> 47:36.640]  you've already nuked the database.
+[47:46.330 --> 47:46.890]  Okay.
+[47:49.890 --> 47:52.690]  Yeah, it's going to take a little bit.
+[47:54.590 --> 48:04.850]  Okay, so I guess I should finish fixing up those graphics that are going to be fucked.
+[48:07.090 --> 48:07.990]  Like the links and stuff?
+[48:08.310 --> 48:11.490]  Yeah, that's a good idea while doing that other stuff.
+[48:11.490 --> 48:12.330]  Yep.
+[48:15.190 --> 48:15.470]  Yeah.
+[50:00.300 --> 50:09.460]  So all of these references need to change to RCP references.
+[50:12.280 --> 50:19.400]  And in templates, I can't open a version 7 panel or can I?
+[50:21.640 --> 50:23.900]  I cannot remember.
+[50:35.270 --> 50:36.610]  Panel file templates.
+[50:37.010 --> 50:39.730]  I feel like they're supported, but I can't remember.
+[50:47.420 --> 50:49.880]  If I try and create one, it'll tell me right there.
+[50:52.100 --> 50:56.160]  The selected panel file must have the same controller type as those
+[50:56.160 --> 50:58.900]  entered in the template summary worksheet.
+[51:03.160 --> 51:04.140]  That'd be a no.
+[51:20.000 --> 51:24.660]  Pro air or pro zone legacy is all you can do.
+[51:25.540 --> 51:32.640]  You can't do a pro sys legacy.
+[51:41.420 --> 52:10.180]  At least I don't see that as an hour.
+[52:12.040 --> 52:16.920]  For the descriptor load, what I can do is I can take that file from before
+[52:19.740 --> 52:23.440]  and download it and then just rename it and then use that in Studio.
+[52:24.720 --> 52:28.760]  Then you can just do a load on just 1000. That should be a lot faster.
+[52:29.000 --> 52:33.180]  But I mean, you want to just leave it as is and we can do that.
+[52:58.440 --> 53:02.180]  Well, like I said, it's going to take an hour.
+[53:02.960 --> 53:04.040]  I don't know.
+[53:12.880 --> 53:20.960]  I don't know if you've got the time for this or if I have the time for this.
+[53:22.220 --> 53:25.600]  Right. Which is why I'm thinking I could just take the descriptor file
+[53:25.600 --> 53:27.560]  because we know what needs to be updated.
+[53:27.920 --> 53:30.640]  Ah, whatever. It's still running. I guess we can let it run.
+[53:31.000 --> 53:34.000]  It's probably best that it does wipe out the older stuff.
+[54:03.160 --> 54:10.460]  OK, so what you're saying to me then is with these trend logs,
+[54:13.880 --> 54:20.260]  the issue that I'm having with them filling out is because I simply don't have room.
+[54:24.920 --> 54:29.000]  I don't have descriptors, so I have to wait until I load.
+[54:34.830 --> 54:40.730]  Right. Because I only got half a brain as a version 7 controller, not a full brain.
+[54:41.670 --> 54:46.710]  I didn't realize that. I thought a bigger brain was a bigger brain, but apparently not.
+[54:51.880 --> 54:54.380]  OK, now we're getting a little movement on this.
+[54:58.820 --> 55:03.040]  Until we get up to the BTU meters and then it would go fucking slow again.
+[56:01.170 --> 56:12.000]  Oh, it's not going to let me put them in here as anything other than BACnet values, is it?
+[56:14.460 --> 56:18.580]  Inside your like MTL SCLs? Yeah, yeah, that's a BACnet trend.
+[56:18.640 --> 56:22.440]  So it'll be a BACnet object on there.
+[56:22.940 --> 56:25.380]  But you can also do the RCP trend logs as well.
+[56:25.560 --> 56:27.420]  But anyways, that's a different thing.
+[56:28.360 --> 56:36.420]  No, I was referring more to this system group. All the values are now BACnet.
+[56:41.060 --> 56:42.420]  And so because...
+[56:47.050 --> 56:57.050]  So if I want to put this value on this system group as an RCP value, so it only takes one
+[56:58.310 --> 57:04.050]  value, right? I can delete these, but...
+[57:05.470 --> 57:07.670]  In a system group? Yeah, yeah, you can.
+[57:11.430 --> 57:14.330]  But they used to be annotated.
+[57:19.060 --> 57:22.800]  Are you running out of like points in the system groups?
+[57:28.030 --> 57:28.630]  Yes.
+[57:30.530 --> 57:32.150]  I thought it was trend logs you're running out of.
+[57:39.600 --> 57:44.780]  When this was an enhanced system group on a version 8 controller,
+[57:45.200 --> 57:48.720]  I could have all of these boxes filled with annotations.
+[57:53.700 --> 58:02.960]  But because these are BACnet annotations on a version 7 controller,
+[58:03.140 --> 58:06.660]  each annotation takes up two slots.
+[58:09.320 --> 58:20.910]  So I thought what I should be able to do was delete them
+[58:26.040 --> 58:33.400]  and then add it as RCP annotation.
+[58:35.120 --> 58:35.760]  Okay.
+[58:43.160 --> 58:43.660]  Okay.
+[58:46.080 --> 58:50.540]  Hey, you should be able to insert like VAR1, VAR2, whatever it is.
+[58:51.960 --> 58:56.000]  If it doesn't let you, if it complains about it, then
+[58:56.760 --> 59:02.640]  what I think you would need to do then is to connect dual or connect RCP.
+[59:03.380 --> 59:06.100]  And then it should let you, like if you go to the RCP side
+[59:06.100 --> 59:08.040]  and that's where you open up your system group stuff.
+[59:11.530 --> 59:12.850]  Okay, yeah.
+[59:14.830 --> 59:19.410]  Yeah, so, you know, the whole thing about going over to remote access
+[59:19.410 --> 59:26.750]  and all that stuff just has turned into this huge cluster
+[59:29.310 --> 59:33.090]  of, you know, what's going wrong, what's going on,
+[59:33.230 --> 59:37.350]  how come, what is, what isn't.
+[01:00:05.810 --> 01:00:06.590]  All right.
+[01:00:09.010 --> 01:00:09.990]  It's working.
+[01:01:12.980 --> 01:01:17.520]  So, I think I am logged, no, I guess I'm not logged on dual.
+[01:01:17.740 --> 01:01:19.260]  I'm just back net, okay.
+[01:01:29.980 --> 01:01:32.840]  And I'm not logging off now.
+[01:01:34.700 --> 01:01:36.060]  That would be tragic.
+[01:03:08.440 --> 01:03:09.380]  That's weird.
+[01:08:00.160 --> 01:08:02.300]  I wonder if that's going to be enough.
+[01:08:10.130 --> 01:08:11.850]  It tells me no.
+[01:08:24.410 --> 01:08:26.290]  Hold for a moment, please.
+[01:08:26.870 --> 01:08:27.050]  Yep.

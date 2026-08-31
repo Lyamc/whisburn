@@ -1,0 +1,57 @@
+[00:01.240 --> 00:04.680]  This is Level Control Support, Philip speaking. How can I help you?
+[00:05.980 --> 00:11.960]  Hey, Philip. This is Tyler, Tristar Automation in Winnipeg. I'm fighting with a mock pro
+[00:11.960 --> 00:29.980]  web here. I have sent... We're adding a couple mock pro views to an existing system. There's
+[00:29.980 --> 00:37.900]  fine. But then we have system groups in the mock pro views, which I have sent to the pro
+[00:37.900 --> 00:48.180]  web and the resource manager. But when opening... When clicking on those links in the web, like
+[00:48.180 --> 00:54.420]  in the website, it doesn't even try to look for them. Like it's just like an immediate
+[00:54.420 --> 00:59.560]  timeout saying that system group doesn't even exist, I believe is the error it
+[00:59.560 --> 01:04.020]  gives me. So our system group cannot be loaded. The object cannot be found. Please verify
+[01:04.020 --> 01:08.700]  the URL is correct and the host device is online. If the problem persists, please try
+[01:08.700 --> 01:11.280]  sending the latest support files, which I have done.
+[01:12.460 --> 01:18.980]  I see. Yeah, that's kind of strange. I do have some ideas here. Can you do a
+[01:18.980 --> 01:19.920]  screen connect to that location?
+[01:21.860 --> 01:22.100]  Yep.
+[01:23.480 --> 01:24.960]  Let's see if we can jump on that one.
+[01:25.800 --> 01:29.540]  It has been a very long time since I did this. So if you don't mind, just step
+[01:29.540 --> 01:31.680]  me through how to get that done up.
+[01:32.080 --> 01:37.060]  Oh, yeah, no worries. Just go to rcsupport.screenconnect.com. It's going to prompt you for a code
+[01:37.060 --> 01:40.260]  and I've got the code ready to go here.
+[01:41.920 --> 01:44.360]  rcsupport.screenconnect.com
+[01:46.100 --> 01:46.500]  Okay.
+[01:48.080 --> 02:00.960]  And then the code is 211859. And it should download a file. And then when you run
+[02:00.960 --> 02:06.080]  that, it will have a couple of security prompts. And then the connection will start.
+[02:13.700 --> 02:14.560]  Oh, there it goes.
+[02:34.630 --> 02:37.490]  All right. And you should see me joining now.
+[02:38.210 --> 02:46.010]  Okay. So I'm kind of all over the place here. I've got... I have an AnyDesk session
+[02:46.010 --> 02:52.190]  open because our web access to this site is limited to our office IP address. But
+[02:52.190 --> 02:55.950]  I am at home and I am connected studio from my PC.
+[02:56.910 --> 03:00.090]  I see. And then the studio on the...
+[03:00.090 --> 03:02.010]  But then you go further down that...
+[03:02.010 --> 03:03.130]  Yeah, this one here.
+[03:03.250 --> 03:04.050]  Sorry, sorry. Go ahead.
+[03:04.850 --> 03:08.010]  Does this one... Does this have the latest resources on it or is it just from
+[03:08.010 --> 03:09.630]  the studio on your computer over here?
+[03:12.720 --> 03:20.680]  So I have sent... So controller 101101 is the one that I sent. The mock review
+[03:20.680 --> 03:28.800]  there, Pharmacy Front MPV. So that's the one that I just recently sent all the
+[03:28.800 --> 03:34.860]  resources for and still get the time out on the web interface.
+[03:35.740 --> 03:38.560]  I see. I'm going to try something here.
+[03:39.300 --> 03:39.820]  Mm-hmm.
+[03:40.140 --> 03:45.620]  I'm going to try the descriptors. Sometimes they can be the source of some trouble.
+[03:46.860 --> 03:48.860]  And I'm also going to send this with overwrite.
+[03:57.900 --> 04:01.820]  That was insanely fast compared to how it went last time.
+[04:04.040 --> 04:05.920]  Were you sending all the resources last time?
+[04:07.220 --> 04:08.580]  No, just that one controller.
+[04:09.340 --> 04:23.440]  Oh, strange. Okay, and now let's see if it will start working.
+[04:27.220 --> 04:27.560]  Oh, yeah.
+[04:27.680 --> 04:28.180]  Wow.
+[04:30.980 --> 04:35.900]  So if the descriptors are not updated, it will go wonky on us.
+[04:36.900 --> 04:40.940]  Yeah, yeah. There's no indication of it either. It's kind of a strange one.
+[04:41.040 --> 04:45.080]  I just had a call like last week where I was stuck for a while with the same
+[04:45.080 --> 04:45.940]  kind of situation.
+[04:48.100 --> 04:51.240]  Yeah, okay. That's good to know. So always make sure that descriptors are sent when
+[04:51.240 --> 04:52.080]  we do new stuff too.
+[04:55.500 --> 04:59.010]  Perfect. That was incredibly easy. Thank you.
+[04:59.580 --> 05:02.600]  Hey, no worries. If anything else comes up, just let us know.
+[05:03.360 --> 05:03.820]  Will do.
+[05:04.900 --> 05:06.140]  All right. Take it easy.
+[05:07.000 --> 05:07.420]  Thanks, bye.

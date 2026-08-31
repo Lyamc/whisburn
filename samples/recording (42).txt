@@ -1,0 +1,1860 @@
+[00:03.060 --> 00:05.360]  [SPEAKER_04]: Reliable controls, technical support,
+Liam speaking.
+[00:08.060 --> 00:09.440]  [SPEAKER_02]: Hey, Liam, it's Jake on.
+[00:10.980 --> 00:14.320]  [SPEAKER_02]: I'm calling from a different issue other
+than what we were talking about via email.
+[00:15.180 --> 00:21.440]  [SPEAKER_02]: Today I'm updating WebView and updating
+SQL databases on a server here.
+[00:21.600 --> 00:27.160]  [SPEAKER_02]: What I'm trying to change is the
+compatibility for them and for FSMS.
+[00:28.040 --> 00:30.220]  [SPEAKER_04]: It probably doesn't let you drop down
+anything, right?
+[00:30.220 --> 00:34.120]  [SPEAKER_02]: Oh, we don't have access to the database.
+[00:51.760 --> 00:53.860]  [SPEAKER_04]: Sounds like you just don't have
+permissions.
+[00:56.100 --> 00:58.100]  [SPEAKER_04]: Like your user doesn't have permissions.
+[00:58.100 --> 00:59.300]  [SPEAKER_04]: Are you using SSMS?
+[01:02.440 --> 01:03.540]  [SPEAKER_02]: I am on SSMS.
+[01:04.040 --> 01:07.640]  [SPEAKER_04]: Did you use the SA user for login or are
+you using Windows authentication?
+[01:10.420 --> 01:11.460]  [SPEAKER_02]: Windows authentication.
+[01:12.580 --> 01:14.860]  [SPEAKER_04]: Okay, change it to SQL authentication.
+[01:17.180 --> 01:21.100]  [SPEAKER_04]: So hit disconnect, then hit connect,
+and then you'll get the window.
+[01:21.260 --> 01:24.720]  [SPEAKER_04]: You'll be able to choose SQL
+authentication from the dropdown.
+[01:26.100 --> 01:26.660]  [SPEAKER_02]: Sure.
+[01:30.230 --> 01:31.350]  [SPEAKER_02]: Sure, yep.
+[01:33.330 --> 01:35.910]  [SPEAKER_04]: Okay, I guess you don't know the SA
+password.
+[01:36.010 --> 01:39.110]  [SPEAKER_04]: For the username, it's going to be SA,
+so that's Sierra Alpha.
+[01:40.670 --> 01:47.330]  [SPEAKER_04]: The password is going to be a combination
+of letters and numbers, but fundamentally
+[01:47.330 --> 01:49.710]  [SPEAKER_04]: it spells out reliable with numbers in
+between.
+[01:51.890 --> 02:01.310]  [SPEAKER_04]: So it's going to be capital R,
+1, lowercase e, 2, lowercase l,
+[02:02.190 --> 02:08.670]  [SPEAKER_04]: 3, uppercase I, 4, lowercase a.
+[02:10.510 --> 02:11.390]  [SPEAKER_04]: Oh, I lost track.
+[02:11.430 --> 02:16.930]  [SPEAKER_04]: Is it 5, lowercase b, 6, uppercase L?
+[02:16.970 --> 02:18.710]  [SPEAKER_02]: 5, lowercase b, 6.
+[02:18.710 --> 02:21.810]  [SPEAKER_04]: Basically, every second letter is
+capitalized.
+[02:22.050 --> 02:23.270]  [SPEAKER_04]: That's the gist of it.
+[02:23.790 --> 02:25.530]  [SPEAKER_04]: Every second letter is capitalized.
+[02:26.710 --> 02:30.770]  [SPEAKER_04]: So not every other letter, but every other
+other letter is capitalized.
+[02:32.050 --> 02:37.150]  [SPEAKER_04]: And then in between each letter,
+it's a number, and it starts at 1.
+[02:37.330 --> 02:41.510]  [SPEAKER_04]: So R1, E2, L3, up to 7.
+[02:44.660 --> 02:46.020]  [SPEAKER_02]: R, E, 1.
+[02:46.760 --> 02:49.760]  [SPEAKER_02]: Okay, I'm going to be honest, I think I
+messed up somewhere.
+[02:50.040 --> 02:52.540]  [SPEAKER_02]: Are you able to just text me because I've
+needed this before?
+[02:53.460 --> 02:54.380]  [SPEAKER_02]: It's on the website.
+[02:55.920 --> 02:56.340]  Where?
+[02:58.140 --> 02:59.180]  [SPEAKER_02]: Where do I go for that one?
+[03:00.360 --> 03:01.100]  [SPEAKER_03]: Give me a second.
+[03:09.170 --> 03:13.230]  [SPEAKER_04]: It's in the migration application notice
+33.
+[03:21.970 --> 03:22.670]  [SPEAKER_02]: In E4?
+[03:24.930 --> 03:25.970]  [SPEAKER_04]: Application notice.
+[03:26.070 --> 03:29.110]  [SPEAKER_04]: So that's under technical, application
+notices.
+[03:31.030 --> 03:32.890]  [SPEAKER_04]: It's probably in the E4 somewhere.
+[03:33.150 --> 03:35.850]  [SPEAKER_04]: If you ask the AI, it'll tell you,
+I think.
+[03:41.890 --> 03:42.450]  [SPEAKER_02]: Yeah,
+[03:57.020 --> 03:57.300]  [SPEAKER_03]: okay.
+[04:13.550 --> 04:15.210]  [SPEAKER_02]: Okay, we're in databases.
+[04:15.210 --> 04:15.550]  [SPEAKER_02]: Databases.
+[04:30.910 --> 04:33.230]  [SPEAKER_02]: Compatibility level, server 2018.
+[04:35.550 --> 04:36.150]  [SPEAKER_02]: Okay.
+[04:54.180 --> 04:55.700]  [SPEAKER_02]: All right, that worked.
+[04:57.400 --> 04:57.560]  [SPEAKER_02]: Perfect.
+[04:58.480 --> 05:02.200]  [SPEAKER_04]: Once you're in there, it should allow you
+to change it, unless your version of SSMS
+[05:02.200 --> 05:02.900]  [SPEAKER_04]: is outdated.
+[05:07.780 --> 05:13.500]  [SPEAKER_02]: It's... I think we're in SSMS 18,
+and I was able to change it to...
+[05:15.280 --> 05:16.380]  [SPEAKER_04]: Oh, yeah, you'll have a problem.
+[05:16.480 --> 05:20.660]  [SPEAKER_04]: But don't worry, you can still do it with
+a query.
+[05:21.080 --> 05:23.340]  [SPEAKER_04]: But it's probably easier if you just...
+[05:26.480 --> 05:28.700]  [SPEAKER_04]: It's probably easier if you just download
+SSMS.
+[05:28.960 --> 05:32.380]  [SPEAKER_04]: Yeah, because what will happen is the
+dropdown will not populate with the newer
+[05:32.380 --> 05:33.520]  [SPEAKER_04]: compatibility level.
+[05:35.580 --> 05:36.940]  [SPEAKER_02]: What is the compatibility level?
+[05:37.040 --> 05:38.200]  [SPEAKER_02]: It needs to be 19?
+[05:38.520 --> 05:42.780]  [SPEAKER_04]: It needs to be at least 2016, but you
+should put it at the highest number.
+[05:45.160 --> 05:48.160]  [SPEAKER_02]: Okay, so I'll put it to 19 for now.
+[05:50.640 --> 05:51.840]  [SPEAKER_04]: Oh, if it's 19, that's fine.
+[05:52.040 --> 05:54.440]  [SPEAKER_04]: Yeah, if it lets you pick 19, then go for
+it.
+[05:58.010 --> 06:02.950]  [SPEAKER_02]: Well, I'd rather get the updated SSMS.
+[06:03.970 --> 06:05.770]  [SPEAKER_04]: Yeah, I think current version is 22.
+[06:14.960 --> 06:16.080]  [SPEAKER_02]: All is good.
+[06:16.520 --> 06:17.980]  [SPEAKER_02]: Down 722.
+[06:18.980 --> 06:20.280]  [SPEAKER_02]: Yes, install that.
+[06:20.680 --> 06:20.680]  Run.
+[07:12.080 --> 07:17.360]  [SPEAKER_02]: Okay, any of the other tools, just save,
+install.
+[07:58.890 --> 08:01.890]  [SPEAKER_02]: Yeah, we were having some issues where
+some system groups weren't appearing.
+[08:03.190 --> 08:08.290]  [SPEAKER_02]: Here's why I thought I'd start with
+updating WebView first and getting that
+[08:08.290 --> 08:11.170]  [SPEAKER_02]: out of the way, because we can upgrade it
+regardless.
+[08:12.130 --> 08:14.090]  [SPEAKER_04]: What version are you upgrading from?
+[08:16.950 --> 08:21.550]  [SPEAKER_02]: I think it's 3.15.2.1.
+[08:22.190 --> 08:22.830]  [SPEAKER_03]: Okay.
+[08:31.590 --> 08:33.850]  [SPEAKER_02]: Yeah, so I haven't done that yet.
+[08:37.250 --> 08:41.690]  [SPEAKER_02]: I think we're having a resource manager
+file sync issue.
+[08:42.730 --> 08:47.850]  [SPEAKER_02]: I know there was a fix that came out after
+this version that they were currently on.
+[08:49.710 --> 08:54.610]  [SPEAKER_02]: 3.15.2.1 and 3.15.3, it's addressed.
+[08:55.670 --> 09:00.810]  [SPEAKER_04]: Before you do the upgrade, can you tell me
+what size the database is?
+[09:05.160 --> 09:05.580]  [SPEAKER_02]: Sure.
+[09:08.900 --> 09:11.440]  [SPEAKER_02]: The whole database or the RcWebView
+database?
+[09:11.980 --> 09:13.100]  [SPEAKER_04]: RcWebView database.
+[09:13.700 --> 09:14.300]  [SPEAKER_02]: Okay.
+[09:16.360 --> 09:17.200]  [SPEAKER_02]: 700.
+[09:19.800 --> 09:20.020]  [SPEAKER_04]: Okay.
+[09:22.320 --> 09:22.880]  [SPEAKER_04]: Yeah, that's fine.
+[09:25.500 --> 09:25.940]  [SPEAKER_02]: Yeah.
+[09:28.000 --> 09:32.860]  [SPEAKER_02]: It seemed to kind of start when we
+upgraded the controller from version 7 to
+[09:32.860 --> 09:33.260]  [SPEAKER_02]: 8.
+[09:36.040 --> 09:40.000]  [SPEAKER_02]: That was kind of where some of the issues
+where we couldn't have system groups
+[09:40.000 --> 09:42.960]  [SPEAKER_02]: showing up, at least some of the system
+groups on that controller aren't showing
+[09:42.960 --> 09:43.260]  [SPEAKER_02]: up.
+[09:43.640 --> 09:48.360]  [SPEAKER_02]: So I was going to go and update the INI
+file and start there too.
+[09:56.730 --> 09:59.590]  [SPEAKER_02]: Unless you think there's a better way we
+can go about it.
+[12:15.850 --> 12:16.550]  Okay.
+[12:20.410 --> 12:24.110]  [SPEAKER_02]: Restarting the system here after SSMS
+install.
+[12:27.130 --> 12:28.350]  [SPEAKER_02]: For a minute or two.
+[13:41.590 --> 13:41.930]  [SPEAKER_02]: Okay.
+[13:43.230 --> 13:48.110]  [SPEAKER_02]: When do you upgrade or actually change the
+database first?
+[13:51.690 --> 13:51.850]  [SPEAKER_02]: Okay.
+[13:57.520 --> 14:00.420]  [SPEAKER_02]: Man accounts leader, I think that'll do
+that.
+[14:12.740 --> 14:13.540]  [SPEAKER_02]: There we go.
+[14:15.400 --> 14:19.860]  [SPEAKER_02]: Would you like to import SMS user settings
+from previous versions of SSMS?
+[14:20.460 --> 14:20.940]  [SPEAKER_02]: Yes.
+[14:32.940 --> 14:33.860]  [SPEAKER_02]: Server name.
+[14:34.380 --> 14:36.040]  [SPEAKER_02]: Recent connection, no connection history.
+[16:03.730 --> 16:05.230]  [SPEAKER_02]: How am I not doing here?
+[16:12.550 --> 16:12.810]  [SPEAKER_02]: Okay.
+[16:13.150 --> 16:14.190]  [SPEAKER_02]: Password copy.
+[16:24.130 --> 16:27.590]  [SPEAKER_02]: And so encryption was enabled on this
+connection.
+[16:27.770 --> 16:32.070]  [SPEAKER_02]: Do your SSL into different configurations
+for the target SQL server or enable trust
+[16:32.070 --> 16:35.010]  [SPEAKER_02]: server certificate and connection
+dialogue.
+[16:44.490 --> 16:46.370]  [SPEAKER_02]: And there occurred a long process sharing.
+[16:49.130 --> 16:51.750]  [SPEAKER_02]: Long process at the end of the uploader
+pipeline.
+[16:52.610 --> 16:52.990]  Hmm.
+[17:06.150 --> 17:07.690]  [SPEAKER_02]: Have you seen that before, Liam?
+[17:11.510 --> 17:12.410]  [SPEAKER_02]: I've been killed.
+[17:24.080 --> 17:24.660]  [SPEAKER_02]: I don't know.
+[17:24.960 --> 17:25.420]  [SPEAKER_02]: I don't even know.
+[17:26.360 --> 17:27.460]  [SPEAKER_02]: Doing something stupid now.
+[17:28.620 --> 17:29.000]  [SPEAKER_02]: Upgrade.
+[17:36.430 --> 17:37.810]  [SPEAKER_02]: Server 22.
+[17:38.930 --> 17:39.310]  [SPEAKER_02]: Okay.
+[17:42.130 --> 17:42.890]  [SPEAKER_02]: Freeze.
+[17:43.490 --> 17:44.070]  [SPEAKER_02]: Options.
+[17:46.370 --> 17:47.510]  Server 22.
+[17:48.390 --> 17:48.770]  Okay.
+[17:48.770 --> 17:48.830]  Okay.
+[17:56.240 --> 17:57.010]  [SPEAKER_02]: Hey,
+[32:13.830 --> 32:13.830]  Liam.
+[32:19.410 --> 32:20.510]  [SPEAKER_04]: Sorry, I was muted.
+[32:22.770 --> 32:23.910]  [SPEAKER_02]: No, you're good.
+[32:24.330 --> 32:29.810]  [SPEAKER_02]: So I changed the compatibility level to 22
+on these and then started installing
+[32:29.810 --> 32:32.670]  [SPEAKER_02]: WebView and it hung, basically.
+[32:33.770 --> 32:35.070]  [SPEAKER_04]: Yep, just let it sit there.
+[32:35.810 --> 32:36.370]  [SPEAKER_02]: Cancel.
+[32:37.910 --> 32:38.030]  [SPEAKER_02]: No!
+[32:39.830 --> 32:41.010]  [SPEAKER_02]: Let it complete.
+[32:41.310 --> 32:42.450]  [SPEAKER_02]: I'm pretty sure I can cancel.
+[32:45.050 --> 32:45.350]  [SPEAKER_02]: Huh?
+[32:45.830 --> 32:47.810]  [SPEAKER_04]: Let it finish the install.
+[32:48.170 --> 32:48.930]  [SPEAKER_04]: Don't hit cancel.
+[32:49.490 --> 32:50.830]  [SPEAKER_04]: It's not actually hung up.
+[32:51.750 --> 32:56.570]  [SPEAKER_04]: I know the installer does not give you
+good feedback, but it is actually doing
+[32:56.570 --> 32:56.950]  [SPEAKER_04]: things.
+[32:57.130 --> 32:58.630]  [SPEAKER_02]: Yeah, it's too late for that.
+[32:59.010 --> 33:00.490]  [SPEAKER_02]: I unfortunately hit cancel.
+[33:00.490 --> 33:01.070]  [SPEAKER_02]: Okay.
+[33:01.990 --> 33:05.330]  [SPEAKER_04]: I don't know if it's going to work now
+that you've hit cancel, like the second
+[33:05.330 --> 33:05.990]  [SPEAKER_04]: time around.
+[33:06.390 --> 33:08.490]  [SPEAKER_04]: So hopefully it works, but...
+[33:13.400 --> 33:13.680]  [SPEAKER_02]: Yeah.
+[33:14.380 --> 33:15.800]  [SPEAKER_02]: So I'll let it cancel.
+[33:15.980 --> 33:17.040]  [SPEAKER_02]: It hasn't closed yet.
+[33:28.660 --> 33:30.840]  [SPEAKER_02]: Yeah, it's not a great indicator on this
+one.
+[33:35.240 --> 33:38.500]  [SPEAKER_02]: Although it's updated to this version
+before and it wasn't hung, so...
+[36:50.050 --> 36:50.490]  Alright.
+[36:51.070 --> 36:54.530]  [SPEAKER_02]: Install Shield Wizard was interrupted,
+now it's saying...
+[36:54.530 --> 36:56.250]  [SPEAKER_04]: Yep, that's what I was worried about.
+[36:56.550 --> 36:57.530]  [SPEAKER_04]: So you're going to...
+[36:58.110 --> 37:01.730]  [SPEAKER_04]: Yes, you're going to have to do a thing to
+make this work.
+[37:04.070 --> 37:04.510]  [SPEAKER_02]: Okay.
+[37:06.810 --> 37:09.010]  [SPEAKER_02]: Should I put finish on this and close this
+out?
+[37:09.510 --> 37:13.310]  [SPEAKER_04]: So what you're going to have to do is
+close out of the installer, navigate to a
+[37:13.310 --> 37:16.970]  [SPEAKER_04]: directory, delete the contents of the
+directory, and then run the installer
+[37:16.970 --> 37:17.290]  [SPEAKER_04]: again.
+[37:18.550 --> 37:21.130]  [SPEAKER_04]: And it's going to have to take all that
+time again.
+[37:21.790 --> 37:25.370]  [SPEAKER_04]: So it's going to be the C drive,
+program data directory.
+[37:28.650 --> 37:29.850]  [SPEAKER_02]: Program files?
+[37:30.910 --> 37:32.410]  [SPEAKER_04]: Program data directory.
+[37:32.630 --> 37:35.210]  [SPEAKER_04]: It's a hidden folder, so keep that in
+mind.
+[37:36.050 --> 37:36.610]  [SPEAKER_02]: Gotcha, gotcha.
+[37:38.270 --> 37:40.150]  [SPEAKER_02]: Program data, gotcha.
+[37:52.590 --> 37:53.850]  [SPEAKER_04]: Reliable controls.
+[37:59.170 --> 38:01.510]  [SPEAKER_04]: Find the RC WebView folder.
+[38:01.510 --> 38:02.810]  [SPEAKER_02]: RC WebView, I take it.
+[38:48.630 --> 38:50.990]  [SPEAKER_02]: Do you know which file I have to delete
+then?
+[38:52.790 --> 38:56.630]  [SPEAKER_04]: Delete all the ones that are numbered,
+like 1, 2, 3, 4, 5, 6.
+[38:57.010 --> 38:57.990]  [SPEAKER_04]: Delete all of them.
+[38:59.230 --> 39:00.950]  [SPEAKER_02]: There's only one.
+[39:01.590 --> 39:03.210]  [SPEAKER_04]: Okay, then delete it.
+[39:05.830 --> 39:07.190]  [SPEAKER_04]: Now run the installer again.
+[39:09.610 --> 39:10.790]  [SPEAKER_02]: That's a lot of items.
+[39:12.910 --> 39:14.990]  [SPEAKER_04]: Yeah, remember what I said?
+[39:15.270 --> 39:17.910]  [SPEAKER_04]: I said if you got a lot of panel file
+backups, it'll take a while.
+[39:20.110 --> 39:20.670]  [SPEAKER_02]: Okay.
+[39:23.930 --> 39:25.730]  [SPEAKER_02]: Yes, continue to delete.
+[39:28.490 --> 39:29.610]  [SPEAKER_02]: $90,000.
+[39:30.270 --> 39:30.410]  [SPEAKER_02]: Awesome.
+[40:27.410 --> 40:28.310]  [SPEAKER_02]: Would you like the permutative?
+[40:28.530 --> 40:28.910]  [SPEAKER_02]: Yes.
+[42:23.640 --> 42:25.000]  [SPEAKER_02]: Okay, that is deleted.
+[42:25.280 --> 42:27.160]  [SPEAKER_02]: It's from that file again.
+[42:29.700 --> 42:31.560]  [SPEAKER_02]: And not click cancel.
+[42:40.070 --> 42:42.610]  [SPEAKER_02]: I will not do that again.
+[42:42.650 --> 42:46.550]  [SPEAKER_02]: Is that a common thing where it hangs,
+or is that just... why is it doing that?
+[42:46.850 --> 42:50.590]  [SPEAKER_04]: All it is, is that we didn't add a
+progress indicator.
+[42:50.930 --> 42:51.830]  [SPEAKER_04]: That's all it is.
+[42:54.720 --> 43:00.120]  [SPEAKER_04]: So during the file copy step, it's not
+telling you that it's copying files.
+[43:00.500 --> 43:02.980]  [SPEAKER_04]: It just kind of sits there at that step.
+[43:03.220 --> 43:05.080]  [SPEAKER_04]: It doesn't tell you it's progress.
+[43:05.380 --> 43:08.340]  [SPEAKER_04]: We'd have to have a double progress bar to
+show that, basically.
+[43:11.520 --> 43:11.960]  [SPEAKER_02]: Okay.
+[43:14.300 --> 43:17.720]  [SPEAKER_04]: But most people don't run into it,
+because most people don't have a bazillion
+[43:17.720 --> 43:18.680]  [SPEAKER_04]: panel file backups.
+[43:18.800 --> 43:19.660]  [SPEAKER_04]: But some people do.
+[43:20.760 --> 43:21.560]  [SPEAKER_04]: And it takes forever.
+[43:24.240 --> 43:24.720]  [SPEAKER_03]: Yeah.
+[43:30.280 --> 43:33.480]  [SPEAKER_04]: Now, if we still have a problem,
+then it might be a path link issue.
+[43:34.040 --> 43:36.720]  [SPEAKER_04]: And we can address that if that does come
+up.
+[43:38.880 --> 43:41.040]  [SPEAKER_02]: Okay, will it notify me if there's an
+error?
+[43:42.200 --> 43:44.920]  [SPEAKER_04]: It'll say installer interrupted again,
+like before.
+[43:45.420 --> 43:51.160]  [SPEAKER_04]: But then we can look at the actual reason
+as to why.
+[43:51.600 --> 43:54.960]  [SPEAKER_04]: What was probably the reason before is
+that it was trying to copy files,
+[43:55.240 --> 43:56.780]  [SPEAKER_04]: and there was already files there.
+[43:56.860 --> 43:58.760]  [SPEAKER_04]: So it's like, what do I do?
+[44:01.240 --> 44:03.300]  [SPEAKER_02]: I just got a copy.
+[44:03.440 --> 44:03.680]  [SPEAKER_02]: I don't know.
+[44:03.940 --> 44:04.120]  [SPEAKER_02]: Okay.
+[44:04.340 --> 44:04.660]  [SPEAKER_02]: All right.
+[44:07.800 --> 44:09.580]  [SPEAKER_02]: Backing up my database right now.
+[44:11.800 --> 44:16.720]  [SPEAKER_04]: Something that I like to do is I like to
+take your panel file backups, you know,
+[44:16.780 --> 44:18.640]  [SPEAKER_04]: they're all like the different folders
+that are numbered.
+[44:19.320 --> 44:25.040]  [SPEAKER_04]: I would select all the ones in the same
+year, zip them up, and then delete the
+[44:25.040 --> 44:25.460]  [SPEAKER_04]: originals.
+[44:25.580 --> 44:28.740]  [SPEAKER_04]: Then I'd still have the backups in the zip
+file, and it's much, much smaller,
+[44:29.440 --> 44:32.260]  [SPEAKER_04]: much less files to actually back up,
+especially if you have a lot of
+[44:32.260 --> 44:32.660]  [SPEAKER_04]: controllers.
+[44:36.480 --> 44:38.460]  [SPEAKER_02]: This is a whole district.
+[44:45.140 --> 44:46.720]  [SPEAKER_02]: Database backup complete.
+[44:50.080 --> 44:52.860]  [SPEAKER_02]: And we're just filling it out.
+[44:57.400 --> 44:57.580]  [SPEAKER_02]: Great.
+[45:00.690 --> 45:01.870]  [SPEAKER_02]: Okay, well, that's good.
+[45:01.970 --> 45:02.770]  [SPEAKER_02]: I'm going to go find the bathroom.
+[45:09.080 --> 45:10.380]  [SPEAKER_02]: I'm going to find the staff one.
+[45:10.540 --> 45:13.800]  [SPEAKER_04]: Do you want me to hang out while I try and
+figure out what's going on?
+[45:17.690 --> 45:21.950]  [SPEAKER_02]: No, I was just going to mute, but...
+[45:22.930 --> 45:23.410]  [SPEAKER_02]: Whatever.
+[45:23.410 --> 45:24.570]  [SPEAKER_02]: Whatever you prefer.
+[45:26.230 --> 45:26.850]  [SPEAKER_04]: Yeah, I can hang out.
+[45:32.980 --> 45:34.580]  [SPEAKER_04]: You're working on stuff in the background.
+[45:34.960 --> 45:38.640]  [SPEAKER_02]: Whatever you
+[45:42.270 --> 45:42.570]  [SPEAKER_02]: prefer.
+[45:42.750 --> 45:43.250]  [SPEAKER_02]: Just pick one.
+[58:15.560 --> 58:16.100]  [SPEAKER_02]: Oh, boy.
+[58:18.360 --> 58:19.060]  [SPEAKER_04]: Still going?
+[58:23.260 --> 58:26.820]  [SPEAKER_02]: So, I made the mistake of not getting an
+updated license.
+[58:30.680 --> 58:31.860]  [SPEAKER_02]: That's what it told me.
+[58:40.210 --> 58:41.770]  [SPEAKER_02]: So, let me do that.
+[58:48.410 --> 58:48.850]  [SPEAKER_00]: So,
+[58:57.180 --> 58:59.360]  [SPEAKER_02]: I take it I have to go do all that again.
+[59:00.540 --> 59:01.240]  [SPEAKER_04]: Sounds about right.
+[59:02.560 --> 59:03.860]  [SPEAKER_04]: If it got stopped partway through.
+[59:04.440 --> 59:06.580]  [SPEAKER_04]: Although, I don't think you have to delete
+anything.
+[59:06.660 --> 59:10.040]  [SPEAKER_04]: If you got to the point past the file
+copy, then I think you're good.
+[59:11.500 --> 59:12.620]  [SPEAKER_04]: But, maybe not.
+[59:12.760 --> 59:12.980]  [SPEAKER_02]: Okay.
+[59:13.400 --> 59:14.800]  [SPEAKER_02]: It looks that way because it's...
+[59:17.100 --> 59:19.020]  [SPEAKER_02]: So, purchase that.
+[59:22.660 --> 59:26.020]  [SPEAKER_02]: I want to make market segment education.
+[59:35.610 --> 59:38.070]  [SPEAKER_02]: And then I got to wait for...
+[59:38.950 --> 59:42.430]  [SPEAKER_02]: So, if there's licenses were found on this
+computer, however, none have an update
+[59:42.430 --> 59:45.710]  [SPEAKER_02]: subscription expiry date that is at least
+8-11.
+[59:46.050 --> 59:49.450]  [SPEAKER_02]: Please require an update and install this
+computer before running the install.
+[59:50.910 --> 59:53.190]  [SPEAKER_02]: I click okay on that.
+[59:54.330 --> 59:57.850]  [SPEAKER_02]: It says it was interrupted before so it
+can completely be installed.
+[59:58.050 --> 59:59.730]  [SPEAKER_02]: It's just not been modified.
+[01:00:00.290 --> 01:00:01.270]  [SPEAKER_02]: Install it again.
+[01:00:01.350 --> 01:00:02.890]  [SPEAKER_02]: I guess I can check in that folder.
+[01:00:04.710 --> 01:00:06.750]  [SPEAKER_02]: It does look like there's a one folder.
+[01:00:13.930 --> 01:00:14.770]  [SPEAKER_02]: License manager...
+[01:00:20.180 --> 01:00:22.100]  [SPEAKER_02]: Shit, I need to plug it back up here.
+[01:00:42.420 --> 01:00:42.840]  [SPEAKER_02]: Okay.
+[01:00:47.120 --> 01:00:48.060]  [SPEAKER_02]: Now it's updated.
+[01:00:50.180 --> 01:00:52.440]  [SPEAKER_02]: So, do I have to delete that one folder
+again?
+[01:00:53.140 --> 01:00:53.820]  [SPEAKER_02]: Up in there?
+[01:00:56.960 --> 01:00:58.260]  [SPEAKER_04]: You may need to.
+[01:00:58.360 --> 01:00:59.200]  [SPEAKER_04]: You might not need to.
+[01:01:02.740 --> 01:01:04.980]  [SPEAKER_02]: Will it hang if I try to run it?
+[01:01:05.160 --> 01:01:06.360]  [SPEAKER_02]: And I need to?
+[01:01:06.440 --> 01:01:07.200]  [SPEAKER_02]: Or will it...
+[01:01:07.200 --> 01:01:08.520]  [SPEAKER_04]: It'll hang regardless.
+[01:01:09.640 --> 01:01:11.920]  [SPEAKER_04]: The difference is whether it'll be
+installed or interrupted.
+[01:01:12.080 --> 01:01:14.660]  [SPEAKER_04]: But even then, it might not even be that
+issue.
+[01:01:14.980 --> 01:01:16.600]  [SPEAKER_04]: It might be something completely
+different.
+[01:01:24.000 --> 01:01:24.500]  [SPEAKER_02]: Okay.
+[01:01:25.960 --> 01:01:28.100]  [SPEAKER_02]: Do you recommend deleting it or not?
+[01:01:28.800 --> 01:01:29.560]  [SPEAKER_04]: Don't delete it.
+[01:01:30.620 --> 01:01:33.060]  [SPEAKER_04]: If it doesn't have to copy it,
+then this will be a lot faster.
+[01:01:35.780 --> 01:01:36.300]  [SPEAKER_02]: Okay.
+[01:01:40.220 --> 01:01:41.260]  Run that...
+[01:01:43.140 --> 01:01:43.580]  Again...
+[01:01:44.200 --> 01:01:46.440]  [SPEAKER_02]: Damn it, I meant to buy that before I came
+out here.
+[01:02:47.230 --> 01:02:48.110]  Next, next...
+[01:02:48.110 --> 01:02:53.270]  [SPEAKER_02]: Has reliable got the fix for the
+descriptors... the system's losing
+[01:02:53.270 --> 01:02:54.430]  [SPEAKER_02]: descriptors in Studio?
+[01:02:54.950 --> 01:02:56.210]  [SPEAKER_02]: Coming down the pipeline?
+[01:02:56.910 --> 01:02:59.030]  [SPEAKER_02]: Do you have anybody else contacting you
+about that ever?
+[01:02:59.550 --> 01:03:00.370]  [SPEAKER_04]: Sorry, what is this?
+[01:03:03.240 --> 01:03:07.560]  [SPEAKER_02]: When you're in Studio and you go to view a
+trend log and you...
+[01:03:07.560 --> 01:03:10.040]  [SPEAKER_02]: It doesn't have any of the descriptors or
+anything.
+[01:03:10.160 --> 01:03:10.440]  [SPEAKER_02]: Okay.
+[01:03:11.400 --> 01:03:13.120]  [SPEAKER_04]: What version of what, uh, Studio?
+[01:03:13.520 --> 01:03:14.220]  [SPEAKER_02]: It saves the descriptors.
+[01:03:15.820 --> 01:03:16.380]  [SPEAKER_02]: Our latest.
+[01:03:17.360 --> 01:03:19.420]  [SPEAKER_02]: I mean, this has been happening to us
+forever.
+[01:03:20.780 --> 01:03:21.160]  [SPEAKER_04]: Okay.
+[01:03:21.420 --> 01:03:23.600]  [SPEAKER_04]: Do you have version 7 Mac Pro webcomms?
+[01:03:27.480 --> 01:03:27.960]  [SPEAKER_02]: No.
+[01:03:28.320 --> 01:03:32.320]  [SPEAKER_02]: I mean, this seems to happen across the
+board, no matter what system we're on.
+[01:03:32.320 --> 01:03:35.880]  [SPEAKER_04]: No, I'm just asking if you have any
+version...
+[01:03:35.880 --> 01:03:39.660]  [SPEAKER_04]: So, the reason I'm asking is because
+there's an issue in 3.11 and older,
+[01:03:40.300 --> 01:03:45.780]  [SPEAKER_04]: where sending the job configuration would
+overwrite the GUID, which would change the
+[01:03:45.780 --> 01:03:46.300]  [SPEAKER_04]: lookup.
+[01:03:46.700 --> 01:03:48.760]  [SPEAKER_04]: And when you change the lookup,
+there's no more descriptors.
+[01:03:50.600 --> 01:03:54.500]  [SPEAKER_04]: Basically, yeah, it's looking to a place
+that doesn't have descriptors anymore.
+[01:03:54.600 --> 01:03:55.740]  [SPEAKER_04]: It has to re-index again.
+[01:03:58.080 --> 01:04:02.920]  [SPEAKER_04]: 3.11.1 still has the issue, if I remember
+correctly, but only in the case of version
+[01:04:02.920 --> 01:04:06.300]  [SPEAKER_04]: 7 controllers that have FTP.
+[01:04:06.900 --> 01:04:09.480]  [SPEAKER_04]: So, if you send FTP, then it has the same
+issue.
+[01:04:12.820 --> 01:04:13.660]  [SPEAKER_02]: Does that make sense?
+[01:04:16.160 --> 01:04:16.680]  [SPEAKER_02]: Yeah.
+[01:04:17.640 --> 01:04:21.400]  [SPEAKER_02]: So, I mean, the system I'm on,
+that's a version 8.
+[01:04:22.820 --> 01:04:24.660]  [SPEAKER_02]: This one's a version 7.
+[01:04:24.780 --> 01:04:30.920]  [SPEAKER_02]: But I don't know if that's the one where
+it's actually... we're connecting to for
+[01:04:30.920 --> 01:04:34.480]  [SPEAKER_02]: remote access, and I have to check in to
+look at it.
+[01:04:36.500 --> 01:04:39.420]  [SPEAKER_04]: But, anywho, that's the main issue.
+[01:04:39.580 --> 01:04:43.560]  [SPEAKER_04]: I'm not aware of any other issues that
+have to do with the disappearing
+[01:04:43.560 --> 01:04:45.400]  [SPEAKER_04]: descriptors or something.
+[01:04:45.700 --> 01:04:50.060]  [SPEAKER_04]: But what I would really like to know is,
+if it happens, does that GUID change?
+[01:04:50.120 --> 01:04:52.400]  [SPEAKER_04]: So, that's the job.json file.
+[01:04:52.700 --> 01:04:57.460]  [SPEAKER_04]: So, what I would do is make a backup of
+that job.json file.
+[01:04:57.900 --> 01:05:00.060]  [SPEAKER_04]: Just, like, put in the date or something
+like that, right?
+[01:05:02.920 --> 01:05:04.620]  [SPEAKER_04]: And then just see...
+[01:05:04.620 --> 01:05:05.040]  [SPEAKER_02]: Okay.
+[01:05:08.490 --> 01:05:09.210]  [SPEAKER_02]: Oh, yeah.
+[01:05:09.290 --> 01:05:12.930]  [SPEAKER_02]: It looks to be, like, the controller I was
+having on was version 7.
+[01:05:13.190 --> 01:05:16.170]  [SPEAKER_02]: But if I go...
+[01:05:16.170 --> 01:05:17.830]  [SPEAKER_02]: Oh, I guess that's technically too long.
+[01:05:17.950 --> 01:05:21.810]  [SPEAKER_02]: And that was just on this system.
+[01:05:23.810 --> 01:05:25.270]  [SPEAKER_02]: I can try...
+[01:05:27.170 --> 01:05:31.790]  [SPEAKER_02]: I can try a system we just installed that
+definitely doesn't have version 7.
+[01:05:32.610 --> 01:05:35.940]  [SPEAKER_04]: But, yes.
+[01:05:36.200 --> 01:05:41.940]  [SPEAKER_04]: If you send the job configuration with the
+version 7 mock pro web, it will nuke that
+[01:05:41.940 --> 01:05:43.540]  [SPEAKER_04]: thing there.
+[01:05:44.420 --> 01:05:45.380]  [SPEAKER_04]: And that'll be it.
+[01:05:46.140 --> 01:05:46.440]  [SPEAKER_02]: Okay.
+[01:05:49.270 --> 01:05:49.700]  [SPEAKER_02]: Gotcha.
+[01:05:56.240 --> 01:06:00.140]  [SPEAKER_02]: So, this is a system we just installed
+this year with brand new controllers.
+[01:06:00.320 --> 01:06:01.780]  [SPEAKER_02]: I mean, they don't have descriptors here.
+[01:06:04.100 --> 01:06:06.800]  [SPEAKER_02]: Let me... I'm going to moan descriptors.
+[01:06:09.020 --> 01:06:10.380]  [SPEAKER_02]: I mean, that'll work.
+[01:06:15.280 --> 01:06:19.360]  [SPEAKER_02]: I guess, in this case, I'm not sure how to
+make it not happen anymore.
+[01:06:20.600 --> 01:06:21.120]  [SPEAKER_04]: Right.
+[01:06:21.300 --> 01:06:24.200]  [SPEAKER_04]: So, it's a matter of copy that job.json
+file.
+[01:06:24.900 --> 01:06:28.600]  [SPEAKER_04]: And all I need to know is whether that had
+changed.
+[01:06:28.700 --> 01:06:31.220]  [SPEAKER_04]: So, if it happens again, compare the two
+files.
+[01:06:31.680 --> 01:06:32.420]  [SPEAKER_04]: Is the number different?
+[01:06:32.640 --> 01:06:33.320]  [SPEAKER_04]: It is.
+[01:06:33.440 --> 01:06:34.340]  [SPEAKER_04]: Then something happened.
+[01:06:34.340 --> 01:06:39.140]  [SPEAKER_04]: I don't know what happened, but that at
+least tells me what to look for,
+[01:06:39.240 --> 01:06:39.940]  [SPEAKER_04]: what to investigate.
+[01:06:40.040 --> 01:06:41.740]  [SPEAKER_04]: Because I don't know which one it is.
+[01:06:43.260 --> 01:06:43.560]  [SPEAKER_04]: Right?
+[01:06:44.020 --> 01:06:44.420]  [SPEAKER_02]: Sure.
+[01:06:51.320 --> 01:06:54.560]  [SPEAKER_02]: Should I pull back all the descriptors
+before I copy it?
+[01:06:57.670 --> 01:06:59.150]  [SPEAKER_02]: I know I'm kind of bouncing around here.
+[01:07:00.770 --> 01:07:03.870]  [SPEAKER_04]: You don't have to copy anything other than
+the job.json file.
+[01:07:12.220 --> 01:07:12.700]  [SPEAKER_02]: Okay.
+[01:07:12.700 --> 01:07:13.520]  [SPEAKER_02]: Copy that.
+[01:07:13.520 --> 01:07:15.820]  [SPEAKER_02]: Slap that thing into a folder.
+[01:07:18.840 --> 01:07:19.560]  [SPEAKER_02]: Boom.
+[01:07:19.920 --> 01:07:20.640]  [SPEAKER_02]: Folder.
+[01:07:35.950 --> 01:07:36.390]  [SPEAKER_02]: Gotcha.
+[01:07:40.150 --> 01:07:40.570]  [SPEAKER_02]: Okay.
+[01:07:40.830 --> 01:07:41.970]  [SPEAKER_02]: It's copied in there.
+[01:07:43.730 --> 01:07:46.990]  [SPEAKER_02]: That folder is dated today at 2.30.
+[01:07:47.890 --> 01:07:48.990]  [SPEAKER_02]: That's one kilobyte.
+[01:07:51.930 --> 01:07:58.550]  [SPEAKER_02]: So, you're saying if I download
+descriptors, if that changes, then
+[01:07:58.550 --> 01:07:59.490]  [SPEAKER_02]: something's going on.
+[01:08:00.290 --> 01:08:00.730]  [SPEAKER_02]: Yeah.
+[01:08:33.750 --> 01:08:37.870]  [SPEAKER_02]: And it really just seems to be the
+descriptors that are in our trend logs.
+[01:08:39.270 --> 01:08:39.710]  [SPEAKER_04]: Yes.
+[01:08:39.850 --> 01:08:40.850]  [SPEAKER_04]: That's what I'm referring to.
+[01:08:40.850 --> 01:08:44.330]  [SPEAKER_04]: Job.json points to a database.
+[01:08:45.070 --> 01:08:50.970]  [SPEAKER_04]: There's a database with some entries with
+a unique identifier called a GUID.
+[01:08:53.670 --> 01:08:54.310]  [SPEAKER_02]: Yeah.
+[01:08:54.610 --> 01:08:56.050]  [SPEAKER_04]: Basically, random number, right?
+[01:09:02.360 --> 01:09:03.400]  [SPEAKER_04]: So, yeah.
+[01:09:03.520 --> 01:09:07.140]  [SPEAKER_04]: If that ever gets removed, we lose that
+file, then that's it.
+[01:09:08.360 --> 01:09:10.860]  [SPEAKER_04]: No more descriptors in trend logs.
+[01:09:11.120 --> 01:09:11.400]  [SPEAKER_02]: Okay.
+[01:09:23.040 --> 01:09:27.900]  [SPEAKER_04]: So, all I need to know is when this
+happens the next time, did you lose,
+[01:09:28.240 --> 01:09:29.600]  [SPEAKER_04]: like, did that file get changed?
+[01:09:29.600 --> 01:09:31.260]  [SPEAKER_02]: It looks like it got modified when I...
+[01:09:32.000 --> 01:09:33.700]  [SPEAKER_02]: It gets modified all the time.
+[01:09:34.080 --> 01:09:35.080]  [SPEAKER_02]: Disconnected and reconnected.
+[01:09:35.100 --> 01:09:35.100]  Yeah.
+[01:09:35.100 --> 01:09:37.420]  [SPEAKER_04]: The date modified does not help at all.
+[01:09:37.740 --> 01:09:39.060]  [SPEAKER_04]: What matters is the content.
+[01:09:50.740 --> 01:09:52.160]  [SPEAKER_02]: It's the new ID.
+[01:09:53.960 --> 01:09:54.400]  [SPEAKER_02]: Okay.
+[01:09:54.620 --> 01:09:57.820]  [SPEAKER_02]: I guess we can compare that to the other
+one.
+[01:10:00.180 --> 01:10:00.580]  [SPEAKER_02]: Nope.
+[01:10:03.820 --> 01:10:07.200]  [SPEAKER_02]: No, it doesn't look like that modified it.
+[01:10:09.460 --> 01:10:10.800]  [SPEAKER_02]: At least in this case.
+[01:10:11.240 --> 01:10:14.280]  [SPEAKER_04]: Sorry, what are we... are you checking to
+see if something modifies?
+[01:10:14.420 --> 01:10:18.620]  [SPEAKER_04]: No, what I'm saying is next time it
+happens, not, like, don't try and do it
+[01:10:18.620 --> 01:10:19.020]  [SPEAKER_04]: right now.
+[01:10:19.180 --> 01:10:22.000]  [SPEAKER_04]: Like, it's probably not going to happen.
+[01:10:22.480 --> 01:10:22.820]  [SPEAKER_02]: Sure.
+[01:10:28.800 --> 01:10:31.980]  [SPEAKER_04]: Just make a backup of the file so the next
+time it happens, you've got it.
+[01:10:34.020 --> 01:10:34.860]  [SPEAKER_04]: Okay.
+[01:10:43.680 --> 01:10:46.000]  [SPEAKER_02]: Upgrade seems like it's going along.
+[01:10:47.120 --> 01:10:49.540]  [SPEAKER_02]: Accepting application pool and services.
+[01:11:30.520 --> 01:11:30.960]  [SPEAKER_02]: Okay.
+[01:11:31.260 --> 01:11:32.860]  [SPEAKER_02]: Upgrade seems to finish.
+[01:11:33.380 --> 01:11:33.920]  [SPEAKER_02]: To finish.
+[01:11:34.040 --> 01:11:35.000]  [SPEAKER_02]: You must restart system.
+[01:11:36.000 --> 01:11:36.500]  [SPEAKER_02]: Yes.
+[01:11:36.800 --> 01:11:37.400]  [SPEAKER_02]: Restart now.
+[01:13:41.950 --> 01:13:42.790]  [SPEAKER_02]: Okay.
+[01:13:42.790 --> 01:13:48.150]  [SPEAKER_02]: Okay, so it looks like we're still having
+that issue we were having where the system
+[01:13:48.150 --> 01:13:55.010]  [SPEAKER_02]: groups were not showing in WebView.
+[01:13:55.450 --> 01:13:56.850]  [SPEAKER_02]: So basically we can't reach it.
+[01:14:03.670 --> 01:14:05.350]  [SPEAKER_02]: System group cannot be loaded.
+[01:14:05.530 --> 01:14:06.010]  [SPEAKER_02]: Retry.
+[01:14:11.440 --> 01:14:14.900]  [SPEAKER_04]: So, you're saying systems cannot be
+loaded?
+[01:14:15.080 --> 01:14:15.480]  [SPEAKER_04]: What's this?
+[01:14:17.500 --> 01:14:19.020]  [SPEAKER_02]: System group cannot be loaded.
+[01:14:19.020 --> 01:14:21.240]  [SPEAKER_02]: So this is the original issue we're having
+is...
+[01:14:21.980 --> 01:14:22.780]  [SPEAKER_04]: Yeah, okay.
+[01:14:22.980 --> 01:14:24.220]  [SPEAKER_04]: So, two things.
+[01:14:24.880 --> 01:14:31.140]  [SPEAKER_04]: First thing is Studio 3.11 had an issue
+where it could fail to write all of the
+[01:14:31.140 --> 01:14:36.760]  [SPEAKER_04]: contents of what you have discovered on
+the network until you go by from the
+[01:14:36.760 --> 01:14:37.560]  [SPEAKER_04]: system and reconnect.
+[01:14:38.040 --> 01:14:42.300]  [SPEAKER_04]: So you could discover stuff, send the job
+config, and then nothing.
+[01:14:46.150 --> 01:14:46.630]  [SPEAKER_02]: Okay.
+[01:14:52.070 --> 01:14:52.510]  Okay.
+[01:14:54.550 --> 01:14:58.190]  [SPEAKER_04]: So that would cause an issue in WebView
+where it says system group cannot be
+[01:14:58.190 --> 01:14:58.410]  [SPEAKER_04]: loaded.
+[01:14:58.710 --> 01:15:02.530]  [SPEAKER_04]: Basically, most of the time you see that
+issue, it's because it's missing the job
+[01:15:02.530 --> 01:15:03.150]  [SPEAKER_04]: configuration.
+[01:15:04.050 --> 01:15:05.650]  [SPEAKER_04]: Missing the device from the job
+configuration.
+[01:15:08.250 --> 01:15:08.690]  [SPEAKER_02]: Okay.
+[01:15:09.050 --> 01:15:11.510]  [SPEAKER_02]: Can I just see that in the WebView folder?
+[01:15:12.350 --> 01:15:15.430]  [SPEAKER_02]: It looks like the job config file is here,
+but it's zero kilobytes.
+[01:15:21.900 --> 01:15:25.720]  [SPEAKER_02]: I'm going to copy this folder and create a
+backup.
+[01:15:38.650 --> 01:15:43.570]  [SPEAKER_02]: And this job folder in its entirety is
+like seven gig.
+[01:15:43.730 --> 01:15:44.530]  [SPEAKER_02]: I don't know if that matters.
+[01:15:47.620 --> 01:15:48.080]  [SPEAKER_03]: Not sure.
+[01:16:04.850 --> 01:16:06.170]  That's going...
+[01:16:06.170 --> 01:16:13.530]  [SPEAKER_02]: I'm going to take the permissions file
+that we have for the site and copy it.
+[01:16:13.670 --> 01:16:21.270]  [SPEAKER_02]: And I was just going to basically write
+all of our... basically overwrite what
+[01:16:21.270 --> 01:16:22.310]  [SPEAKER_02]: they have in that folder.
+[01:16:23.410 --> 01:16:25.270]  [SPEAKER_02]: But have a copy of it, obviously.
+[01:16:30.490 --> 01:16:32.150]  [SPEAKER_02]: Let's see if that works.
+[01:16:33.450 --> 01:16:41.330]  [SPEAKER_04]: Wait, are you trying to do the change by
+copying files manually from Studio over to
+[01:16:41.330 --> 01:16:41.890]  [SPEAKER_04]: another folder?
+[01:16:46.040 --> 01:16:49.660]  [SPEAKER_02]: I had considered doing that, but I think
+I'm going to take his file...
+[01:16:49.660 --> 01:16:50.520]  [SPEAKER_02]: Because that's not going to work.
+[01:16:50.740 --> 01:16:51.380]  [SPEAKER_02]: That's why I'm checking.
+[01:16:51.560 --> 01:16:52.420]  [SPEAKER_02]: ...and put it on my machine and do it via
+Resource Manager.
+[01:16:53.760 --> 01:16:54.200]  [SPEAKER_02]: Okay.
+[01:16:54.680 --> 01:16:57.400]  [SPEAKER_02]: Should I just have them do it via Resource
+Manager, is that what you're saying?
+[01:16:57.940 --> 01:16:58.380]  [SPEAKER_04]: No.
+[01:16:59.120 --> 01:16:59.320]  [SPEAKER_04]: No.
+[01:17:00.140 --> 01:17:01.800]  [SPEAKER_04]: Yeah, Resource Manager will work.
+[01:17:01.920 --> 01:17:02.520]  [SPEAKER_04]: Like, that's good.
+[01:17:02.520 --> 01:17:03.900]  [SPEAKER_04]: Yeah, do a Discovery.
+[01:17:04.580 --> 01:17:05.680]  [SPEAKER_04]: Do a Load Descriptors.
+[01:17:06.240 --> 01:17:08.780]  [SPEAKER_04]: Send Job Config, and then Load
+Descriptors.
+[01:17:08.960 --> 01:17:10.420]  [SPEAKER_04]: Job Descriptors.
+[01:17:10.420 --> 01:17:10.860]  [SPEAKER_04]: Oh my goodness.
+[01:17:11.740 --> 01:17:16.340]  [SPEAKER_04]: Send Job Config, then Descriptors via
+Resource Manager.
+[01:17:17.380 --> 01:17:18.140]  [SPEAKER_02]: Job Config.
+[01:17:18.720 --> 01:17:19.040]  [SPEAKER_02]: Okay.
+[01:17:19.660 --> 01:17:19.960]  [SPEAKER_02]: Fine.
+[01:17:20.000 --> 01:17:24.480]  [SPEAKER_02]: I'm pulling his latest file onto my
+machine first so I have a copy of it.
+[01:17:32.190 --> 01:17:37.170]  [SPEAKER_02]: Should I pull back any resource files that
+I need from the server first before I send
+[01:17:37.170 --> 01:17:37.310]  [SPEAKER_02]: it?
+[01:17:38.390 --> 01:17:44.250]  [SPEAKER_04]: I'm just saying, just send in the Support
+Files section, send the Job Configuration
+[01:17:44.250 --> 01:17:48.470]  [SPEAKER_04]: and the Descriptors, so long as you have
+fully discovered the tree and you have
+[01:17:48.470 --> 01:17:51.070]  [SPEAKER_04]: Loaded Descriptors before or have done it
+now.
+[01:17:52.230 --> 01:17:56.670]  [SPEAKER_04]: It doesn't matter what resources you do or
+do not have in Studio.
+[01:18:01.020 --> 01:18:01.620]  Okay.
+[01:19:36.630 --> 01:19:37.230]  Okay.
+[01:19:37.690 --> 01:19:38.290]  [SPEAKER_02]: Discover.
+[01:19:40.070 --> 01:19:40.670]  [SPEAKER_02]: Yes.
+[01:19:50.470 --> 01:19:51.810]  [SPEAKER_02]: I'm going to take a second.
+[01:19:52.070 --> 01:19:53.350]  [SPEAKER_02]: This is the entire district.
+[01:20:19.210 --> 01:20:20.950]  [SPEAKER_02]: And I hope I have Descriptors.
+[01:20:21.070 --> 01:20:21.470]  [SPEAKER_02]: I don't know.
+[01:20:22.410 --> 01:20:25.330]  [SPEAKER_02]: I'm going to try and load them up.
+[01:21:30.220 --> 01:21:39.970]  [SPEAKER_02]: Doesn't appear it found WebView for the
+FileSync.
+[01:21:40.470 --> 01:21:42.210]  [SPEAKER_02]: 65,000 network.
+[01:21:46.690 --> 01:21:53.570]  [SPEAKER_02]: And we were kind of having that issue
+before, too, where a Resource Manager and
+[01:21:53.570 --> 01:21:57.190]  [SPEAKER_02]: FileSync service would basically,
+I'm assuming, get hung.
+[01:21:57.270 --> 01:21:59.370]  [SPEAKER_02]: I was hoping that would get resolved with
+this update.
+[01:22:01.430 --> 01:22:01.610]  [SPEAKER_02]: Sorry.
+[01:22:01.890 --> 01:22:06.450]  [SPEAKER_04]: You're talking about a bunch of things,
+but I'm not really sure what we're talking
+[01:22:06.450 --> 01:22:06.730]  [SPEAKER_04]: about.
+[01:22:09.070 --> 01:22:09.590]  [SPEAKER_02]: Okay.
+[01:22:09.770 --> 01:22:15.170]  [SPEAKER_02]: So, I just did a discovery in Studio,
+and I do not see WebView.
+[01:22:17.190 --> 01:22:17.710]  [SPEAKER_04]: Okay.
+[01:22:18.250 --> 01:22:19.370]  [SPEAKER_04]: Is it Remote Access?
+[01:22:20.310 --> 01:22:23.810]  [SPEAKER_04]: Where's the connection relative to RC
+WebView?
+[01:22:28.980 --> 01:22:30.240]  [SPEAKER_02]: My connection?
+[01:22:30.900 --> 01:22:31.600]  [SPEAKER_02]: We're connecting.
+[01:22:32.240 --> 01:22:33.800]  [SPEAKER_04]: How is Studio connecting?
+[01:22:34.000 --> 01:22:35.340]  [SPEAKER_04]: How is WebView connecting?
+[01:22:42.270 --> 01:22:44.670]  [SPEAKER_02]: I'm not sure how WebView is connecting.
+[01:22:45.930 --> 01:22:49.470]  [SPEAKER_02]: Probably Remote Access.
+[01:22:53.390 --> 01:22:55.930]  [SPEAKER_04]: So, like, is WebView doing local VIP
+connection?
+[01:22:56.330 --> 01:22:58.430]  [SPEAKER_04]: Is it also Remote Access connection?
+[01:22:58.430 --> 01:23:02.930]  [SPEAKER_02]: I think it's doing... Okay.
+[01:23:03.170 --> 01:23:06.510]  [SPEAKER_02]: I don't want to say it's like I'm doing...
+Let me let you know.
+[01:23:07.150 --> 01:23:07.890]  [SPEAKER_02]: So, WebView
+[01:23:12.120 --> 01:23:16.240]  [SPEAKER_02]: is...
+[01:23:18.570 --> 01:23:20.490]  [SPEAKER_02]: WebView looks like it's IP.
+[01:23:21.750 --> 01:23:24.310]  [SPEAKER_02]: I don't think...
+[01:23:24.310 --> 01:23:25.850]  [SPEAKER_04]: Are you checking the system settings?
+[01:23:26.170 --> 01:23:29.270]  [SPEAKER_04]: Because that's where you'd be able to find
+out how it's connected.
+[01:23:30.750 --> 01:23:32.730]  [SPEAKER_02]: I'm in system settings in WebView.
+[01:23:32.830 --> 01:23:35.390]  [SPEAKER_02]: So, it's using... It has an IP address
+here.
+[01:23:36.830 --> 01:23:37.710]  [SPEAKER_04]: Does it say BACnet?
+[01:23:37.850 --> 01:23:38.870]  [SPEAKER_04]: Does it say BSN?
+[01:23:39.070 --> 01:23:39.990]  [SPEAKER_04]: Does it say BVPN?
+[01:23:42.810 --> 01:23:43.930]  [SPEAKER_02]: It says dual.
+[01:23:45.290 --> 01:23:45.850]  [SPEAKER_04]: Dual.
+[01:23:46.030 --> 01:23:46.270]  [SPEAKER_04]: Okay.
+[01:23:49.370 --> 01:23:56.890]  [SPEAKER_04]: Is... So... And you said that Studio is
+doing a Remote Access connection?
+[01:23:59.330 --> 01:24:01.530]  [SPEAKER_02]: That is how I'm connecting to it,
+yes.
+[01:24:04.170 --> 01:24:06.690]  [SPEAKER_02]: Not on their way I'm connecting to it.
+[01:24:09.450 --> 01:24:14.050]  [SPEAKER_04]: Do you know... I'm just thinking about
+this.
+[01:24:16.330 --> 01:24:20.850]  [SPEAKER_04]: For WebView, it's connected to a
+controller somewhere.
+[01:24:20.970 --> 01:24:25.410]  [SPEAKER_04]: Can you tell me, for that particular
+controller that it's connecting to,
+[01:24:26.930 --> 01:24:30.710]  [SPEAKER_04]: what UDP port has it specified for the
+connection?
+[01:24:33.930 --> 01:24:36.150]  [SPEAKER_02]: Would that be in Toolkit, or would I...
+[01:24:36.690 --> 01:24:39.130]  [SPEAKER_04]: No, that's going to be in the WebView
+system settings.
+[01:24:59.910 --> 01:25:02.870]  [SPEAKER_02]: The only port I see is a BACnet IP.
+[01:25:13.720 --> 01:25:17.100]  [SPEAKER_02]: I can get you remote connected,
+if that'd be easier, if you think.
+[01:25:17.680 --> 01:25:18.600]  [SPEAKER_04]: Sure, we can do that.
+[01:25:19.040 --> 01:25:21.780]  [SPEAKER_04]: Can you go to rcsupport.screenconnect.com?
+[01:25:23.060 --> 01:25:24.260]  [SPEAKER_02]: Yeah.
+[01:25:24.980 --> 01:25:25.360]  [SPEAKER_02]: Do
+[01:25:31.270 --> 01:25:33.930]  [SPEAKER_02]: I have a code?
+[01:25:35.040 --> 01:25:35.340]  [SPEAKER_04]: Yep.
+[01:25:35.930 --> 01:25:41.040]  [SPEAKER_04]: Code is 87509.
+[01:25:53.010 --> 01:25:54.230]  [SPEAKER_02]: And there's the download.
+[01:25:56.350 --> 01:25:56.510]  [SPEAKER_02]: Run.
+[01:25:58.890 --> 01:25:59.990]  [SPEAKER_02]: Run.
+[01:26:13.190 --> 01:26:14.690]  [SPEAKER_02]: I have five.
+[01:26:15.410 --> 01:26:16.470]  [SPEAKER_02]: That's for tomorrow.
+[01:26:30.320 --> 01:26:32.560]  [SPEAKER_02]: This is not that system.
+[01:26:35.780 --> 01:26:36.960]  [SPEAKER_02]: It'll be OMRO.
+[01:26:41.010 --> 01:26:44.150]  [SPEAKER_02]: William, just to clarify, we are not
+talking about what our meeting is
+[01:26:44.150 --> 01:26:44.890]  [SPEAKER_02]: scheduled for tomorrow.
+[01:26:48.750 --> 01:26:51.950]  [SPEAKER_02]: That is not the plan five thing.
+[01:28:33.130 --> 01:28:34.530]  [SPEAKER_02]: This is a studio login, right?
+[01:31:56.800 --> 01:31:57.360]  [SPEAKER_03]: Sorry.
+[01:32:31.490 --> 01:32:32.170]  [SPEAKER_02]: Finally,
+[01:50:52.130 --> 01:50:54.890]  [SPEAKER_04]: can you punch in the login again?
+[01:50:59.060 --> 01:50:59.400]  [SPEAKER_04]: All right.
+[01:50:59.700 --> 01:51:01.860]  [SPEAKER_04]: Hopefully, this time...
+[01:51:01.860 --> 01:51:02.740]  [SPEAKER_04]: Dang it.
+[01:51:03.080 --> 01:51:05.980]  [SPEAKER_04]: I forgot to bring it online, to tap
+online.
+[01:51:07.420 --> 01:51:07.800]  [SPEAKER_04]: All right.
+[01:51:08.280 --> 01:51:08.560]  [SPEAKER_04]: Again,
+[01:51:11.650 --> 01:51:13.290]  [SPEAKER_04]: at least it's a simple password.
+[01:51:17.110 --> 01:51:17.790]  [SPEAKER_02]: Yes.
+[01:51:21.730 --> 01:51:23.770]  [SPEAKER_02]: It's kind of viewing some of the stuff
+you're doing.
+[01:51:23.890 --> 01:51:26.010]  [SPEAKER_02]: It seems like it's pretty balled up in
+there.
+[01:51:27.510 --> 01:51:31.050]  [SPEAKER_04]: I have no idea what's going on,
+but whatever files were in there,
+[01:51:31.130 --> 01:51:32.510]  [SPEAKER_04]: it was very unhappy with.
+[01:51:35.970 --> 01:51:36.410]  [SPEAKER_02]: Okay.
+[01:52:16.110 --> 01:52:17.870]  [SPEAKER_02]: Let me make a phone call real quick.
+[01:52:18.250 --> 01:52:19.370]  [SPEAKER_02]: I'm worried about where I'm parked.
+[01:52:20.470 --> 01:52:20.690]  [SPEAKER_03]: Okay.
+[01:52:21.790 --> 01:52:23.010]  [SPEAKER_02]: I'm not going to hang up, though.
+[01:53:27.340 --> 01:53:28.040]  [SPEAKER_03]: All right.
+[01:53:28.180 --> 01:53:28.560]  [SPEAKER_03]: We're good.
+[01:53:37.280 --> 01:53:40.000]  [SPEAKER_04]: This is unusually long, by the way.
+[01:53:43.080 --> 01:53:45.820]  [SPEAKER_02]: I don't think I've ever seen this happen.
+[01:53:46.300 --> 01:53:46.380]  [SPEAKER_04]: Yes.
+[01:53:46.640 --> 01:53:48.880]  [SPEAKER_04]: In most cases, it's like three seconds and
+it's done.
+[01:53:51.260 --> 01:53:54.060]  [SPEAKER_04]: So, I don't know what's going on right
+now.
+[01:53:55.740 --> 01:53:58.260]  [SPEAKER_02]: Could that be from all the backups that
+are there?
+[01:53:59.060 --> 01:53:59.580]  [SPEAKER_02]: No.
+[01:54:00.760 --> 01:54:02.620]  [SPEAKER_04]: So, I cleaned that up.
+[01:54:03.020 --> 01:54:06.640]  [SPEAKER_04]: I stuck them to zip files, so there is now
+just a couple of files.
+[01:54:06.820 --> 01:54:08.170]  [SPEAKER_04]: All the files are still there.
+[01:54:08.300 --> 01:54:09.590]  [SPEAKER_04]: They're just within zips.
+[01:54:10.000 --> 01:54:14.580]  [SPEAKER_04]: So, for example, you go into here,
+and then there's tons of stuff.
+[01:54:16.670 --> 01:54:21.280]  [SPEAKER_04]: So, the files are still there,
+but instead of having a gazillion files,
+[01:54:21.420 --> 01:54:22.740]  [SPEAKER_04]: there's only five there.
+[01:54:40.820 --> 01:54:41.300]  [SPEAKER_04]: 311.
+[01:54:41.500 --> 01:54:43.160]  [SPEAKER_04]: Well, we got not the latest.
+[01:54:43.500 --> 01:54:49.780]  [SPEAKER_04]: It's the one where if you go by,
+it'll actually write the...
+[01:55:09.840 --> 01:55:11.800]  [SPEAKER_04]: Let's compare the file size.
+[01:55:12.120 --> 01:55:13.940]  [SPEAKER_04]: You've got a bigger one, both of these.
+[01:55:14.240 --> 01:55:15.420]  [SPEAKER_04]: So, that's good.
+[01:55:26.100 --> 01:55:29.260]  [SPEAKER_04]: We might have a difference between yours
+and that one.
+[01:55:38.470 --> 01:55:40.250]  [SPEAKER_04]: Well, I have a way to kind of fudge it.
+[01:55:41.630 --> 01:55:42.810]  [SPEAKER_03]: I think I'm going to do it.
+[01:56:40.870 --> 01:56:43.050]  [SPEAKER_04]: I'll give it a little bit for the values
+to start pulling in.
+[01:56:43.110 --> 01:56:44.350]  [SPEAKER_04]: I just restarted a bunch of services.
+[01:56:49.320 --> 01:56:55.500]  [SPEAKER_02]: I think it was, if you go to the high
+school, middle school area, that was the
+[01:56:55.500 --> 01:56:56.900]  [SPEAKER_02]: area that wasn't working.
+[01:57:17.690 --> 01:57:19.410]  [SPEAKER_04]: Did the upgrade not succeed all the way?
+[01:57:19.450 --> 01:57:19.970]  [SPEAKER_04]: Let's see.
+[01:57:23.690 --> 01:57:24.490]  [SPEAKER_02]: Details there.
+[01:57:25.170 --> 01:57:26.110]  [SPEAKER_02]: Edit is there.
+[01:57:31.670 --> 01:57:38.150]  [SPEAKER_03]: That looks correct.
+[01:57:49.860 --> 01:57:51.820]  [SPEAKER_04]: Why does it always fail to respond to time
+limits?
+[01:57:54.160 --> 01:57:54.560]  Well...
+[01:57:55.000 --> 01:57:56.960]  [SPEAKER_04]: I think I have a solution, but it's sort
+of dumb.
+[01:57:59.780 --> 01:58:01.580]  [SPEAKER_04]: It has to do with how this is structured.
+[01:58:01.580 --> 01:58:04.900]  [SPEAKER_02]: So, were they on the wrong pro-com that
+they were connecting to the system?
+[01:58:05.660 --> 01:58:07.440]  [SPEAKER_04]: No, I thought that was the wrong pro-com.
+[01:58:07.660 --> 01:58:08.700]  [SPEAKER_02]: I thought you changed that.
+[01:58:09.620 --> 01:58:13.720]  [SPEAKER_04]: Well, so, the problem was it was connected
+dual to a pro-com that can't do dual.
+[01:58:13.880 --> 01:58:15.180]  [SPEAKER_04]: That was the first problem.
+[01:58:16.300 --> 01:58:17.760]  [SPEAKER_04]: It's not the only problem, though.
+[01:58:21.650 --> 01:58:23.950]  [SPEAKER_04]: Do we have a network 30, network 10?
+[01:58:25.290 --> 01:58:26.270]  [SPEAKER_04]: No network 10.
+[01:58:28.090 --> 01:58:30.010]  [SPEAKER_04]: That's what I'm trying to figure out.
+[01:58:35.550 --> 01:58:41.710]  [SPEAKER_02]: I feel like this is one of the very first
+systems that ever got WebView and that
+[01:58:41.710 --> 01:58:42.490]  [SPEAKER_02]: they did here.
+[01:58:50.360 --> 01:58:51.800]  [SPEAKER_02]: I want to make it 1,000.
+[01:58:59.470 --> 01:59:00.550]  [SPEAKER_04]: Do I want to make it 1,000?
+[01:59:00.610 --> 01:59:01.570]  [SPEAKER_04]: Wait, this is already enabled.
+[01:59:03.650 --> 01:59:04.890]  [SPEAKER_04]: What is on network number?
+[01:59:06.350 --> 01:59:06.990]  [SPEAKER_04]: Or did I?
+[01:59:07.230 --> 01:59:08.150]  [SPEAKER_04]: No, I just enabled that.
+[01:59:08.310 --> 01:59:08.470]  [SPEAKER_04]: Okay.
+[01:59:08.750 --> 01:59:09.950]  [SPEAKER_04]: Nope, I'm just losing my mind.
+[01:59:10.010 --> 01:59:10.570]  [SPEAKER_04]: Don't worry about it.
+[01:59:12.630 --> 01:59:14.150]  [SPEAKER_04]: Don't worry about it.
+[01:59:22.620 --> 01:59:23.540]  [SPEAKER_03]: All right.
+[01:59:30.230 --> 01:59:31.950]  [SPEAKER_04]: Mention the username and password again?
+[01:59:35.100 --> 01:59:35.700]  [SPEAKER_02]: Yes.
+[01:59:38.680 --> 01:59:40.820]  [SPEAKER_02]: Is this a version 7 or 8 controller?
+[01:59:42.620 --> 01:59:43.160]  [SPEAKER_04]: Version 8.
+[01:59:43.220 --> 01:59:44.060]  [SPEAKER_04]: They're all version 8s.
+[01:59:46.140 --> 01:59:46.740]  [SPEAKER_02]: Okay.
+[01:59:47.840 --> 01:59:51.820]  [SPEAKER_02]: We were going to upgrade them all to
+version 9 because they're about to do a
+[01:59:51.820 --> 01:59:54.880]  [SPEAKER_02]: job and we have multiple jobs at each of
+the schools.
+[01:59:57.200 --> 01:59:59.040]  [SPEAKER_04]: That appears to be my problem.
+[01:59:59.820 --> 02:00:02.560]  [SPEAKER_04]: Connecting on the 47808 port was the
+issue.
+[02:00:03.940 --> 02:00:09.540]  [SPEAKER_04]: And, yep, that is to do with how the
+structure, the setup is with the different
+[02:00:09.540 --> 02:00:10.000]  [SPEAKER_04]: ports.
+[02:00:11.120 --> 02:00:11.280]  [SPEAKER_04]: Yeah.
+[02:00:14.000 --> 02:00:14.600]  [SPEAKER_04]: Well.
+[02:00:15.740 --> 02:00:17.480]  [SPEAKER_04]: I don't know if I want to fix that now.
+[02:00:19.560 --> 02:00:21.100]  [SPEAKER_04]: Is this local?
+[02:00:21.940 --> 02:00:22.760]  [SPEAKER_04]: Yeah, it's remote.
+[02:00:22.940 --> 02:00:23.140]  [SPEAKER_04]: Okay.
+[02:00:23.500 --> 02:00:24.880]  [SPEAKER_04]: I will leave it then.
+[02:00:25.720 --> 02:00:27.040]  [SPEAKER_04]: Seems to be working there.
+[02:00:27.140 --> 02:00:30.020]  [SPEAKER_04]: So let's make sure that things are
+actually talking now.
+[02:00:30.560 --> 02:00:32.260]  [SPEAKER_04]: Things are loading and all that.
+[02:00:37.480 --> 02:00:40.980]  [SPEAKER_02]: So they couldn't view this first floor
+schedule.
+[02:00:42.060 --> 02:00:43.940]  [SPEAKER_04]: Let's see what's going on with this one.
+[02:00:47.220 --> 02:00:51.060]  [SPEAKER_04]: This one is which 2000 group 7.
+[02:00:51.220 --> 02:00:51.500]  [SPEAKER_04]: All right.
+[02:00:52.830 --> 02:00:55.800]  [SPEAKER_04]: So let's go to your studio, connect.
+[02:01:23.350 --> 02:01:27.090]  [SPEAKER_02]: 2000 was a version 7 controller that was
+just recently updated to 8.
+[02:01:29.390 --> 02:01:30.010]  [SPEAKER_02]: And that's.
+[02:01:33.130 --> 02:01:35.710]  [SPEAKER_02]: I don't know if that was a cause of the
+problem or.
+[02:01:36.410 --> 02:01:37.870]  [SPEAKER_04]: That would certainly cause a problem.
+[02:01:38.090 --> 02:01:38.130]  [SPEAKER_04]: Yeah.
+[02:01:39.030 --> 02:01:43.910]  [SPEAKER_04]: No, if so, if the thing that it was
+connected to, and it's going to do all
+[02:01:43.910 --> 02:01:47.190]  [SPEAKER_04]: before it's trying to talk, RCP suddenly
+changed to a version.
+[02:01:49.850 --> 02:01:51.730]  [SPEAKER_04]: Version 8 problems.
+[02:01:52.250 --> 02:01:53.310]  [SPEAKER_04]: Yeah, definitely problems.
+[02:01:54.150 --> 02:01:57.050]  [SPEAKER_04]: And not just there, but all over the
+place, like.
+[02:01:58.470 --> 02:02:02.690]  [SPEAKER_04]: Without updating the resources that update
+the connection info, it's going to be
+[02:02:02.690 --> 02:02:06.730]  [SPEAKER_04]: trying to do things that it cannot do,
+and it will fail to do things like load
+[02:02:06.730 --> 02:02:07.450]  [SPEAKER_04]: your system groups.
+[02:02:10.390 --> 02:02:10.870]  [SPEAKER_04]: Yeah.
+[02:02:11.010 --> 02:02:11.510]  [SPEAKER_04]: What was I doing?
+[02:02:11.730 --> 02:02:11.930]  [SPEAKER_04]: Right.
+[02:02:14.150 --> 02:02:14.630]  [SPEAKER_03]: Awesome.
+[02:02:18.650 --> 02:02:19.750]  [SPEAKER_04]: I'll have to figure that one out.
+[02:02:20.650 --> 02:02:21.810]  [SPEAKER_04]: I think I know that one, actually.
+[02:02:27.220 --> 02:02:28.400]  [SPEAKER_02]: Where is this?
+[02:03:29.630 --> 02:03:31.770]  [SPEAKER_03]: That should have fixed it.
+[02:03:51.250 --> 02:03:52.590]  [SPEAKER_04]: Is very weird.
+[02:03:52.590 --> 02:03:53.150]  [SPEAKER_04]: Great.
+[02:03:55.490 --> 02:03:57.090]  [SPEAKER_04]: Moving to the next weird thing.
+[02:03:57.830 --> 02:03:58.970]  [SPEAKER_04]: So, why does it not show up?
+[02:04:02.180 --> 02:04:03.420]  [SPEAKER_04]: Oh, actually, I think I know.
+[02:04:08.080 --> 02:04:08.520]  [SPEAKER_03]: Maybe.
+[02:04:59.090 --> 02:05:00.270]  [SPEAKER_02]: That was fast.
+[02:05:02.610 --> 02:05:04.890]  [SPEAKER_04]: Yeah, it's hard on the network,
+so it's not the default.
+[02:05:06.670 --> 02:05:08.350]  [SPEAKER_04]: A little pro tip for you.
+[02:05:11.170 --> 02:05:13.790]  [SPEAKER_04]: I feel like I need to get into the remote
+access server.
+[02:05:15.730 --> 02:05:17.830]  [SPEAKER_04]: Are you able to connect to the remote
+access?
+[02:05:19.070 --> 02:05:20.330]  [SPEAKER_04]: Maybe I should.
+[02:05:22.150 --> 02:05:26.790]  [SPEAKER_04]: I'm trying to decide whether or not I
+should do that or change something else.
+[02:05:30.010 --> 02:05:32.070]  [SPEAKER_04]: I wonder if I can do it through studio.
+[02:05:33.970 --> 02:05:35.870]  [SPEAKER_04]: Should be one under here.
+[02:05:35.870 --> 02:05:40.450]  [SPEAKER_02]: Does that discover all the devices in each
+network that quick, then?
+[02:05:41.530 --> 02:05:44.050]  [SPEAKER_04]: It sends a global who is, and everything
+responds.
+[02:05:44.190 --> 02:05:46.070]  [SPEAKER_04]: The problem is that you can overwhelm the
+network.
+[02:05:47.470 --> 02:05:49.330]  [SPEAKER_04]: So, you might get partial load.
+[02:05:49.470 --> 02:05:50.790]  [SPEAKER_04]: You might be missing devices.
+[02:05:51.550 --> 02:05:51.590]  [SPEAKER_04]: Right.
+[02:05:52.870 --> 02:05:55.490]  [SPEAKER_04]: But it is faster, quote unquote.
+[02:05:56.070 --> 02:05:56.270]  [SPEAKER_04]: Right.
+[02:05:57.030 --> 02:05:58.930]  [SPEAKER_04]: Not necessarily more reliable.
+[02:06:01.710 --> 02:06:02.750]  [SPEAKER_04]: Like, see this guy?
+[02:06:05.190 --> 02:06:06.170]  [SPEAKER_02]: Yep, yep.
+[02:06:07.410 --> 02:06:09.810]  [SPEAKER_02]: This showed up as a basic bad method.
+[02:06:10.890 --> 02:06:11.070]  [SPEAKER_04]: Yep.
+[02:06:12.490 --> 02:06:13.530]  [SPEAKER_04]: What was I doing?
+[02:06:14.850 --> 02:06:15.370]  [SPEAKER_04]: Remote access.
+[02:06:15.830 --> 02:06:16.250]  [SPEAKER_04]: Remote access.
+[02:06:17.910 --> 02:06:20.010]  [SPEAKER_04]: The server with remote access.
+[02:06:20.210 --> 02:06:20.410]  [SPEAKER_00]: Yeah, the remote access one.
+[02:06:23.430 --> 02:06:23.590]  [SPEAKER_00]: Yep.
+[02:06:54.800 --> 02:06:56.300]  [SPEAKER_02]: Hopefully, no one was online.
+[02:06:57.500 --> 02:06:58.760]  [SPEAKER_04]: Yeah, it will reconnect them.
+[02:06:58.760 --> 02:07:03.180]  [SPEAKER_04]: It would be no different than if they were
+to have a momentary disconnect.
+[02:07:03.760 --> 02:07:06.400]  [SPEAKER_04]: It will reconnect, and they will be back
+at it.
+[02:07:11.260 --> 02:07:15.740]  [SPEAKER_04]: But the problem that I was seeing there is
+that it did not matter how many times I
+[02:07:15.740 --> 02:07:15.940]  [SPEAKER_04]: rediscovered.
+[02:07:16.940 --> 02:07:20.740]  [SPEAKER_04]: It is like, studio did not even know that
+the network number even existed.
+[02:07:24.540 --> 02:07:24.940]  [SPEAKER_02]: Right.
+[02:07:25.580 --> 02:07:27.040]  [SPEAKER_04]: Even after I changed the network number.
+[02:07:31.960 --> 02:07:33.340]  [SPEAKER_04]: And, like, here is an example.
+[02:07:33.460 --> 02:07:34.980]  [SPEAKER_04]: So, like, studio is already back and
+connected.
+[02:07:34.980 --> 02:07:36.700]  [SPEAKER_04]: It did not even know that things broke.
+[02:07:39.460 --> 02:07:39.920]  [SPEAKER_02]: Sure.
+[02:07:40.140 --> 02:07:41.500]  [SPEAKER_04]: It is like, oh, okay.
+[02:07:44.040 --> 02:07:44.740]  [SPEAKER_04]: All right.
+[02:07:46.040 --> 02:07:47.280]  [SPEAKER_04]: Back over to here.
+[02:07:53.000 --> 02:07:58.420]  [SPEAKER_04]: Looks like I am going to have to change
+what I did or how I am doing the
+[02:07:58.420 --> 02:08:02.400]  [SPEAKER_04]: connection for those guys.
+[02:08:04.740 --> 02:08:06.700]  [SPEAKER_02]: Could it be a studio version issue?
+[02:08:08.680 --> 02:08:09.640]  [SPEAKER_04]: No, I do not think so.
+[02:08:10.080 --> 02:08:12.200]  [SPEAKER_04]: Oh, right.
+[02:08:30.780 --> 02:08:31.580]  [SPEAKER_04]: All right.
+[02:08:33.300 --> 02:08:34.260]  [SPEAKER_04]: Nope, not that one.
+[02:08:34.360 --> 02:08:35.280]  [SPEAKER_04]: I think we are done in here.
+[02:08:38.670 --> 02:08:39.350]  [SPEAKER_02]: This one.
+[02:08:54.280 --> 02:08:55.620]  [SPEAKER_04]: Hey, there is the network number.
+[02:08:57.900 --> 02:08:59.040]  [SPEAKER_04]: That is what I am looking for.
+[02:08:59.940 --> 02:09:00.880]  [SPEAKER_04]: Nothing is coming up.
+[02:09:04.870 --> 02:09:05.450]  [SPEAKER_04]: All right.
+[02:09:08.430 --> 02:09:09.970]  [SPEAKER_02]: Well, that makes things a little bit
+trickier.
+[02:09:17.680 --> 02:09:21.000]  [SPEAKER_04]: So, the problem is that there is a number
+of these devices in the same subnet,
+[02:09:21.080 --> 02:09:22.420]  [SPEAKER_04]: but not all of them are in the same
+subnet.
+[02:09:22.540 --> 02:09:25.540]  [SPEAKER_04]: However, they all have the same network
+number and some of them are BBMDed.
+[02:09:25.860 --> 02:09:29.440]  [SPEAKER_04]: That causes a lot of confusion about what
+is broadcast and what is not.
+[02:09:32.240 --> 02:09:34.880]  [SPEAKER_04]: Of course, this one is not in the same
+subnet.
+[02:09:37.040 --> 02:09:37.540]  [SPEAKER_04]: That one does.
+[02:09:37.540 --> 02:09:38.500]  [SPEAKER_04]: This one has BBMD enabled.
+[02:09:38.800 --> 02:09:39.280]  [SPEAKER_04]: That one does.
+[02:09:39.660 --> 02:09:40.860]  [SPEAKER_04]: This one has BBMD enabled.
+[02:09:41.300 --> 02:09:42.200]  [SPEAKER_04]: That one does not.
+[02:09:44.020 --> 02:09:45.120]  [SPEAKER_04]: That is probably my problem.
+[02:09:45.200 --> 02:09:45.900]  [SPEAKER_04]: I picked the wrong one.
+[02:09:46.940 --> 02:09:50.060]  [SPEAKER_04]: So, I should not use this one for the BBMD
+connection.
+[02:09:50.620 --> 02:09:52.660]  [SPEAKER_04]: I should use a different controller.
+[02:09:53.760 --> 02:09:54.760]  [SPEAKER_04]: Like 3000.
+[02:10:04.130 --> 02:10:05.130]  [SPEAKER_03]: Do that.
+[02:10:27.080 --> 02:10:30.260]  [SPEAKER_04]: And the IP address of that is 11.1.10.
+[02:10:46.350 --> 02:10:47.390]  [SPEAKER_03]: Thank you.
+[02:11:03.530 --> 02:11:04.050]  [SPEAKER_02]: Hooray!
+[02:11:09.460 --> 02:11:10.720]  [SPEAKER_04]: Now it is coming up.
+[02:11:10.980 --> 02:11:12.180]  [SPEAKER_04]: Yep, so that was the issue.
+[02:11:12.940 --> 02:11:15.460]  [SPEAKER_04]: So, it is the structure and how these are
+set up.
+[02:11:15.720 --> 02:11:19.420]  [SPEAKER_04]: So, it should be pretty straightforward to
+fix.
+[02:11:28.120 --> 02:11:31.720]  [SPEAKER_04]: The question is, do we have something like
+Toolkit over here?
+[02:11:33.380 --> 02:11:35.240]  [SPEAKER_04]: I do not want to be moving things around.
+[02:11:35.680 --> 02:11:36.080]  [SPEAKER_02]: Yeah.
+[02:11:39.380 --> 02:11:43.060]  [SPEAKER_04]: The thing that makes things a little bit
+tricky and that is why I bounce around
+[02:11:43.060 --> 02:11:46.020]  [SPEAKER_04]: choosing different things is because I am
+not physically there.
+[02:11:46.140 --> 02:11:46.920]  [SPEAKER_04]: You are not physically there.
+[02:11:49.060 --> 02:11:50.900]  [SPEAKER_04]: I am assuming you are not physically
+there, right?
+[02:11:51.080 --> 02:11:52.240]  [SPEAKER_02]: Well, I am at the school.
+[02:11:53.120 --> 02:11:53.540]  [SPEAKER_02]: Oh, okay.
+[02:11:54.120 --> 02:11:54.520]  [SPEAKER_04]: Oh, perfect.
+[02:11:54.960 --> 02:11:57.260]  [SPEAKER_04]: Then, yeah, there is some stuff I can do
+then.
+[02:11:57.880 --> 02:12:00.780]  [SPEAKER_04]: Are you able to connect in so we can hit
+this network though?
+[02:12:04.450 --> 02:12:05.170]  [SPEAKER_04]: Like locally?
+[02:12:05.170 --> 02:12:06.030]  [SPEAKER_02]: You mean from Studio?
+[02:12:07.090 --> 02:12:10.050]  [SPEAKER_04]: Yeah, as opposed to... or from Toolkit as
+opposed to the...
+[02:12:10.050 --> 02:12:10.570]  [SPEAKER_02]: Try it in the IP.
+[02:12:11.570 --> 02:12:11.930]  [SPEAKER_02]: All right.
+[02:12:20.830 --> 02:12:21.270]  [SPEAKER_04]: Sweet.
+[02:12:21.410 --> 02:12:23.270]  [SPEAKER_04]: Okay, so there is something I can do here.
+[02:12:31.510 --> 02:12:31.950]  [SPEAKER_04]: Nope.
+[02:12:32.990 --> 02:12:34.350]  [SPEAKER_04]: Sorry, we both typed it.
+[02:12:35.630 --> 02:12:36.390]  [SPEAKER_04]: No worries.
+[02:12:42.730 --> 02:12:43.170]  Okay.
+[02:12:50.070 --> 02:12:52.130]  [SPEAKER_04]: So, for example, this one here...
+[02:12:53.470 --> 02:12:59.570]  [SPEAKER_04]: Let us say this one is network 200 because
+they seem to all be...
+[02:12:59.570 --> 02:13:00.230]  [SPEAKER_02]: Oh, I am good there.
+[02:13:01.210 --> 02:13:01.630]  [SPEAKER_04]: I know.
+[02:13:03.190 --> 02:13:05.030]  [SPEAKER_04]: It is because of how the network is set
+up.
+[02:13:05.150 --> 02:13:07.270]  [SPEAKER_04]: The broadcasts are not always being sent
+out.
+[02:13:07.470 --> 02:13:09.550]  [SPEAKER_04]: That was... that is kind of the point I
+was trying to make.
+[02:13:10.590 --> 02:13:11.690]  [SPEAKER_04]: Okay, so this is the one.
+[02:13:11.950 --> 02:13:12.230]  [SPEAKER_02]: Sure.
+[02:13:12.350 --> 02:13:15.450]  [SPEAKER_04]: So, I am going to consider all of these on
+network number 200.
+[02:13:16.710 --> 02:13:18.590]  [SPEAKER_04]: And they can be on force of 808.
+[02:13:18.670 --> 02:13:19.750]  [SPEAKER_04]: That is perfectly fine.
+[02:13:22.470 --> 02:13:24.610]  [SPEAKER_04]: So, I will change these ones first.
+[02:13:48.720 --> 02:13:49.520]  [SPEAKER_03]: This one will have to be...
+[02:14:01.440 --> 02:14:02.680]  [SPEAKER_03]: I will have to do something funny here.
+[02:14:06.460 --> 02:14:08.060]  [SPEAKER_04]: Let me get 88.
+[02:14:08.820 --> 02:14:11.140]  [SPEAKER_04]: This one here to be network number 10.
+[02:14:13.400 --> 02:14:14.940]  [SPEAKER_04]: We have 2001.
+[02:14:17.140 --> 02:14:18.660]  [SPEAKER_04]: It is a 1001.
+[02:14:18.880 --> 02:14:19.620]  [SPEAKER_04]: It is a 1001.
+[02:14:21.600 --> 02:14:23.360]  [SPEAKER_04]: That one can have BPMG enabled.
+[02:14:31.560 --> 02:14:32.780]  [SPEAKER_03]: I will do that.
+[02:15:15.660 --> 02:15:17.160]  [SPEAKER_03]: And the other one...
+[02:15:28.880 --> 02:15:30.840]  [SPEAKER_03]: I am getting confused.
+[02:15:31.620 --> 02:15:32.180]  [SPEAKER_03]: There we go.
+[02:15:43.460 --> 02:15:47.500]  [SPEAKER_04]: 10.10.1.134.
+[02:15:48.600 --> 02:15:49.680]  [SPEAKER_04]: Port, yeah.
+[02:15:53.290 --> 02:15:57.650]  [SPEAKER_02]: It will be 10.11.1.10.
+[02:16:21.480 --> 02:16:22.400]  [SPEAKER_03]: Go ahead.
+[02:16:39.710 --> 02:16:40.510]  [SPEAKER_04]: Here we are.
+[02:16:40.690 --> 02:16:42.950]  [SPEAKER_04]: I can make that 47808 again.
+[02:16:52.270 --> 02:16:53.030]  [SPEAKER_02]: Okay.
+[02:16:54.630 --> 02:16:55.930]  [SPEAKER_02]: Wait for those to come back.
+[02:16:57.430 --> 02:16:58.310]  [SPEAKER_02]: There we are.
+[02:17:06.360 --> 02:17:08.180]  [SPEAKER_03]: This is another subnet.
+[02:17:18.280 --> 02:17:21.590]  [SPEAKER_04]: 0.130.248.
+[02:17:26.220 --> 02:17:30.440]  [SPEAKER_02]: 0.130.248.
+[02:17:30.960 --> 02:17:31.800]  [SPEAKER_02]: What?
+[02:17:54.560 --> 02:17:57.880]  [SPEAKER_04]: This one here can be network number 400.
+[02:18:00.160 --> 02:18:22.820]  [SPEAKER_02]: This will be 10.1001.3248.
+[02:18:59.330 --> 02:18:59.790]  [SPEAKER_03]: There we go.
+[02:19:01.350 --> 02:19:01.910]  [SPEAKER_04]: All right.
+[02:19:03.280 --> 02:19:04.690]  [SPEAKER_04]: That should do with that.
+[02:19:05.630 --> 02:19:06.150]  [SPEAKER_04]: Yeah, I know.
+[02:19:08.070 --> 02:19:11.990]  [SPEAKER_04]: So there will be a couple of things
+complaining about duplicate networks.
+[02:19:12.210 --> 02:19:16.450]  [SPEAKER_04]: That will all be sorted out in just a
+moment.
+[02:19:27.180 --> 02:19:27.300]  What?
+[02:19:27.740 --> 02:19:28.380]  [SPEAKER_03]: In the downloads?
+[02:19:29.880 --> 02:19:32.620]  [SPEAKER_03]: Maybe the wrong folder.
+[02:19:40.070 --> 02:19:40.330]  [SPEAKER_04]: Huh.
+[02:19:41.190 --> 02:19:41.850]  [SPEAKER_04]: Oh, whatever.
+[02:19:44.270 --> 02:19:45.310]  [SPEAKER_04]: All right.
+[02:19:45.650 --> 02:19:46.750]  [SPEAKER_04]: Let's get rid of that.
+[02:19:58.310 --> 02:19:59.790]  [SPEAKER_02]: Maybe I have to make a call really quick.
+[02:20:00.330 --> 02:20:00.690]  [SPEAKER_03]: Okay.
+[02:21:06.830 --> 02:21:07.510]  [SPEAKER_02]: All right.
+[02:21:07.630 --> 02:21:08.510]  [SPEAKER_02]: Sorry about that, Liam.
+[02:21:08.610 --> 02:21:09.710]  [SPEAKER_02]: I had to make a call quick.
+[02:21:10.730 --> 02:21:11.410]  [SPEAKER_04]: No worries.
+[02:21:11.610 --> 02:21:15.430]  [SPEAKER_04]: Can you just punch in the log in here?
+[02:21:51.660 --> 02:21:52.680]  [SPEAKER_03]: This one's here.
+[02:21:53.040 --> 02:21:54.240]  [SPEAKER_03]: Acknowledge all of them.
+[02:21:56.520 --> 02:21:57.260]  [SPEAKER_04]: These are me.
+[02:22:27.580 --> 02:22:28.100]  [SPEAKER_04]: Okay.
+[02:22:28.240 --> 02:22:30.680]  [SPEAKER_04]: And this one's network number should be
+300.
+[02:23:26.820 --> 02:23:27.820]  [SPEAKER_03]: There we go.
+[02:23:39.240 --> 02:23:40.040]  [SPEAKER_03]: Discovering stuff.
+[02:24:30.590 --> 02:24:33.270]  [SPEAKER_02]: So everything was pretty fucked up there,
+huh?
+[02:24:35.250 --> 02:24:36.550]  [SPEAKER_04]: That's one way to put it.
+[02:24:39.350 --> 02:24:41.190]  [SPEAKER_04]: Yeah, the network is a little bit screwy.
+[02:24:41.330 --> 02:24:42.830]  [SPEAKER_04]: So think of it like this.
+[02:24:44.610 --> 02:24:49.770]  [SPEAKER_04]: Imagine you're talking in a room with some
+people and you thought that your co-worker
+[02:24:49.770 --> 02:24:51.030]  [SPEAKER_04]: was in the room with you.
+[02:24:51.030 --> 02:24:55.430]  [SPEAKER_04]: So then later on, you ask the co-worker
+for information that you were talking
+[02:24:55.430 --> 02:24:56.990]  [SPEAKER_04]: about, and he's like, what are you talking
+about?
+[02:24:58.010 --> 02:24:58.570]  [SPEAKER_04]: Right?
+[02:24:59.010 --> 02:25:04.050]  [SPEAKER_04]: Turns out the entire time you're talking,
+he had no idea because he wasn't in the
+[02:25:04.050 --> 02:25:04.290]  [SPEAKER_04]: room.
+[02:25:04.430 --> 02:25:09.210]  [SPEAKER_04]: Because you didn't know he wasn't in the
+room, you never made sure he heard it
+[02:25:09.210 --> 02:25:10.190]  [SPEAKER_04]: afterwards, right?
+[02:25:12.970 --> 02:25:13.530]  [SPEAKER_02]: Gotcha.
+[02:25:13.530 --> 02:25:19.590]  [SPEAKER_04]: So in the case of network numbers,
+there were devices that were across
+[02:25:19.590 --> 02:25:23.210]  [SPEAKER_04]: subnets, they weren't in the same subnet,
+and there were devices that were in the
+[02:25:23.210 --> 02:25:23.810]  [SPEAKER_04]: same subnet.
+[02:25:24.850 --> 02:25:28.650]  [SPEAKER_04]: Depending on which device you start from
+and which device you end up with,
+[02:25:28.710 --> 02:25:30.050]  [SPEAKER_04]: you will be in a different place.
+[02:25:32.330 --> 02:25:33.490]  [SPEAKER_04]: So yeah.
+[02:25:34.930 --> 02:25:37.030]  [SPEAKER_04]: Everything is now structured correctly.
+[02:25:38.110 --> 02:25:42.950]  [SPEAKER_04]: This network number, number 10,
+is where all of the different subnets are
+[02:25:42.950 --> 02:25:44.830]  [SPEAKER_04]: having their cross-subnet communication.
+[02:25:46.410 --> 02:25:50.290]  [SPEAKER_04]: Ask there, it goes to the individual
+controllers.
+[02:25:56.110 --> 02:25:56.250]  [SPEAKER_02]: Okay.
+[02:25:56.710 --> 02:26:00.030]  [SPEAKER_02]: Is there a reason why they can't exist on
+the same network like 20?
+[02:26:01.470 --> 02:26:05.190]  [SPEAKER_04]: Yes, because they aren't actually in the
+same network number 20.
+[02:26:08.770 --> 02:26:09.210]  [SPEAKER_02]: Okay.
+[02:26:10.490 --> 02:26:13.210]  [SPEAKER_04]: Now, yes, I could set something up like
+that.
+[02:26:16.010 --> 02:26:20.230]  [SPEAKER_04]: It's not a great... it's not really great
+for me to set it up that way, though.
+[02:26:21.010 --> 02:26:23.950]  [SPEAKER_04]: It's not really how things are designed.
+[02:26:24.070 --> 02:26:24.610]  [SPEAKER_04]: I can.
+[02:26:27.970 --> 02:26:30.130]  [SPEAKER_04]: But it's going to be a bad time,
+basically.
+[02:26:30.390 --> 02:26:31.290]  [SPEAKER_04]: Yeah, that's the gist of it.
+[02:26:31.290 --> 02:26:32.630]  [SPEAKER_04]: It's going to be a real bad time.
+[02:26:35.390 --> 02:26:37.410]  [SPEAKER_02]: Yeah, because I know we have one site.
+[02:26:37.610 --> 02:26:41.610]  [SPEAKER_02]: I mean, I guess it's fine if they're
+actually all existing on the same IP
+[02:26:41.610 --> 02:26:42.430]  [SPEAKER_02]: subnet, right?
+[02:26:42.730 --> 02:26:44.170]  [SPEAKER_02]: If they're on the same network?
+[02:26:45.010 --> 02:26:46.410]  [SPEAKER_04]: Yeah, but there's a mixture, right?
+[02:26:46.430 --> 02:26:47.050]  [SPEAKER_04]: That's the problem.
+[02:26:48.990 --> 02:26:50.450]  [SPEAKER_04]: Yeah, some of them were, some of them
+weren't.
+[02:26:50.750 --> 02:26:54.450]  [SPEAKER_04]: So that's why some things worked and some
+things didn't consistently.
+[02:26:57.350 --> 02:26:57.750]  [SPEAKER_02]: Gotcha.
+[02:26:58.210 --> 02:26:58.530]  [SPEAKER_02]: Okay.
+[02:26:58.530 --> 02:27:02.290]  [SPEAKER_04]: And depending on how you're connecting and
+where you're connecting from, things would
+[02:27:02.290 --> 02:27:03.110]  [SPEAKER_04]: load, no problem.
+[02:27:05.350 --> 02:27:07.030]  [SPEAKER_04]: Now, what was the one you wanted to check?
+[02:27:07.810 --> 02:27:08.650]  [SPEAKER_04]: 2000 something?
+[02:27:09.190 --> 02:27:10.230]  [SPEAKER_02]: That's in the high school.
+[02:27:11.130 --> 02:27:11.850]  [SPEAKER_04]: High school.
+[02:27:12.170 --> 02:27:15.130]  [SPEAKER_02]: So we'll go to high school and then first
+floor schedule is what we were finding
+[02:27:15.130 --> 02:27:15.690]  [SPEAKER_02]: wasn't working.
+[02:27:17.090 --> 02:27:17.570]  [SPEAKER_04]: That one right there?
+[02:27:18.150 --> 02:27:18.530]  [SPEAKER_02]: Yep.
+[02:27:18.870 --> 02:27:19.830]  [SPEAKER_04]: Okay, perfect.
+[02:27:19.830 --> 02:27:25.930]  [SPEAKER_04]: So what I'm doing now is discovering with
+studio, you know, let's do enhanced
+[02:27:25.930 --> 02:27:29.850]  [SPEAKER_04]: colors, and I'm reloading descriptors from
+the top.
+[02:27:29.990 --> 02:27:34.950]  [SPEAKER_04]: Now, the reason why I'm doing that isn't
+necessarily because you didn't have them.
+[02:27:35.310 --> 02:27:39.070]  [SPEAKER_04]: What I was actually concerned about is
+that you might have had them for a bunch
+[02:27:39.070 --> 02:27:49.630]  [SPEAKER_04]: of version seven controllers, in which
+case, probably have a bad time.
+[02:27:51.730 --> 02:27:52.430]  [SPEAKER_02]: Let's see.
+[02:27:54.150 --> 02:27:55.310]  [SPEAKER_02]: There we go.
+[02:28:00.890 --> 02:28:02.510]  [SPEAKER_02]: This is going to take a while.
+[02:28:03.290 --> 02:28:04.750]  [SPEAKER_04]: We can resume this some other time.
+[02:28:07.070 --> 02:28:09.990]  [SPEAKER_02]: The big thing, though, is I want to make
+sure...
+[02:28:11.170 --> 02:28:12.150]  [SPEAKER_04]: Sorry, log in again.
+[02:28:13.010 --> 02:28:15.250]  [SPEAKER_04]: The big thing is I want to make sure the
+job config was sent.
+[02:28:16.550 --> 02:28:21.730]  [SPEAKER_04]: If I can send that to WebView,
+then the rest should be a lot easier to
+[02:28:21.730 --> 02:28:22.070]  [SPEAKER_04]: deal with.
+[02:28:24.390 --> 02:28:28.170]  [SPEAKER_02]: I still have to send descriptors to
+WebView, though, don't I?
+[02:28:29.630 --> 02:28:33.930]  [SPEAKER_04]: For now, we just have to do the... what do
+you call it?
+[02:28:34.910 --> 02:28:36.950]  [SPEAKER_04]: Just the job config for right now.
+[02:28:39.740 --> 02:28:41.040]  [SPEAKER_04]: Oh, I got it all confused.
+[02:28:49.910 --> 02:28:50.610]  [SPEAKER_04]: Come on.
+[02:28:51.170 --> 02:28:52.770]  [SPEAKER_04]: I don't remember how long the timeout is.
+[02:28:52.850 --> 02:28:53.470]  [SPEAKER_04]: I don't want to wait.
+[02:28:57.390 --> 02:28:59.410]  [SPEAKER_04]: I didn't rediscover before opening it.
+[02:29:03.240 --> 02:29:04.600]  [SPEAKER_02]: Oh, that was scary.
+[02:29:06.540 --> 02:29:09.860]  [SPEAKER_04]: It's just the kind of weird Windows-y...
+[02:29:09.860 --> 02:29:12.300]  [SPEAKER_04]: Oh, I'm going to sit here and load for a
+little bit.
+[02:29:12.480 --> 02:29:13.200]  [SPEAKER_04]: That's what that was.
+[02:29:14.360 --> 02:29:18.560]  [SPEAKER_04]: That's why it does the weird changing of
+the stuff visually.
+[02:29:19.840 --> 02:29:20.600]  [SPEAKER_04]: There we go.
+[02:29:23.950 --> 02:29:24.070]  [SPEAKER_04]: Huh.
+[02:29:24.370 --> 02:29:25.750]  [SPEAKER_02]: No support files, huh?
+[02:29:27.050 --> 02:29:27.870]  [SPEAKER_04]: That's weird.
+[02:30:05.710 --> 02:30:06.990]  [SPEAKER_04]: Don't worry about that right now.
+[02:30:06.990 --> 02:30:09.690]  [SPEAKER_04]: I don't know how much of that it's
+actually telling me the truth,
+[02:30:09.770 --> 02:30:10.270]  [SPEAKER_04]: to be honest.
+[02:30:15.740 --> 02:30:15.880]  [SPEAKER_04]: Huh.
+[02:30:18.520 --> 02:30:20.740]  [SPEAKER_03]: Just not build up the...
+[02:30:21.220 --> 02:30:22.080]  [SPEAKER_03]: MalSync folder?
+[02:30:27.690 --> 02:30:27.930]  [SPEAKER_03]: Weird.
+[02:30:31.280 --> 02:30:31.920]  [SPEAKER_03]: All right.
+[02:30:32.160 --> 02:30:33.160]  [SPEAKER_04]: Back over to this.
+[02:30:35.540 --> 02:30:36.260]  [SPEAKER_04]: Look at that.
+[02:30:36.340 --> 02:30:36.860]  [SPEAKER_04]: It loads now.
+[02:30:38.620 --> 02:30:39.460]  [SPEAKER_04]: I'm magic!
+[02:30:40.520 --> 02:30:40.840]  [SPEAKER_03]: Hey!
+[02:30:41.720 --> 02:30:45.220]  [SPEAKER_04]: This whole time it was, in fact,
+the job configuration.
+[02:30:45.220 --> 02:30:51.020]  [SPEAKER_04]: But I think what the problem was,
+is the controller 2000 had never been
+[02:30:51.020 --> 02:30:55.640]  [SPEAKER_04]: rediscovered since it was swapped from a
+version 7 to a version 8.
+[02:30:56.420 --> 02:30:58.020]  [SPEAKER_04]: I think that's all that it ended up being.
+[02:30:58.660 --> 02:30:58.920]  [SPEAKER_02]: Okay.
+[02:30:59.720 --> 02:31:02.060]  [SPEAKER_04]: So, I'm going to do load descriptors from
+the top.
+[02:31:02.260 --> 02:31:03.020]  [SPEAKER_04]: You can let that run.
+[02:31:03.660 --> 02:31:05.160]  [SPEAKER_04]: And do something else in the meantime.
+[02:31:05.740 --> 02:31:07.660]  [SPEAKER_04]: Once it's done, send it to WebView.
+[02:31:10.360 --> 02:31:10.680]  [SPEAKER_02]: Okay.
+[02:31:11.160 --> 02:31:15.980]  [SPEAKER_02]: Is there... I mean, as far as the files
+not being in Resource Manager,
+[02:31:16.060 --> 02:31:18.780]  [SPEAKER_02]: is that...
+[02:31:18.780 --> 02:31:20.240]  [SPEAKER_02]: Well, we can do for that one.
+[02:31:20.380 --> 02:31:23.140]  [SPEAKER_02]: Because if we want to... if someone wants
+to pull back...
+[02:31:23.140 --> 02:31:24.020]  [SPEAKER_02]: Yeah, so what we can do...
+[02:31:24.940 --> 02:31:27.440]  [SPEAKER_04]: Yeah, so what we can do for that...
+[02:31:27.880 --> 02:31:29.040]  [SPEAKER_04]: It is in the server.
+[02:31:29.120 --> 02:31:29.440]  [SPEAKER_04]: Yeah, yeah.
+[02:31:29.460 --> 02:31:31.900]  [SPEAKER_04]: I don't know why it's missing from the
+right-hand side.
+[02:31:31.900 --> 02:31:33.660]  [SPEAKER_04]: It should populate the file thing.
+[02:31:33.760 --> 02:31:37.400]  [SPEAKER_04]: It must have been something weird about
+the way I was trying to rebuild stuff.
+[02:31:37.720 --> 02:31:38.340]  [SPEAKER_04]: But, whatever.
+[02:31:38.560 --> 02:31:39.840]  [SPEAKER_04]: I can just drag that in like this.
+[02:31:40.120 --> 02:31:43.160]  [SPEAKER_04]: And it will go through and send them.
+[02:31:43.520 --> 02:31:44.960]  [SPEAKER_04]: So, now it's just a matter of waiting.
+[02:31:45.860 --> 02:31:46.560]  [SPEAKER_04]: So, woo-hoo!
+[02:31:49.790 --> 02:31:51.990]  [SPEAKER_02]: I'm out of school and I don't sell beer
+here.
+[02:31:53.950 --> 02:31:54.350]  [SPEAKER_02]: Fuck.
+[02:31:58.970 --> 02:31:59.850]  [SPEAKER_04]: All right.
+[02:31:59.850 --> 02:32:01.290]  [SPEAKER_04]: Oh, I just realized.
+[02:32:01.410 --> 02:32:03.810]  [SPEAKER_04]: I'm connected over the slowest way of
+doing this.
+[02:32:08.490 --> 02:32:11.090]  [SPEAKER_04]: Are you leaving site or are you going to
+hang out for a little bit longer?
+[02:32:13.290 --> 02:32:15.430]  [SPEAKER_02]: No, I want to get... I want to be done.
+[02:32:16.370 --> 02:32:17.170]  [SPEAKER_04]: Okay, so...
+[02:32:17.170 --> 02:32:19.210]  [SPEAKER_02]: And not have to come back to it.
+[02:32:19.910 --> 02:32:21.810]  [SPEAKER_04]: So, everything else you should be able to
+do remotely.
+[02:32:22.170 --> 02:32:23.650]  [SPEAKER_04]: That's why I was saying that.
+[02:32:23.710 --> 02:32:28.990]  [SPEAKER_04]: But we can connect this way, if you want.
+[02:32:29.770 --> 02:32:30.130]  [SPEAKER_04]: Oh, wait.
+[02:32:30.130 --> 02:32:31.090]  [SPEAKER_04]: I have to update the...
+[02:32:31.090 --> 02:32:35.610]  [SPEAKER_04]: I was connected remotely just a little bit
+ago.
+[02:32:36.190 --> 02:32:39.030]  [SPEAKER_04]: As in, not me, but Studio was.
+[02:32:39.550 --> 02:32:40.950]  [SPEAKER_04]: Let's update this.
+[02:32:42.010 --> 02:32:43.810]  [SPEAKER_04]: That should be...
+[02:32:44.870 --> 02:32:48.590]  [SPEAKER_04]: That's 0.10?
+[02:32:58.380 --> 02:33:00.200]  [SPEAKER_04]: 11.1.10.
+[02:33:01.500 --> 02:33:01.720]  There
+[02:33:11.240 --> 02:33:13.200]  [SPEAKER_04]: we go.
+[02:33:16.140 --> 02:33:21.100]  [SPEAKER_04]: So, if you're doing a full load
+descriptors, it will be faster from here.
+[02:33:23.460 --> 02:33:28.880]  [SPEAKER_04]: Yeah, I moved things around a little bit
+to make a little bit more sense for what
+[02:33:28.880 --> 02:33:30.100]  [SPEAKER_04]: the system is.
+[02:33:30.820 --> 02:33:31.680]  [SPEAKER_04]: How it's set up.
+[02:33:36.380 --> 02:33:37.780]  [SPEAKER_04]: Nope, shouldn't have anything to do with
+that.
+[02:33:37.960 --> 02:33:38.600]  [SPEAKER_04]: But, anyways.
+[02:33:39.720 --> 02:33:41.300]  [SPEAKER_04]: Should be grabbing them and sending them
+now.
+[02:33:41.560 --> 02:33:43.060]  [SPEAKER_04]: But this is going a lot faster now.
+[02:33:43.060 --> 02:33:44.220]  [SPEAKER_04]: So, yeah.
+[02:33:44.600 --> 02:33:45.680]  [SPEAKER_04]: Okay, anything else?
+[02:33:46.020 --> 02:33:46.500]  [SPEAKER_04]: Or is that it?
+[02:33:50.320 --> 02:33:51.540]  [SPEAKER_02]: No, I think that's it.
+[02:33:51.600 --> 02:33:53.280]  [SPEAKER_02]: If you think we're good, we're covered.
+[02:33:55.240 --> 02:33:56.360]  [SPEAKER_04]: Yeah, I think we're good.
+[02:33:56.400 --> 02:34:01.520]  [SPEAKER_04]: As soon as these are done being sent,
+then I think you're good to go.
+[02:34:02.140 --> 02:34:04.560]  [SPEAKER_04]: That was a lot more involved than I
+thought it was going to be.
+[02:34:04.640 --> 02:34:06.720]  [SPEAKER_04]: I thought it was going to be a
+straightforward, oh, you got something
+[02:34:06.720 --> 02:34:09.980]  [SPEAKER_04]: funny with setting here or file here.
+[02:34:10.000 --> 02:34:11.420]  [SPEAKER_04]: But it ended up being everything.
+[02:34:12.080 --> 02:34:12.800]  [SPEAKER_04]: Literally everything.
+[02:34:14.600 --> 02:34:14.960]  [SPEAKER_04]: Yeah.
+[02:34:17.140 --> 02:34:18.980]  [SPEAKER_02]: Hey, I'm sorry I didn't set this up.
+[02:34:19.860 --> 02:34:20.460]  [SPEAKER_04]: That's okay.
+[02:34:21.840 --> 02:34:25.740]  [SPEAKER_04]: Look, it wouldn't even be a problem if you
+were the guy that set it up.
+[02:34:25.800 --> 02:34:30.100]  [SPEAKER_04]: Because, I don't know about you,
+but I am the number one problem in my own
+[02:34:30.100 --> 02:34:31.640]  [SPEAKER_04]: life with breaking things, right?
+[02:34:35.250 --> 02:34:36.370]  [SPEAKER_02]: Like, who did this?
+[02:34:36.450 --> 02:34:37.970]  [SPEAKER_02]: Oh, that was me a week ago.
+[02:34:44.870 --> 02:34:45.810]  [SPEAKER_02]: Perfect, okay.
+[02:34:46.130 --> 02:34:47.890]  [SPEAKER_02]: Well, no, that's great.
+[02:34:47.990 --> 02:34:49.630]  [SPEAKER_02]: I just, you know, I really wanted to get
+it resolved.
+[02:34:49.790 --> 02:34:51.710]  [SPEAKER_02]: So, I really appreciate your help,
+Liam.
+[02:34:52.130 --> 02:34:56.230]  [SPEAKER_02]: Tomorrow, I don't know if you know,
+I did schedule a time with you,
+[02:34:56.290 --> 02:34:58.130]  [SPEAKER_02]: I think for like 12 or 12.30?
+[02:34:58.930 --> 02:34:59.290]  [SPEAKER_03]: Yep.
+[02:34:59.370 --> 02:35:04.630]  [SPEAKER_02]: To do that plant five shit.
+[02:35:08.390 --> 02:35:10.790]  [SPEAKER_02]: I basically just forwarded your email.
+[02:35:12.170 --> 02:35:13.330]  [SPEAKER_04]: Yeah, sounds good.
+[02:35:14.530 --> 02:35:17.550]  [SPEAKER_04]: But this network thing, like what we just
+saw with the networking thing,
+[02:35:17.730 --> 02:35:17.850]  [SPEAKER_04]: right?
+[02:35:17.970 --> 02:35:19.470]  [SPEAKER_04]: That's why I was like, well, it depends.
+[02:35:21.330 --> 02:35:21.730]  [SPEAKER_04]: Right?
+[02:35:23.690 --> 02:35:27.510]  [SPEAKER_04]: If we're going from like a flat network to
+a flat network, it's probably no problem.
+[02:35:27.710 --> 02:35:32.750]  [SPEAKER_04]: Unless BBMD wasn't enabled in the first
+place, and the client software is on a
+[02:35:32.750 --> 02:35:34.630]  [SPEAKER_04]: different subnet, then suddenly you're
+going to lose connection.
+[02:35:34.750 --> 02:35:36.370]  [SPEAKER_04]: You won't be able to figure out why you
+can't connect.
+[02:35:36.950 --> 02:35:37.890]  [SPEAKER_04]: Like, stuff like that.
+[02:35:40.810 --> 02:35:44.150]  [SPEAKER_04]: So, usually it's fine, but sometimes it
+isn't.
+[02:35:44.150 --> 02:35:48.490]  [SPEAKER_04]: And some of the worst calls I've ever had
+to deal with were because IP moved a bunch
+[02:35:48.490 --> 02:35:50.610]  [SPEAKER_04]: of subnets around and changed a bunch of
+IPs.
+[02:35:50.850 --> 02:35:54.450]  [SPEAKER_04]: And controllers were doing multiple
+broadcast storms.
+[02:35:58.240 --> 02:35:58.400]  [SPEAKER_02]: Yeah.
+[02:35:58.880 --> 02:35:59.600]  [SPEAKER_04]: Good times.
+[02:35:59.760 --> 02:36:01.340]  [SPEAKER_02]: You know what we have here today with a
+broadcast storm?
+[02:36:02.080 --> 02:36:08.780]  [SPEAKER_04]: No, no, it's more of like a... I send you
+a message with the expectation that you're
+[02:36:08.780 --> 02:36:10.300]  [SPEAKER_04]: going to send it along to everyone else.
+[02:36:10.300 --> 02:36:14.900]  [SPEAKER_04]: But you're like, everyone who needs to
+hear this is already in the same room,
+[02:36:15.040 --> 02:36:16.360]  [SPEAKER_04]: so I don't need to repeat it.
+[02:36:19.260 --> 02:36:19.700]  [SPEAKER_02]: Okay.
+[02:36:21.340 --> 02:36:22.760]  [SPEAKER_04]: So, that's all it is.
+[02:36:23.240 --> 02:36:24.660]  [SPEAKER_04]: How do I explain it?
+[02:36:26.900 --> 02:36:32.060]  [SPEAKER_04]: Okay, suppose you're in network number 20,
+and you receive a broadcast on network
+[02:36:32.060 --> 02:36:32.680]  [SPEAKER_04]: number 20.
+[02:36:33.180 --> 02:36:36.500]  [SPEAKER_04]: Are you going to think, oh, I need to send
+that along to someone else on network
+[02:36:36.500 --> 02:36:36.920]  [SPEAKER_04]: number 20?
+[02:36:36.920 --> 02:36:39.800]  [SPEAKER_04]: You're probably going to think,
+no, it's a broadcast on network number 20.
+[02:36:39.900 --> 02:36:41.980]  [SPEAKER_04]: Everyone on network number 20 obviously
+saw it.
+[02:36:42.180 --> 02:36:43.240]  [SPEAKER_04]: Right, right, everyone's here.
+[02:36:43.620 --> 02:36:45.020]  [SPEAKER_04]: So, I don't need to send it anywhere else.
+[02:36:45.840 --> 02:36:48.280]  [SPEAKER_04]: And as a result...
+[02:36:48.280 --> 02:36:49.800]  [SPEAKER_04]: So, let's see here.
+[02:36:49.920 --> 02:36:57.080]  [SPEAKER_04]: WebView was pointed at controller... I had
+it pointed at 1000, which was all by
+[02:36:57.080 --> 02:36:57.520]  [SPEAKER_04]: itself.
+[02:36:58.540 --> 02:37:00.040]  [SPEAKER_04]: It didn't have BVMD enabled.
+[02:37:00.640 --> 02:37:05.900]  [SPEAKER_04]: So, when it sent out a broadcast and 3000
+received it, 3000 didn't go, oh,
+[02:37:05.940 --> 02:37:08.060]  [SPEAKER_04]: I need to send this to all the other
+people on the BVMD.
+[02:37:08.280 --> 02:37:12.780]  [SPEAKER_04]: It doesn't think it needs to, because
+everything else is supposedly in network
+[02:37:12.780 --> 02:37:13.420]  [SPEAKER_04]: number 30.
+[02:37:15.820 --> 02:37:17.660]  [SPEAKER_04]: Or 20, sorry, network number 20.
+[02:37:21.020 --> 02:37:21.820]  [SPEAKER_04]: So, yeah.
+[02:37:23.200 --> 02:37:24.480]  [SPEAKER_04]: Yeah, that's all it was.
+[02:37:27.300 --> 02:37:28.720]  [SPEAKER_04]: Well, I mean, that was part of it.
+[02:37:28.920 --> 02:37:30.900]  [SPEAKER_04]: Then there's also the version 7 to version
+8 thing.
+[02:37:31.560 --> 02:37:36.440]  [SPEAKER_04]: I don't expect you to necessarily get why
+that's a problem, but what ended up
+[02:37:36.440 --> 02:37:40.380]  [SPEAKER_04]: happening is between version 7,
+version 8, version 7, mach.coms,
+[02:37:40.520 --> 02:37:45.980]  [SPEAKER_04]: fundamentally, we're like RCP first,
+BACnet second.
+[02:37:47.020 --> 02:37:51.780]  [SPEAKER_04]: So, a lot of the objects, like system
+groups and such, are actually RCP objects.
+[02:37:51.960 --> 02:37:52.780]  [SPEAKER_04]: They aren't BACnet ones.
+[02:37:52.860 --> 02:37:54.000]  [SPEAKER_04]: So, how do we request them?
+[02:37:54.080 --> 02:37:56.080]  [SPEAKER_04]: We request them via RCP, not actually
+BACnet.
+[02:37:57.320 --> 02:38:00.120]  [SPEAKER_04]: Now, imagine WebView still thinks that's
+the case.
+[02:38:00.120 --> 02:38:09.100]  [SPEAKER_04]: And tries to go and access something from
+a controller, an RCP controller that
+[02:38:09.100 --> 02:38:10.200]  [SPEAKER_04]: doesn't actually exist anymore.
+[02:38:10.580 --> 02:38:11.840]  [SPEAKER_04]: That's just all it is.
+[02:38:12.600 --> 02:38:18.060]  [SPEAKER_04]: It'd be no difference if I had somehow,
+if I had an ability to link like Modbus
+[02:38:18.060 --> 02:38:19.800]  [SPEAKER_04]: objects directly into a system group.
+[02:38:20.480 --> 02:38:24.800]  [SPEAKER_04]: Imagine if that's no longer a Modbus
+device, but now it's a BACnet device,
+[02:38:25.100 --> 02:38:25.360]  [SPEAKER_04]: right?
+[02:38:27.020 --> 02:38:30.480]  [SPEAKER_04]: If WebView doesn't know that that's
+changed, it's going to keep trying to
+[02:38:30.480 --> 02:38:30.720]  [SPEAKER_04]: talk.
+[02:38:31.160 --> 02:38:32.740]  [SPEAKER_04]: But again, it doesn't have that
+capability.
+[02:38:32.960 --> 02:38:33.640]  [SPEAKER_04]: But suppose it did.
+[02:38:34.220 --> 02:38:35.580]  [SPEAKER_04]: That's effectively what happened.
+[02:38:38.140 --> 02:38:39.020]  [SPEAKER_02]: I'll ask you this.
+[02:38:39.220 --> 02:38:44.340]  [SPEAKER_02]: So, as part of the new work we're doing
+here, we're going to be planning to update
+[02:38:44.340 --> 02:38:46.200]  [SPEAKER_02]: all of these programs to version 9.
+[02:38:46.280 --> 02:38:49.580]  [SPEAKER_02]: Are we going to run into any issues with
+the version 7 thing here?
+[02:38:52.480 --> 02:38:59.580]  [SPEAKER_04]: If they are version 7 now, and you're
+going to version 9, you do need to be
+[02:38:59.580 --> 02:39:02.520]  [SPEAKER_04]: careful about a number of things involved
+with that.
+[02:39:02.640 --> 02:39:04.520]  [SPEAKER_04]: But if it's version 8 to version 9,
+no issue.
+[02:39:04.640 --> 02:39:05.880]  [SPEAKER_04]: They are effectively the same.
+[02:39:08.300 --> 02:39:09.120]  [SPEAKER_02]: They're both BACnet.
+[02:39:17.480 --> 02:39:20.720]  [SPEAKER_04]: ProZone, ProAir version 7, version 8,
+they're BACnet first.
+[02:39:21.000 --> 02:39:21.740]  [SPEAKER_04]: They're fine.
+[02:39:21.940 --> 02:39:22.880]  [SPEAKER_04]: There's no issues there.
+[02:39:23.920 --> 02:39:25.980]  [SPEAKER_04]: ProCom version 8 to version 9,
+no problem.
+[02:39:25.980 --> 02:39:26.800]  [SPEAKER_04]: They're both BACnet.
+[02:39:28.120 --> 02:39:34.280]  [SPEAKER_04]: If it's version 7, going across from a
+ProCom, ProSys, whatever, that is RCP
+[02:39:34.280 --> 02:39:36.860]  [SPEAKER_04]: first, and that goes to BACnet.
+[02:39:37.220 --> 02:39:39.140]  [SPEAKER_04]: And then there's things that have to be
+updated.
+[02:39:40.040 --> 02:39:41.800]  [SPEAKER_04]: Now, this is a personal gripe of mine.
+[02:39:42.840 --> 02:39:48.460]  [SPEAKER_04]: We decided that there's... to use the same
+type of mnemonic, whether it's RCP or
+[02:39:48.460 --> 02:39:48.800]  [SPEAKER_04]: BACnet.
+[02:39:49.800 --> 02:39:55.900]  [SPEAKER_04]: And I cannot tell you the amount of times
+it has bitten me and other people.
+[02:39:59.150 --> 02:39:59.550]  [SPEAKER_02]: Okay.
+[02:40:01.010 --> 02:40:02.530]  [SPEAKER_02]: It seems like we'll be good.
+[02:40:02.630 --> 02:40:06.310]  [SPEAKER_02]: Everything, all the ProComs here are
+version 8 anyway, so...
+[02:40:07.470 --> 02:40:07.750]  [SPEAKER_03]: Yep.
+[02:40:08.010 --> 02:40:09.670]  [SPEAKER_02]: All right, so...
+[02:40:09.670 --> 02:40:13.090]  [SPEAKER_02]: Yeah, I can't say we're going to be
+updating everything that's at least
+[02:40:13.090 --> 02:40:14.050]  [SPEAKER_02]: version 7 to 8.
+[02:40:14.090 --> 02:40:14.930]  [SPEAKER_02]: I don't know about that.
+[02:40:17.570 --> 02:40:17.970]  [SPEAKER_02]: Okay.
+[02:40:19.590 --> 02:40:23.310]  [SPEAKER_04]: Yeah, if it's 7 to 8, we can take a look
+at that when you're looking at...
+[02:40:23.310 --> 02:40:24.230]  [SPEAKER_04]: Yes, plant 5?
+[02:40:27.260 --> 02:40:30.780]  [SPEAKER_02]: No, this is not... this has nothing to do
+with what we're talking about tomorrow.
+[02:40:32.220 --> 02:40:32.780]  [SPEAKER_04]: No, I know.
+[02:40:33.020 --> 02:40:34.080]  [SPEAKER_04]: So, just...
+[02:40:35.160 --> 02:40:38.800]  [SPEAKER_04]: Is it this system here that you're doing
+version 7 to version 8 or something?
+[02:40:38.900 --> 02:40:40.280]  [SPEAKER_04]: Or version 8 to version 9?
+[02:40:43.260 --> 02:40:45.740]  [SPEAKER_02]: The ProComs will be going from 8 to 9.
+[02:40:46.080 --> 02:40:49.820]  [SPEAKER_02]: Some of the system controllers,
+like ProZones, ProAirs, may still remain
+[02:40:49.820 --> 02:40:50.240]  [SPEAKER_02]: at 7.
+[02:40:51.500 --> 02:40:51.980]  [SPEAKER_00]: Right.
+[02:40:57.170 --> 02:40:58.130]  [SPEAKER_02]: Yeah, we'll look.
+[02:41:01.790 --> 02:41:02.230]  Nope.
+[02:41:08.750 --> 02:41:09.710]  [SPEAKER_02]: Device not found.
+[02:41:09.870 --> 02:41:10.490]  [SPEAKER_02]: We'll do that one.
+[02:41:24.410 --> 02:41:26.350]  [SPEAKER_04]: Is that one of the ones we were moving
+around earlier?
+[02:41:28.970 --> 02:41:29.750]  [SPEAKER_04]: Oh, this?
+[02:41:29.930 --> 02:41:30.850]  [SPEAKER_04]: Yeah, don't worry about that.
+[02:41:31.070 --> 02:41:33.550]  [SPEAKER_04]: That is going to be, like, Toolkit's
+device ID.
+[02:41:36.170 --> 02:41:36.610]  [SPEAKER_02]: Okay.
+[02:41:36.610 --> 02:41:39.290]  [SPEAKER_04]: Looks like it's done.
+[02:41:39.870 --> 02:41:40.930]  [SPEAKER_02]: Okay, it's finished.
+[02:41:42.990 --> 02:41:45.790]  [SPEAKER_02]: Oh, it's still sending files, so I've got
+to probably wait until they're done,
+[02:41:46.010 --> 02:41:46.010]  huh?
+[02:41:46.410 --> 02:41:46.870]  [SPEAKER_02]: To send it?
+[02:41:49.850 --> 02:41:50.290]  [SPEAKER_04]: Probably.
+[02:41:53.430 --> 02:41:55.530]  [SPEAKER_02]: Okay, I thought it just started sending
+them.
+[02:41:57.770 --> 02:41:58.930]  [SPEAKER_02]: After it loaded them all.
+[02:42:03.530 --> 02:42:09.650]  [SPEAKER_04]: It is interesting that it's going through
+and sending them, because...
+[02:42:09.650 --> 02:42:12.910]  [SPEAKER_04]: This call was all sorts of weird.
+[02:42:13.410 --> 02:42:21.110]  [SPEAKER_04]: Starting with the installer getting stuck,
+I think that the hitting Cancel definitely
+[02:42:21.110 --> 02:42:21.730]  [SPEAKER_04]: didn't help.
+[02:42:23.910 --> 02:42:27.290]  [SPEAKER_04]: But there's a bunch of other weird things
+that were happening.
+[02:42:27.370 --> 02:42:32.370]  [SPEAKER_04]: Like, you saw me screwing around with the
+system settings in WebView, right?
+[02:42:33.130 --> 02:42:35.550]  [SPEAKER_04]: And I'd, like, hit Save, and it failed.
+[02:42:36.530 --> 02:42:38.730]  [SPEAKER_04]: I have no idea what's going on there.
+[02:42:40.090 --> 02:42:41.450]  [SPEAKER_04]: I have a theory, though.
+[02:42:42.710 --> 02:42:46.990]  [SPEAKER_04]: My theory is that the same thing of,
+like, talking in the same room.
+[02:42:47.230 --> 02:42:49.110]  [SPEAKER_04]: It's trying to discover a controller.
+[02:42:49.490 --> 02:42:52.690]  [SPEAKER_04]: Can't talk to it, because it can't
+discover it.
+[02:42:52.910 --> 02:42:57.210]  [SPEAKER_04]: The reason why it can't discover it is
+because its request to discover it isn't
+[02:42:57.210 --> 02:42:58.090]  [SPEAKER_04]: actually sent to it.
+[02:42:58.110 --> 02:43:01.350]  [SPEAKER_04]: Because the device that received it didn't
+think it had to send it to it.
+[02:43:04.070 --> 02:43:08.450]  [SPEAKER_04]: Because it never receives it, that
+response is never received.
+[02:43:08.450 --> 02:43:14.250]  [SPEAKER_04]: And even if it was received, it's possible
+its response was never propagated through
+[02:43:14.250 --> 02:43:14.670]  [SPEAKER_04]: the system.
+[02:43:14.690 --> 02:43:18.170]  [SPEAKER_04]: Because why would you need to send it when
+you're already in the same room as the
+[02:43:18.170 --> 02:43:19.670]  [SPEAKER_04]: other thing that's talking to you,
+right?
+[02:43:21.550 --> 02:43:22.030]  So...
+[02:43:22.030 --> 02:43:22.590]  [SPEAKER_03]: Right.
+[02:43:24.210 --> 02:43:25.090]  [SPEAKER_04]: Doubly bad.
+[02:43:25.650 --> 02:43:29.410]  [SPEAKER_04]: And that's probably why it wasn't able to
+save all those other times.
+[02:43:31.810 --> 02:43:32.770]  [SPEAKER_04]: Oh, goodness.
+[02:43:33.050 --> 02:43:33.310]  [SPEAKER_04]: All right.
+[02:43:33.970 --> 02:43:34.750]  [SPEAKER_04]: So, yeah.
+[02:43:34.970 --> 02:43:37.390]  [SPEAKER_04]: Once that's done sending, send the
+descriptors.
+[02:43:37.790 --> 02:43:41.590]  [SPEAKER_04]: And do a couple of spot checks in WebView,
+and I think you're good.
+[02:43:44.270 --> 02:43:44.750]  [SPEAKER_02]: Okay.
+[02:43:46.770 --> 02:43:47.550]  [SPEAKER_02]: Will do.
+[02:43:49.290 --> 02:43:49.770]  [SPEAKER_02]: Awesome.
+[02:43:51.630 --> 02:43:52.110]  Well...
+[02:43:52.110 --> 02:43:57.850]  [SPEAKER_02]: Hopefully tomorrow isn't as eventful for
+you and I in our time together.
+[02:43:58.090 --> 02:43:59.630]  [SPEAKER_02]: Hopefully it's something simple.
+[02:43:59.730 --> 02:44:00.590]  [SPEAKER_02]: What do you need from them?
+[02:44:00.590 --> 02:44:01.210]  [SPEAKER_02]: What did you just need?
+[02:44:08.130 --> 02:44:11.110]  [SPEAKER_02]: This is what she sent me, this is what I
+sent you.
+[02:44:13.890 --> 02:44:17.090]  [SPEAKER_02]: Essentially, I just sent her what you sent
+me.
+[02:44:18.410 --> 02:44:22.170]  [SPEAKER_02]: Yeah, I was on the... she was
+misunderstood about IPs.
+[02:44:29.350 --> 02:44:30.690]  [SPEAKER_04]: Yeah, that was really weird.
+[02:44:30.810 --> 02:44:33.110]  [SPEAKER_04]: It's like, yeah, so subnet, like,
+2500.
+[02:44:33.630 --> 02:44:35.870]  [SPEAKER_04]: I'm like, uh, what are they talking about?
+[02:44:37.790 --> 02:44:43.130]  [SPEAKER_04]: Oh, MSTP networks, or like VIP1,
+VIP2, where the VIP2 is like the
+[02:44:43.130 --> 02:44:44.430]  [SPEAKER_04]: subnetwork, as it were.
+[02:44:47.230 --> 02:44:49.470]  [SPEAKER_02]: Yeah, she's talking about IPs,
+I'm pretty sure.
+[02:44:52.210 --> 02:44:52.650]  [SPEAKER_04]: IPs?
+[02:44:52.910 --> 02:44:54.150]  [SPEAKER_02]: I don't know.
+[02:44:56.050 --> 02:44:59.430]  [SPEAKER_04]: I don't know what number she's referring
+to if she's talking about IPs.
+[02:44:59.510 --> 02:45:01.510]  [SPEAKER_04]: Like, I don't know what no subnet means.
+[02:45:01.630 --> 02:45:03.090]  [SPEAKER_04]: You have to have a subnet.
+[02:45:03.430 --> 02:45:04.350]  [SPEAKER_04]: What is no subnet?
+[02:45:05.870 --> 02:45:06.870]  [SPEAKER_04]: I don't understand.
+[02:45:17.290 --> 02:45:22.830]  [SPEAKER_04]: I say, like, I've got a house in a city,
+but no address.
+[02:45:23.110 --> 02:45:23.650]  [SPEAKER_04]: What?
+[02:45:27.950 --> 02:45:29.390]  [SPEAKER_02]: We live there.
+[02:45:29.970 --> 02:45:30.630]  [SPEAKER_02]: That's where we're at.
+[02:45:32.370 --> 02:45:34.830]  [SPEAKER_04]: Yeah, what street are you... what street?
+[02:45:35.790 --> 02:45:36.710]  [SPEAKER_04]: It's just around.
+[02:45:39.810 --> 02:45:40.650]  [SPEAKER_02]: You'll find me.
+[02:45:40.810 --> 02:45:41.870]  [SPEAKER_02]: Don't worry about it.
+[02:45:45.110 --> 02:45:46.770]  [SPEAKER_02]: I don't understand what she's saying.
+[02:45:47.390 --> 02:45:49.370]  [SPEAKER_02]: So, I just, I...
+[02:45:49.370 --> 02:45:53.590]  [SPEAKER_02]: I think clearly she was misunderstood,
+so I felt it was best to forward what you
+[02:45:53.590 --> 02:45:54.550]  [SPEAKER_02]: had said to me.
+[02:45:56.970 --> 02:45:59.570]  [SPEAKER_04]: I'm hoping you just forward it,
+because I'm like, I don't know what she's
+[02:45:59.570 --> 02:45:59.770]  [SPEAKER_04]: saying.
+[02:46:02.430 --> 02:46:06.610]  [SPEAKER_02]: Yeah, I mean, you kind of did the talking
+for me by saying this.
+[02:46:11.890 --> 02:46:12.210]  [SPEAKER_02]: So...
+[02:46:13.610 --> 02:46:14.170]  [SPEAKER_02]: I don't know.
+[02:46:14.310 --> 02:46:18.230]  [SPEAKER_02]: Maybe we'll get together and she won't
+have gotten back to me, and we'll just be
+[02:46:18.230 --> 02:46:20.350]  [SPEAKER_02]: like, all right, well, I guess we're not
+doing this.
+[02:46:24.550 --> 02:46:24.870]  [SPEAKER_02]: So...
+[02:46:25.390 --> 02:46:27.170]  [SPEAKER_04]: Solution solved by just waiting long
+enough.
+[02:46:27.250 --> 02:46:28.050]  [SPEAKER_04]: They have to give me a team viewer.
+[02:46:30.710 --> 02:46:31.610]  [SPEAKER_02]: I hope so.
+[02:46:39.000 --> 02:46:42.340]  [SPEAKER_04]: How long was this school not functioning?
+[02:46:42.780 --> 02:46:44.300]  [SPEAKER_04]: With the WebView?
+[02:46:45.000 --> 02:46:45.920]  [SPEAKER_04]: How long was this?
+[02:46:47.080 --> 02:46:47.720]  [SPEAKER_02]: I...
+[02:46:47.720 --> 02:46:49.640]  [SPEAKER_02]: So, okay.
+[02:46:50.220 --> 02:46:53.560]  [SPEAKER_02]: From what I know is...
+[02:46:53.560 --> 02:46:54.800]  [SPEAKER_02]: The...
+[02:46:54.800 --> 02:46:59.600]  [SPEAKER_02]: The version 7 controllers, I believe it's
+2000 that went to version 8.
+[02:47:00.740 --> 02:47:02.600]  [SPEAKER_02]: That happened...
+[02:47:02.600 --> 02:47:03.200]  [SPEAKER_02]: Tuesday?
+[02:47:04.660 --> 02:47:05.880]  [SPEAKER_02]: That happened Tuesday.
+[02:47:06.440 --> 02:47:11.160]  [SPEAKER_02]: And then Wednesday, I heard there was an
+issue going on at this location.
+[02:47:12.320 --> 02:47:14.380]  [SPEAKER_04]: So, I think I know why...
+[02:47:14.380 --> 02:47:17.080]  [SPEAKER_04]: I think I understand now why things worked
+before.
+[02:47:17.440 --> 02:47:20.920]  [SPEAKER_04]: So, remember I was talking about XNet
+versus RCP, right?
+[02:47:21.380 --> 02:47:27.980]  [SPEAKER_04]: In the RCP world, a lot of the stuff is
+these main panels, like panel 1,
+[02:47:28.100 --> 02:47:29.300]  [SPEAKER_04]: panel 2, panel 3, like that.
+[02:47:29.960 --> 02:47:32.460]  [SPEAKER_04]: They communicate using IP tables.
+[02:47:32.460 --> 02:47:38.380]  [SPEAKER_04]: So, BACnet auto-discovers everything,
+including all the sub-panels,
+[02:47:38.480 --> 02:47:39.320]  [SPEAKER_04]: sub-networks, right?
+[02:47:40.060 --> 02:47:41.660]  [SPEAKER_04]: It discovers everything.
+[02:47:42.500 --> 02:47:44.780]  [SPEAKER_04]: RCP only discovers the sub-networks.
+[02:47:44.920 --> 02:47:49.700]  [SPEAKER_04]: It actually, for the main networks,
+you build that up, right?
+[02:47:49.740 --> 02:47:51.080]  [SPEAKER_04]: You build up the IP tables.
+[02:47:51.400 --> 02:47:56.320]  [SPEAKER_04]: So, when WebView were to connect,
+it would get a list of IPs, and it just
+[02:47:56.320 --> 02:47:57.340]  [SPEAKER_04]: talks to the IP directly.
+[02:47:57.340 --> 02:48:01.140]  [SPEAKER_04]: No need to route to whoever, who's it to
+much, and watch it.
+[02:48:01.560 --> 02:48:03.640]  [SPEAKER_04]: No routing issues, because there's nothing
+to route.
+[02:48:04.900 --> 02:48:09.300]  [SPEAKER_04]: So, when you're loading up the system
+groups that are RCP-based, they would go
+[02:48:09.300 --> 02:48:12.060]  [SPEAKER_04]: to a IP directly, and there would never be
+any problem.
+[02:48:16.370 --> 02:48:16.810]  [SPEAKER_02]: Okay.
+[02:48:19.210 --> 02:48:23.130]  [SPEAKER_04]: I'm a little bit concerned about something
+else, because I don't know how long this
+[02:48:23.130 --> 02:48:23.710]  [SPEAKER_04]: was like that.
+[02:48:23.710 --> 02:48:27.270]  [SPEAKER_04]: And that means that there's probably a
+number of alarms that never actually made
+[02:48:27.270 --> 02:48:29.990]  [SPEAKER_04]: it to the main panel.
+[02:48:32.950 --> 02:48:34.770]  [SPEAKER_02]: Well, it should be here now, shouldn't
+they?
+[02:48:36.190 --> 02:48:38.650]  [SPEAKER_04]: I'm saying that when the alarms were
+initially generated.
+[02:48:39.710 --> 02:48:40.590]  [SPEAKER_04]: You see what I'm saying?
+[02:48:41.150 --> 02:48:44.110]  [SPEAKER_02]: Oh, so they would never appear here,
+huh?
+[02:48:44.690 --> 02:48:45.090]  [SPEAKER_04]: Right.
+[02:48:45.210 --> 02:48:51.150]  [SPEAKER_04]: So, the way that you would check that is,
+if you were to disconnect with Studio,
+[02:48:51.310 --> 02:48:53.930]  [SPEAKER_04]: for example, you don't have to do it right
+now, but let's say you were to disconnect.
+[02:48:54.710 --> 02:48:57.030]  [SPEAKER_04]: Change the device ID that you have
+entered.
+[02:48:57.650 --> 02:49:00.050]  [SPEAKER_04]: You don't have to change anything else,
+just the device ID number.
+[02:49:00.850 --> 02:49:02.510]  [SPEAKER_04]: So, like 3,000 or something.
+[02:49:03.390 --> 02:49:05.190]  [SPEAKER_04]: 3,000, 4,000, whatever.
+[02:49:05.550 --> 02:49:06.130]  [SPEAKER_04]: And hit connect.
+[02:49:06.830 --> 02:49:11.090]  [SPEAKER_04]: And then it will load the alarms buffer
+from that device.
+[02:49:11.790 --> 02:49:16.110]  [SPEAKER_04]: If there's a mismatch between which ones
+you're seeing, then there you go.
+[02:49:19.190 --> 02:49:19.530]  [SPEAKER_02]: Okay.
+[02:49:20.790 --> 02:49:21.310]  [SPEAKER_02]: Well,
+[02:49:25.860 --> 02:49:27.120]  [SPEAKER_02]: I'm going to let it ride.
+[02:49:27.120 --> 02:49:29.340]  [SPEAKER_02]: Oh, you're going to let it do it.
+[02:49:34.400 --> 02:49:37.420]  [SPEAKER_02]: And do you think that would have started
+happening only after that went from 7 to
+[02:49:37.420 --> 02:49:37.640]  [SPEAKER_02]: 8?
+[02:49:39.380 --> 02:49:46.720]  [SPEAKER_04]: Yeah, because when it was loading the
+groups before, it was RCP, so it didn't
+[02:49:46.720 --> 02:49:48.640]  [SPEAKER_04]: matter if the broadcasts weren't making
+it.
+[02:49:49.780 --> 02:49:51.940]  [SPEAKER_04]: Because everything was actually being sent
+over RCP.
+[02:49:52.320 --> 02:49:52.540]  [SPEAKER_04]: Okay.
+[02:49:53.160 --> 02:49:56.460]  [SPEAKER_04]: But as soon as it was BACnet only,
+now you see the BACnet issues that have
+[02:49:56.460 --> 02:49:57.760]  [SPEAKER_04]: been there for who knows how long.
+[02:50:00.720 --> 02:50:00.900]  [SPEAKER_02]: Okay.
+[02:50:17.690 --> 02:50:18.770]  [SPEAKER_04]: Oh, is file sync stuck?
+[02:50:22.640 --> 02:50:23.480]  [SPEAKER_04]: I think it's stuck.
+[02:50:24.040 --> 02:50:24.160]  [SPEAKER_02]: Oh.
+[02:50:27.000 --> 02:50:28.680]  [SPEAKER_04]: It's been stuck at this one for a while.
+[02:50:31.380 --> 02:50:31.860]  [SPEAKER_02]: That's not good.
+[02:50:31.860 --> 02:50:32.100]  [SPEAKER_02]: Yeah.
+[02:50:35.420 --> 02:50:40.520]  [SPEAKER_04]: The good news is when it sends a second
+time, it compares what the file is already
+[02:50:40.520 --> 02:50:40.820]  [SPEAKER_04]: there.
+[02:50:41.480 --> 02:50:43.480]  [SPEAKER_04]: And then it will just skip right over it.
+[02:50:43.600 --> 02:50:45.500]  [SPEAKER_04]: It's just like, oh, okay, I don't need to
+send it again.
+[02:50:47.600 --> 02:50:49.580]  [SPEAKER_02]: She's got to cancel it and resend it.
+[02:50:53.490 --> 02:50:54.590]  [SPEAKER_02]: Is that all we got to do?
+[02:50:57.190 --> 02:50:57.530]  [SPEAKER_02]: Oh.
+[02:51:00.480 --> 02:51:03.260]  [SPEAKER_02]: Did it fail itself, or did you do that?
+[02:51:04.080 --> 02:51:10.120]  [SPEAKER_04]: I tried to hit the little thing,
+a little X, but it looks like it just kind
+[02:51:10.120 --> 02:51:10.880]  [SPEAKER_04]: of kept on going.
+[02:51:11.560 --> 02:51:12.100]  [SPEAKER_04]: Sort of.
+[02:51:12.460 --> 02:51:12.940]  [SPEAKER_04]: Did it?
+[02:51:16.320 --> 02:51:17.150]  [SPEAKER_04]: That was weird.
+[02:51:17.360 --> 02:51:17.520]  [SPEAKER_04]: No.
+[02:51:19.810 --> 02:51:20.490]  [SPEAKER_04]: All right.
+[02:51:21.380 --> 02:51:25.380]  [SPEAKER_04]: Let's see if I do that again to just get
+super hung up again.
+[02:51:42.100 --> 02:51:42.940]  [SPEAKER_03]: All right.
+[02:51:56.460 --> 02:51:57.620]  [SPEAKER_02]: Where are you from, William?
+[02:51:57.780 --> 02:51:59.020]  [SPEAKER_02]: Do you live in Canada?
+[02:51:59.990 --> 02:52:00.200]  [SPEAKER_03]: Yep.
+[02:52:02.920 --> 02:52:07.040]  [SPEAKER_02]: Do you live in Victoria, too, like
+everyone else from the library I've been
+[02:52:07.040 --> 02:52:07.540]  [SPEAKER_02]: to talk to?
+[02:52:14.210 --> 02:52:16.670]  [SPEAKER_04]: I'm the only one where I'm at,
+which is Saskatoon.
+[02:52:17.610 --> 02:52:18.550]  [SPEAKER_04]: Yes, it is.
+[02:52:18.550 --> 02:52:22.930]  [SPEAKER_04]: When I woke up this morning, it was like
+minus 27 degrees Celsius.
+[02:52:24.510 --> 02:52:25.010]  [SPEAKER_02]: Oh.
+[02:52:30.900 --> 02:52:36.420]  [SPEAKER_04]: Right now, it is minus 29 degrees Celsius.
+[02:52:37.580 --> 02:52:40.560]  [SPEAKER_04]: A high of minus 24.
+[02:52:41.600 --> 02:52:44.400]  [SPEAKER_04]: A low of minus 37.
+[02:52:50.090 --> 02:52:53.090]  [SPEAKER_04]: Supposedly, it'll get as low as...
+[02:52:53.090 --> 02:53:00.230]  [SPEAKER_04]: Yeah, supposedly, it's going to go minus
+39 degrees Celsius sometime early tomorrow
+[02:53:00.230 --> 02:53:00.610]  [SPEAKER_04]: morning.
+[02:53:03.630 --> 02:53:04.830]  [SPEAKER_04]: Or is that this morning?
+[02:53:05.090 --> 02:53:06.430]  [SPEAKER_04]: No, that's early tomorrow morning.
+[02:53:08.270 --> 02:53:10.370]  [SPEAKER_02]: Minus 38 degrees Fahrenheit.
+[02:53:11.110 --> 02:53:14.910]  [SPEAKER_02]: So, for us, it's the low of minus 20
+Fahrenheit.
+[02:53:14.910 --> 02:53:17.850]  [SPEAKER_04]: Yeah, once it gets to minus 40,
+it's the same.
+[02:53:20.370 --> 02:53:22.090]  [SPEAKER_04]: Fahrenheit and Celsius are the same.
+[02:53:22.910 --> 02:53:27.350]  [SPEAKER_04]: Yeah, well, how I like to think about
+Fahrenheit is...
+[02:53:28.490 --> 02:53:31.790]  [SPEAKER_04]: Fahrenheit is like livable temperature
+ranges.
+[02:53:34.210 --> 02:53:36.330]  [SPEAKER_04]: Like for a human, right?
+[02:53:36.510 --> 02:53:37.250]  [SPEAKER_04]: 0 to 100.
+[02:53:37.790 --> 02:53:38.790]  [SPEAKER_04]: That's about livable.
+[02:53:39.770 --> 02:53:43.110]  [SPEAKER_04]: 0 to 100 with Celsius is, you know,
+boiling.
+[02:53:43.490 --> 02:53:45.510]  [SPEAKER_04]: It's water, so it's freezing, boiling.
+[02:53:45.510 --> 02:53:50.550]  [SPEAKER_04]: So, Fahrenheit is kind of nice in the
+sense of number is not negative.
+[02:53:51.250 --> 02:53:52.770]  [SPEAKER_04]: It's probably not so cold.
+[02:53:56.550 --> 02:53:59.090]  [SPEAKER_02]: Yeah, when it starts going to the
+negative, it's cold.
+[02:53:59.210 --> 02:54:00.290]  [SPEAKER_02]: It's seriously cold.
+[02:54:01.090 --> 02:54:01.350]  [SPEAKER_02]: Yeah.
+[02:54:04.500 --> 02:54:06.760]  [SPEAKER_02]: What's the wind chill tomorrow?
+[02:54:09.060 --> 02:54:10.460]  [SPEAKER_04]: I want to look at the wind chill.
+[02:54:10.600 --> 02:54:11.330]  [SPEAKER_04]: It's scary.
+[02:54:19.040 --> 02:54:20.640]  [SPEAKER_04]: Feels like negative 40.
+[02:54:22.860 --> 02:54:23.620]  [SPEAKER_04]: Right now.
+[02:54:23.880 --> 02:54:26.300]  [SPEAKER_04]: So, an extra minus 10 degrees.
+[02:54:29.880 --> 02:54:30.660]  [SPEAKER_04]: Oh, nice.
+[02:54:30.700 --> 02:54:31.660]  [SPEAKER_04]: It's going to get even worse.
+[02:54:33.000 --> 02:54:35.740]  [SPEAKER_04]: As it goes on, it's going to be like...
+feels like... I can't believe there's any
+[02:54:35.740 --> 02:54:39.060]  [SPEAKER_04]: humidity in the air, and yet I see
+humidity at like 10%.
+[02:54:39.740 --> 02:54:44.700]  [SPEAKER_04]: No, actually, no, today, right now,
+it is... humidity is apparently 62%?
+[02:54:46.240 --> 02:54:46.720]  [SPEAKER_04]: How?
+[02:54:47.400 --> 02:54:48.940]  [SPEAKER_03]: Where does the humidity go?
+[02:55:05.940 --> 02:55:06.420]  [SPEAKER_03]: Goodness.
+[02:55:06.420 --> 02:55:06.660]  [SPEAKER_03]: Goodness.
+[02:55:12.660 --> 02:55:13.560]  [SPEAKER_04]: Oh, there it's going.
+[02:55:14.420 --> 02:55:15.580]  [SPEAKER_04]: Look at it zoom now.
+[02:56:32.050 --> 02:56:33.470]  [SPEAKER_01]: Awesome, we made it past halfway.
+[02:57:33.470 --> 02:57:34.690]  [SPEAKER_04]: Only 100 more left.
+[02:57:42.240 --> 02:57:44.680]  [SPEAKER_04]: I just want to log into WebView and just
+navigate around.
+[02:58:08.050 --> 02:58:09.950]  [SPEAKER_03]: Are there any trend logs on this system?
+[02:58:11.170 --> 02:58:11.810]  [SPEAKER_01]: Oh, there we go.
+[02:59:38.810 --> 02:59:39.770]  [SPEAKER_03]: This is an FTP.
+[02:59:56.080 --> 02:59:57.560]  [SPEAKER_01]: Well, I think I might have lost you.
+[02:59:58.340 --> 02:59:59.200]  [SPEAKER_01]: I don't know if you're still there.
+[03:00:01.180 --> 03:00:09.020]  [SPEAKER_01]: But if you can hear me, looks like we've
+got a few more files.
+[03:00:14.780 --> 03:00:15.680]  [SPEAKER_01]: Look at that.
+[03:00:15.760 --> 03:00:16.400]  [SPEAKER_01]: Last one.
+[03:00:16.920 --> 03:00:17.280]  [SPEAKER_01]: Done.
+[03:00:18.840 --> 03:00:19.320]  [SPEAKER_04]: All right.
+[03:00:19.840 --> 03:00:21.540]  [SPEAKER_04]: So, navigate through WebView.
+[03:00:22.020 --> 03:00:26.000]  [SPEAKER_04]: Make sure some things are working
+correctly.
+[03:00:29.830 --> 03:00:30.910]  [SPEAKER_04]: Oh, look at that.
+[03:00:31.030 --> 03:00:31.870]  [SPEAKER_04]: I already found one.
+[03:00:32.490 --> 03:00:32.910]  [SPEAKER_04]: It's loading.
+[03:00:47.790 --> 03:00:48.790]  [SPEAKER_01]: Ah, I know this issue.
+[03:00:50.230 --> 03:00:50.950]  [SPEAKER_01]: This will fix itself.
+[03:00:53.050 --> 03:00:53.590]  [SPEAKER_01]: I think.
+[03:00:54.150 --> 03:00:54.970]  [SPEAKER_01]: It should fix itself.
+[03:00:55.650 --> 03:00:56.730]  [SPEAKER_01]: If I understand it correctly.
+[03:02:16.300 --> 03:02:17.530]  [SPEAKER_03]: Why this one?
+[03:02:20.030 --> 03:02:21.280]  [SPEAKER_02]: That's really weird.

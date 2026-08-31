@@ -1,0 +1,801 @@
+[00:01.440 --> 00:02.000]  Hi.
+[00:03.900 --> 00:06.660]  Reliable Controls Technical Support speaking.
+[00:08.460 --> 00:09.600]  Hey, is this Philip again?
+[00:14.400 --> 00:16.380]  Can't hardly hear you, give me a sec.
+[00:18.580 --> 00:19.160]  Alright, hello?
+[00:20.000 --> 00:20.840]  Yep, it's Liam.
+[00:23.580 --> 00:29.980]  Liam, oh, okay. I was talking to a Philip previously, is there
+[00:30.640 --> 00:31.880]  anything we can do?
+[00:33.380 --> 00:36.880]  I can find the ticket here.
+[00:37.080 --> 00:38.080]  You're calling from a different number?
+[00:47.760 --> 00:49.540]  I don't know if he made a ticket.
+[00:49.680 --> 00:52.100]  I was just on the phone with him like fifteen minutes ago.
+[00:52.680 --> 00:55.240]  Yeah, whenever you do a call, it automatically creates a ticket.
+[00:56.360 --> 00:57.660]  Which is what's kind of weird.
+[00:59.140 --> 01:01.660]  Not coming up with anything else.
+[01:12.170 --> 01:13.730]  I think I know what he did.
+[01:16.070 --> 01:19.810]  Probably was like, oh yeah, who are you? And then assigned the ticket to that
+[01:19.810 --> 01:23.370]  without matching the phone number. I can probably fix that.
+[01:32.620 --> 01:35.980]  Devices lost as soon as mock pro com is scanned in.
+[01:36.060 --> 01:39.560]  Is that the one? Yep.
+[01:48.360 --> 01:49.900]  Oh, he's on another call.
+[01:55.580 --> 01:58.320]  Well, that's alright. If you want to know who to give me a call back,
+[01:59.780 --> 02:00.200]  well...
+[02:01.360 --> 02:03.900]  First I'm just going to merge users. There we go.
+[02:16.930 --> 02:18.530]  All devices seem to go missing
+[02:18.530 --> 02:19.950]  when the pro com is brought online.
+[02:21.330 --> 02:23.070]  When you say all devices go missing,
+[02:26.110 --> 02:28.630]  is the pro com the MSCP host?
+[02:29.250 --> 02:31.930]  Or is it a device that happens to be on the MSCP?
+[02:34.630 --> 02:37.510]  It is the end of line. It is supposed to be the host.
+[02:39.690 --> 02:46.560]  Previously it functioned as...
+[02:46.560 --> 02:48.900]  Functioned as...
+[02:53.460 --> 02:56.740]  Oh, the network host. For these particular
+[02:56.740 --> 03:00.240]  MSCP lines. But it's not the network host anymore?
+[03:04.200 --> 03:06.940]  It's not acting like it. What happens is
+[03:08.560 --> 03:11.320]  most things on the floor are talking to each other
+[03:11.320 --> 03:15.440]  right now. And we are currently direct connected
+[03:15.440 --> 03:19.280]  into a handful of pro zones that sit physically
+[03:19.280 --> 03:23.700]  right next to the pro com. And from those pro zones we've been doing work
+[03:23.700 --> 03:27.460]  on the rest of the network. The moment I
+[03:27.460 --> 03:31.220]  plug in the network to the pro com,
+[03:32.200 --> 03:34.620]  either the MSCP ports for the pro com,
+[03:36.680 --> 03:39.500]  the status light stops flashing as if it's not
+[03:39.500 --> 03:43.440]  talking to anything. And we can't see anything over the direct connect
+[03:43.440 --> 03:47.440]  from the pro. So right now you don't have any host. You're just doing the export to the
+[03:47.440 --> 03:50.580]  connect in. Okay. Or direct connect to like a pro 2 or something.
+[03:52.160 --> 03:55.000]  I think it's coming in on local MSCP.
+[03:55.740 --> 03:59.260]  So there's only a couple of things that I can think of that would have that drastic
+[03:59.260 --> 04:03.480]  of a change to the network. One of them is
+[04:03.480 --> 04:07.180]  if the polarity to the power of the pro com
+[04:07.180 --> 04:11.000]  is inverted. So relative to everyone else,
+[04:11.960 --> 04:15.160]  it's very, very wrong, right? Even if it's right
+[04:15.160 --> 04:17.540]  next to the controllers, you can have that polarity clip.
+[04:20.740 --> 04:23.680]  Even the polarity going to the
+[04:23.680 --> 04:27.300]  pro com itself, I find what often happens
+[04:27.300 --> 04:31.180]  at least has happened to me, some of our devices... Okay, how do I explain this?
+[04:36.180 --> 04:37.680]  On our devices,
+[04:38.080 --> 04:39.040]  some of our devices,
+[04:40.260 --> 04:43.940]  which port is the minus and plus, the A minus, B plus, right?
+[04:43.940 --> 04:46.540]  Which one is minus, which one is B plus on the port
+[04:47.360 --> 04:51.200]  is vertically aligned. So
+[04:51.200 --> 04:54.460]  that means that if you have a port on the right hand side,
+[04:55.360 --> 04:59.460]  it is mirrored from one on the left hand side. And some of our devices
+[04:59.460 --> 05:03.460]  just happen to be like that. And I found that sometimes I will take a
+[05:04.560 --> 05:07.900]  connection, assume based on the label that that's the polarity
+[05:07.900 --> 05:09.920]  of the MSTP.
+[05:11.520 --> 05:15.740]  But then I actually follow the cable and go, oh, no, it's just the label's
+[05:15.740 --> 05:19.780]  wrong. I don't know if you've confirmed that part, but that's
+[05:19.780 --> 05:21.000]  what has gotten me before.
+[05:24.140 --> 05:27.620]  Interesting. Well, the context for this particular
+[05:27.620 --> 05:30.060]  issue is that
+[05:31.260 --> 05:35.640]  this procom was functioning previously. It seemed up until the point
+[05:35.640 --> 05:38.660]  that we added these flexors in the middle of this network.
+[05:42.120 --> 05:43.700]  And the difficulty
+[05:43.700 --> 05:47.460]  is arising from the fact that the procom can see
+[05:47.460 --> 05:51.940]  some units if they're completely isolated. But then
+[05:51.940 --> 05:55.840]  all the rest of the units can talk to the flexors, no problem when the procom is out of the picture.
+[05:57.960 --> 06:00.380]  I could try checking the polarity,
+[06:00.500 --> 06:03.940]  but my guess is that if I were to do that, then
+[06:03.940 --> 06:06.200]  it's because it was working previously.
+[06:07.180 --> 06:10.680]  Okay, so the part I was missing was the adding the flexors.
+[06:12.440 --> 06:14.200]  Do you know the firmware version of those flexors?
+[06:17.200 --> 06:20.060]  1.5.3, or I can check
+[06:20.060 --> 06:22.040]  real quick. It's either 2 or 3.
+[06:25.000 --> 06:26.140]  Probably 3, yeah.
+[06:26.640 --> 06:29.280]  Do you know how many devices total on this network?
+[06:34.160 --> 06:34.560]  Currently
+[06:35.000 --> 06:38.260]  34, there's meant to be 39, but there are five
+[06:38.260 --> 06:41.680]  on the very end that I can't put on without having the same issue as the procom.
+[06:42.160 --> 06:46.120]  Good stuff, stop talking. Okay, what the hell happened? Oh, I got plugged
+[06:46.120 --> 06:47.900]  in at the procom. That's funny.
+[06:53.710 --> 06:54.310]  I'm
+[06:54.310 --> 06:57.970]  going to maintain that these things are on 1.5.3.
+[06:58.350 --> 07:01.790]  The procom itself is running the newest firmware available.
+[07:03.610 --> 07:04.670]  Yeah, that sounds about right.
+[07:04.970 --> 07:06.090]  That sounds correct.
+[07:10.450 --> 07:10.770]  Alright.
+[07:15.230 --> 07:16.030]  Let's see.
+[07:16.030 --> 07:20.090]  The vast majority of the
+[07:20.090 --> 07:23.210]  old pro airs on this network are running
+[07:23.210 --> 07:27.570]  7.26 or 7.28. The two pro zones are running
+[07:27.570 --> 07:28.830]  7.48.
+[07:33.450 --> 07:35.830]  It may be worth it to update the
+[07:35.830 --> 07:39.350]  seven pro airs to the latest firmware
+[07:39.750 --> 07:42.650]  back into controllers and then update them type thing.
+[07:42.650 --> 07:45.290]  But we don't have to worry about that at the moment.
+[07:46.690 --> 07:50.610]  The only issue that I can think of that might be related to the flex airs
+[07:50.610 --> 07:54.530]  being added on would have to do with the requests and how token passing
+[07:54.530 --> 07:55.330]  works.
+[07:59.610 --> 08:02.590]  So, when they were added, they were
+[08:02.590 --> 08:06.390]  already programmed, right? So they could start doing requests immediately.
+[08:08.190 --> 08:10.510]  Is that about right? I don't think they were
+[08:10.510 --> 08:14.270]  actually. The issues kind of started as I
+[08:14.270 --> 08:18.310]  didn't, not uploading programs at that point, but uploading the
+[08:18.310 --> 08:20.130]  MAC addresses and the device instances.
+[08:23.110 --> 08:26.590]  Interesting. So after you configure the MAC addresses, yeah.
+[08:27.270 --> 08:30.710]  If there's any conflicts with
+[08:30.710 --> 08:32.190]  things on the network,
+[08:34.570 --> 08:38.570]  that could cause things to go up and down, especially if it's conflicting with something that the
+[08:38.570 --> 08:41.410]  Wacom has. However, I'm not necessarily saying that's the issue.
+[08:43.270 --> 08:46.470]  And you're finding that you have the issue in Toolkit or Studio doesn't
+[08:46.470 --> 08:50.430]  really matter. You're just watching the blinking of the MSCP and it just kind of stops blinking.
+[08:53.010 --> 08:53.970]  So, yeah.
+[08:55.670 --> 08:58.830]  If in the token passing side,
+[09:01.450 --> 09:02.550]  suppose you had
+[09:02.550 --> 09:06.670]  100 devices, for example, right? And every device
+[09:06.670 --> 09:11.050]  is trying to access or request 10 things
+[09:11.050 --> 09:14.910]  from device 10. What's going to happen is
+[09:14.910 --> 09:18.370]  all of them are going to be doing the request, right?
+[09:18.370 --> 09:22.910]  Every time they go, I want this stuff, I want this stuff. And the problem is
+[09:22.910 --> 09:27.050]  this device 10 can only respond to so many
+[09:27.050 --> 09:29.710]  requests at once.
+[09:30.390 --> 09:32.370]  In a given token pass, right?
+[09:34.730 --> 09:36.650]  So, let's say its limit is
+[09:36.650 --> 09:40.470]  20. And that is the limit of the flex errors. But it could also be 8
+[09:40.470 --> 09:44.330]  like on the pro errors and pro zones. So, let's say it's 20. The moment
+[09:44.330 --> 09:48.610]  it exceeds that number, the controller responds back with a
+[09:48.610 --> 09:51.090]  you sent me too much stuff, you're going to have to wait.
+[09:52.230 --> 09:56.330]  And it does that for every single request. So, let's say again,
+[09:56.350 --> 10:00.430]  100 devices, 99 requests times 10
+[10:03.030 --> 10:04.790]  think of how long you would have to go
+[10:04.790 --> 10:08.850]  through a single token pass before it gets to the next device.
+[10:10.190 --> 10:12.870]  There would be so many of these reply
+[10:12.870 --> 10:16.530]  postpones going out all the time that the network would
+[10:16.530 --> 10:19.690]  crawl, right? It would just drag down to a crawl.
+[10:20.290 --> 10:24.490]  If that were happening though, I don't think you would see
+[10:24.490 --> 10:26.390]  anything from any of the devices.
+[10:27.790 --> 10:30.590]  I mean, maybe the export too. You could see
+[10:30.590 --> 10:34.370]  some stuff. But I don't think you'd see anything from any of the devices because
+[10:35.370 --> 10:38.330]  it would be consistently slow for everything.
+[10:38.470 --> 10:40.350]  I guess what I'm trying to say.
+[10:42.850 --> 10:46.030]  So, that leaves electrical.
+[10:46.510 --> 10:48.690]  Now, what's the current baud rate?
+[10:52.460 --> 10:56.780]  The current baud rate for the network is 76, 800. I confirm
+[10:56.780 --> 11:00.960]  that the ProCom is trying to host the network running 76, 800
+[11:00.960 --> 11:04.600]  and the flexors and all that
+[11:04.600 --> 11:08.020]  that are in the network currently are all
+[11:08.780 --> 11:10.460]  talking at that speed.
+[11:10.860 --> 11:13.140]  How many devices total, roughly speaking?
+[11:15.820 --> 11:19.700]  39. It is probably worth mentioning,
+[11:20.460 --> 11:23.820]  I didn't mention this to you, that
+[11:23.820 --> 11:28.040]  this ProCom was also previously
+[11:28.040 --> 11:31.600]  hosting a main network A. The one we're dealing with
+[11:31.600 --> 11:36.260]  right now is B, the subnet B for MSTP.
+[11:36.600 --> 11:40.220]  Subnet A has also, it is no longer able to talk to that one either
+[11:40.220 --> 11:41.880]  though previously it was.
+[11:45.210 --> 11:49.820]  Interesting. So, both A and B essentially went down at the same time.
+[11:52.090 --> 11:53.950]  Were flexors added to both networks?
+[11:53.950 --> 11:57.230]  Where B was down first and... no.
+[11:58.630 --> 11:59.650]  Just on one.
+[12:00.010 --> 12:05.950]  When you're having issues with communicating with network A, was that
+[12:05.950 --> 12:07.590]  while network B was connected?
+[12:14.660 --> 12:18.920]  Pregrettably, I think the point at which it stopped
+[12:18.920 --> 12:22.960]  communicating was I tried to check if the port was bad
+[12:22.960 --> 12:26.100]  by sticking both kind of daisy chaining
+[12:26.940 --> 12:30.440]  the devices from net A into net B and seeing if I could
+[12:30.440 --> 12:33.900]  see them from the ProZones, which I could for a moment.
+[12:39.030 --> 12:42.170]  It does take a while for...
+[12:42.170 --> 12:46.130]  especially when you're changing things between network numbers, sometimes you do have to disconnect and reconnect
+[12:46.130 --> 12:49.930]  and toolkit, so keep that in mind when you're trying different tests
+[12:49.930 --> 12:54.190]  like that. It's a good idea to disconnect and reconnect
+[12:54.190 --> 12:57.030]  periodically. Anyways...
+[13:06.290 --> 13:07.770]  I'm just wondering if it's
+[13:07.770 --> 13:10.510]  possible that the fuses of both networks were affected.
+[13:11.570 --> 13:12.490]  I'm just thinking...
+[13:17.020 --> 13:19.920]  you tried the network...
+[13:19.920 --> 13:23.680]  the A and the B ports, right?
+[13:24.700 --> 13:27.920]  The MSDB network port and the Auxnet port. Were you having
+[13:27.920 --> 13:31.680]  issues with the A network before you did that test?
+[13:34.160 --> 13:34.720]  Nope.
+[13:36.620 --> 13:38.320]  Oh, give me one second.
+[13:42.840 --> 13:43.360]  Oh, damn.
+[13:48.980 --> 13:51.380]  I had an extension cord or something.
+[13:52.960 --> 13:54.300]  Oh, the port is there. Perfect.
+[14:02.560 --> 14:03.120]  Alright,
+[14:45.300 --> 14:46.380]  apologies. Hello again.
+[14:46.380 --> 14:50.560]  Yep. So, I'm wondering if the...
+[14:50.560 --> 14:54.180]  there's something about the electrical situation
+[14:54.180 --> 14:58.460]  on network B that when you connected to network A, it affected
+[14:58.460 --> 15:01.580]  that one. Like permanently type thing.
+[15:03.200 --> 15:04.940]  Do you know how to check the fuses?
+[15:08.790 --> 15:10.390]  The fuses in the controllers?
+[15:12.770 --> 15:14.250]  Or the fuses on the MSDB?
+[15:14.250 --> 15:15.170]  The ProCom?
+[15:17.290 --> 15:19.590]  Do you use this on the MSDB?
+[15:21.610 --> 15:24.890]  On the port for the ProCom?
+[15:25.410 --> 15:26.550]  On the ProCom, yeah.
+[15:30.160 --> 15:32.580]  I haven't ever seen those light up.
+[15:33.980 --> 15:39.280]  Well, it's not about lighting up in this case. The reason why I'm wondering is because
+[15:39.280 --> 15:42.960]  to me, the part that makes it kind of suspect is
+[15:42.960 --> 15:47.160]  that the port A was working fine until the issue, the troublesome
+[15:47.160 --> 15:50.940]  network was connected to port A. Now port A is also having a problem.
+[15:51.180 --> 15:54.120]  See what I'm saying? Yep.
+[15:55.420 --> 15:59.340]  So, either the controllers on the other side
+[15:59.340 --> 16:03.180]  are all confused right now, in which case maybe they need to be
+[16:03.180 --> 16:07.460]  power cycled. Like, port A, what were they
+[16:07.460 --> 16:11.120]  running on for the baud rate? 70, 60, 100
+[16:11.120 --> 16:15.940]  I don't recall, but 76, 800 is what the network was set for.
+[16:16.760 --> 16:19.380]  Okay. In the case where there's
+[16:19.380 --> 16:23.220]  a bunch of network errors, it will autobaud.
+[16:24.480 --> 16:27.680]  So, if that happens, they can end up autobauding
+[16:27.680 --> 16:31.320]  to a different baud rate and start talking on that. That can cause you all sorts of
+[16:31.320 --> 16:35.580]  communication issues. If you power them off and turn them on,
+[16:36.200 --> 16:37.600]  the downstream devices,
+[16:39.820 --> 16:41.860]  they will autobaud again.
+[16:42.040 --> 16:46.040]  And if you have the procom connected while they are doing the autobauding,
+[16:46.060 --> 16:49.420]  they should all go to the correct baud rate.
+[16:52.420 --> 16:53.720]  Now, that's just based on
+[16:53.720 --> 16:57.600]  their autobauding. Uh huh. That's just based on...
+[16:58.120 --> 17:01.960]  So, I've never really heard
+[17:01.960 --> 17:06.000]  of a situation where someone connects, let's say, network B to network A,
+[17:06.000 --> 17:09.820]  and network A is fried without there being clearly like,
+[17:10.060 --> 17:14.100]  oh, there's 24 volts on here. That sort of a thing.
+[17:14.920 --> 17:18.020]  Right? Yeah, these networks
+[17:19.160 --> 17:21.080]  are talking to themselves.
+[17:22.020 --> 17:26.060]  I've never heard of it before. So, I'm thinking that the issue has to be
+[17:26.060 --> 17:29.880]  something else in the configuration. Most of the configuration is
+[17:29.880 --> 17:34.280]  something like a state, the state that it's in. And if you
+[17:34.280 --> 17:38.740]  change the state it's in, then you can change its behavior. In this case, when you added the
+[17:38.740 --> 17:42.320]  network that was having problems to network A, and then back again,
+[17:43.740 --> 17:46.280]  something about the state of that first network
+[17:46.900 --> 17:48.920]  changed. I don't know what,
+[17:50.340 --> 17:53.860]  but something clearly changed. So...
+[17:54.380 --> 17:54.860]  Yeah.
+[17:59.290 --> 17:59.930]  Ah.
+[18:05.670 --> 18:05.870]  But,
+[18:05.930 --> 18:09.910]  anyways, are you able to power off multiple
+[18:09.910 --> 18:14.030]  devices, like through a breaker or something like that?
+[18:16.230 --> 18:16.970]  Power off what?
+[18:18.270 --> 18:21.610]  A number of the devices. Can you
+[18:21.610 --> 18:25.410]  focus on network A for the beginning here, because
+[18:25.410 --> 18:29.570]  we know network A had no changes to it, and we know it's
+[18:29.570 --> 18:33.590]  currently having issues. So, until that is addressed,
+[18:33.710 --> 18:37.610]  I don't know if there's any point looking at the network that we know we have problems with. You see what I'm saying?
+[18:39.390 --> 18:41.590]  Okay. Because otherwise you're trying to
+[18:41.590 --> 18:45.870]  solve two problems at the same time, and you're probably going to be chasing your tail.
+[18:48.550 --> 18:48.990]  Yeah.
+[18:50.390 --> 18:53.430]  So, for network A, are you able to power off
+[18:53.430 --> 18:57.490]  all the devices and power them on using something like a circuit breaker?
+[18:59.190 --> 19:01.510]  I could probably power off a few.
+[19:01.970 --> 19:04.750]  I don't know about all of them, because it is an occupied space.
+[19:05.730 --> 19:06.090]  Okay.
+[19:09.250 --> 19:13.430]  That is one way to do it. There is another way. We can introduce autobotting.
+[19:13.970 --> 19:16.230]  So, currently, is it connected to the ProCom?
+[19:19.550 --> 19:22.950]  Yes. Okay, perfect. While it's connected,
+[19:23.810 --> 19:27.030]  short the A and B together.
+[19:27.730 --> 19:29.650]  A minus B plus, right?
+[19:31.930 --> 19:33.150]  Alright, give me a sec.
+[19:34.110 --> 19:38.370]  Only short it for like three to five seconds. Basically, what that should do
+[19:38.370 --> 19:42.770]  is generate so many errors on the network that all of the devices are forced to
+[19:42.770 --> 19:43.730]  autobot.
+[19:46.890 --> 19:50.510]  If they don't get enough errors, then they won't autobot, but
+[19:50.510 --> 19:52.810]  hopefully they will.
+[20:29.210 --> 20:29.810]  Alright.
+[20:31.010 --> 20:34.970]  It's doing an intermittent flashing pattern. Is that indicative of an autobot?
+[20:36.370 --> 20:39.470]  No, it's not necessarily autobotting, but
+[20:39.470 --> 20:43.190]  flashing of any kind, like flickering, generally
+[20:43.190 --> 20:46.790]  is a good indication on the MCP, because it indicates...
+[20:46.790 --> 20:49.490]  It's gone back to solid, but it was flashing for a sec.
+[20:49.490 --> 20:53.490]  Okay, give it up to two minutes before we
+[20:54.770 --> 20:56.910]  figure that there may be a problem there.
+[20:59.320 --> 21:00.780]  Okay, well wait a minute.
+[21:09.820 --> 21:14.260]  Now, for the version 7 controllers, there is a known issue with the version 7
+[21:14.260 --> 21:18.400]  controllers that was fixed in a fairly recent release. What can happen
+[21:18.400 --> 21:21.960]  is it can generate noise on the
+[21:21.960 --> 21:26.300]  MSCP that exceeds what you would normally want to see
+[21:26.300 --> 21:29.140]  anything recently generate noise for.
+[21:33.020 --> 21:34.580]  So, updating the firmware
+[21:34.580 --> 21:38.520]  on the version 7 controllers to the latest version may actually
+[21:38.520 --> 21:39.500]  benefit the network.
+[21:42.760 --> 21:46.360]  That said, the number of devices you have,
+[21:46.360 --> 21:49.920]  it should be fine. I don't see any reason why there would be a problem.
+[21:52.960 --> 21:54.080]  If they're
+[21:54.080 --> 21:56.920]  on the old site. Do you know how old the transformers are?
+[22:00.060 --> 22:03.760]  Oh, I do not. So, like, the flex airs, are they
+[22:03.760 --> 22:07.260]  being added to existing transformers, or are they new transformers?
+[22:10.560 --> 22:13.580]  Flex airs. I think they were existing. Well,
+[22:14.920 --> 22:17.380]  some of them are existing, some of them are new.
+[22:20.260 --> 22:21.680]  Now, I'm just
+[22:21.680 --> 22:25.560]  guessing, because I don't know if it's up my head, but my guess
+[22:25.560 --> 22:29.520]  is that the flex air uses a bit more power than the
+[22:29.520 --> 22:33.560]  pro air. I'd have to pull up the
+[22:34.540 --> 22:37.640]  power calculator, but that's my assumption.
+[22:40.860 --> 22:41.780]  They shouldn't
+[22:41.780 --> 22:44.680]  pull that much more power. I don't know.
+[22:48.630 --> 22:51.730]  I should note that the MSCP transmitters in the
+[22:51.730 --> 22:55.890]  flex airs are the same MSCP transmitters in the pro airs and pro zones
+[22:55.890 --> 22:59.770]  and those controllers. Like, physically, they're the exact same transmitter.
+[23:02.050 --> 23:04.110]  The only thing left has to do with
+[23:04.110 --> 23:07.890]  like, say, the environment, the power, or
+[23:07.890 --> 23:11.810]  something to do with maybe the wiring. Like, maybe there's a bad termination somewhere.
+[23:13.790 --> 23:15.890]  But the pro com not be able to see it
+[23:15.890 --> 23:19.890]  still makes me kind of...
+[23:20.610 --> 23:23.590]  Right now with the pro com, does it have end of mind enabled or disabled?
+[23:29.100 --> 23:30.340]  Does it have what?
+[23:31.280 --> 23:35.220]  The end of line toggle switch. Is it enabled or disabled?
+[23:36.040 --> 23:39.740]  If it's enabled, I try disabling it. Oh, they are enabled. I try enabling it.
+[23:42.100 --> 23:42.560]  Okay.
+[23:43.100 --> 23:45.600]  Yeah, exactly.
+[23:47.960 --> 23:51.100]  Do you roughly know why
+[23:51.100 --> 23:53.660]  end of line is recommended and enabled?
+[23:56.340 --> 23:57.900]  Yeah, because it puts a little
+[23:57.900 --> 24:01.100]  bit of resistance so you don't get echoes. Exactly.
+[24:01.260 --> 24:03.180]  It's impedance matching, specifically.
+[24:04.900 --> 24:07.620]  The problem is that it doesn't necessarily...
+[24:09.620 --> 24:13.560]  If you don't suffer from issues with impedance
+[24:13.560 --> 24:17.540]  matching, and then you enable it, then you can actually create
+[24:17.540 --> 24:21.780]  issues. But having end of line enabled
+[24:21.780 --> 24:25.620]  on both ends should resolve that because there's this
+[24:25.620 --> 24:28.560]  equivalent resistance on both ends.
+[24:31.260 --> 24:33.920]  That said, adding resistance to a
+[24:34.600 --> 24:36.820]  network communication does drop the voltage.
+[24:38.720 --> 24:41.260]  So, we'll see.
+[24:43.740 --> 24:45.240]  Right? It is a load on the network.
+[24:47.860 --> 24:48.580]  Perhaps
+[24:48.580 --> 24:52.680]  not having it on there will get us a little bit
+[24:52.680 --> 24:57.120]  of talking here. So, any change to the behavior of the
+[24:57.120 --> 25:03.360]  lights? Nope. Not so far.
+[25:04.220 --> 25:04.580]  Right.
+[25:17.010 --> 25:18.210]  I've got another idea.
+[25:20.990 --> 25:24.830]  You can export connect to the pro airs, correct?
+[25:27.850 --> 25:29.830]  Yeah. Okay.
+[25:29.830 --> 25:33.450]  And this is on network A. Yeah. Do a direct connect.
+[25:34.010 --> 25:35.730]  Let me know when you're actually connected.
+[25:39.080 --> 25:40.440]  Okay. That might be a moment.
+[25:45.470 --> 25:48.810]  How long are you going to wait? Because I don't know how long
+[25:48.810 --> 25:52.930]  it would take. I think you could do the direct connect via the pro com
+[25:52.930 --> 25:56.910]  if you're using the export 2. Even though it's physically in the same
+[25:56.910 --> 26:00.430]  location, the export 2 taps directly into
+[26:01.770 --> 26:04.510]  the mstp from there.
+[26:06.690 --> 26:07.250]  Okay.
+[26:14.410 --> 26:16.530]  Like, electrically? You want to try?
+[26:17.610 --> 26:21.610]  It would be...
+[26:21.610 --> 26:25.230]  We're not going through the pro com's transmitter
+[26:25.230 --> 26:29.250]  when we're going through the export 2 through the smart net port, if that makes sense.
+[26:31.550 --> 26:32.090]  Yeah.
+[27:26.180 --> 27:27.480]  ...
+[27:27.480 --> 27:28.560]  ...
+[27:42.700 --> 27:44.000]  ...
+[27:44.000 --> 27:44.020]  ...
+[27:44.020 --> 27:44.320]  ...
+[27:57.410 --> 28:09.500]  All right. Then we'll get through the export 2.
+[28:09.500 --> 28:13.700]  Yep. So do the direct connect. If you can see
+[28:13.700 --> 28:17.480]  the network number for the mstp, click on it and let me know if any
+[28:17.480 --> 28:19.420]  devices pull in.
+[28:24.680 --> 28:26.480]  It might come up under local network.
+[28:31.560 --> 28:33.040]  Yeah. I'm seeing network A
+[28:33.040 --> 28:35.800]  now. But only on local mstp.
+[28:36.860 --> 28:40.080]  Right. And you're not seeing it when you're otherwise connected to the pro com.
+[28:40.080 --> 28:44.200]  So the pro com seems to be
+[28:44.200 --> 28:47.400]  a common denominator here. And I do not know why.
+[28:48.020 --> 28:50.640]  Do you happen to have another pro com you can swap? Oh, boy.
+[28:52.920 --> 28:54.600]  I didn't... Oh, god.
+[28:56.740 --> 29:00.200]  Kind of. But I would need to rip it out of another panel in this
+[29:00.200 --> 29:04.140]  building. Well, before doing that, there's something else
+[29:04.140 --> 29:05.340]  you can still try.
+[29:08.900 --> 29:10.100]  Uh huh.
+[29:10.620 --> 29:13.420]  Have you ever had a bad ethernet cable? And you were like
+[29:13.420 --> 29:14.820]  why is my network so slow?
+[29:17.180 --> 29:21.400]  Yep. So think of what that would look
+[29:21.400 --> 29:25.340]  like on an mstp network. Because everything's shared, it could
+[29:25.340 --> 29:29.600]  cause all of that. But the reason for that
+[29:29.600 --> 29:33.480]  is the baud rate is dropped in order to maintain
+[29:33.480 --> 29:37.760]  signal integrity. Sometimes dropping
+[29:37.760 --> 29:41.700]  the baud rate can overcome some other network
+[29:41.700 --> 29:42.980]  related issues.
+[29:46.400 --> 29:49.280]  Under normal circumstance, you shouldn't ever have to do this.
+[29:50.260 --> 29:53.420]  So the fact that it's affecting both your smaller network
+[29:53.420 --> 29:57.540]  and your larger network, I don't think it's going to help in this
+[29:57.540 --> 30:01.780]  case. But it is something I have done before. And it has helped
+[30:02.360 --> 30:05.860]  before. So if you want to try
+[30:05.860 --> 30:09.760]  one other thing, that's the other thing I would suggest trying. Otherwise I'd suggest trying
+[30:09.760 --> 30:13.480]  to swap out the mockrocom. It sounds like there's something
+[30:13.480 --> 30:17.800]  I don't know what, but it sounds like there's something wrong. Because the thing about
+[30:17.800 --> 30:22.060]  your export to is using the 5 volt and ground
+[30:22.060 --> 30:25.060]  from your mockrocom. Right?
+[30:26.520 --> 30:29.580]  If it's not having issues with seeing the network,
+[30:29.580 --> 30:32.960]  then I don't think the issue has anything to do with
+[30:33.780 --> 30:38.020]  the power of the procom. I don't think it has anything to do with
+[30:38.020 --> 30:41.580]  your network at large. I think the issue is the procom.
+[30:41.700 --> 30:45.660]  I don't know what though. Like this is not something I typically hear about.
+[30:45.780 --> 30:49.780]  And I'm assuming you've already tried stuff like power cycling with the procom as well.
+[30:50.960 --> 30:52.600]  So many times.
+[30:55.400 --> 30:57.600]  Yeah, but over the SmartNet Direct Connect
+[30:57.600 --> 31:01.880]  I can see all the Network A stuff,
+[31:01.940 --> 31:05.600]  but I'm not seeing that light up on the MSCP. I could try
+[31:06.140 --> 31:08.060]  setting it back to the end of the line, maybe?
+[31:09.020 --> 31:12.660]  You could, yeah. You could check what the MAC address is set for
+[31:12.660 --> 31:17.720]  for that. So when you do a... actually, this might actually matter.
+[31:18.540 --> 31:21.240]  You were talking about main
+[31:22.040 --> 31:24.420]  BACnet versus sub-network, right?
+[31:25.540 --> 31:27.120]  For the MSCP?
+[31:28.060 --> 31:32.020]  Okay, so I'll let you know what happens when you change the main. Because a lot of people don't know
+[31:32.020 --> 31:36.660]  that this happens, and they absolutely shoot themselves in the foot. So what happens is
+[31:36.660 --> 31:40.080]  it'll change your MAC address
+[31:40.080 --> 31:44.320]  for that device, in this case the procom, it changes MAC address
+[31:44.320 --> 31:48.420]  to the network host number in the top right, which is almost certainly
+[31:49.500 --> 31:52.340]  something else right now. So I think
+[31:52.340 --> 31:54.640]  by default it's one?
+[31:55.720 --> 31:57.480]  I see the one or one hundred, but I think it's one.
+[31:59.900 --> 32:03.600]  Currently the network host...
+[32:06.750 --> 32:10.390]  on both of the networks, the MAC address of the procom is zero,
+[32:10.770 --> 32:14.290]  but in the top right, if I recall, the network host number is six.
+[32:16.670 --> 32:18.890]  So you want me to set this MAC address
+[32:18.890 --> 32:22.370]  for each of the networks to six, and then boot off the one unit
+[32:22.370 --> 32:26.290]  set a different MAC address for it? No, if they're both set at zero, then that should be fine.
+[32:26.370 --> 32:30.110]  What I'm saying is... here, try this. So without hitting send,
+[32:30.310 --> 32:34.250]  just click on the back-knit drop-down. So back-knit
+[32:34.250 --> 32:38.510]  sub, change the back-knit main. Then go to advanced and you'll see what I'm talking about.
+[32:43.130 --> 32:46.210]  Alright, give me just a second. I need to... I can't see the
+[32:47.910 --> 32:48.710]  procom... huh.
+[32:49.410 --> 32:53.030]  Does it mean anything to you? I'm still direct connected using the export
+[32:53.030 --> 32:57.030]  too. I can't see
+[32:57.030 --> 33:00.910]  the procom at all this way, even though it's plugged into the procom.
+[33:01.590 --> 33:03.810]  Isn't that wild? Yeah, huh.
+[33:04.930 --> 33:05.210]  Okay.
+[33:10.410 --> 33:12.770]  Procom MSDP advanced settings.
+[33:14.070 --> 33:16.950]  Because the total verified that the MAC address is actually set
+[33:16.950 --> 33:20.330]  to zero. When you change it to back-knit main,
+[33:21.190 --> 33:24.910]  it'll change it under the hood. It's hidden behind the menu, right? So you won't
+[33:24.910 --> 33:27.750]  actually notice that it has changed the MAC address.
+[33:28.850 --> 33:32.570]  If you hit send and then switch it back to
+[33:32.570 --> 33:36.810]  back-knit sub, it still keeps that same incorrect
+[33:36.810 --> 33:45.080]  MAC address. Aha. Okay, sorry.
+[33:45.180 --> 33:49.200]  So I'm here. Where do you want me to look at this? Okay, so in the
+[33:49.200 --> 33:53.750]  settings. Yeah.
+[33:56.570 --> 33:59.110]  Whatever network you were looking at, connected
+[33:59.110 --> 34:03.050]  to, etc. Click on advanced.
+[34:06.310 --> 34:09.130]  Yep. What's its
+[34:09.130 --> 34:09.850]  MAC address?
+[34:12.570 --> 34:17.070]  MAC address for both is still zero. Okay, good. That's just what I want to make
+[34:17.070 --> 34:20.930]  sure. So that sounds right. Okay. So that
+[34:20.930 --> 34:24.070]  further cements the idea that there's something wrong with the ProCom.
+[34:25.030 --> 34:28.430]  Unfortunately, I don't really know what, because I haven't really heard of a case
+[34:28.430 --> 34:32.770]  quite like that, except for if the transmitters had both
+[34:32.770 --> 34:35.290]  gotten fried at the same time type thing.
+[34:37.790 --> 34:40.870]  I'd expect the fuses to also be...
+[34:40.870 --> 34:44.710]  But anyways, doesn't really matter. Point is, I think the transmitters are not
+[34:44.710 --> 34:46.190]  working or the fuses are bad.
+[34:46.190 --> 34:50.450]  Uh-huh.
+[34:51.610 --> 34:53.670]  And how should I go about looking at these fuses?
+[34:54.350 --> 34:58.570]  It's just the bulbs on the outside, right? Yeah, you just pull them...
+[34:58.570 --> 35:02.410]  Yeah, they're just the bulbs that are sticking out there. Yeah, you just pull them right out.
+[35:03.630 --> 35:06.030]  Measure the... Oh, I can just pull them straight out?
+[35:06.550 --> 35:08.110]  Yep, just pull them straight out.
+[35:09.890 --> 35:11.170]  Good luck getting them back in though.
+[35:11.170 --> 35:11.570]  Alright.
+[35:14.850 --> 35:19.270]  Oh, boy. Don't tell me that. It's like a breadboard, right?
+[35:19.430 --> 35:21.010]  There's only two holes.
+[35:24.760 --> 35:27.580]  You're trying to align something with a breadboard.
+[35:28.140 --> 35:31.920]  And the longer the
+[35:32.860 --> 35:36.600]  component's wires, the harder it is to
+[35:36.600 --> 35:39.640]  kind of push it in, right? Get it aligned.
+[35:41.000 --> 35:42.780]  Because it can kind of bend a little bit.
+[35:45.900 --> 35:48.280]  If it's right in front of you, you'll probably be fine.
+[35:48.360 --> 35:51.800]  But the problem is if you're up on a ladder or something, it makes it a little bit trickier.
+[35:54.320 --> 35:55.840]  Thankfully, this thing is just in a
+[35:55.840 --> 35:56.600]  panel.
+[36:00.000 --> 36:03.440]  Yes, you should read about 17 ohms.
+[36:06.360 --> 36:07.160]  15 ohms?
+[36:08.120 --> 36:11.160]  A little bit lower, but anyway, try the other one.
+[36:14.180 --> 36:14.940]  Oh, oh, sorry.
+[36:15.100 --> 36:19.060]  I thought you were telling me what it's supposed to be, not what it is.
+[36:19.320 --> 36:21.620]  Right now it's
+[36:25.780 --> 36:27.400]  16. 16 seems fine.
+[36:33.330 --> 36:33.690]  16.
+[36:36.690 --> 36:39.850]  You know, I'm starting to think there's nothing wrong with the fuses. I think the transmitter isn't working.
+[36:39.850 --> 36:42.170]  That's what it sounds like to me.
+[36:42.570 --> 36:47.850]  The very last thing you can try
+[36:47.850 --> 36:52.070]  is doing a factory set of the controller, but I don't know how that would have any effect.
+[36:53.970 --> 36:55.170]  If there were somehow
+[36:55.810 --> 37:00.030]  an issue with the OS of it, you could try doing a firmware send.
+[37:00.150 --> 37:04.030]  However, here's the part that kind of concerns me, which is if there was
+[37:04.030 --> 37:08.070]  an issue such as that, I would RMA it
+[37:08.070 --> 37:09.250]  anyway. See what I mean?
+[37:11.130 --> 37:15.610]  If something happened to the controller where the basic functionality got corrupted
+[37:15.610 --> 37:17.710]  or didn't work anymore, sort of a thing,
+[37:19.490 --> 37:24.130]  I would think that it would happen again, so I would RMA it at that point.
+[37:25.430 --> 37:27.570]  Do the swap with another controller.
+[37:29.170 --> 37:32.110]  It doesn't matter really where you get it from, just try another controller.
+[37:33.550 --> 37:35.630]  And if the issue persists,
+[37:35.630 --> 37:38.690]  well, now you've got a real problem.
+[37:41.690 --> 37:42.330]  Oh, boy.
+[37:43.850 --> 37:45.270]  I already knew that.
+[37:47.450 --> 37:50.710]  At the moment, it looks like the issue is all ProCom.
+[37:55.600 --> 37:58.940]  Okay. Sorry, just trying to get these damn
+[37:58.940 --> 38:00.300]  fuses back in, you know.
+[38:06.480 --> 38:08.220]  Yeah, I thought you'd get a kick out of that.
+[38:09.300 --> 38:12.220]  The only way it can get worse is if we made them polarity,
+[38:13.680 --> 38:16.280]  you know, if we care about the polarity of it.
+[38:16.500 --> 38:18.340]  Oh, don't even say that.
+[38:19.680 --> 38:24.380]  It's okay if there's a fuse that doesn't care which way the burning electricity goes.
+[38:30.140 --> 38:32.220]  Okay. Let's see.
+[38:33.400 --> 38:39.220]  I got those back in. Back to reset.
+[38:39.220 --> 38:43.320]  Do you think, just pull the controller, try swapping in
+[38:43.320 --> 38:45.280]  with another one, see if that does it.
+[38:45.760 --> 38:51.220]  Exactly. If it doesn't do it...
+[38:54.880 --> 38:55.320]  Then
+[38:55.320 --> 38:59.380]  I'm starting to get at a loss. Because then I'd start to
+[38:59.380 --> 39:02.240]  wonder why did the export 2 work when it was connected to it?
+[39:02.800 --> 39:06.900]  It should be using the ground of the smart net.
+[39:06.900 --> 39:10.400]  That said, your laptop will also have a ground.
+[39:13.860 --> 39:15.100]  So, maybe...
+[39:53.320 --> 39:57.220]  Do you mind if I try something real quick?
+[40:02.080 --> 40:03.440]  So, this direct connects
+[40:03.440 --> 40:05.480]  with the export 2 to the ProCom, right?
+[40:12.000 --> 40:13.240]  Does it...
+[40:13.240 --> 40:16.480]  see both the sub A and the sub B?
+[40:17.880 --> 40:21.100]  That I can't remember. I would assume we could see both, yeah?
+[40:23.560 --> 40:24.220]  Yeah, okay.
+[40:24.540 --> 40:28.320]  Because I can only see the A right now even though both are plugged in.
+[40:31.340 --> 40:33.320]  Maybe it does make sense for it to
+[40:33.320 --> 40:37.440]  only see one. But because it sees one, and
+[40:37.440 --> 40:41.720]  the ProCom can't see either, I think that's still good enough to go off of right now.
+[40:43.460 --> 40:46.160]  Oh, are you thinking to switch it so
+[40:46.160 --> 40:49.860]  B is in A? Because you could try that. Yeah, like you want to switch B into
+[40:49.860 --> 40:53.260]  A and then try and discover it. Go for it.
+[40:53.680 --> 40:59.820]  Yeah, I've just done that.
+[41:33.080 --> 41:35.300]  Can't see anything on a...
+[41:35.960 --> 41:38.080]  Can't see anything on net B still.
+[41:46.330 --> 41:49.110]  But now net B is connected to your...
+[41:49.990 --> 41:53.190]  I would disconnect from toolkit reconnect. It will be
+[41:53.190 --> 41:57.010]  very confused otherwise. Yeah. Yeah,
+[41:57.010 --> 42:08.350]  I did that. Okay. I don't think
+[42:08.350 --> 42:12.590]  you'd have to disconnect the export too, but you could try that as well.
+[42:12.930 --> 42:14.530]  Disconnect, reconnect it. Alright.
+[43:39.730 --> 43:44.320]  Alright. Yeah, I tried
+[43:44.320 --> 43:46.460]  disconnecting from the space.
+[43:48.300 --> 43:50.360]  I've seen some blinks over there, but
+[43:54.700 --> 43:56.900]  try restarting toolkit again.
+[43:58.940 --> 44:01.040]  So in short, network A
+[44:01.040 --> 44:04.600]  you can see it just fine with the export two. Network B you can't see
+[44:04.600 --> 44:06.900]  with the export two regardless of where it's connected.
+[44:11.430 --> 44:15.230]  So far that seems to be the case here. I see
+[44:15.230 --> 44:19.290]  blinking over there, but going back
+[44:19.290 --> 44:21.250]  through toolkit after a full restart.
+[44:26.090 --> 44:28.410]  I guess this brings me back to two issues.
+[44:32.160 --> 44:36.120]  One of those problems where you don't actually know there's even an issue until
+[44:36.120 --> 44:39.260]  you try to use the thing. In this case, try to add a controller.
+[44:42.180 --> 44:42.680]  Yeah.
+[44:44.660 --> 44:47.920]  Certainly seems that way. The building I'm in currently has
+[44:49.280 --> 44:52.280]  apparently historically has issues with
+[44:52.280 --> 44:55.520]  compatibility between newer devices getting added to old devices.
+[44:56.220 --> 45:00.280]  But I'm not sure who resolved that.
+[45:01.200 --> 45:03.600]  Sounds a little bit... what do you call it?
+[45:07.120 --> 45:08.500]  I don't know how to
+[45:08.500 --> 45:11.820]  explain other than a technician superstitious type thing.
+[45:12.040 --> 45:14.720]  But I also absolutely believe them by the way.
+[45:16.060 --> 45:20.300]  I don't know why, but this one building has all these problems when we add new things.
+[45:20.300 --> 45:22.940]  It just...
+[45:27.070 --> 45:31.290]  It sounds like there's issues that have been unaddressed for a long time and
+[45:31.290 --> 45:33.090]  that may never get addressed.
+[45:38.130 --> 45:39.750]  That's how it goes.
+[45:49.050 --> 45:52.850]  Do you happen to have a DC power supply on you?
+[45:53.150 --> 45:54.870]  A 24 volt DC power supply.
+[45:56.990 --> 46:00.190]  Not 24. I have a signal generator up to 10.
+[46:05.780 --> 46:08.260]  That might work. Can it just do
+[46:08.260 --> 46:14.280]  solid DC? I think so.
+[46:16.600 --> 46:17.880]  Might be worth a try.
+[46:22.890 --> 46:24.690]  Alright. Putting that where do you think?
+[46:26.090 --> 46:29.170]  Behind the ProCom. So instead of using 24 volt AC,
+[46:29.670 --> 46:34.190]  use that. I would just make sure it doesn't have any
+[46:34.690 --> 46:36.890]  ProCom, no inputs, outputs. Yeah, that should be fine.
+[46:43.120 --> 46:44.400]  I used to have
+[46:44.400 --> 46:48.300]  all of my controllers on a
+[46:50.380 --> 46:52.240]  signal generator. It was a variable DC
+[46:52.240 --> 46:55.040]  power supply and it was a cheap one at that.
+[46:56.500 --> 47:00.300]  For testing signal problems and power
+[47:00.300 --> 47:00.700]  problems.
+[47:04.940 --> 47:06.620]  How does that work?
+[47:07.400 --> 47:08.520]  Stuff still worked.
+[47:09.400 --> 47:11.380]  Instead of a transformer, you just use a supply?
+[47:13.320 --> 47:17.060]  Right now, all of my controllers are on a 24 volt DC power supply.
+[47:17.140 --> 47:21.480]  The only control of ours that wouldn't work with that is a ProLite.
+[47:21.840 --> 47:26.620]  That one requires an unbalanced or ungrounded
+[47:29.480 --> 47:30.760]  24 volt AC.
+[47:31.120 --> 47:33.160]  But all of the other controllers, yeah.
+[47:33.160 --> 47:36.860]  They can be powered through 24 volt DC.
+[47:39.420 --> 47:40.820]  As far as I'm aware, they're halfway
+[47:40.820 --> 47:44.960]  rectified, so it honestly seems like they
+[47:44.960 --> 47:48.980]  were designed to be 24 volt DC
+[47:48.980 --> 47:49.620]  powered?
+[47:54.120 --> 47:55.260]  Right, with halfway rectified...
+[47:59.200 --> 48:01.000]  Sorry, with halfway rectified,
+[48:01.000 --> 48:05.460]  you get half the voltage drop as you would with full wave rectified.
+[48:10.420 --> 48:13.040]  One second, somebody's glaring at me.
+[48:13.140 --> 48:14.200]  I don't think it's glaring.
+[48:18.660 --> 48:21.000]  He's suspicious that the transmitter is inside the
+[48:21.000 --> 48:23.560]  ProCom. We're kind of just trying stuff.
+[48:24.900 --> 48:28.980]  He's not familiar with this issue. And interestingly
+[48:28.980 --> 48:32.400]  the ProCom, by connecting to the export through that,
+[48:32.660 --> 48:35.180]  I can see the second floor network.
+[48:36.120 --> 48:38.860]  But the ProCom can't see it. Nobody has a CP port.
+[48:44.930 --> 48:46.450]  I was going to ask
+[48:46.450 --> 48:48.930]  the guy who recommended trying to talk to ProComs.
+[48:50.210 --> 48:54.030]  There's not really anywhere in this building that would be as fair as that.
+[48:55.750 --> 48:57.110]  I'm going to keep talking to him again.
+[48:58.470 --> 48:59.350]  Alright, hello again.
+[49:00.250 --> 49:04.030]  Or any other MSTP controller that you could swap with that's in your van or something?
+[49:06.450 --> 49:09.590]  No, we don't have any. The only spare I have is like a
+[49:09.590 --> 49:12.610]  flex there, but that's for another job. And that's not the
+[49:14.010 --> 49:14.850]  MSTP anyways.
+[49:15.850 --> 49:17.150]  How far away is your office?
+[49:17.890 --> 49:22.110]  We don't seem to have any spares in here that I can pull and put in place.
+[49:23.410 --> 49:25.210]  How far away is the office?
+[49:29.180 --> 49:31.520]  Gosh, that'll be...
+[49:31.520 --> 49:36.360]  Long enough I wouldn't get back in time for my work day to end.
+[49:39.480 --> 49:40.480]  Good news is,
+[49:41.480 --> 49:44.060]  with the other devices communicating on the network,
+[49:44.440 --> 49:49.420]  they can still communicate even when the ProCom isn't. They'll talk to each other.
+[49:50.080 --> 49:51.800]  So the site will continue to run.
+[49:52.460 --> 49:55.440]  What I would probably suggest is finish up your programming then,
+[49:56.340 --> 49:59.140]  using the export tool, if you're able to.
+[49:59.340 --> 50:03.760]  Direct connect to one of those. And then if you have to come back another day,
+[50:04.060 --> 50:06.960]  let's say you couldn't swap a controller or something else, whatever,
+[50:07.660 --> 50:08.780]  couldn't get someone to bring one.
+[50:10.780 --> 50:13.980]  Does anyone else have a spare in their van or did you all come in the same van?
+[50:18.960 --> 50:19.840]  I've got me
+[50:19.840 --> 50:24.060]  new hire and then project managers on site, also trying to figure out
+[50:24.060 --> 50:27.900]  what the hell is going on. None of us really have controllers with us.
+[50:27.980 --> 50:32.140]  There's one of our offices nearby, and my project manager
+[50:32.140 --> 50:35.900]  is on the phone right now trying to see if he can get us a ProCom out here.
+[50:35.920 --> 50:37.740]  And I'm not sure if that would be a today thing.
+[50:39.700 --> 50:43.620]  So yeah, like I was saying, even if the ProCom thing doesn't work,
+[50:43.660 --> 50:47.680]  I'd probably go about making sure that the flexhires are programmed, like address
+[50:47.680 --> 50:52.260]  programs, and then the customer will still have
+[50:52.260 --> 50:55.960]  their stuff working. They just won't have the ProCom doing the communication
+[50:55.960 --> 50:56.960]  between the different networks.
+[50:59.560 --> 51:03.800]  Yeah, thankfully once we figured out that we could talk to stuff through the
+[51:03.800 --> 51:07.360]  ProZones with the ProCom disconnected, we were able to do that just fine.
+[51:09.600 --> 51:11.960]  So all the new controllers are functioning
+[51:11.960 --> 51:14.760]  about as well as I think they could, or they can.
+[51:15.260 --> 51:16.780]  Okay, that's good.
+[51:23.860 --> 51:24.820]  Yeah, so...
+[51:24.820 --> 51:26.960]  Were you ever able to get any ProCom
+[51:26.960 --> 51:30.740]  or ProZones to even appear, ProAirs, whatever, any other
+[51:30.740 --> 51:34.620]  controllers to appear on the MSTP? Like if you were to connect one single controller
+[51:34.620 --> 51:38.820]  to the ProCom, does it come up? Because at the moment it sounds like
+[51:38.820 --> 51:42.060]  that's not going to work. But I am curious if that would.
+[51:44.180 --> 51:46.060]  I'm not sure how...
+[51:48.320 --> 51:50.300]  Yeah, I'm not sure if
+[51:50.300 --> 51:52.440]  I could recreate it, but
+[51:54.100 --> 51:58.180]  before I left yesterday, I had the ProCom talking to the
+[51:58.180 --> 52:02.180]  two ProZones, and only the two ProZones. But
+[52:02.180 --> 52:06.060]  just a moment ago when I tried that configuration, or what I believe that configuration
+[52:06.060 --> 52:10.240]  was, it didn't do anything. Yeah, still follows along with
+[52:10.240 --> 52:13.080]  what I'm thinking. It sounds like the transmitter is having a problem.
+[52:15.340 --> 52:15.660]  Yeah.
+[52:20.220 --> 52:22.380]  Do you know what the serial number of that ProCom is?
+[52:25.340 --> 52:26.340]  Serial number of the
+[52:26.340 --> 52:29.700]  ProCom. Yep, it will be on the back of it.
+[52:33.580 --> 52:34.480]  Yeah, forgive me a minute.
+[52:34.820 --> 52:37.400]  I stepped away from the mechanical room because it's loud as all hell.
+[52:38.380 --> 52:41.260]  I guess when you
+[52:42.640 --> 52:45.540]  guys swap it with something else, you can check
+[52:45.540 --> 52:51.470]  the serial number then. Is this just like an email?
+[52:51.530 --> 52:54.290]  You want this email to you? Sure, yeah.
+[52:55.530 --> 52:59.330]  If it didn't send you an email, I'll make sure an email is sent to you.
+[53:00.750 --> 53:06.620]  Okay. So in that case,
+[53:06.620 --> 53:08.740]  I'll send you guys the serial number later.
+[53:09.820 --> 53:12.740]  Okay, sounds good.
+[53:17.280 --> 53:20.880]  Alright, well, anything else you would
+[53:20.880 --> 53:25.080]  recommend before I start banging my head against the wall a little bit more?
+[53:26.080 --> 53:28.820]  We pretty much covered everything. I mean, you know that I can talk
+[53:28.820 --> 53:31.760]  to stuff, but the thing that I'm thinking of is that
+[53:32.660 --> 53:36.860]  I've seen it before where I do like a
+[53:36.860 --> 53:40.760]  voltage measurement on the MSCP to check how it's doing, right?
+[53:41.120 --> 53:44.400]  And everything looks fine. Then I disconnect the controller
+[53:44.400 --> 53:48.060]  from the MSCP and it reads basically no voltage.
+[53:50.980 --> 53:53.020]  Talking with the
+[53:53.740 --> 53:56.920]  like... and this is with no end of line enabled. So what should
+[53:56.920 --> 54:00.800]  happen when no end of line is enabled is it should operate like a floating
+[54:00.800 --> 54:04.940]  signal, right? It's just whatever signal there just kind of bouncing
+[54:04.940 --> 54:09.060]  around, right? And the way that I think about it in that case is
+[54:09.060 --> 54:12.620]  if something was 24... sorry,
+[54:13.020 --> 54:17.060]  2.5 volts DC, which is approximately what you would read, and it was
+[54:17.060 --> 54:20.900]  sitting there at 2.5 volts DC, and then you were to remove
+[54:20.900 --> 54:25.120]  the MSCP, I would expect it to still read approximately
+[54:25.120 --> 54:29.160]  2.5 MSCP right on the pins. But what I found
+[54:29.160 --> 54:32.940]  is that...
+[54:32.940 --> 54:37.020]  without anything else connected to the MSCP... so you connect
+[54:37.020 --> 54:40.600]  the MSCP to it. You measure the
+[54:40.600 --> 54:45.720]  DC voltage between ground on the controller and the A-
+[54:45.720 --> 54:49.040]  ground and the B+. You should get approximately 2.5
+[54:49.040 --> 54:52.820]  volts DC. Then disconnect the MSCP
+[54:53.720 --> 54:57.020]  from... on both. Yeah, you should read about 2.5 volts
+[54:57.020 --> 55:01.100]  DC on both of them. It doesn't matter
+[55:01.100 --> 55:03.140]  if it's positive or negative. It's just your polarity, right?
+[55:07.920 --> 55:10.720]  They should sum to approximately
+[55:10.720 --> 55:12.820]  5 volts DC.
+[55:17.580 --> 55:18.240]  Anyways...
+[55:18.240 --> 55:22.240]  Either or.
+[55:22.800 --> 55:25.400]  It will be slightly different with it on versus with it off.
+[55:26.260 --> 55:29.860]  But for doing this testing, try it off first.
+[55:29.860 --> 55:33.920]  And we'll find out why. I want to try that first.
+[55:35.360 --> 55:36.520]  In a little bit here.
+[55:48.740 --> 55:52.620]  And this is the MSCP port on the controller?
+[55:55.980 --> 55:56.900]  On the profile?
+[55:57.380 --> 55:59.700]  You can do it right on the screw terminals.
+[56:00.240 --> 56:04.120]  So you don't have to actually pull out anything or whatever. Just measure it on those.
+[56:04.680 --> 56:07.560]  If they've got good contact, the screws will have the same voltage.
+[56:13.800 --> 56:16.700]  So like measure between the ground of the power of the
+[56:16.700 --> 56:20.180]  macrocom and the A minus terminal screw.
+[56:21.860 --> 56:22.900]  While it's connected.
+[56:25.140 --> 56:28.660]  Yeah. It's jumping around a little bit,
+[56:28.780 --> 56:32.680]  but I'm seeing... Yeah, sorry, are you seeing what?
+[56:35.240 --> 56:36.720]  It's jumping around a little bit,
+[56:36.720 --> 56:39.100]  but I'm seeing about 5 total here.
+[56:40.780 --> 56:42.940]  So now just connect the MSCP
+[56:42.940 --> 56:45.100]  and then measure the pin.
+[56:46.680 --> 56:49.460]  So the pin right on the... Yeah, still about the same.
+[56:51.380 --> 56:55.160]  Is end of line currently in? If it is, take it out and then measure the voltage.
+[57:03.970 --> 57:07.190]  As I'm sitting here reading this thing,
+[57:08.870 --> 57:11.570]  both of them have gone to...
+[57:11.570 --> 57:15.270]  They went to zero for a second and then came back.
+[57:19.010 --> 57:20.670]  Like as you switched it type thing?
+[57:26.640 --> 57:29.980]  I'm sitting here reading the voltage on just the pins with the MSCP
+[57:31.000 --> 57:31.960]  terminal off.
+[57:35.280 --> 57:37.920]  Reading from controller ground.
+[57:40.910 --> 57:41.830]  Oh, this guy.
+[57:43.690 --> 57:47.710]  Yeah, 2.3 on the A minus and then
+[57:47.710 --> 57:50.830]  2.8-ish on the B plus.
+[57:51.270 --> 57:53.510]  Periodically these things seem like they go to zero.
+[57:54.890 --> 58:00.700]  That's weird. We can wait for it, I guess.
+[58:03.260 --> 58:04.520]  I usually find that when it goes to zero.
+[58:04.520 --> 58:07.960]  I'm not sure. And this is with the end of line on.
+[58:09.820 --> 58:12.560]  Yeah. And did you do a test with it off?
+[58:21.380 --> 58:23.000]  I should say, could you do a test with it off?
+[58:26.850 --> 58:27.870]  Sorry, what?
+[58:28.530 --> 58:31.190]  Could you do a test with the end of line off?
+[58:47.230 --> 58:49.770]  Yeah, okay. So with the end of line on or off
+[58:49.770 --> 58:52.670]  it does seem to sum to about 5 volts.
+[58:54.670 --> 58:55.130]  Okay.
+[58:56.730 --> 59:00.390]  Well, it's reading just fine as far as the electrical side is concerned.
+[59:00.390 --> 59:02.450]  It doesn't seem to be a problem at all.
+[59:03.350 --> 59:10.350]  Still got me stumped.
+[59:12.450 --> 59:13.850]  Still could be something with the transmitter.
+[59:14.010 --> 59:17.410]  I just don't know what it would be. This would be the first time I've run into an issue where
+[59:17.410 --> 59:21.710]  there's no issue with the voltage on the MSTP
+[59:21.710 --> 59:23.570]  but there is an issue communicating.
+[59:28.750 --> 59:29.290]  So.
+[59:30.750 --> 59:31.430]  Because it could?
+[59:31.430 --> 59:35.390]  It would be power? I don't know. Were there any other changes
+[59:35.390 --> 59:38.830]  things added aside from the flex errors that could affect
+[59:38.830 --> 59:42.170]  the electrical network, like for example a VFD?
+[59:44.690 --> 59:46.890]  Not that I'm aware of.
+[59:48.670 --> 59:51.630]  The reason I'm asking is because there have been times where
+[59:51.630 --> 59:55.610]  someone goes to add one thing and they were not the only ones adding something.
+[59:57.330 --> 59:58.370]  And they found it after.
+[59:59.250 --> 01:00:01.570]  And it affected them, right?
+[01:00:04.230 --> 01:00:06.970]  Still seems way too much.
+[01:00:07.750 --> 01:00:09.110]  Does any other work happening?
+[01:00:13.640 --> 01:00:17.800]  I know they were having issues with the condensers
+[01:00:17.800 --> 01:00:21.980]  or the compressors in the room, but it's not an I.O. to the
+[01:00:21.980 --> 01:00:26.080]  ProCom and the ProZones that are controlling those compressors for the big AC units
+[01:00:26.080 --> 01:00:27.760]  are running just fine.
+[01:00:30.800 --> 01:00:33.500]  So where are those compressors
+[01:00:33.500 --> 01:00:37.500]  electrically? So are they under the same breaker?
+[01:00:37.780 --> 01:00:40.700]  Or are they using the same ground? Do you see what I'm talking about?
+[01:00:43.950 --> 01:00:46.490]  Yes. I'm not sure if they're using the same ground.
+[01:00:47.650 --> 01:00:51.410]  I don't believe they're using the same ground. And they're certainly
+[01:00:51.410 --> 01:00:52.890]  separate breakers.
+[01:00:55.890 --> 01:00:58.290]  Is it possible it could be affecting
+[01:00:59.210 --> 01:01:02.270]  the ground reference for the mock ProCom?
+[01:01:05.630 --> 01:01:07.350]  The only way I guess you could
+[01:01:08.730 --> 01:01:11.550]  eliminate the power is by
+[01:01:11.550 --> 01:01:15.210]  using something like a DC power supply. So if
+[01:01:15.210 --> 01:01:19.410]  your project manager is getting someone to send something over, maybe you also get a
+[01:01:19.410 --> 01:01:23.650]  DC power supply. That's another thing you can try to eliminate
+[01:01:23.650 --> 01:01:24.430]  as a possibility.
+[01:01:27.150 --> 01:01:31.550]  Gotcha. Damn, I had one of those at one point that I donated to a project.
+[01:01:33.810 --> 01:01:35.590]  If I'm back on site, I'll give that a shot.
+[01:01:36.310 --> 01:01:37.710]  Yeah. Alright.
+[01:01:39.870 --> 01:01:40.970]  So I can say it's good luck.
+[01:01:43.930 --> 01:01:46.490]  Yeah, thank you. If you can create a ticket, do you know my email?
+[01:01:47.170 --> 01:01:49.330]  Yep, I got it here.
+[01:01:51.150 --> 01:01:53.690]  Yeah, T.W. Moon Adventure Controls. Yep.
+[01:01:56.860 --> 01:02:00.080]  And yeah, if you could create a ticket, I don't know.
+[01:02:00.900 --> 01:02:03.880]  I appreciate your time a lot. Thank you. Yep, you're welcome.
+[01:02:06.300 --> 01:02:07.560]  Alright, well, have a nice day, man.
+[01:02:08.360 --> 01:02:09.480]  Yep, you too. Bye.

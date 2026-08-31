@@ -1,0 +1,453 @@
+[00:03.660 --> 00:04.900]  We can get you connected. Are you there on the phone?
+[00:13.500 --> 00:15.020]  Can you hear me?
+[00:15.220 --> 00:15.680]  Hello?
+[00:17.420 --> 00:17.700]  Yes.
+[00:18.580 --> 00:19.100]  Okay, perfect.
+[00:19.700 --> 00:20.800]  I left a message earlier.
+[00:21.920 --> 00:23.240]  Yep, I see it here.
+[00:28.080 --> 00:31.500]  And the new owner, this is a food distribution place?
+[00:32.260 --> 00:32.600]  Yep.
+[00:32.860 --> 00:35.980]  We can get you connected. Are you there on the phone?
+[00:35.980 --> 00:37.480]  Are you on site right now?
+[00:39.620 --> 00:41.760]  I'm on site, but I'm not in front of the panel.
+[00:42.200 --> 00:42.720]  Okay.
+[00:43.460 --> 00:44.840]  Give me a couple minutes.
+[00:45.360 --> 00:52.180]  I was going to say, just as a general tip, if you're doing a direct connect with Toolkit, it bypasses the master password.
+[00:52.660 --> 00:56.240]  And you can set the master password via the MSET tool.
+[01:00.370 --> 01:00.910]  The export.
+[01:02.710 --> 01:07.290]  Well, let's say there's a ProCom, right? You direct connect to it.
+[01:08.550 --> 01:10.370]  Then you can set the offset.
+[01:13.150 --> 01:15.110]  Right from there, you can do the master password.
+[01:15.470 --> 01:19.910]  If not, if there's no host controller like that, then you can't do that method.
+[01:20.250 --> 01:24.350]  However, you won't be out of luck. There is still a way.
+[01:24.750 --> 01:30.610]  As long as you can get to the point where you're getting a connection attempt and you're getting the user password login field,
+[01:30.610 --> 01:35.370]  I can get you in. Yeah.
+[01:35.790 --> 01:37.890]  All right. Would it be better to plug into the mock Pro?
+[01:37.950 --> 01:45.210]  Because I've tried to get into through just a controller from our office that we know Longview works in.
+[01:46.030 --> 01:46.390]  Yeah.
+[01:46.390 --> 01:50.730]  And then when I plug up the MSTP to it, that's when I lose it all.
+[01:52.710 --> 01:54.030]  Lose it all.
+[01:56.170 --> 02:05.030]  But should the expander... I'm getting like 2.9 volts on both A and B or 2.7 or something like that.
+[02:05.730 --> 02:08.950]  Sorry. That's different from the...
+[02:08.950 --> 02:13.110]  It's different from what I'm reading here because the reading here, it was just that it was a master password thing.
+[02:13.530 --> 02:15.790]  You also have like a network issue separate from that?
+[02:19.430 --> 02:20.930]  No, just the expander.
+[02:22.270 --> 02:24.470]  Expander. Like SmartNet?
+[02:29.210 --> 02:29.730]  Yes.
+[02:31.930 --> 02:36.930]  Or the I.O. The I.O. goes from the mock Pro to the expander.
+[02:38.670 --> 02:38.990]  Right.
+[02:38.990 --> 02:39.970]  Does that talk smart bus?
+[02:41.210 --> 02:42.810]  No, it talks SmartNet.
+[02:43.290 --> 02:46.070]  So when I...
+[02:46.750 --> 02:48.690]  So we're talking about a different expander.
+[02:52.230 --> 02:54.110]  Expander, the SmartNet expander.
+[02:54.250 --> 02:57.730]  Let me walk in there in front of it.
+[02:58.730 --> 03:00.990]  Give me 2 minutes so I can walk back.
+[03:02.730 --> 03:06.210]  And I apologize because it's going to be piled in again.
+[03:07.010 --> 03:07.630]  All right.
+[03:14.610 --> 03:15.730]  All right.
+[03:23.700 --> 03:25.620]  Let me get my...
+[03:27.900 --> 03:30.620]  export in my laptop down there.
+[04:04.990 --> 04:06.730]  I didn't lose you, did I?
+[04:07.070 --> 04:07.550]  Nope.
+[04:09.110 --> 04:09.450]  Hello?
+[04:11.190 --> 04:11.670]  What is it?
+[04:11.710 --> 04:14.050]  I was just wondering. I'm in a warehouse. I didn't know if I lost.
+[04:14.810 --> 04:16.870]  Okay. Okay. Yep. Yep.
+[04:26.680 --> 04:28.080]  I'm almost there.
+[04:43.620 --> 04:48.240]  All right. So if I plug my export into the SmartNet...
+[04:48.860 --> 04:49.280]  Yep.
+[04:49.280 --> 04:50.660]  ...on the process.
+[04:56.370 --> 04:57.490]  All right.
+[05:00.460 --> 05:04.800]  My network status is blanking and my PC modem status is blanking on the SmartNet.
+[05:05.200 --> 05:08.140]  All right. So there's 2 ways to connect.
+[05:08.660 --> 05:12.360]  Again, one way is you can do the direct connect with toolkit.
+[05:12.660 --> 05:18.540]  As long as you get in, you just have to find the host panel and set the password there.
+[05:29.800 --> 05:30.900]  From the main one?
+[05:33.420 --> 05:37.760]  Like you'd find the main controller, like a ProCom or something.
+[05:43.800 --> 05:46.300]  I have to do it from there, not from here.
+[05:48.800 --> 05:51.240]  You can do it from there.
+[05:52.440 --> 05:58.300]  So long as you actually manage to direct connect in, you can double click in the top left.
+[05:59.740 --> 06:03.900]  And it should discover more devices than just what you're connected to.
+[06:08.010 --> 06:10.710]  All right. So go into toolkit.
+[06:14.680 --> 06:15.860]  Opening toolkit.
+[06:18.060 --> 06:19.740]  Systems lift.
+[06:34.370 --> 06:35.630]  Direct connect.
+[06:38.030 --> 06:40.010]  BACnet or reliable? BACnet?
+[06:41.950 --> 06:44.370]  BACnet or reliable? We want BACnet.
+[06:47.290 --> 06:50.390]  All right. I've connected local MSPP.
+[06:50.390 --> 06:58.260]  Now it is loading.
+[06:58.780 --> 07:00.000]  Device discovery.
+[07:11.580 --> 07:13.880]  I'm sorry I haven't done this very much.
+[07:14.800 --> 07:15.600]  No worries.
+[07:24.520 --> 07:34.380]  But on the one that's down, my IONet is blanking like a heartbeat, but I have nothing blanking at the ProPoint expansion module.
+[07:54.050 --> 07:54.490]  Okay.
+[07:54.590 --> 07:57.150]  Okay. And I have some controllers that came up.
+[07:58.030 --> 08:01.670]  And I see the panel that I'm in, REMF5.
+[08:02.650 --> 08:03.690]  So now what do I do?
+[08:05.010 --> 08:08.430]  Okay. So can you find a ProCom process?
+[08:11.490 --> 08:13.930]  ProView. Any of those controllers will work.
+[08:14.850 --> 08:16.310]  See if you can find one of them in the network.
+[08:18.110 --> 08:28.710]  All we need to know is its device ID and for you to set the master password in the NSET for it.
+[08:29.070 --> 08:31.210]  And then that's it. That will get you in with Studio.
+[08:31.710 --> 08:36.150]  Once you're in with Studio, you can set the master password using broadcast.
+[08:37.190 --> 08:38.670]  And then everything will be set.
+[08:40.750 --> 08:46.130]  All right. I'm plugged into REMF5, which is a mock process.
+[08:48.290 --> 08:48.750]  Okay.
+[08:49.950 --> 08:50.710]  Is that what you said?
+[08:51.990 --> 08:56.550]  Perfect. Yeah. So you get the mock process. Do you see anything in Toolkit?
+[09:04.000 --> 09:05.680]  Like, are you able to see the controller in Toolkit?
+[09:09.300 --> 09:12.520]  When I click on this controller...
+[09:15.140 --> 09:22.560]  All right. I'm looking at the picture of mock process with all the IPs and all that stuff.
+[09:23.100 --> 09:24.420]  Is that what I need to be?
+[09:32.070 --> 09:37.390]  What I'm talking about is on the left-hand side, there's a bunch of different tools.
+[09:37.990 --> 09:42.350]  We want NSET selected. And then on the left-hand side, there's going to be your network tree.
+[09:42.790 --> 09:45.950]  I just want the controller, the process controller, selected.
+[09:47.810 --> 09:49.450]  Have you gotten to that point?
+[09:58.200 --> 09:59.160]  All right.
+[10:00.200 --> 10:03.200]  I can hardly understand you, but I don't know...
+[10:03.200 --> 10:08.680]  When I clicked on local NSTP, it expanded. I have five controllers.
+[10:10.200 --> 10:11.260]  How do I back out?
+[10:12.400 --> 10:15.160]  No, that's perfect. You have five controllers there.
+[10:15.680 --> 10:19.440]  Okay. Can you tell me, is one of them a process?
+[10:25.430 --> 10:26.450]  Is one of them what?
+[10:27.390 --> 10:29.470]  Is one of them a mock process?
+[10:32.350 --> 10:33.890]  Yes. R-A-M-S-1.
+[10:34.050 --> 10:35.230]  Okay. Click on it.
+[10:39.540 --> 10:44.440]  All I need is two things. One is, write down its device ID somewhere.
+[10:44.800 --> 10:47.780]  I don't care where. Just write down its device ID so you have a note of it.
+[10:48.120 --> 10:52.380]  Second thing is, in Toolkit, on the right-hand side, there's a gear.
+[10:53.000 --> 11:01.580]  Right in the top right, where it has network host and device ID, all that stuff, there's a little gear. That's actions.
+[11:02.460 --> 11:07.660]  It has stuff like switch controller to version 7, factory set, set master password.
+[11:08.200 --> 11:09.540]  We want set master password.
+[11:10.040 --> 11:16.320]  Once you set the master password there, you should be able to get in with Studio using that master password, whatever, when you set.
+[11:18.280 --> 11:28.580]  All right. So, if I'm in R-A-M-S-1, which is the ProView, the number in parentheses, is that the ID that I need?
+[11:30.660 --> 11:31.720]  Backnet device ID?
+[11:39.870 --> 11:42.750]  The backnet device ID is the one you told me to write down.
+[11:47.210 --> 11:51.530]  Sure. Yeah, yeah. Just make a note of that, because we're going to use it later.
+[11:52.030 --> 11:57.490]  You'll understand why later, but just make a note of it. I just need to know what the device ID is.
+[11:59.150 --> 12:11.650]  Once you've done that, click on actions, set gear, again in the right-hand side, top right-hand side of the controller settings, and do set master password.
+[12:15.860 --> 12:24.450]  Set master password. Okay? Is there a factory master or just one of ours?
+[12:28.190 --> 12:38.150]  It doesn't really matter in this point. Just do set master password. That will get you the master pass... that will allow you to set the master password so you can connect with Studio.
+[12:41.590 --> 12:47.830]  Do you get what I'm saying? Toolkit allows you to bypass the password requirement and set the password.
+[12:49.790 --> 12:52.590]  Once you set the password, you can connect with Studio.
+[12:57.100 --> 13:03.900]  But the only way that Studio is going to request that password is if Studio requests it from that device ID.
+[13:04.420 --> 13:09.920]  So that's why I wanted you to mark down the device ID. It's going to be something that you enter in the system list.
+[13:16.670 --> 13:18.870]  All right. Hang on. You're going kind of fast.
+[13:45.740 --> 13:46.800]  All right. I'll get it set.
+[13:46.800 --> 13:57.930]  All right. So you've got the master password set, so you can disconnect from Toolkit.
+[13:59.430 --> 14:00.390]  Don't need any more.
+[14:04.620 --> 14:06.740]  So open up Studio if you don't have it open already.
+[14:08.720 --> 14:15.360]  In your connection information, you see how there's like IP address, folder name, that kind of stuff, where it says device ID?
+[14:16.080 --> 14:20.180]  Enter in the device ID that you were seeing before. If it already has it, great.
+[14:21.660 --> 14:25.520]  Just make sure it's that. It needs to match the device ID you were reading before.
+[14:26.940 --> 14:31.520]  Once it does, you can connect to it however you want to connect to it.
+[14:32.200 --> 14:38.560]  And Studio will request the master password from that device, and that will let you log in.
+[14:44.120 --> 14:45.440]  All right. So now I need to...
+[14:47.400 --> 14:52.240]  So is that the master password? Is that username or password? Just password?
+[14:54.760 --> 14:55.880]  And Studio?
+[15:00.110 --> 15:06.750]  When you set the master password, you only enter the information in the user field. You do not put anything in the password field.
+[15:08.990 --> 15:09.550]  Okay.
+[15:19.850 --> 15:21.090]  Invalid user item.
+[15:37.570 --> 15:38.510]  That don't work.
+[15:39.810 --> 15:44.850]  Well, if you set your master password in that other field, then this should absolutely work.
+[15:46.670 --> 15:49.550]  What? No, this is a process. Yeah, this should work.
+[15:52.190 --> 15:54.170]  So I need to go back to Toolkit?
+[15:55.230 --> 15:59.810]  No. No, you already did the thing in Toolkit. There's something else wrong with your configuration here.
+[16:00.590 --> 16:01.730]  Do you have internet access?
+[16:05.060 --> 16:05.860]  Not here.
+[16:07.840 --> 16:09.000]  Do you like nothing with the hotspot?
+[16:13.780 --> 16:15.020]  Yeah, I've got a hotspot.
+[16:16.540 --> 16:20.000]  If you do that, we could probably try and do a remote session where remote in.
+[16:28.480 --> 16:32.220]  All right, my hotspot is on. Let me...
+[16:46.300 --> 16:48.000]  All right, I'm connected to my phone.
+[17:00.080 --> 17:01.220]  So do you need my phone number?
+[17:03.600 --> 17:05.260]  That won't help me here.
+[17:07.400 --> 17:12.280]  I need you to go to the website, rcsupport.screenconnect.com.
+[17:23.360 --> 17:23.900]  What am I doing?
+[17:25.440 --> 17:28.340]  You're going to a website in your browser on your computer.
+[17:50.980 --> 17:53.340]  Let me know when you get your browser open.
+[17:53.340 --> 17:58.520]  All right, what is it?
+[17:59.380 --> 18:01.720]  rcsupport.screenconnect.com
+[18:02.840 --> 18:06.080]  So RC like Relial Controls, right?
+[18:06.380 --> 18:09.600]  So rcsupport.screenconnect.com
+[18:14.540 --> 18:16.160]  rcsupport, no dash?
+[18:16.180 --> 18:17.720]  Yep, no dash.
+[18:18.160 --> 18:18.660]  Screen support.
+[18:21.360 --> 18:24.320]  rcsupport.screenconnect.com
+[18:39.070 --> 18:41.370]  rcsupport.screenconnect.com
+[18:41.790 --> 18:45.530]  Like TV screen, and I'm connecting to it, right?
+[18:46.650 --> 18:49.190]  rcsupport.screenconnect.com
+[18:52.660 --> 18:59.360]  rcsupport.screenconnect.com
+[19:22.420 --> 19:25.380]  Okay, I'm there.
+[19:26.740 --> 19:28.140]  Okay, should I say join with the code?
+[19:40.530 --> 19:41.250]  Join.
+[19:42.150 --> 19:44.010]  Does it say join with the code?
+[19:50.160 --> 19:50.380]  Join.
+[19:51.940 --> 19:54.920]  Like what are you looking at? What did your screen say?
+[19:58.430 --> 20:03.550]  Oh, I got rcsupport.screensupport.com
+[20:03.550 --> 20:05.650]  And then I've got related searches.
+[20:06.310 --> 20:09.970]  No, you're doing a Google search or something.
+[20:11.370 --> 20:14.950]  So it's rcsupport. like a period.
+[20:15.850 --> 20:20.850]  Screen connect, not screen support. screenconnect.com
+[20:25.030 --> 20:26.330]  Screen connect.
+[20:28.470 --> 20:28.910]  Right?
+[20:29.990 --> 20:30.810]  Yeah.
+[20:49.910 --> 20:50.750]  Screen connect.
+[20:54.160 --> 20:55.660]  .com, yeah.
+[21:09.810 --> 21:12.650]  Yeah, I misspelled it, but I showed that I'm there. Screen connect.
+[21:26.620 --> 21:31.100]  Remote access or remote support and access software to fix IP faster.
+[21:33.580 --> 21:36.500]  Well, now you search for screen connect, I think.
+[21:37.520 --> 21:44.420]  I'm trying to get you to enter in a website name that you just put in the title, the top of your browser.
+[21:44.920 --> 21:50.730]  So that we can get a remote session going so then I can remote into your computer so that I can find out what's going on.
+[22:14.080 --> 22:15.080]  rcsupport.screen...
+[22:15.720 --> 22:17.800]  .screenconnect.com, yeah.
+[22:23.180 --> 22:25.740]  rcsupport.screenconnect.com, yeah.
+[22:29.640 --> 22:33.980]  All right, now it says the RMM used by leading NSBs.
+[22:40.430 --> 22:42.470]  Is it the security thing, security warning?
+[22:46.610 --> 22:47.790]  I don't see anything.
+[22:50.870 --> 22:55.770]  All right. If I were to send you an email with a link, would that work?
+[22:59.160 --> 23:00.200]  All right.
+[23:25.890 --> 23:29.310]  Okay, I just sent, nope, I just sent you an email.
+[23:31.670 --> 23:37.690]  At jgardener at bas-cs.com, so I just sent that.
+[23:39.670 --> 23:40.010]  Okay.
+[24:07.890 --> 24:09.010]  I don't have nothing yet.
+[24:23.880 --> 24:26.920]  Should be from helpdesk at reliablecontrols.com.
+[24:29.980 --> 24:31.320]  I don't have anything yet. All right.
+[24:35.480 --> 24:40.480]  On my browser, rcsupport.screenconnect.com.
+[24:41.420 --> 24:42.440]  That's right.
+[24:44.540 --> 24:45.060]  Okay.
+[24:47.320 --> 24:48.680]  Do I have to click sign in?
+[24:50.160 --> 25:00.940]  Nope, you should have a, in the smack dab center of your screen, there should be a thing that says join with a code and a field for you to put a code in.
+[25:16.540 --> 25:18.120]  I don't see anything like that.
+[25:20.240 --> 25:24.620]  Yeah, it should just say welcome, join with a code, right smack dab in the middle.
+[25:33.600 --> 25:50.680]  This might be a case of some letters being flipped around or something like, so RCE, that's Romeo Charlie, Sierra Umbrella, Papa Papa, OscarRomeoToronto.SierraCharlie,
+[25:52.080 --> 26:02.680]  Romeo Echo, Echo November, Charlie Oscar, November November, EchoCharlieToronto.com.
+[26:07.220 --> 26:09.520]  Yeah, that's what I got. Exactly like that.
+[26:10.040 --> 26:11.600]  It should just say join with a code.
+[26:17.900 --> 26:19.380]  What does it say?
+[26:22.220 --> 26:23.940]  Is it like a white page or something?
+[26:25.880 --> 26:33.100]  It might be blocked by the, it might be blocked by the local IT unless you're on your hotspot, like I was saying before.
+[26:41.050 --> 27:09.910]  Alright, I just got something from Liam. Run the EXD. Let me get into my outlook.
+[27:30.490 --> 27:32.450]  Alright, I've got that.
+[27:34.350 --> 27:35.630]  Look at the following link.
+[27:46.840 --> 27:48.520]  Alright, it says joining your session.
+[27:56.800 --> 27:57.720]  ScreenConnectClient1.exe.
+[28:22.810 --> 28:26.550]  Alright, I mean it says joining your session. Is there anything I need to do on this end?
+[28:27.310 --> 28:32.230]  Right, so you should have downloaded an executable file. It's a .exe file.
+[28:32.310 --> 28:38.870]  So if you check your downloads, you'll see there's a ScreenConnect.exe file. Just click on it to run it.
+[28:38.970 --> 28:41.990]  And that should be it. That should get us connected.
+[28:50.610 --> 28:52.830]  Run the EXA to downloads.
+[28:55.870 --> 28:59.730]  In your browser, like you clicked the link, it opened up a browser, right?
+[29:00.770 --> 29:02.130]  Where do you usually find your downloads?
+[29:12.150 --> 29:13.590]  I don't know. I'm not...
+[29:14.150 --> 29:19.650]  Press Ctrl J as in Juliet on your keyboard. Ctrl J as in Juliet.
+[29:20.050 --> 29:24.130]  It should drop down your downloads window or switch to the downloads page.
+[29:25.190 --> 29:27.990]  It's the most recent download. It should say ScreenConnect.
+[29:29.090 --> 29:31.190]  Yes, that's the one. Click on it.
+[29:32.910 --> 29:34.110]  Open file.
+[29:34.610 --> 29:35.050]  Yep.
+[29:45.320 --> 29:45.960]  And run it.
+[29:46.780 --> 29:47.240]  Right.
+[29:49.920 --> 29:50.880]  Alright, it's downloading.
+[29:53.340 --> 29:55.780]  I apologize. It's hard to hear in here.
+[29:57.840 --> 29:58.280]  Alright.
+[30:01.320 --> 30:04.240]  I acknowledge someone is about to connect.
+[30:04.860 --> 30:05.460]  Connect.
+[30:08.300 --> 30:10.560]  Awesome. Alright, I'm connecting now.
+[30:11.580 --> 30:14.300]  I am in. Okay, so I found your first problem.
+[30:15.000 --> 30:17.900]  Your first problem is they're all searches.
+[30:20.120 --> 30:22.860]  They're all like Google searches or Bing searches or whatever.
+[30:24.680 --> 30:27.340]  And partly due to a couple of typos.
+[30:28.500 --> 30:33.340]  Which does happen and unless you're someone like me, you're going to miss some subtleties.
+[30:33.340 --> 30:35.480]  I'm just going to show you the subtlety.
+[30:35.900 --> 30:38.240]  So you see where my mouse is hovering over right now?
+[30:39.680 --> 30:41.260]  So there's two different icons.
+[30:42.580 --> 30:45.100]  One is a... it says go to this website.
+[30:45.180 --> 30:47.640]  The other one is do a Bing search.
+[30:48.400 --> 30:52.420]  And by default, it's doing a Bing search once the first mistake happened.
+[30:52.420 --> 30:54.300]  And at that point, you're just kind of screwed.
+[30:54.880 --> 30:57.540]  So that's what was happening.
+[30:59.220 --> 31:01.500]  And again, even for someone like me,
+[31:02.200 --> 31:05.200]  it is a easy mistake for people to make.
+[31:06.000 --> 31:10.780]  And once it gets doing that, it is very hard to fix it without knowing how stuff works.
+[31:10.880 --> 31:15.780]  All right. Now moving on.
+[31:15.840 --> 31:17.980]  Let's deal with your issue now.
+[31:18.060 --> 31:21.520]  I'm just getting some stuff set up on my end here.
+[31:27.090 --> 31:31.890]  It's trying to do the... send me the file through your hotspot.
+[31:31.990 --> 31:34.690]  It's struggling a little bit, so I'm just waiting for the screen to update.
+[32:05.370 --> 32:06.250]  All right.
+[32:06.250 --> 32:07.230]  Let's go over there.
+[32:10.690 --> 32:14.070]  Yeah, the screen is now updating so I can actually click through and see stuff.
+[32:16.710 --> 32:17.590]  All right.
+[32:19.310 --> 32:20.190]  Where are we here?
+[32:21.750 --> 32:22.350]  All right.
+[32:22.870 --> 32:25.270]  I'm going to go back to the beginning toolkit.
+[32:26.550 --> 32:29.350]  I just want to make sure we got everything going right.
+[32:36.300 --> 32:37.180]  TZ 1186.
+[32:41.350 --> 32:42.250]  What's that?
+[32:44.390 --> 32:48.690]  1186. I'm just reading things out loud. Yep.
+[32:50.250 --> 32:52.210]  Nine is the line where I'm at.
+[33:09.800 --> 33:12.120]  And REMS-1 is the main control.
+[33:13.840 --> 33:19.120]  Right. So all I really wanted to know was that backed up device ID, so I'm copying that.
+[33:19.300 --> 33:23.460]  End. Actions. Set master password.
+[33:23.840 --> 33:25.180]  I'm just going to do long view.
+[33:29.660 --> 33:30.740]  All right.
+[33:31.180 --> 33:33.200]  So now that should be it.
+[33:33.500 --> 33:39.500]  As long as Studio can connect and you get that login prompt, that will work.
+[33:39.940 --> 33:41.620]  So I'm going to do...
+[33:41.620 --> 33:43.700]  Make sure that's in there. Yep, you had that in there, right?
+[33:43.880 --> 33:46.440]  So everything here looks right so far.
+[33:46.880 --> 33:48.800]  Direct connect. Backnet.
+[33:54.290 --> 33:59.250]  Once the user login field comes up, I'm just going to type long view on the top here.
+[33:59.650 --> 34:00.950]  And I should get in.
+[34:03.210 --> 34:04.710]  There we go.
+[34:08.100 --> 34:08.900]  We're in.
+[34:09.220 --> 34:10.120]  All right. So there they are.
+[34:12.220 --> 34:17.300]  Now, you won't be able to access the web portion at this point because we're doing a direct connect.
+[34:17.380 --> 34:20.380]  It's serial. It's not Ethernet, right?
+[34:20.420 --> 34:21.900]  There's no IP address with serial.
+[34:22.160 --> 34:31.860]  So if you want to access the web portion, send any files, receive any files, stuff like that, you will need to connect over Ethernet, IP, etc.
+[34:32.640 --> 34:36.360]  Now, luckily enough, you have all the information to how to connect now.
+[34:36.680 --> 34:41.960]  But to fix the master password now, we're going to go to system setup.
+[34:42.020 --> 34:43.740]  This is what I was trying to get you to get to before.
+[34:44.760 --> 34:55.820]  So under system setup in RC Studio, and you do set master password, this will send a broadcast to all of the controllers in the network to have this master password, whatever it is you type here.
+[34:56.280 --> 34:58.460]  So if you want long view, I can put in long view.
+[34:58.480 --> 35:00.960]  But if you have a password, you just want long view.
+[35:00.960 --> 35:01.760]  Okay, perfect.
+[35:03.600 --> 35:04.560]  Long view.
+[35:05.240 --> 35:13.760]  Awesome. All right, it's set. So now you should be able to connect normally. I would normally connect whatever, and you'd have no problems logging in.
+[35:15.880 --> 35:26.900]  All right, so in REMF-5 on the left-hand side, the bottom one, this is the one that the auxiliary board is hanging off of.
+[35:27.460 --> 35:27.940]  Okay.
+[35:28.860 --> 35:33.160]  Is there a way in toolkit that I can find out?
+[35:33.820 --> 35:34.420]  Tom failure.
+[35:35.580 --> 35:36.240]  What is wrong?
+[35:38.040 --> 35:45.640]  Right here. So in the drop-down, right here under firmware, it tells you the different IO statuses here.
+[35:46.380 --> 35:54.800]  And IO2, so there's a second board, I guess. So IO1 is this controller, just to be clear.
+[35:54.800 --> 35:59.460]  The process is a mockpro com with a mockpro point integrated.
+[36:00.240 --> 36:09.420]  It's why it has the IO port that's dedicated for the expanders. It's because there's already one. And that's it right here. So that's that first one.
+[36:09.980 --> 36:16.740]  So the second one is going to be the one that is not connected at the moment or is failing to connect.
+[36:17.260 --> 36:24.700]  So if it's powered off, you'd have a com failure. If you have no network connection, you'd have a com failure, etc.
+[36:24.800 --> 36:27.720]  Right. So it's just com failure. That's what the issue is.
+[36:29.940 --> 36:31.580]  There's another place to look for the errors.
+[36:31.700 --> 36:33.780]  Between the process and the expander.
+[36:34.160 --> 36:45.520]  And the expander, exactly. Yeah. Yeah. So it says com failure. So whether that means the expander is offline, whether it means that it's physically disconnected, I don't know.
+[36:47.420 --> 36:49.420]  But it just means that it's not communicating at all.
+[36:50.960 --> 36:53.680]  Yeah. Is it blinking, the pro point?
+[36:57.900 --> 37:08.740]  Yeah. The process controller IO is blinking like a heartbeat. The bottom one isn't doing nothing on the IO.
+[37:09.760 --> 37:12.420]  Right. I got like 2.7 volts.
+[37:13.280 --> 37:14.980]  Yeah. Yeah. Okay.
+[37:15.980 --> 37:22.480]  Now when you're reading the voltage, are you reading the voltage while it's connected? Because if you are, that's not going to tell you a whole lot.
+[37:23.200 --> 37:25.980]  You have to disconnect it and then read the voltage.
+[37:32.260 --> 37:34.700]  Disconnect it from the process?
+[37:37.980 --> 37:41.460]  If you're at the pro point, you're looking at the expander.
+[37:42.300 --> 37:49.640]  You disconnect the IO and then you measure the voltage relative to the ground of the pro point.
+[37:50.100 --> 37:54.320]  You're going to do a DC measurement to the IO net that's been disconnected.
+[37:54.880 --> 37:58.680]  If you have good continuity, you should see some volts, right?
+[38:00.580 --> 38:08.760]  But the moment you connect that to your IO, you're going to see the voltage of your board. You're not going to see the voltage of the network anymore.
+[38:15.100 --> 38:18.620]  All right. Disconnected from the expander. I have zero and zero.
+[38:23.780 --> 38:33.880]  You have zero volts when you're measuring between ground and the little terminal screw on the disconnected IO?
+[38:37.380 --> 38:37.900]  Yes.
+[38:38.480 --> 38:49.760]  Okay. I'm wondering if it might be the case that the process is fuses. Does it have fuses on the IO? On yours? I can't remember if it has it.
+[38:50.640 --> 38:56.880]  If I go to ground through the prongs of the IO on the expander...
+[38:58.140 --> 38:58.760]  It probably reads great.
+[38:59.500 --> 39:05.620]  Yeah, exactly. So the issue is going to be at the process as far as I'm concerned.
+[39:05.820 --> 39:11.440]  And what it sounds like right now is that the fuses are blown, but I don't know.
+[39:12.100 --> 39:14.860]  Can you go over to the process and do the same thing?
+[39:16.140 --> 39:24.840]  You don't have to disconnect the cable in this case. We just want to see, do we have voltage on the IO at the process side?
+[39:25.820 --> 39:33.060]  Like, leave the probe point disconnected physically from the process.
+[39:34.660 --> 39:44.860]  And then do a measurement of the IO net at the process, the process side, because it sounds like the fuse is blown, so there's no voltage.
+[39:46.260 --> 39:49.760]  Assuming it has a fuse. I think it does. Yeah, it should have a fuse.
+[39:49.760 --> 39:54.260]  So if you're looking at your screen, you see the little light bulbs moving around?
+[39:54.880 --> 39:57.860]  Yeah, exactly. The light bulbs, yeah.
+[40:02.780 --> 40:08.420]  Okay, well, we might have a problem here.
+[40:08.700 --> 40:13.860]  So can you take out the bulb on the one you didn't measure anything on and do an ohm reading on that fuse?
+[40:14.320 --> 40:16.900]  It should be about 17 ohms.
+[40:18.540 --> 40:22.860]  So that's 17. 17 ohms.
+[40:32.060 --> 40:34.140]  That looks like a pain in the ass to get back in.
+[40:34.680 --> 40:40.860]  Yeah, sorry. I didn't design them.
+[40:48.760 --> 40:54.980]  If you've got fingers like mine, it's not a big deal. I've got skinny little fingers, but if you've got mechanic fingers, sorry.
+[40:57.080 --> 40:57.820]  Good luck.
+[40:57.820 --> 41:03.580]  Right now I have 15 ohms across the bulb.
+[41:04.980 --> 41:09.660]  Okay, so that should be good. So then the question becomes, why don't we see voltage?
+[41:11.860 --> 41:21.480]  I would expect, well, I don't know 100% if we're supposed to see it on both ends, but that explains the zero reading you were getting before when you were doing a measurement.
+[41:24.180 --> 41:44.660]  Unless, can you double check that the terminal inserts that the screws have made contact on the wire and not the insulation itself?
+[41:45.960 --> 41:49.120]  That could be another reason for...
+[41:49.120 --> 41:51.660]  Okay, okay. So that's good.
+[41:57.680 --> 42:03.400]  At the moment, it sounds like there's a problem with the process. I mean, that's what it sounds like to me, like physically with the process.
+[42:05.860 --> 42:13.540]  Is there another process just temporarily that you could try connecting? Oh, actually.
+[42:15.520 --> 42:22.020]  Is this a new pro point that you're trying to put on or is this like an existing one that's hanging off of it that you're trying to troubleshoot why it's not working?
+[42:27.110 --> 42:28.470]  Play that part again.
+[42:29.270 --> 42:37.450]  So is this a new pro point that you're putting on here or is it you've come over to the site and you found, oh, there's a pro point that's not working?
+[42:41.570 --> 42:48.950]  I replaced this pro point probably six months to a year ago and everything's been working fine until Friday.
+[42:49.950 --> 42:50.450]  Right.
+[42:53.370 --> 43:04.970]  So basically the reason I was checking is because sometimes it will happen that someone will replace a pro point, they won't set the DIP switches, but that's not the case here because obviously if it was working for like six months, it's not like someone came along and messed with the DIP switches.
+[43:05.510 --> 43:08.510]  So all I can think of is a physical issue at this point.
+[43:09.770 --> 43:20.430]  You can connect the wires to a power cycle on both controllers. If that doesn't resolve it, then my current assumption is that there's still something wrong with the...
+[43:22.850 --> 43:26.650]  I think there's something wrong at the pro sys itself.
+[43:28.450 --> 43:37.670]  The only way to confirm that would be to have another pro point to test on it or another pro sys to test on the pro... I can't tell at this point which one it is.
+[43:38.430 --> 43:46.130]  It sounds like it's the pro sys though, because you're reading zero volts on one of the lines. Your fuse looks good.
+[43:46.130 --> 43:56.230]  But when you did a measurement on the pro point, you measured voltage on both pins. Right? To me that's pretty damning. That sounds like there's an issue with the pro sys.
+[43:59.630 --> 44:00.110]  Okay.
+[44:01.750 --> 44:03.670]  Do you have a pro sys you can swap it with?
+[44:07.160 --> 44:12.100]  Well, that I don't know.
+[44:12.980 --> 44:13.460]  Okay.
+[44:14.880 --> 44:15.860]  I was going to say...
+[44:18.880 --> 44:31.140]  Yeah, I was going to say if you are going to do a swap, I would say while you're connected here, do a backup of the panel file and studio and do a backup of the mset.
+[44:31.780 --> 44:37.420]  So that's the connection settings. It's everything you see in toolkit is what the mset backup is.
+[44:38.040 --> 44:45.240]  So if you need to put it on another controller, it's way faster than putting in the device ID, putting in the IP address, putting in the, you know, etc, etc, etc.
+[44:47.920 --> 44:51.740]  So right here, for example, I can just do backup.
+[44:54.160 --> 44:57.100]  No worries. You see panel, blah, blah, blah, blah, blah.
+[44:57.160 --> 45:04.520]  So if you do happen to swap it, it is very quick. You can just do mset like once you get the other control on there, right?
+[45:04.580 --> 45:11.020]  You do actions, restore, you pick that file, and then it would fill everything in just like how you have it seen right here.
+[45:11.020 --> 45:23.160]  And then studio, I want to backup the panel, so then we've got a backup of it.
+[45:37.890 --> 45:39.630]  Doing five, yeah.
+[45:58.390 --> 46:02.410]  Just doing all of them. Won't take that much longer.
+[46:07.130 --> 46:09.250]  Yeah, so that's doing the backup.
+[46:12.030 --> 46:17.650]  So you're wondering about the units that's running right now. What would happen to them?
+[46:18.690 --> 46:24.590]  While doing the backup, you can check the outputs of the controller, you can check the programming of the controller, find out what it's actually controlling.
+[46:25.730 --> 46:30.730]  That will give you an idea. But, I mean, it already has a problem right now because the probe point is not working.
+[46:32.250 --> 46:41.210]  So, of course, the other option is...
+[46:42.650 --> 46:44.010]  Sorry, go ahead.
+[46:47.060 --> 46:57.320]  All right, so if I go back to my shop, if we have one, I can download it there. So when I get out here, all I got to do is unplug everything and plug it back in.
+[47:00.800 --> 47:01.820]  Would that be a true statement?
+[47:04.960 --> 47:08.980]  Sorry, I missed what you were saying before. Say it again.
+[47:10.200 --> 47:18.140]  All right. If I take my laptop back to our office, and if we do have a process, I can download it there.
+[47:18.660 --> 47:22.560]  So when I come out here, all I got to do is just unplug the plugs and plug it back in.
+[47:23.100 --> 47:29.440]  Exactly. Yep, you got it exactly right. Yep. That's the idea of doing the backup right now.
+[47:29.440 --> 47:34.680]  So you can do that restore, have it programmed with Advice ID, the panel file, everything.
+[47:34.680 --> 47:44.920]  The only thing you have to watch out for is our controllers have something like a 72-hour time of how long it holds the programming of the controller.
+[47:45.760 --> 47:53.700]  It's like held by a capacitor. So if you do that and you leave it over the weekend, that might be too long, right?
+[47:58.720 --> 48:16.540]  It's still fine. All I'm saying is that make sure when you install it, if you're to do that, make sure that when you install it, if there is a large gap in time, like several days to a week, month, whatever it is, you'll probably have to restore the panel file.
+[48:17.860 --> 48:23.540]  That's all I'm saying. That's the only thing you have to look out for. Yep.
+[48:26.360 --> 48:29.780]  If I go to the office, that's going to install the panel file, right?
+[48:30.680 --> 48:38.420]  Yes, but what I'm saying is the panel file, the controller programming information is held in a capacitor.
+[48:39.160 --> 48:47.540]  The capacitor is charged lasts like 72 hours approximately, right? Three days. So I don't know what the time frame is.
+[48:47.540 --> 48:52.320]  I'm just letting you know that if the time frame is three days or more,
+[48:53.220 --> 48:56.600]  you may have to restore the panel file on site.
+[49:00.580 --> 49:06.340]  Not a huge deal. You already have all your stuff there. All I'm saying is,
+[49:08.720 --> 49:15.740]  it's just a consideration. You may have to do it. If it's less than 72 hours, don't even worry about it.
+[49:22.850 --> 49:29.190]  I still don't understand what you're saying. Is it going to just disappear or on a power loss or what?
+[49:29.650 --> 49:36.550]  No, what I'm saying is, I understand you're going to go to the office and set up some programming.
+[49:36.910 --> 49:43.230]  I don't know what your guys' schedule looks like. I don't know if it's a case of you're going to go back to the office, do the thing, and come back a week later.
+[49:43.350 --> 49:50.570]  I don't know if it's going to be the same day. If you come back a week later, then what I'm saying matters.
+[49:51.110 --> 49:57.130]  If you're doing it same day, it doesn't matter. What I'm saying does not matter at all. Does it apply here? Don't even worry about it.
+[49:59.780 --> 50:03.620]  Yeah, I mean, if I do this, I've got to get this shit back up running.
+[50:04.420 --> 50:12.900]  Okay, perfect. Okay, so yeah, it's a case of you go to the office, you restore the MSET, you restore the panel file, then it's just a matter of swapping it.
+[50:13.120 --> 50:19.420]  Yeah, take all the physical connections, swap them. That's it. Easy. Done.
+[50:20.320 --> 50:20.700]  Okay.
+[50:21.720 --> 50:27.560]  Now, that doesn't solve a second problem though, which is, why does this keep happening?
+[50:31.280 --> 50:36.760]  My guess, something related to the electrical, but I don't know.
+[50:40.440 --> 50:46.540]  Okay. All right. I think I got it.
+[50:46.920 --> 50:54.000]  Yeah. Now, there's one other thought I had as well, which is, if you're going to be swapping a process,
+[50:54.960 --> 50:59.260]  and if the issue is a pro point, and this has been like a recurring thing,
+[51:00.120 --> 51:04.840]  what if you just had another process there instead of a pro point dangling off of it?
+[51:08.460 --> 51:10.820]  I guess it's a question for whoever's doing the programming.
+[51:13.320 --> 51:18.120]  But that's another consideration, especially if it's happened multiple times, right?
+[51:18.260 --> 51:20.280]  This particular issue, if it's happened multiple times.
+[51:21.660 --> 51:25.220]  But anyways, yep, that's it. So anything else you need from me?
+[51:27.800 --> 51:29.060]  I don't think so.
+[51:31.860 --> 51:32.940]  All right. Okay.
+[51:34.680 --> 51:35.720]  All right. Thank you.
+[51:35.980 --> 51:38.180]  Yep. You're welcome. Okay. Bye.
+[51:39.000 --> 51:40.560]  Bye. Bye.

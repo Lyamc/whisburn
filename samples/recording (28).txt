@@ -1,0 +1,27 @@
+[00:00.000 --> 00:03.700]  No, okay. Because I can... oh, yeah.
+[00:04.200 --> 00:06.300]  Hello, I have the controls technical support, Liam speaking.
+[00:09.080 --> 00:11.240]  Yeah, Liam, this is Todd with Five Star Mechanical.
+[00:11.820 --> 00:16.240]  Hey. Hey, we have a really stupid one here. We set up WebView
+[00:16.240 --> 00:20.280]  here in the office just so we could play with it and get better with it. And so there's three of us sitting here.
+[00:20.820 --> 00:24.320]  How do I get my Enterprise schedules to show up in the tree
+[00:24.320 --> 00:28.200]  in the navigation tree? Enterprise schedules? Or are you talking
+[00:28.200 --> 00:29.660]  about like schedule schedules?
+[00:32.200 --> 00:35.820]  Well, I just want the customer to be able to modify an Enterprise schedule
+[00:35.820 --> 00:39.200]  just from the navigation tree, not from the main tree.
+[00:39.820 --> 00:44.240]  So when you're adding stuff, there's either object or keyword. I believe you're looking
+[00:44.240 --> 00:45.060]  for keyword.
+[00:55.580 --> 00:58.240]  Okay. Yeah, that's not intuitive, but we got it now.
+[00:59.380 --> 01:01.200]  Thank you. I knew it had to be simple.
+[01:03.140 --> 01:05.480]  Yep. That was really all we needed.
+[01:06.320 --> 01:09.320]  Awesome. Now we're all looking at each other
+[01:09.320 --> 01:10.060]  really funny.
+[01:12.880 --> 01:17.300]  So just so you know, now you're right. I don't like that they put
+[01:17.300 --> 01:21.440]  keyword under Enterprise things like navigation groups, for example.
+[01:21.940 --> 01:24.920]  But it comes from a studio paradigm.
+[01:26.220 --> 01:29.200]  So objects are the
+[01:29.200 --> 01:33.360]  object, RCP objects, right? Keywords are everything
+[01:33.360 --> 01:34.140]  else.
+[01:36.740 --> 01:40.120]  Yeah. Like links, folders, etc.
+[01:40.990 --> 01:44.620]  Yep, you're welcome. Appreciate it.
+[01:45.100 --> 01:45.300]  Bye.
+[01:46.260 --> 01:47.040]  ...

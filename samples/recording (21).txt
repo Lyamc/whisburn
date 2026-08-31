@@ -1,0 +1,425 @@
+[00:01.100 --> 00:04.800]  This is Reliable Control Support, Philip speaking. How can I help you?
+[00:06.780 --> 00:14.220]  Hi, Paul. This is Austin, the Building Management Systems. We currently have a ticket number open with you guys that we're just trying to get resolved.
+[00:16.420 --> 00:19.340]  And I need that ticket number if you're ready for it.
+[00:19.840 --> 00:23.500]  Yeah, I think I might actually see it here. Is it 190-742?
+[00:26.000 --> 00:27.480]  Yep, that's it.
+[00:28.340 --> 00:30.820]  Let me see here. I'm just taking a look at it to see what's going on.
+[00:31.660 --> 00:35.680]  So, yeah, we need something off to access to one of our WebD pages.
+[00:36.220 --> 00:42.040]  So, we've been trying to get that back and figure out any coordination with the IQ guy on site over there.
+[00:42.560 --> 00:45.720]  Changing a couple of the back-end efforts that we needed.
+[00:46.940 --> 00:48.280]  But now it's the current moment.
+[00:49.320 --> 00:54.480]  I'm not sure what happened, but I'm not able to see...
+[00:54.480 --> 00:58.000]  the main system, I suppose.
+[01:01.220 --> 01:03.420]  At least on the reliable side through BACnet.
+[01:04.380 --> 01:06.000]  So, I'm not sure what just happened.
+[01:08.180 --> 01:11.780]  And at the same time, someone's going to get that resolved.
+[01:12.340 --> 01:18.860]  I'm just curious what I'm supposed to change on the WebView side in order to get that back online.
+[01:18.860 --> 01:24.820]  If we just need to change the port number through WebView, or how should we go about that?
+[01:25.780 --> 01:28.680]  Yeah, it looks like it'll be just the port number on the WebView side.
+[01:30.500 --> 01:33.100]  I see Mike Buchanan replied at some point.
+[01:33.460 --> 01:37.480]  He has a screenshot that just kind of shows exactly where the port number will need to be changed.
+[01:37.600 --> 01:40.040]  It's just in the site settings in WebView.
+[01:44.800 --> 01:45.380]  Okay.
+[01:56.150 --> 02:00.560]  And so, you said on the site right now you're not seeing some of the controllers, right?
+[02:03.280 --> 02:03.860]  Correct.
+[02:08.400 --> 02:09.960]  That's just in the studio?
+[02:13.140 --> 02:14.400]  Yeah, in the studio.
+[02:45.240 --> 02:47.840]  Okay, I see you're working with Thomas on this one.
+[02:48.120 --> 02:53.100]  He's available if you want me to pull him back on here and then have him take over?
+[02:55.740 --> 02:56.420]  Yeah, that's fine.
+[02:57.340 --> 03:00.660]  Okay, perfect. Just stand in line. I'll have him take over.
+[03:03.020 --> 03:03.960]  Sounds good. Thanks, Philip.
+[03:07.760 --> 03:10.100]  Hello, Tom speaking.
+[03:12.000 --> 03:14.940]  Hey, Tom, this is Austin from the building management system. How's it going?
+[03:15.740 --> 03:16.580]  Hey, how are you doing?
+[03:17.000 --> 03:22.280]  I am. One sec, let me figure out... No, that's not the right one.
+[03:22.500 --> 03:25.680]  My full screen can't get to the top. One sec.
+[03:27.000 --> 03:30.180]  All right, there we go. I think. Yeah.
+[03:30.600 --> 03:30.980]  Okay.
+[03:34.200 --> 03:35.840]  All right, so what's happening?
+[03:36.140 --> 03:41.600]  So I was just messing with the new port number. I just haven't saved it yet.
+[03:43.060 --> 03:47.180]  But we... I believe Eric kind of started this video. I'm just kind of taking it over.
+[03:47.360 --> 03:53.020]  We've lost our web view page over at this place for our church.
+[03:53.560 --> 03:58.220]  And then upon doing that, we tried speaking with the IT guys, because I was told yesterday,
+[03:58.540 --> 04:02.560]  if I just switch over the static back and forth and let them know to open that up,
+[04:02.560 --> 04:05.140]  we should have it back. Okay.
+[04:05.360 --> 04:11.400]  And then all of a sudden we seem to have lost back net size to our controller out there.
+[04:11.440 --> 04:13.340]  So I'm not quite sure what just happened.
+[04:15.140 --> 04:17.580]  This is the connection that you're doing right here?
+[04:20.360 --> 04:20.860]  Yes.
+[04:24.040 --> 04:28.840]  And you're using a different port?
+[04:31.340 --> 04:34.340]  Same port. Yeah. All right. That makes sense.
+[04:35.640 --> 04:39.040]  And you're on the same machine as this guy or no, right?
+[04:40.340 --> 04:44.600]  You're not on the web view. You're connecting...
+[04:48.180 --> 04:50.660]  I'm connecting remotely right now.
+[04:53.740 --> 04:57.680]  So this should be... Oh, that's the same port.
+[05:01.940 --> 05:04.640]  I hadn't changed... I just typed...
+[05:04.640 --> 05:09.080]  This one originally said 47898. I hadn't saved it yet.
+[05:09.440 --> 05:09.940]  Oh, yeah.
+[05:11.560 --> 05:17.680]  But we were going to switch it to 43898 and then have him open that port up for us.
+[05:18.480 --> 05:23.860]  Upon doing so, it seems that we've lost access to the back net size.
+[05:23.860 --> 05:26.600]  It won't be a long view. I can type it in real fast.
+[05:31.030 --> 05:33.390]  But we're still getting the RCP. Interesting.
+[05:34.850 --> 05:36.570]  And it wasn't like this before, right?
+[05:38.030 --> 05:40.550]  It was working. You haven't made any changes?
+[05:43.390 --> 05:43.830]  No.
+[05:58.990 --> 05:59.850]  Back here.
+[06:09.380 --> 06:15.300]  And you haven't changed anything. So it was working before, and now it's not. And IT says nothing has changed.
+[06:19.280 --> 06:27.320]  Yeah, both ports are open right now. Ports were 47898 and 43898.
+[06:38.480 --> 06:41.460]  Can we connect to the toolkit and take a look?
+[06:42.160 --> 06:43.520]  See what it does?
+[06:45.120 --> 06:49.820]  It won't. It will let us connect to reliable, but it won't let us connect to the back net size.
+[06:49.960 --> 06:51.820]  So the back net doesn't work there either.
+[06:54.280 --> 06:57.860]  Can we see it? Don't have to connect, just I want to see the line.
+[07:01.130 --> 07:01.530]  Yeah.
+[07:02.770 --> 07:05.730]  That guy, okay. Let's try. Oh, stop.
+[07:41.240 --> 07:41.760]  Nice.
+[07:56.360 --> 08:01.480]  If it comes through as well, I can try to rope in the IT tech.
+[08:05.100 --> 08:09.460]  We can do the phone call and maybe we can discuss what do you see on his end.
+[08:14.390 --> 08:16.330]  He was just poking Liam here.
+[08:19.020 --> 08:19.440]  Okay.
+[09:11.380 --> 09:46.660]  Oh, I can connect RCP. Oh, I did back net again.
+[09:52.460 --> 09:53.260]  Yeah.
+[10:00.660 --> 10:02.240]  Mashing the password.
+[10:05.750 --> 10:06.430]  Oh, yeah.
+[10:08.350 --> 10:11.570]  And that's your connecting device that you're connecting to?
+[10:17.120 --> 10:17.920]  Yeah.
+[10:22.800 --> 10:23.880]  How's the net?
+[10:25.500 --> 10:27.800]  And we're connecting to eight.
+[10:47.200 --> 10:48.960]  Oh, we probably need the net.
+[10:55.900 --> 10:59.400]  But the net's not working. Why is the net not working?
+[11:02.630 --> 11:05.870]  At least with back net. Weird. Okay.
+[11:11.610 --> 11:12.570]  Yeah, exactly.
+[11:19.580 --> 11:25.560]  If that port was closed, would we be able to be reliable, like RCP? Would that be able to reach out?
+[11:26.560 --> 11:30.840]  Well, RCP is a different port. So that's why RCP is probably working.
+[11:34.400 --> 11:39.780]  So we double check to make sure the firewall is not blocking it too?
+[11:40.240 --> 11:50.100]  Well, I think it's something else. So what's happening? Well, give me one sec. I'm just going to slide Liam in here. One sec.
+[11:53.120 --> 11:54.840]  James is the... Oh, it doesn't matter.
+[11:55.260 --> 11:56.160]  Well, now you're added.
+[12:00.040 --> 12:02.900]  I was going to talk about it, and he's going to have no idea what I'm talking about.
+[12:03.040 --> 12:05.840]  No. Well, you said add me first. Okay.
+[12:06.100 --> 12:07.120]  No. Okay, first.
+[12:07.120 --> 12:09.500]  Are you on screen connect? Yeah.
+[12:09.500 --> 12:11.820]  So first thing, let's try doing reliable.
+[12:13.640 --> 12:14.680]  That works.
+[12:15.920 --> 12:16.960]  Oh, do you log in?
+[12:25.150 --> 12:31.610]  So the thing I'm seeing is we're trying to connect to this guy right here, and there's a net on.
+[12:32.350 --> 12:33.970]  Oh, I was ready to cancel.
+[12:35.090 --> 12:36.370]  We're both moving the bell thread.
+[12:36.370 --> 12:42.270]  There's a net for that. So I'm wondering if maybe that's what we're running into. Is that correct?
+[12:43.450 --> 12:45.510]  Yeah, that looks correct.
+[12:49.090 --> 12:54.250]  Are you sure it's correct? Because that's not the IP that he's got connected on the bottom.
+[12:56.390 --> 12:57.750]  Are you sure?
+[12:59.550 --> 13:00.950]  Yeah, that's the same IP.
+[13:03.850 --> 13:06.710]  Sorry, 4K monitor. Yep. Okay, cool.
+[13:08.730 --> 13:11.090]  Sorry, I have too much pixels. I couldn't see.
+[13:11.570 --> 13:15.570]  No, I have all three of the screens. So four screens open.
+[13:16.430 --> 13:17.950]  Oh, oh, yeah, that would do it.
+[13:18.890 --> 13:22.190]  All right. Let's try. It's giving me hilarious. So it works this time.
+[13:23.150 --> 13:25.290]  No, I tried it a couple of times. It didn't work.
+[13:25.290 --> 13:26.050]  Okay.
+[13:27.990 --> 13:31.630]  So what was the port before? There must be some other port.
+[13:35.580 --> 13:38.760]  The first port was 47898.
+[13:40.920 --> 13:45.620]  And that's what they were both set to. Static Bagnet port, the Bagnet over IP port.
+[13:46.400 --> 13:47.500]  Yeah, I'm just looking at it.
+[13:48.040 --> 13:54.460]  Yeah, that is what it was set for. I think IT might have made your rule go away.
+[13:55.700 --> 13:58.760]  But... oh, sorry, log in again.
+[14:09.340 --> 14:15.800]  Yeah, like the... there should be a... it should work. There's no reason why it should not work.
+[14:16.020 --> 14:17.380]  Yeah, agreed.
+[14:18.180 --> 14:25.120]  Especially if we can connect via RCP. So that means there is... it's missing a port forwarding rule for this port.
+[14:25.120 --> 14:29.340]  It was probably actually something else before.
+[14:31.560 --> 14:35.240]  Or someone just turned off the port forward rule.
+[14:38.560 --> 14:44.620]  Yeah, I think he shut it off at first and then turned it back on.
+[14:44.860 --> 14:49.320]  So I'm wondering if maybe he just re-enabled the port forwarding rule.
+[14:51.660 --> 14:55.380]  Because I was wondering the same thing. Because that turtle IP, I know is what it is.
+[14:57.580 --> 15:02.120]  But I guess to... we'll handle that side and call back if needed.
+[15:02.800 --> 15:08.060]  But for the static Bagnet port on the WebView side, all we need to do is physically change that, right?
+[15:08.100 --> 15:10.720]  Once he unlocks that port too...
+[15:10.720 --> 15:14.320]  Yeah, you shouldn't even have to change anything on the port for that.
+[15:15.340 --> 15:20.040]  The port... talk about the port forwarding for WebView. That was a different thing.
+[15:21.040 --> 15:24.340]  Yeah, that's what my concern was.
+[15:25.240 --> 15:26.420]  It changed that port number.
+[15:28.400 --> 15:28.900]  Yeah.
+[15:31.220 --> 15:38.820]  I noticed there was no BBMD or anything selected on that other port that you're thinking of going...
+[15:40.100 --> 15:48.860]  I mean, I could try other ports, but it's faster for just having someone checking the... that there's a port that is forwarded.
+[15:49.060 --> 15:54.200]  My guess is they forwarded 47808 and that was changed and nobody knows stuff is broken.
+[15:57.960 --> 15:58.480]  So...
+[15:58.480 --> 16:00.660]  Well, we can get IP on the phone, right?
+[16:00.720 --> 16:02.820]  We're texting...
+[16:03.380 --> 16:03.640]  Yeah.
+[16:04.000 --> 16:05.700]  Can we just loop them in here?
+[16:10.190 --> 16:12.490]  Do you mind if we just loop them in on the call?
+[16:12.590 --> 16:13.370]  Yeah, go for it.
+[16:13.570 --> 16:15.190]  Yeah, no, no. Yeah, go ahead.
+[16:16.410 --> 16:44.770]  All right.
+[16:45.390 --> 16:46.810]  What version of Toolkit do they have?
+[16:47.230 --> 16:50.690]  Oh, God. That's what happens when we both click it.
+[16:54.690 --> 16:56.110]  Check what version of Toolkit he has.
+[16:56.330 --> 16:58.710]  I got it right here on...
+[17:01.490 --> 17:01.930]  That's old.
+[17:01.930 --> 17:03.330]  I think it's one version too old.
+[17:03.330 --> 17:06.550]  Well, I think it worked. I think this version actually works.
+[17:07.750 --> 17:08.570]  Let me try one more time.
+[17:08.750 --> 17:09.850]  Oh, that's pro-web here.
+[17:10.190 --> 17:11.930]  Yup, yup.
+[17:12.950 --> 17:19.810]  Yeah, so port forwarding rules. Can you tell us if you have a port forwarding rule for...
+[17:19.810 --> 17:21.450]  Give me a second. I have the screenshot here.
+[17:23.050 --> 17:23.450]  47898?
+[17:23.750 --> 17:24.150]  Yeah.
+[17:24.310 --> 17:25.810]  From the web view side too.
+[17:28.350 --> 17:31.850]  Okay. Well, let me put this with you guys first.
+[17:31.850 --> 17:35.390]  I'm not the most network savvy person here.
+[17:35.430 --> 17:37.370]  That's okay. That's why I'm here.
+[17:38.130 --> 17:45.510]  So, yes. I'm like, I've got lots of other duties and firewall router is not one of them that is top of my list.
+[17:46.210 --> 17:54.810]  So, I just went and looked everywhere that had 47898. And I saw that...
+[17:54.810 --> 17:57.010]  First off, I've got a 40 gate firewall.
+[17:57.010 --> 18:05.450]  So, instead, look for a rule for 21068 because that is there and it does work.
+[18:08.230 --> 18:08.830]  21068?
+[18:09.510 --> 18:09.810]  Yup.
+[18:10.730 --> 18:14.490]  All right. Let me check here really quick.
+[18:15.990 --> 18:24.140]  Okay. I do see that. Yes.
+[18:24.700 --> 18:29.360]  Okay. So, we just need another rule. Same exact as that, but a different port.
+[18:31.620 --> 18:34.600]  Oh, all right. We can do that. Hold on.
+[18:34.840 --> 18:37.800]  That was 21068.
+[18:39.540 --> 18:42.700]  Take that one and we'll just clone it.
+[18:47.980 --> 18:50.160]  The only time that cloning is acceptable.
+[18:51.960 --> 18:53.100]  Maybe the only time.
+[18:55.460 --> 18:58.580]  Look, I'm totally for cloning. I don't have to do work.
+[19:02.240 --> 19:07.700]  So, just change the 21068 to 43898?
+[19:07.980 --> 19:16.100]  Right. Again, so long as we still have the old rule because if we lose the old rule, we'll also be very, very sad.
+[19:19.420 --> 19:21.340]  Keep that 21068, correct?
+[19:21.340 --> 19:27.960]  Yeah, yeah. 21068 and we also need 47898.
+[19:30.880 --> 19:33.780]  47898. All righty. That has been created.
+[19:34.740 --> 19:35.120]  Sweet.
+[19:37.780 --> 19:40.640]  Let's give it a try. Oh, so exciting.
+[19:41.840 --> 19:44.920]  Yeah, I'm very excited to see what's going to happen.
+[19:50.050 --> 19:51.410]  Great, it's in.
+[19:55.670 --> 19:58.370]  I'll never stop.
+[20:03.460 --> 20:04.180]  And...
+[20:04.180 --> 20:07.460]  That thing's too long. Yeah, port advisor restriction failed.
+[20:11.200 --> 20:14.840]  That didn't work. Does it have to reboot to upload it?
+[20:17.180 --> 20:21.040]  No, here's another spot that's got...
+[20:21.040 --> 20:26.580]  Here's another one that's got 21068. This is probably more it.
+[20:27.320 --> 20:34.380]  Okay, it might be a two... Oh, sorry, I typed this. Yeah, it might be a in and out type rule, I'm assuming you got there.
+[20:40.220 --> 20:40.780]  47898.
+[20:43.740 --> 20:44.300]  47898.
+[20:48.200 --> 20:51.300]  That already existed, so I did create that already.
+[21:32.000 --> 21:40.060]  Everything I worked on today has just been network stuff. And this has actually been the easiest call so far, so this is nice.
+[21:41.740 --> 21:47.360]  Well, yeah, if I had an all-day thing of networking, I would pull my hair out.
+[21:51.080 --> 21:53.920]  That's a lot more PG than what I was thinking.
+[21:56.160 --> 21:56.720]  Yeah.
+[22:05.570 --> 22:09.950]  Alrighty, I am just not seeing anything else here.
+[22:19.640 --> 22:20.200]  Would...
+[22:20.200 --> 22:23.720]  Someone's more than welcome to remote into my computer if you prefer.
+[22:26.300 --> 22:27.640]  Let's do it.
+[22:29.520 --> 22:35.040]  Sounds good. You just tell me what you use or prefer or...
+[22:35.040 --> 22:43.060]  Yeah, so let's go to rcsupport.screenconnect.com.
+[22:48.400 --> 22:50.920]  rcsupport.screenconnect.com.
+[22:52.140 --> 22:52.280]  Yep.
+[22:55.920 --> 22:56.220]  Alright.
+[22:57.940 --> 22:59.200]  You should ask for a code.
+[22:59.360 --> 23:00.280]  I just need a code.
+[23:00.280 --> 23:06.000]  It's going to be capital D as in delta 07583.
+[23:09.980 --> 23:10.560]  Sounds good.
+[23:14.550 --> 23:16.770]  I was going to ask you to download and then install.
+[23:19.070 --> 23:19.630]  Yep.
+[23:25.980 --> 23:27.300]  It's launching here.
+[23:35.720 --> 23:36.660]  There you go.
+[23:38.660 --> 23:39.200]  Alrighty.
+[23:41.940 --> 23:46.820]  Sounds good. Well, here's our Portageek.
+[23:52.230 --> 23:53.450]  You're in that one too?
+[23:54.210 --> 23:54.870]  Sorry, what?
+[23:55.990 --> 23:57.410]  We've got another Screen Connect.
+[23:57.970 --> 23:58.890]  Are you able to see my screen?
+[23:58.890 --> 24:00.730]  We can see the router. Yeah, I'm on it.
+[24:00.870 --> 24:02.950]  I'm just waiting for Liam to get in.
+[24:03.330 --> 24:03.750]  Oh!
+[24:05.310 --> 24:07.170]  Sorry, I zoned out.
+[24:08.350 --> 24:10.950]  I saw the other thing I was typing about. Yeah.
+[24:10.950 --> 24:15.110]  It's the untitled one that I'm in.
+[24:17.510 --> 24:18.210]  Yeah, you're in.
+[24:19.650 --> 24:22.490]  That looks like a hefty duty router, holy moly.
+[24:22.510 --> 24:24.310]  I just disconnected my other two screens. Sorry.
+[24:24.770 --> 24:27.230]  No, that's fine. We can pick screens. It's not a big issue.
+[24:28.070 --> 24:31.350]  Oh my goodness. I can see why you're like, oh...
+[24:31.350 --> 24:35.790]  Yeah. I'm also looking at it. I'm like, that's a pretty intense setup.
+[24:38.110 --> 24:42.910]  We need probably 2% of it.
+[24:42.930 --> 24:44.350]  A Cisco little router.
+[24:46.370 --> 24:51.290]  This is one of those cases of the only way you know that you don't need something is by removing it and having people complain later.
+[24:53.810 --> 24:57.790]  Yeah, well, we've gotten rid of all of our servers. We've gotten rid of all these other things, so it's...
+[24:58.590 --> 25:01.790]  HVAC range. We don't need hardly anything anymore, but...
+[25:03.110 --> 25:10.630]  Is it possible our issue is here? 47898. No, that should be fine.
+[25:11.390 --> 25:14.930]  Okay, HVAC. Why is this a separate range?
+[25:20.690 --> 25:22.550]  Can we just add...
+[25:22.550 --> 25:23.330]  Great question.
+[25:25.090 --> 25:28.370]  No, no, no. I added the numbers to the HVAC range one.
+[25:28.370 --> 25:31.970]  Because HVAC is working. Does the web browser working? Do you know?
+[25:34.270 --> 25:36.370]  Yeah, can we load the...
+[25:36.950 --> 25:38.450]  Yeah. Okay, let's check.
+[25:42.790 --> 25:44.410]  Oh, where's the browser? Wait, is it a pro-web?
+[25:45.770 --> 25:49.850]  Yeah, it's a... Oh, yeah, it's not a pro-web. Duh. So we can't even check the browser.
+[25:50.710 --> 25:54.710]  Okay. It does have all the pro-web firewall rules that we don't need.
+[25:54.710 --> 26:00.690]  Yeah, we can assume that everything in that has nothing to do with the external NAT.
+[26:03.750 --> 26:04.270]  So...
+[26:04.270 --> 26:07.390]  Yeah, so should have been adding it to HVAC, not HVAC range.
+[26:08.430 --> 26:16.070]  Well, I think it's fine for both, I guess. So can we just add it here? Is there a way to just add another one?
+[26:17.170 --> 26:22.710]  You know what? The thing is, go for it. I think I created a new one using the...
+[26:22.710 --> 26:26.210]  Like that. That's what I cloned.
+[26:27.690 --> 26:29.670]  And I'll just do save.
+[26:31.050 --> 26:35.130]  Okay, and then we'll go back over to the other screen connect here.
+[26:39.640 --> 26:43.080]  Oh, we're already doing it. You're on the wrong screen.
+[26:45.420 --> 26:47.860]  Wrong screen. Remember, in 4K, I see all the screens.
+[26:48.780 --> 26:51.660]  Yeah. Still doesn't work. Dang it.
+[26:51.660 --> 26:57.560]  Are we sure we don't have to like reboot the firewall or something to apply a rule or hit some sort of apply button?
+[26:59.680 --> 27:02.400]  I've never had to in the past.
+[27:03.540 --> 27:07.800]  I'm going to show you here, too. I do have virtual IP set up.
+[27:08.940 --> 27:11.840]  Oh, yeah, right here. HVAC system, right here.
+[27:14.960 --> 27:15.400]  HVAC.
+[27:18.200 --> 27:19.880]  Okay. 478.98.
+[27:20.360 --> 27:22.700]  43. Yeah, those all look good.
+[27:29.030 --> 27:30.950]  Why does this one say reference zero?
+[27:31.310 --> 27:34.130]  No, there might be something...
+[27:38.280 --> 27:41.480]  What does that mean? Nothing's referencing it?
+[27:44.310 --> 27:49.370]  No, it's not in a group, I guess. I wonder if it needs to be under the virtual IP group.
+[27:51.770 --> 27:54.050]  Do you do it in here? Do you do it elsewhere?
+[27:56.510 --> 28:00.070]  I'm thinking really quick here. If I click on this group.
+[28:00.490 --> 28:05.750]  Oh, yeah, the IP virtual group. Yeah, you add it.
+[28:06.550 --> 28:07.230]  That shouldn't matter.
+[28:08.570 --> 28:12.470]  Oh, you'd be surprised. Yeah, you'd be surprised.
+[28:14.490 --> 28:16.310]  All right. It's the moment of truth.
+[28:18.500 --> 28:21.440]  There we go. Yes! That did it.
+[28:24.320 --> 28:28.980]  Oh, that's annoying. But that is something super simple.
+[28:34.370 --> 28:42.630]  All right. Now that we have this, should I just be able to change that static backnet port?
+[28:42.650 --> 28:48.930]  43.898. Now I should start seeing network 655.18 per one view.
+[28:49.610 --> 28:52.030]  Yeah. Yeah, that should all work now.
+[28:52.210 --> 28:55.490]  Kate, thanks, IT guy. Don't know your name.
+[28:56.570 --> 28:58.790]  You've been. Oh, thank you. Appreciate it.
+[28:59.450 --> 29:06.250]  To get rid of this program, you just right click on this, exit, and then that will disconnect the connection.
+[29:06.270 --> 29:08.750]  Okay. And then you can just delete it from your downloads folder.
+[29:11.330 --> 29:14.010]  Sounds good. I appreciate it.
+[29:19.280 --> 29:23.080]  Okay. Are we able to get off now or do we need to stay awkward just a little bit?
+[29:23.440 --> 29:29.200]  I think you're okay. Yeah, Brett, you should be fine.
+[29:29.900 --> 29:32.700]  All righty. All right. Thank you for your help.
+[29:33.680 --> 29:35.580]  Sure thing. Thank you, guys.
+[29:37.460 --> 29:38.640]  Couldn't do it without you.
+[29:39.400 --> 29:41.600]  You need me on the call anymore or are we going to go?
+[29:41.860 --> 29:44.160]  We're good. We're good. You're fine. You're fine.
+[29:47.840 --> 29:51.760]  All right. Well, we'll talk to you guys later. Maybe. Hopefully not.
+[29:53.000 --> 29:54.820]  That's how I end myself too.
+[29:57.840 --> 30:00.100]  Hopefully, we never talk again.
+[30:05.520 --> 30:08.900]  All right. So now we're going to change that.
+[30:10.240 --> 30:15.300]  So do we need to change the fixed port? Because now that port is open, right?
+[30:20.940 --> 30:21.520]  Fixed port.
+[30:23.400 --> 30:25.860]  So, yeah, this should be fine.
+[30:27.260 --> 30:31.760]  Although that said, I don't really know why there's...
+[30:32.280 --> 30:37.980]  The port forward rules that would be needed for this has nothing to do with what the IT guy was doing there.
+[30:38.200 --> 30:41.640]  This would be wherever the server is located, by the way.
+[30:41.640 --> 30:45.380]  Yeah, but it would have stopped them from communicating with the site.
+[30:46.260 --> 30:46.740]  No.
+[30:49.770 --> 30:51.810]  Well, they wouldn't have been able to talk to the controller.
+[30:53.470 --> 31:01.130]  Sorry. The port issue from before? Absolutely. Yeah, it would have prevented them from talking to the site, except RCP would work.
+[31:02.850 --> 31:08.530]  Right. But when we connected RCP, we saw one controller. We didn't see any of the other ones.
+[31:09.310 --> 31:12.710]  Well, we probably saw the mocks if we went and opened up the group.
+[31:13.430 --> 31:15.750]  There we go. Ta-da!
+[31:16.950 --> 31:17.430]  Magical.
+[31:20.550 --> 31:24.870]  But it's safe. Don't make me feel all sad.
+[31:28.780 --> 31:34.280]  This is what we... yeah, we can see this within a one-note page. Now we can actually see the page. That did it.
+[31:35.460 --> 31:35.940]  Hooray!
+[31:38.760 --> 31:39.280]  Success!
+[31:40.280 --> 31:42.240]  That looks like a big church.
+[31:46.120 --> 31:47.240]  That's an old Chen log.
+[31:48.380 --> 31:52.820]  We've got to hopefully get them off the ground in seven years' time. It's one of those concrete churches.
+[31:54.380 --> 32:03.080]  Yeah. You'll want to connect with Studio and just rediscover it to make sure that you can see the WebView file server.
+[32:03.560 --> 32:07.340]  And then we should be good? Yeah, that definitely can hurt.
+[32:13.800 --> 32:15.560]  There it is.
+[32:16.860 --> 32:18.080]  Got to wait until it's finished.
+[32:23.240 --> 32:25.080]  You're also on the wrong tab.
+[32:32.850 --> 32:34.730]  There you go. Now you can do it.
+[32:38.340 --> 32:39.620]  You do it.
+[32:40.520 --> 32:41.200]  Where are we doing?
+[32:45.680 --> 32:47.620]  Double-click the network.
+[32:52.040 --> 32:53.780]  Let's look them up as the third party.
+[32:54.360 --> 32:56.080]  Let's restart the service.
+[32:58.860 --> 33:00.620]  Wait, can we? They're not on the server.
+[33:01.280 --> 33:01.720]  Dang.
+[33:03.760 --> 33:07.180]  Do you know if there's a port forwarding rule for the RC WebView server?
+[33:11.060 --> 33:13.160]  Oh, we can get to it.
+[33:14.000 --> 33:18.860]  Because there's another method we can kind of get around this if we can't do port forwarding.
+[33:22.400 --> 33:24.940]  Well, we can see it all now, right?
+[33:25.360 --> 33:28.020]  Is there something you didn't like on that MacNet?
+[33:28.900 --> 33:35.160]  Yeah, you can't push files from Studio to the WebView server.
+[33:37.320 --> 33:40.540]  You can't do that though with version 7, can you?
+[33:41.580 --> 33:45.440]  Yeah, you can. Yeah, it doesn't do it automatically, but yeah, you can do it.
+[33:48.660 --> 33:50.380]  But it doesn't matter anyway, right?
+[33:50.540 --> 33:55.140]  So iNi sits on our remote desktop, which is our server for WebView.
+[33:55.400 --> 33:59.040]  When we get out of Studio, it updates to iNi, right? That's in the WebView references.
+[34:00.500 --> 34:03.840]  Or does the new WebView update change that?
+[34:07.140 --> 34:09.820]  I missed part of that. Can you repeat?
+[34:11.340 --> 34:17.200]  No, you're good. I was curious, because Studio and WebView are both on our remote desktop, like hosted.
+[34:18.700 --> 34:23.220]  So the iNi sits on here that says WebView will reference on one server.
+[34:23.220 --> 34:36.120]  So if you use the Resource Manager in the Studio on the server, you probably won't have any connection issues.
+[34:36.280 --> 34:43.200]  And you should be able to pull the information in Studio and then use the Resource Manager to copy it over to WebView.
+[34:43.560 --> 34:45.740]  That's fine. That doesn't change.
+[34:49.720 --> 34:51.380]  Nothing is automatic.
+[34:54.020 --> 34:55.400]  Sorry, what was that?
+[34:57.620 --> 35:02.740]  That's what we had to do in the past. Copy that, refresh iNi under the WebView folder.
+[35:03.940 --> 35:10.920]  Right. OK, so before you copied files, that now is different. You need to use the Resource Manager.
+[35:11.500 --> 35:14.780]  There is a way to do it manually, but it's a pain in the friggin butt.
+[35:17.680 --> 35:18.480]  Yep. OK.
+[35:21.480 --> 35:24.380]  You can get that, so it's easier to push if you want to.
+[35:24.740 --> 35:27.240]  If you're talking about doing the zip thing, by the way, the zip thing doesn't work.
+[35:30.580 --> 35:34.400]  No, I was talking about actually just copying it over and then renaming it.
+[35:35.980 --> 35:36.980]  That doesn't work either.
+[35:37.800 --> 35:41.000]  Never mind. There's no manual. You'll have to use the Resource Manager.
+[35:41.000 --> 35:51.920]  So if he copies it over, which he can do, he just has to do the, you know, pick from local iNi and then that'll copy everything over and that'll be fine.
+[35:52.100 --> 35:57.780]  But he has to be sure that his studio job directory, whatever, is definitely good.
+[36:02.410 --> 36:03.910]  Otherwise, what's the alternative?
+[36:09.700 --> 36:13.560]  Well, the Resource Manager or what Liam just described.
+[36:15.900 --> 36:21.600]  OK. Yeah, so how we used to do it to work referencing the local iNi.
+[36:23.500 --> 36:25.440]  Oh, this is the Resource Manager, doesn't it?
+[36:28.000 --> 36:34.560]  The Resource Manager is probably the easiest. Yeah, you won't be able to just grab the files and copy them into the job folder anymore.
+[36:37.020 --> 36:43.820]  Yeah, WebView will have no idea that you changed it. And when you hit Save, it's going to have, because it has no idea you changed it, it's not going to think there's anything to update.
+[36:45.400 --> 36:50.620]  So, yeah, that's if you rename it. But if you just copy it across, it won't work either.
+[36:50.720 --> 36:55.200]  Yeah, it would push everything. And that's because of the new WebView update, right?
+[36:57.420 --> 37:06.980]  Yeah, so before 3.16.1, or 3.16.1, you had a job folder the same as Studio.
+[37:07.260 --> 37:16.940]  After 3.16.1, we changed it to the Program Data folder and it renamed everything to be job dot whatever.
+[37:18.580 --> 37:24.380]  So when you copy it across, it won't work because your names are going to be incorrect.
+[37:24.380 --> 37:30.380]  And if you change the names to the new ones, it doesn't detect that there's a change and it won't update it.
+[37:33.320 --> 37:37.020]  One down. Okay. No, and that makes sense. Yeah.
+[37:37.020 --> 37:39.820]  I'm talking with Eric about this and I'm talking to you guys.
+[37:41.880 --> 37:50.960]  I think we need to do that folder as RC Studio and RC WebView, right?
+[37:51.020 --> 37:56.200]  So we had all of our INIs in here. We copied it to have separate INIs because once we had a WebView conflict.
+[37:57.100 --> 38:01.460]  So now I know WebView just does everything on its own and creates the job INI.
+[38:01.620 --> 38:04.000]  Yeah, and now that folder you're in right now?
+[38:04.800 --> 38:05.880]  Under Program Data.
+[38:06.380 --> 38:12.880]  Yeah. Yeah, there it is. So that folder that you were looking at, they're basically obsolete. They don't get used anymore.
+[38:13.260 --> 38:14.560]  It's all in here now.
+[38:15.660 --> 38:24.820]  Okay. No, that's fine. I'll probably save them in case something happens or if you've got someone in the back that we can screenshot for our server or so.
+[38:25.900 --> 38:34.920]  Is there going to be...I know I'm guessing they're working on the push update to get rid of 1, 2, 3, 5 to actually be job names again.
+[38:39.280 --> 38:48.800]  Sorry? You're not...I think you're on speakerphone, so it's a little bit hard for me to hear what you're saying.
+[38:50.860 --> 38:58.440]  Yeah, I'm sorry. I'm guessing that there's an update coming for WebView that's going to get rid of the numbering system and go back to job names. Is that correct?
+[38:58.520 --> 39:11.020]  Absolutely not. This is the new way that they're pushing it. I fought this too for nil, dude. Like, I'm like, this is dumb. Like, how is anybody supposed to figure it out?
+[39:11.020 --> 39:20.340]  I'm going to grab my pitchfork and go stand outside your guys' headquarters. I know I can't change the job name either for a file name.
+[39:21.120 --> 39:29.840]  Yeah, the idea is that WebView should be responsible for the management of the files that WebView uses, which I get.
+[39:32.140 --> 39:37.660]  However, whenever there's a change, even if it's a good one, there's always going to be some problems.
+[39:40.390 --> 39:45.190]  Yeah, because the intent, right, is that we won't ever have to really go into these, right? That's the goal.
+[39:45.650 --> 39:46.050]  Yeah, that's right.
+[39:46.230 --> 39:52.910]  Numbers like this. Yeah, I like positive thinking as much as the next guy, but nope. I understand.
+[39:55.610 --> 40:06.010]  So, for example, here you see this three? Yep. That's this guy right here. Come on, you should know this.
+[40:06.010 --> 40:08.930]  Is that how we can kind of cheat and figure them all out?
+[40:09.610 --> 40:13.550]  No, that's literally the only... well, one of the only ways to figure that out.
+[40:15.630 --> 40:26.010]  The other way would actually be in the database, going to the database, finding the system list, and then the system list will tell you what system number it is, and then you know what folder it is.
+[40:30.250 --> 40:38.010]  Okay, now that makes sense. Yeah, I can look in the pictures too. I was doing that earlier, but nope, that answers my questions. I appreciate it.
+[40:39.450 --> 40:44.710]  All right. And all the other sites are working fine then, as far as we know?
+[40:46.330 --> 40:48.610]  Yeah, this is the only one we have some issues with.
+[40:50.270 --> 40:56.730]  Perfect. All right, I'll let you guys go.
+[40:57.150 --> 41:02.530]  That's all we have, so I appreciate your help. Yeah, no, I appreciate you getting us through this, so thank you.
+[41:02.890 --> 41:05.470]  Yeah, it's been a turbulent one.
+[41:09.490 --> 41:13.890]  Well, that's another one we don't have to do now, so hopefully we don't have to bother you as much.
+[41:14.330 --> 41:17.550]  Obviously, the IT server stuff was not a far out ago either.
+[41:18.750 --> 41:24.410]  Yeah. To be honest, it's fine. If you guys have any problems, give us a call, right? We're all on the same team here.
+[41:25.310 --> 41:27.410]  Right. We appreciate that.
+[41:31.350 --> 41:38.590]  All right. Have a good one, guys. I'm going to let you guys go, and I'll put in my notes in the ticket, and we'll close it up.
+[41:40.770 --> 41:42.930]  Sounds good. You have a good one as well. Thank you.
+[41:43.310 --> 41:43.990]  All right. Bye.
+[41:46.250 --> 41:46.710]  All right. Bye.

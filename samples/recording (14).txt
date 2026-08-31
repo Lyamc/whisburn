@@ -1,0 +1,78 @@
+[00:02.900 --> 00:09.840]  Reliable Controls Technical Support, Neem speaking. Hi, this is Jacob Warner. I work
+[00:09.840 --> 00:15.660]  with Amoresco. I'm calling because I'm having trouble getting a stat to work on
+[00:15.660 --> 00:22.260]  a reliable control flex error. Okay. I just want to make sure I've gone through
+[00:22.260 --> 00:25.660]  all the steps that I need to to think it's... because I think it's the
+[00:25.660 --> 00:28.840]  controller. You're talking about a smart net sensor, right?
+[00:29.560 --> 00:43.680]  Yes. To be specific, it is a... Oh, let me look at it real quick. It's a SS3EW. So one of the four
+[00:43.680 --> 00:59.840]  online ones. Can you hear me? Yep, I can hear you. Sorry. Sorry, it was quiet so I wasn't sure.
+[01:03.560 --> 01:11.540]  Yeah. Just finishing up something else. Yep, go ahead. Let's see, what were you saying?
+[01:14.800 --> 01:23.840]  Oh, so it's an SS3EW. Okay. So it's getting power because it's showing the reliable
+[01:23.840 --> 01:31.320]  controls, address one stuff when I plug it in. But the screen's not coming up. So I'm
+[01:31.320 --> 01:35.600]  using the same template as I'm using in all these other ones. There's 27 total here at this building.
+[01:35.960 --> 01:44.360]  Yeah. Usually the issue with that is the address. Yeah, like either it doesn't have
+[01:44.360 --> 01:50.160]  something configured already in the smart sensor worksheet or there's a communication
+[01:50.160 --> 01:55.540]  issue that's preventing it from receiving the configuration information from the controller
+[01:55.540 --> 02:07.760]  it's configured on. It's like one of those two. Okay. So I pushed all these templates at
+[02:07.760 --> 02:15.440]  the same time and this is the only one that's not working. And that's all done in the template,
+[02:15.520 --> 02:22.520]  correct? Not necessarily done in the template. Do you know if you didn't... I don't know about
+[02:22.520 --> 02:27.480]  doing it at the same time, mattering as much as what the state of that particular controller
+[02:27.480 --> 02:35.680]  that's having issues was in. I would expect that if there were an issue, it would resend whatever
+[02:35.680 --> 02:42.400]  it had. I'm not quite sure what would... So I'm assuming a physical issue with the wiring
+[02:42.800 --> 02:52.760]  to do with the polarity of the individual... like com going to data and data going to com,
+[02:53.060 --> 02:56.460]  or not, that's right, clock. That's what I meant. Clock going to data and data going to clock,
+[02:56.580 --> 03:01.340]  like that sort of a thing. Yeah, I did already check that. I made sure the wiring
+[03:01.340 --> 03:07.200]  was correct and I did continuity tests on the wire and then I rewired it up again and it's
+[03:07.200 --> 03:27.320]  still not coming up with the screen. I'm having to do again while on the phone if you want me to, but...
+[03:27.320 --> 03:35.620]  So you said you were doing continuity tests? Yeah, so a continuity test on the wire that we're
+[03:35.620 --> 03:41.340]  using for the stat to the controller. Okay, so here's one way that I would recommend trying
+[03:41.340 --> 03:45.860]  to eliminate a number of potential things that it could or might not be kind of a thing.
+[03:46.480 --> 03:55.360]  Can you take a short cable and just connect the one sensor to the controller? Just
+[03:55.360 --> 04:00.220]  narrow it down so if it works, we know that configuration, we know it's not the sensor,
+[04:00.760 --> 04:11.480]  right? Then we can narrow things down quite a bit. Yep, just take a short wire to it. Yep,
+[04:11.480 --> 04:39.490]  walk over to my bag real quick and grab one. Yep. Oh, I got to strip these real quick.
+[04:40.610 --> 04:45.590]  No worries. I'm not going anywhere.
+[04:48.470 --> 06:23.010]  Yeah, I know. I hear what I'm saying. I'm just screwing these into these terminal blocks now.
+[06:23.010 --> 07:46.500]  Yep, no worries. Alrighty, plug this into the controller now
+[07:48.620 --> 08:20.220]  and see what happens. And it did the same thing. Oh, it comes up with the address one
+[08:21.960 --> 08:24.980]  and like shows reliable and then the screen goes blank again.
+[08:25.300 --> 08:29.680]  Can you restore from a template on that controller again?
+[08:31.800 --> 08:38.500]  Yep. Yep. I'm going to go back over to you.
+[08:45.120 --> 09:02.980]  Sorry, I just got to take a second here. I'm logging back in. Yep, no worries.
+[09:21.370 --> 09:22.850]  Restore from template, correct?
+[09:23.590 --> 09:44.880]  Yep, restore from template. Yeah. Hi, how are you? Oh, it's going all right.
+[10:09.770 --> 10:16.100]  All right, it's just performing file sync now, but it'd be good.
+[10:25.270 --> 10:32.500]  What's its MAC address currently set to? What was that? Sorry.
+[10:32.780 --> 10:36.260]  What's its MAC address set to right now for the smart sensor?
+[10:37.460 --> 10:42.680]  It's MAC. Oh, where do I see that? I apologize.
+[10:45.300 --> 10:47.980]  That's something that you'd usually configure using the dealer menu.
+[10:52.290 --> 10:57.550]  So our programmer set up this template for me and send it to me.
+[10:58.310 --> 11:01.370]  No, I'm saying the sensor itself. I did not set up a...
+[11:02.450 --> 11:06.650]  Oh, it's on the sensor itself. So if you didn't set anything on
+[11:06.650 --> 11:10.790]  sensor itself, it should be address one by default. So as long as there's something
+[11:10.790 --> 11:13.530]  configured in the smart sensor... Yeah, that's what it came up and said.
+[11:14.250 --> 11:20.510]  Yeah, yeah, exactly. So that's what happens when you power on the sensor. It'll say right
+[11:20.510 --> 11:26.210]  in front of it what address it has. So it'll be like MAC address one or whatever. And then
+[11:26.210 --> 11:30.150]  all you need to do is make sure what should be needed is I need to do is make sure that
+[11:30.150 --> 11:38.150]  there is a... Oh, what's it called? Configuration inside of the first smart sensor worksheet.
+[11:39.790 --> 11:46.930]  And then it should be good. Okay, gotcha. Yeah, it says SS address one. So
+[11:49.390 --> 11:56.550]  I just unplugged it and plugged it back in. But I did do that restore and it didn't work.
+[11:57.310 --> 12:02.750]  It didn't change, I guess. It's still not working. I can go check that now, though.
+[12:07.290 --> 12:11.730]  Under smartnet, it says high school VAV410 on it.
+[12:14.590 --> 12:20.890]  And it's showing value for the room temp. It's just not showing it on the screen
+[12:22.910 --> 12:32.410]  of the sensor itself. Interesting. So just the screen is not working. Temperature low.
+[12:35.690 --> 12:42.830]  It's saying 71.1 degrees in there. So can you tell me what the...
+[12:42.830 --> 12:49.950]  In the values worksheet of the controller, change the temperature from 71 to basically
+[12:50.330 --> 12:56.750]  60 or whatever. And just leave the worksheet in refresh mode, update mode. Which should happen
+[12:56.750 --> 13:08.710]  is the program column should change to SS1 or whatever. Leave it in auto. Yeah, leave it in
+[13:08.710 --> 13:15.870]  auto. Yeah, that's fine. Yeah. All right. So just change the value to 61.
+[13:17.810 --> 13:38.480]  And then put in refresh mode. What should I be seeing now?
+[13:43.590 --> 13:49.570]  Oh, see, in the program column, it should update to SS1. See, when you make a change,
+[13:49.650 --> 13:56.470]  it'll clear the column. And then when the sensor updates the value, assuming it's
+[13:56.470 --> 14:04.630]  communicating, then it should change that to SS1. It still sounds like it's just not
+[14:04.630 --> 14:08.150]  communicating with the smart sensor unless it did actually change to SS1.
+[14:11.070 --> 14:17.490]  No, it's still blank. Okay. If it still remains blank after 10 seconds...
+[14:18.570 --> 14:24.570]  Yeah, change the room temp number. So then it should, like I said, clear that column,
+[14:24.570 --> 14:29.070]  the program column, and then you're waiting for it to update it. See, as soon as something
+[14:29.070 --> 14:33.150]  writes to it, it changes the program column. If it's a program that writes to it, it's like
+[14:33.150 --> 14:43.610]  program 1, like PRG1. If it's a smart sensor, it'll be SS1, SS2, SS3. Yeah, I see room temp
+[14:43.610 --> 14:44.090]  at that point.

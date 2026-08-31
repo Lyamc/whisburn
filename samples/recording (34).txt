@@ -1,0 +1,851 @@
+[00:02.580 --> 00:07.960]  Hello, this is Greg Bates. How are you doing?
+[00:08.540 --> 00:14.140]  Hey, not bad. Yeah, your number came up, but I figured I'd do the whole spiel anyway.
+[00:19.140 --> 00:22.740]  Hey, real quick. You probably have an answer for this quickly, I'm hoping.
+[00:23.980 --> 00:28.760]  When I try to pull trend logs in WebView,
+[00:29.300 --> 00:35.760]  I'm getting an error code 500. It says the API is reporting an error code 500.
+[00:36.880 --> 00:40.640]  Yeah, okay. So, that's not going to be a great one.
+[00:43.300 --> 00:50.960]  So, the issue is, if you hit F12 to bring up your DevTools...
+[00:56.340 --> 01:00.620]  Yeah, never mind, don't do that, because then I'm going to have to hunt for it and I don't want to do that over the phone.
+[01:00.620 --> 01:10.420]  But basically what's happening is the new WebView authorization for the API calls,
+[01:12.500 --> 01:16.880]  the cookie for that is getting bigger than what the cookie limit is.
+[01:17.520 --> 01:26.280]  And so, the cookie gets full, and because the cookie for your browser gets full, it's unable to open up the trend logs.
+[01:29.490 --> 01:33.830]  Okay. So, is there a workaround or...?
+[01:33.830 --> 01:38.670]  Yeah, I'm going to look for that right now here. It's not a good one.
+[01:40.970 --> 01:45.710]  Either a workaround or a... you know, do we have an anticipated fix?
+[01:46.370 --> 01:55.430]  There is supposed to be a fix coming out in the next release, I believe. I'm going to have to check for sure.
+[02:03.370 --> 02:14.590]  So, I'm working on a house for a really high-end client with the potential of taking this at least nationwide, if not global.
+[02:14.990 --> 02:15.390]  Nice.
+[02:15.470 --> 02:16.670]  And that's on a punch list.
+[02:18.310 --> 02:22.730]  So, is this on a really big server then? Do you have a lot of systems or is it just the one?
+[02:25.330 --> 02:29.350]  This is just the one. This is the first one, the trial one, and it's failing.
+[02:30.990 --> 02:34.170]  Weird. You shouldn't have a big key then.
+[02:40.360 --> 02:42.260]  Do you want to send me a link and jump in my screen?
+[02:44.820 --> 02:52.980]  One sec, let me figure out where this stupid thing is. We've got all these just... WebView, trend logs not loading. WebView, trend logs not loading.
+[02:57.660 --> 02:59.340]  Where's one from me?
+[03:04.280 --> 03:06.960]  Oh, I remember who it was. Okay, give me a sec here.
+[03:12.780 --> 03:16.760]  If you guys could put that up on the known issues list too, that'd be great.
+[03:16.760 --> 03:21.160]  Wouldn't that be amazing if we filled it up with all the known issues?
+[03:26.620 --> 03:30.080]  You can't see the smile on my face when I said that.
+[03:32.500 --> 03:37.940]  So, the issue is we think it's a great idea. Everybody thinks it's a great idea.
+[03:39.020 --> 03:43.020]  And nobody wants to actually do the work.
+[03:46.140 --> 03:48.140]  So, it just sits there.
+[03:49.060 --> 03:51.180]  Probably should take it down then.
+[03:52.420 --> 03:58.020]  Sam sometimes posts stuff, but then he has to get tons of approval and things to get it to work.
+[04:01.620 --> 04:04.920]  Shoot, I can't find it.
+[04:05.780 --> 04:09.740]  I mean, if I blow my cookies out in my browser, will that work?
+[04:09.980 --> 04:14.440]  No, it rebuilds it with the crappy information.
+[04:19.660 --> 04:23.780]  I remember who it was. It was Danny from SoCo who had it.
+[04:23.780 --> 04:27.930]  There we go.
+[04:41.990 --> 04:43.870]  Not this one.
+[04:47.420 --> 04:49.940]  Signing the stuff in the house is pretty confusing, I agree.
+[04:57.960 --> 04:58.600]  Yeah.
+[05:02.720 --> 05:11.360]  I'm working on a small commercial facility. There's only 43 heat pumps and seven outside air units and all that stuff.
+[05:15.880 --> 05:18.040]  They're still calling it a house though.
+[05:24.720 --> 05:27.860]  I'm saying that for Thomas who's benefiting you on the phone.
+[05:29.520 --> 05:30.660]  Are you talking to your son?
+[05:33.930 --> 05:35.650]  In the background or...?
+[05:35.650 --> 05:39.570]  No, one of the... one of the technicians here.
+[05:41.070 --> 05:43.510]  Alright, sorry it's taken me so long to find it.
+[05:43.730 --> 05:46.170]  I'm saying that for your benefit if you can hear me.
+[05:46.570 --> 05:47.430]  Yeah, yeah.
+[05:58.410 --> 06:00.470]  I swear I had a ticket.
+[06:01.090 --> 06:07.390]  So I found the ticket that I made a reference to it, but I'm now trying to find the ticket where I fixed it.
+[06:09.310 --> 06:14.910]  Okay, let me search here. WebView API.
+[06:22.080 --> 06:26.080]  You remember our ticketing in JIRA and stuff. It's horrendous to find anything.
+[06:26.900 --> 06:33.400]  Oh, yeah. I'm very, very... I remember it very well.
+[06:40.120 --> 06:40.760]  So...
+[06:40.760 --> 06:42.680]  Cookies. Alright, let's try this.
+[06:42.700 --> 06:44.680]  The last incremental release was September.
+[06:48.100 --> 06:48.740]  Soon.
+[06:51.020 --> 06:52.720]  Alright, I found it. Alright.
+[06:53.040 --> 06:53.220]  Good.
+[06:56.480 --> 06:56.920]  Workaround.
+[06:58.340 --> 07:03.680]  You back up that, you remove that, then you do this, and then you do that. Yeah, maybe I should remote it.
+[07:09.040 --> 07:12.920]  Yeah, I mean, if you want to, I'm more than happy to let you here.
+[07:20.680 --> 07:24.800]  I don't know what you guys use now. If you're using Screen Connect or Teams or whatever.
+[07:25.140 --> 07:26.040]  Still Screen Connect.
+[07:32.460 --> 07:33.340]  Oh, and...
+[07:33.340 --> 07:34.180]  Okay.
+[07:36.600 --> 07:37.320]  Okay.
+[07:44.040 --> 07:46.840]  Okay, I got this. Okay.
+[07:47.340 --> 07:49.340]  You're not using the APIs, correct?
+[07:54.270 --> 07:56.210]  No, not at this time.
+[07:56.950 --> 08:02.450]  Alright, let's remote in, and then I can verify that I am.
+[08:02.450 --> 08:05.070]  Is this in WebView or in WebView, you use them?
+[08:05.750 --> 08:09.070]  No, it's if you're doing external ones.
+[08:09.070 --> 08:11.970]  Like you're pulling it with a different program.
+[08:12.070 --> 08:13.270]  No, we're not.
+[08:14.070 --> 08:16.370]  Alright, rcsupport.screenconnect.com.
+[08:16.710 --> 08:17.450]  We're not yet.
+[08:18.730 --> 08:21.870]  Well, y'all won't be able to when we change this.
+[08:22.590 --> 08:25.150]  Yeah, rcsupport.screenconnect.com.
+[08:28.890 --> 08:30.650]  I'll save that.
+[08:31.950 --> 08:32.930]  New site.
+[08:34.750 --> 08:35.410]  Alright.
+[08:38.210 --> 08:39.630]  And your code.
+[08:40.350 --> 08:42.570]  Alright, that's going to be your first name, lowercase.
+[08:43.030 --> 08:43.330]  Greg.
+[09:04.290 --> 09:06.150]  I'm installing the client.
+[09:11.960 --> 09:14.220]  Let's see, ready for the Christmas holidays?
+[09:19.260 --> 09:21.340]  I don't think I'm ever ready.
+[09:26.160 --> 09:28.140]  It says I'm in, waiting for my host.
+[09:28.180 --> 09:29.760]  Yep, I'm just connecting now.
+[09:31.460 --> 09:32.180]  Okay.
+[09:32.540 --> 09:34.400]  There you go.
+[09:37.840 --> 09:40.100]  So, WebView here.
+[09:43.180 --> 09:44.260]  You don't have much.
+[09:44.600 --> 09:46.040]  What's it complaining about?
+[09:50.870 --> 09:52.230]  Okay, that's a good little tree.
+[09:56.150 --> 09:56.530]  What's that?
+[09:58.570 --> 09:59.290]  Me?
+[10:02.760 --> 10:03.140]  Yeah.
+[10:03.880 --> 10:07.880]  Yeah, I was just saying, there's a lot of controllers.
+[10:18.500 --> 10:19.940]  In a house.
+[10:26.240 --> 10:28.660]  The paintings are split, I think, aren't they?
+[10:28.880 --> 10:31.760]  They are. I just don't want to be responsible for pulling it down.
+[10:31.880 --> 10:32.840]  No, I get it.
+[10:32.840 --> 10:37.020]  Let me look at it, because I've seen them open a few different things, and let me see if I'm familiar with it.
+[10:38.200 --> 10:43.380]  You've got control of my laptop. I'm walking away from it just about 30 feet away here.
+[10:43.420 --> 10:45.900]  I'll be right back to it, but I'm taking you with me.
+[10:47.500 --> 10:49.420]  Oh, you're not hotspotting, I hope.
+[10:52.440 --> 10:53.060]  What's that?
+[10:53.440 --> 10:55.000]  You're not hotspotting, I hope.
+[10:58.500 --> 10:59.300]  No, no.
+[11:00.640 --> 11:02.160]  Nope, I'm on the home Wi-Fi.
+[11:02.580 --> 11:04.320]  I think it's back there, isn't it?
+[11:04.320 --> 11:09.100]  Yeah, I think so.
+[11:09.100 --> 11:10.460]  Do you have to pull the paintings down?
+[11:10.840 --> 11:12.820]  No, I don't think you need to.
+[11:15.040 --> 11:16.240]  Is there another door?
+[11:16.980 --> 11:17.200]  No.
+[11:17.360 --> 11:19.040]  Is there a man door somewhere for it?
+[11:19.300 --> 11:19.740]  No.
+[11:23.220 --> 11:24.960]  I mean, that could be... we could ask Mike.
+[11:25.460 --> 11:27.060]  You can see that there's a door.
+[11:27.200 --> 11:27.540]  Yeah.
+[11:27.740 --> 11:30.480]  I've seen them push them in. That's not working.
+[11:30.540 --> 11:31.440]  That's what I was trying to do.
+[11:32.140 --> 11:35.240]  I've kind of pulled it out, and it's not doing anything.
+[11:38.200 --> 11:40.660]  You know where Mike's office is, don't you?
+[11:40.820 --> 11:42.020]  You want to see if he's back there?
+[11:42.100 --> 11:44.020]  I think he's outside with the shutter guys, but...
+[11:44.020 --> 11:44.900]  I think he is.
+[11:44.900 --> 11:45.960]  I thought I saw him before.
+[11:49.640 --> 11:50.440]  Oh, ouch.
+[11:50.840 --> 11:51.520]  Oh, my goodness.
+[11:58.520 --> 12:00.880]  So this is what I think it is, guys.
+[12:01.640 --> 12:03.700]  This is the same as all the other ones I've seen.
+[12:03.700 --> 12:06.080]  But you've got to be able to get to that handle.
+[12:18.660 --> 12:22.120]  So I don't think it's the same error that I was thinking of.
+[12:22.480 --> 12:25.460]  I'm just investigating now to see if it's something else.
+[12:26.660 --> 12:30.860]  So it seems to be when we're pulling archives that it's throwing the error message.
+[12:31.000 --> 12:32.880]  I just saw the connection, and it worked.
+[12:32.880 --> 12:35.880]  I'm wondering if...
+[12:36.480 --> 12:40.380]  maybe we're not connecting to the database?
+[12:45.900 --> 12:47.070]  The 500...
+[12:47.460 --> 12:52.620]  500 is usually when the server says no and won't let you connect.
+[12:57.720 --> 13:00.780]  It's a good thing I had that RDP opening in there.
+[13:01.920 --> 13:04.360]  Yes, I already started snooping.
+[13:05.940 --> 13:07.320]  You cannot connect to server.
+[13:07.400 --> 13:07.880]  You're fine.
+[13:08.140 --> 13:10.000]  If I connect to server.
+[13:22.800 --> 13:27.100]  I can't connect to server. Okay.
+[13:28.420 --> 13:30.100]  Oh, nope, it's connecting.
+[13:30.380 --> 13:30.960]  There you go.
+[13:30.960 --> 13:32.900]  Let's try the SA password.
+[13:46.800 --> 13:49.200]  Are you looking at the default one?
+[13:49.420 --> 13:53.620]  I'm copy and pasting it. I will refuse to type it. It's garbage.
+[13:55.000 --> 13:56.320]  Do you want to remember it or no?
+[13:56.500 --> 13:59.160]  I've got it somewhere at home, but...
+[14:00.300 --> 14:00.940]  Sure.
+[14:03.220 --> 14:04.700]  All right, so that connected fine.
+[14:05.420 --> 14:06.160]  There we go.
+[14:06.920 --> 14:09.080]  And do we have data in here?
+[14:12.420 --> 14:14.560]  Yeah, okay. So that looks good.
+[14:15.360 --> 14:20.060]  So why are... why is WebView having issues?
+[14:22.160 --> 14:23.280]  That looks fine.
+[14:30.070 --> 14:31.230]  That name is fine.
+[14:31.230 --> 14:33.250]  All right.
+[14:38.430 --> 14:40.750]  Oh, sorry.
+[14:42.090 --> 14:43.430]  I grabbed my mouse.
+[14:49.870 --> 14:50.170]  Yeah.
+[14:54.730 --> 14:59.550]  The mechanical rooms, those move downstairs. I don't know if those sheets reflect it.
+[14:59.550 --> 15:01.990]  There's mechanical rooms in the garage.
+[15:02.150 --> 15:02.470]  Okay.
+[15:02.830 --> 15:05.430]  There's two on that side, one on this side, heat pumps.
+[15:05.610 --> 15:06.010]  Okay.
+[15:06.370 --> 15:12.690]  And they're labeled correctly because we went back and forth on that and we changed the label.
+[15:12.770 --> 15:15.110]  Okay, so we can get in and get out of the garage now?
+[15:15.890 --> 15:17.250]  Yeah, we should be able to.
+[15:18.150 --> 15:21.870]  Those garage doors, I don't think, locked or they're not keeping them locked.
+[15:23.090 --> 15:24.470]  I think the words are open.
+[15:25.590 --> 15:25.930]  Yeah.
+[15:27.970 --> 15:28.690]  Yeah.
+[15:33.030 --> 15:36.210]  Oh, what version is this?
+[15:40.350 --> 15:40.890]  I think it's...
+[15:40.890 --> 15:41.310]  The latest?
+[15:41.550 --> 15:43.470]  Yeah, the latest, 1611.
+[16:03.630 --> 16:07.790]  How's everything going with everybody? I texted Eric. He never responded.
+[16:08.710 --> 16:09.990]  Oh, yeah, no, good.
+[16:10.450 --> 16:11.930]  Okay, that's right, too.
+[16:14.050 --> 16:17.310]  What are we falling on?
+[16:28.620 --> 16:30.720]  Do you have studio on your machine?
+[16:32.200 --> 16:33.100]  You do.
+[16:33.720 --> 16:34.060]  I do.
+[16:35.320 --> 16:38.200]  And do we load trend logs on here?
+[16:45.430 --> 16:46.550]  Yes, but...
+[16:46.550 --> 16:48.890]  Yeah, but I don't think I'm connected to archive here.
+[16:49.430 --> 16:51.790]  Right, yeah, so I'm still down the path of...
+[16:51.790 --> 16:53.670]  You can connect me to archive. I'm not connected to archive.
+[16:54.310 --> 16:56.670]  Yeah, I think it's archive that's the issue here.
+[17:01.430 --> 17:04.630]  Why don't we verify that and just...
+[17:04.630 --> 17:05.670]  Oh, we can turn it off.
+[17:05.670 --> 17:06.690]  ...connect my studio to archive.
+[17:08.070 --> 17:10.730]  That's a pain in the butt, but sure.
+[17:12.090 --> 17:15.370]  We can also just turn off archive and then see if the trend logs load.
+[17:25.290 --> 17:28.750]  I usually hit a stopping point somewhere around six or seven.
+[17:28.930 --> 17:29.830]  Archive is there.
+[17:32.430 --> 17:33.190]  Okay.
+[17:37.990 --> 17:41.790]  Oh, okay, cool, sweet.
+[17:54.630 --> 17:58.990]  Oh, I'll be here tomorrow morning. I'll be here probably by seven.
+[17:59.970 --> 18:03.290]  Well, maybe you and I can check in tomorrow morning on that list.
+[18:04.570 --> 18:07.610]  Yeah, well, this was one of the items on the list. It's kind of fixed.
+[18:07.890 --> 18:11.450]  And I've got... I've got a handful of them already marked.
+[18:11.710 --> 18:13.910]  But yeah, we'll update in the morning. It's fine.
+[18:20.430 --> 18:24.230]  My wife's having a procedure Thursday, so I've got to take her in.
+[18:24.270 --> 18:25.630]  She won't be able to drive.
+[18:26.730 --> 18:28.630]  So I won't be down Thursday.
+[18:29.110 --> 18:33.370]  And I'll be... I'm going to take my laptop with me.
+[18:33.370 --> 18:38.210]  But Mike will be down here. Mike's coming tomorrow. Yes.
+[18:38.990 --> 18:40.050]  He'll be here tomorrow.
+[18:41.290 --> 18:41.690]  I know.
+[18:44.490 --> 18:44.970]  So...
+[18:47.330 --> 18:50.990]  I think there's a couple of Greg's, too. But you can call me Greg. Call him Bates.
+[18:51.650 --> 18:54.630]  That way we'll... we can try to sort things out.
+[18:58.400 --> 18:59.420]  Check in in the morning.
+[19:03.560 --> 19:07.060]  Or if I come back today, then we'll check in.
+[19:10.180 --> 19:15.200]  I think I'm going to push Anna and those guys off.
+[19:16.280 --> 19:23.460]  Because she was asking for stuff that I never told her I'd have done before we sequenced the heat pumps.
+[19:24.540 --> 19:29.700]  So if she wants all that done, I'm going to push her and say, we'll commission next week.
+[19:31.780 --> 19:32.200]  You know?
+[19:32.960 --> 19:38.400]  I don't think anybody's coming next week, but I'm not 100% confident in that comment.
+[19:45.300 --> 19:50.740]  So, well, yeah. All the stuff where everybody has to go through the house and everything, yeah, this week.
+[19:53.100 --> 19:54.860]  I don't know. That's the question.
+[19:55.460 --> 20:00.680]  Now, we can be here when they're here, as long as they don't know we're here.
+[20:02.500 --> 20:06.560]  Like Mike Fiore will know we're here. Those guys will know we're here.
+[20:06.840 --> 20:10.540]  But the owner and his guests, they don't want to know we're here.
+[20:10.780 --> 20:13.840]  So we need to access the house we need to do, right?
+[20:14.140 --> 20:14.580]  Correct.
+[20:15.040 --> 20:15.800]  Everything else.
+[20:16.300 --> 20:20.780]  And like mechanical rooms, other than those hidden mechanical rooms, you can get to...
+[20:20.780 --> 20:23.400]  Like we won't be set up in here after this week.
+[20:24.560 --> 20:27.860]  We'll have to find some other spot, which we'll probably go to the kitchen
+[20:27.860 --> 20:30.840]  or back at that little table outside of Jeff's office.
+[20:31.700 --> 20:32.900]  Jeff and Mike's office.
+[20:47.960 --> 20:49.320]  Excuse me.
+[20:51.560 --> 20:54.640]  I think I might have found the problem.
+[20:57.100 --> 20:57.960]  Oh, cool.
+[21:00.240 --> 21:02.600]  It cut off three letters.
+[21:08.530 --> 21:10.850]  I'm wondering if maybe we're running into an issue.
+[21:16.980 --> 21:20.140]  One sec. I'm going to see if I can grab Liam.
+[21:23.340 --> 21:24.700]  Before he takes this call.
+[21:29.540 --> 21:30.340]  Alright, I'm back.
+[21:31.380 --> 21:32.760]  Hey, you got the name here as well.
+[21:33.360 --> 21:36.780]  It is the default username and password.
+[21:39.080 --> 21:40.960]  I conferred that by connecting.
+[21:41.260 --> 21:42.000]  It's already open.
+[21:42.820 --> 21:44.200]  Oh, you're looking at that one.
+[21:46.640 --> 21:48.360]  STCP turned on. Good call.
+[21:48.540 --> 21:50.500]  Well, first thing. Okay, so is that. Yeah.
+[21:50.580 --> 21:52.260]  And it's probably using dynamic port.
+[21:52.700 --> 21:54.040]  Because why wouldn't it?
+[21:54.300 --> 21:55.600]  Enabled. Okay, perfect.
+[22:00.320 --> 22:01.260]  There's our problem.
+[22:24.400 --> 22:25.920]  Did we set up port for that?
+[22:26.820 --> 22:31.880]  No. So, when you have a default instance,
+[22:33.180 --> 22:35.920]  when you set up something like SQL Express or standard,
+[22:36.200 --> 22:38.380]  it will use port 1433.
+[22:38.740 --> 22:40.540]  If you don't use the default instance,
+[22:40.660 --> 22:42.080]  so like RC archive or whatever,
+[22:42.600 --> 22:44.680]  it will assign a dynamic port to it.
+[22:44.680 --> 22:45.580]  Yeah, try it now.
+[22:46.040 --> 22:46.800]  Wait, wait, wait. Hit cancel.
+[22:47.080 --> 22:50.540]  We'll do a thing or a that and that and then do it.
+[22:51.520 --> 22:52.880]  Oh, right. Firewall rule.
+[22:53.120 --> 22:54.360]  We need a firewall rule as well.
+[22:54.740 --> 22:55.380]  There is one.
+[22:56.220 --> 22:58.640]  Oh, the default one.
+[22:58.760 --> 23:01.280]  I didn't set one for that.
+[23:02.380 --> 23:03.460]  For Escobel, right?
+[23:11.000 --> 23:12.800]  But WebView is on the same machine.
+[23:13.840 --> 23:14.040]  No?
+[23:19.180 --> 23:21.740]  Doesn't that mean that you don't have to worry about Firewall
+[23:21.740 --> 23:22.980]  if it's on the same machine?
+[23:24.940 --> 23:26.620]  But he's not on the same machine.
+[23:27.940 --> 23:29.040]  No, he's not.
+[23:29.500 --> 23:30.200]  But WebView is.
+[23:30.200 --> 23:30.880]  He's the one trying to connect.
+[23:30.880 --> 23:32.620]  WebView is running with...
+[23:32.620 --> 23:34.660]  Yeah, but we were just doing this as a test.
+[23:35.300 --> 23:35.680]  Oh.
+[23:36.480 --> 23:37.260]  I don't know.
+[23:37.720 --> 23:38.420]  We'll find out.
+[23:39.320 --> 23:40.320]  That's why I said,
+[23:40.320 --> 23:43.180]  oh, this is more of a pain to set up.
+[23:44.180 --> 23:47.060]  I just wanted to turn it off and see if it works.
+[23:47.980 --> 23:48.500]  All right.
+[23:48.780 --> 23:50.900]  Now let's try it.
+[23:53.650 --> 23:55.210]  No, it doesn't connect to blah, blah, blah, blah, blah.
+[23:55.310 --> 23:56.890]  Oh, is that the right name?
+[23:58.150 --> 23:58.470]  Yes.
+[24:03.630 --> 24:04.530]  Is it the default login?
+[24:07.750 --> 24:09.050]  We lost three letters.
+[24:09.250 --> 24:10.210]  Yeah, there you go.
+[24:10.730 --> 24:11.810]  That's what you were talking about.
+[24:12.650 --> 24:13.810]  There you go.
+[24:13.930 --> 24:14.770]  It's all there.
+[24:16.770 --> 24:17.450]  It should be default.
+[24:17.830 --> 24:19.270]  To my knowledge, nothing was changed,
+[24:19.270 --> 24:20.930]  but I didn't do the install on that.
+[24:23.310 --> 24:26.470]  Well, there's one other service I haven't restarted.
+[24:28.650 --> 24:29.530]  This guy.
+[25:15.310 --> 25:17.430]  I'm seeing error messages that I'm seeing.
+[25:19.070 --> 25:22.930]  This makes it seem like it's either the database name is wrong
+[25:22.930 --> 25:24.950]  or the username and password is wrong.
+[25:24.990 --> 25:26.290]  So let me try this.
+[25:30.420 --> 25:32.140]  We have used the default one.
+[25:33.740 --> 25:36.160]  And you don't get that message if it's the password.
+[25:36.640 --> 25:38.340]  That's just the connection information.
+[25:38.980 --> 25:40.020]  I think you have one after.
+[25:41.520 --> 25:41.980]  Hey, Liam.
+[25:42.700 --> 25:43.140]  What?
+[25:44.260 --> 25:46.880]  I think you have one extra character in that password.
+[25:47.820 --> 25:48.300]  You sure about that?
+[25:48.440 --> 25:50.660]  When you typed it, it looked like it went to replace.
+[25:51.780 --> 25:54.660]  Here, I've got the stupid thing open.
+[25:54.760 --> 25:56.060]  Let me just copy and paste it.
+[25:57.720 --> 25:58.620]  That's the same characters.
+[26:00.040 --> 26:00.840]  Nope, same problem.
+[26:03.160 --> 26:03.480]  All right.
+[26:03.480 --> 26:06.220]  I'm going to check to make sure you have the correct drivers installed.
+[26:19.650 --> 26:20.730]  I don't see them.
+[26:20.730 --> 26:22.980]  The OLE drivers.
+[26:23.710 --> 26:25.170]  Well, that would cause problems.
+[26:27.530 --> 26:29.550]  Let's hit OK.
+[26:30.410 --> 26:30.950]  OK.
+[26:31.090 --> 26:31.790]  Save that.
+[26:31.890 --> 26:32.450]  Close Studio.
+[26:33.010 --> 26:36.350]  Again, I don't care if Greg can't see it.
+[26:36.430 --> 26:38.530]  It's WebView that I'm concerned about.
+[26:38.670 --> 26:39.310]  I know.
+[26:40.010 --> 26:42.590]  But it's a point of comparison, right?
+[26:42.730 --> 26:46.730]  Besides, he still can't do it anyway.
+[26:50.730 --> 26:51.590]  Be nice.
+[26:59.510 --> 27:01.650]  Hey, don't stop him from helping me, Thomas.
+[27:01.730 --> 27:02.510]  Come on now.
+[27:03.230 --> 27:03.930]  Yeah, be nice.
+[27:07.210 --> 27:11.250]  I might have called next week because I couldn't get my studio to connect.
+[27:11.570 --> 27:13.530]  So we're just saving an extra call.
+[27:15.030 --> 27:15.110]  Fine.
+[27:15.210 --> 27:15.990]  That's the spirit.
+[27:18.970 --> 27:20.390]  We're just two birds, one stoning.
+[27:24.620 --> 27:26.160]  Have you installed enough stuff?
+[27:26.920 --> 27:27.320]  Nope.
+[27:27.360 --> 27:28.720]  Need to install more.
+[27:30.240 --> 27:31.460]  You don't need that.
+[27:35.760 --> 27:37.900]  I have to reboot his laptop now, too?
+[27:38.480 --> 27:38.880]  No.
+[27:39.440 --> 27:40.160]  Should be fine.
+[27:42.980 --> 27:43.760]  That's why I closed Studio.
+[27:43.800 --> 27:45.080]  Oh, I don't need the SDK.
+[27:54.440 --> 27:59.000]  I'm pretty sure if you were to reinstall Studio, it would reinstall the OLE DB driver, but who knows?
+[27:59.800 --> 28:01.040]  I guess at least install the latest version.
+[28:01.120 --> 28:02.940]  My goodness, it just enables it every time.
+[28:23.250 --> 28:24.090]  All right.
+[28:24.230 --> 28:31.250]  And there's still one more thing, which is .NET 8, which I saw as 8.0.4.
+[28:32.330 --> 28:36.330]  So this is more preventative problem fixing that I'm doing right here.
+[28:37.330 --> 28:43.010]  At some point, your Windows will probably update the runtime in a way that will break it, which is awesome.
+[28:50.930 --> 28:52.270]  When they get to call us back.
+[29:08.900 --> 29:10.020]  All righty.
+[29:10.280 --> 29:10.820]  To connect.
+[29:12.960 --> 29:14.920]  You haven't set up archive, did you?
+[29:16.000 --> 29:16.960]  I'm just seeing if I'll do that.
+[29:16.960 --> 29:17.480]  There it is.
+[29:17.720 --> 29:19.920]  Yeah. Yeah. Okay.
+[29:30.780 --> 29:31.760]  Looks like it's communicating.
+[29:31.900 --> 29:33.620]  I'll make sure it actually loads trends, though.
+[29:34.040 --> 29:36.800]  I think I have to do a load descriptor on something, anything.
+[29:39.740 --> 29:40.400]  There we go.
+[29:41.080 --> 29:42.260]  Index is done.
+[29:42.500 --> 29:43.260]  Let's try 101.
+[29:47.980 --> 29:48.220]  Look at that.
+[29:48.380 --> 29:49.940]  Does it show archive data?
+[29:49.940 --> 29:53.600]  Yes. Yes, this explicitly shows archive data.
+[29:54.180 --> 29:56.300]  Oh, that's true. We're only doing the archive data.
+[29:56.320 --> 29:56.880]  That's right.
+[29:57.340 --> 29:57.680]  Yeah.
+[29:58.200 --> 29:59.420]  All right. So that's working.
+[29:59.560 --> 30:00.920]  So why is Studio not working?
+[30:02.240 --> 30:06.540]  The data in the collected range might be time zone, or maybe it was disabled.
+[30:08.100 --> 30:11.220]  Well, some of these are newer trends, too.
+[30:12.740 --> 30:17.760]  Oh, these are STLs. So the object might not have changed value for a long time.
+[30:18.100 --> 30:18.500]  Correct.
+[30:18.500 --> 30:19.800]  All right.
+[30:20.720 --> 30:20.920]  Cool.
+[30:21.260 --> 30:23.240]  So yeah, that's good. Studio is good.
+[30:23.380 --> 30:24.640]  Now we're going back into WebView.
+[30:24.640 --> 30:25.760]  WebView is over here.
+[30:27.020 --> 30:27.520]  No, no.
+[30:27.980 --> 30:28.680]  Go back out.
+[30:28.940 --> 30:29.540]  Is it not here?
+[30:30.340 --> 30:36.100]  Yeah, but we're looking at Greg's here with this beautiful image of him right here.
+[30:36.180 --> 30:37.320]  Go to the...
+[30:37.320 --> 30:38.080]  Log into WebView.
+[30:38.100 --> 30:39.120]  There you go. Go to that.
+[30:40.580 --> 30:41.840]  There you go.
+[30:43.320 --> 30:45.280]  What's this thing? Cannot be loaded. What is this?
+[30:45.380 --> 30:47.680]  Device? Question mark. How did this come about?
+[30:47.680 --> 30:49.220]  I'm so confused.
+[30:52.680 --> 30:54.080]  It keeps going back to admin.
+[30:55.080 --> 30:57.580]  Okay, so we'll go to the not admin page.
+[30:59.740 --> 31:00.180]  Give me a second.
+[31:00.280 --> 31:00.700]  There you go.
+[31:00.800 --> 31:04.460]  There is a known issue that has to do with your... like a bookmark.
+[31:04.600 --> 31:11.020]  If your bookmark or shortcut takes you to the slash one, it will completely mess up your login.
+[31:11.220 --> 31:13.980]  Anyways, go ahead and log in.
+[31:14.120 --> 31:16.060]  Whichever thing. I don't know. Is it one of these?
+[31:16.840 --> 31:17.340]  That?
+[31:18.580 --> 31:20.600]  Yeah, just click that. Now hit log on.
+[31:21.280 --> 31:26.980]  It's there. For some reason, only reliable controls doesn't show it when you use Dashlane.
+[31:27.900 --> 31:31.480]  Security! Just call it security.
+[31:34.920 --> 31:36.660]  That's kind of what I've been saying.
+[31:42.560 --> 31:46.320]  Actually, that one didn't have an archive, did it? We'll find out in a sec.
+[31:47.080 --> 31:49.700]  Suspense wheels, and then we get a 500 error.
+[31:50.700 --> 31:52.320]  Alright, before we do that then...
+[31:56.060 --> 31:58.640]  Why is it saying local? Is it local?
+[31:59.640 --> 31:59.960]  Yeah.
+[32:00.660 --> 32:01.980]  Oh, no, not for him.
+[32:02.780 --> 32:03.160]  Aha!
+[32:03.880 --> 32:06.700]  No, no, for this machine. That's local. This should be fine.
+[32:07.600 --> 32:09.520]  Oh, yeah. Yeah, yeah, yeah, yeah.
+[32:10.100 --> 32:10.880]  That's fine.
+[32:11.620 --> 32:14.180]  And 130203, they're on the same machine.
+[32:14.680 --> 32:15.040]  Yeah.
+[32:15.820 --> 32:18.000]  Did I hit save? I don't know if I hit save.
+[32:18.440 --> 32:18.640]  No.
+[32:18.640 --> 32:19.340]  I hit save again.
+[32:30.960 --> 32:32.020]  Was it just added?
+[32:37.720 --> 32:38.420]  What'd you say?
+[32:39.440 --> 32:40.880]  Was the archive stuff just added?
+[32:42.080 --> 32:51.160]  Okay, so good news. It is communicating. Like, look at this. That part is communicating. It's just whether or not the trend log part is.
+[32:52.960 --> 32:54.720]  And I think it's...
+[32:58.520 --> 32:59.680]  Archive.
+[33:01.060 --> 33:03.800]  Do we have the .net issue again?
+[33:08.340 --> 33:10.920]  Let me go over here.
+[33:13.100 --> 33:13.680]  Control.
+[33:16.680 --> 33:18.780]  And event viewer.
+[33:19.820 --> 33:22.000]  And task manager.
+[33:27.120 --> 33:28.740]  So, Greg, what's your...
+[33:28.740 --> 33:30.340]  Oh, object index is suspended.
+[33:31.380 --> 33:32.840]  Oh, that's a problem.
+[33:33.520 --> 33:34.500]  What happened?
+[33:35.000 --> 33:35.900]  Why is it suspended?
+[33:37.240 --> 33:38.160]  No idea.
+[33:43.480 --> 33:47.080]  Wow, it is very unhappy, this service there.
+[33:47.620 --> 33:50.400]  Oh, look at all those errors. I think I found your problem.
+[33:53.300 --> 33:56.420]  .net something, something, something SQLite. Okay.
+[33:57.380 --> 34:04.330]  Well, probably the first time I've seen that particular error message.
+[34:05.570 --> 34:07.590]  But we'll start with basically the same thing.
+[34:08.670 --> 34:10.470]  Go uninstall that.
+[34:20.170 --> 34:22.850]  Well, I can tell you this worked until December 4th.
+[34:25.250 --> 34:26.710]  Maybe Windows Update now.
+[34:27.670 --> 34:34.070]  We've had a number of issues where Windows Update will come along, like I was saying, and it will replace some components of .net.
+[34:34.970 --> 34:43.350]  And because of how .net works, it will try to run the runtime, the latest of whatever version it picks up.
+[34:44.370 --> 34:51.250]  And because Windows Update only updates one of three pieces, it breaks all of .net, which is awesome.
+[34:53.970 --> 34:54.490]  Nice.
+[34:55.230 --> 34:55.690]  Yeah.
+[34:57.070 --> 35:04.910]  I guess rule of thumb is if it quits after a Windows Update, then just go in and...
+[35:04.910 --> 35:07.490]  Yeah, it might be that. I'm hoping it's as simple as that.
+[35:07.850 --> 35:12.290]  If not, we'll probably have to recreate the object indexer database, which isn't a big deal.
+[35:12.290 --> 35:17.290]  It means deleting the database and then rerunning the installer with Repair, and that should do it.
+[35:33.970 --> 35:34.770]  All right.
+[36:22.370 --> 36:24.670]  First one's done. Do you want to run the other ones?
+[36:25.610 --> 36:27.510]  Yeah, go for it. I'm just sending a message.
+[36:32.700 --> 36:35.580]  Did you download more than one, or is it just the one that you downloaded?
+[36:35.580 --> 36:37.920]  I think it's just the one. Yeah, just the hosting bundle. That was it.
+[36:42.820 --> 36:46.140]  I'll also just try WebView here and see what it does, too.
+[36:52.610 --> 36:53.510]  Hey, how you doing?
+[36:55.350 --> 36:55.830]  Good.
+[37:01.320 --> 37:02.540]  I reorganized my basement.
+[37:07.520 --> 37:08.340]  What's that?
+[37:08.880 --> 37:11.200]  I reorganized my basement. Now I've got a couch in here.
+[37:11.220 --> 37:11.960]  You reorganized your basement?
+[37:12.580 --> 37:19.160]  Yeah, so if I ever, you know, get sore or tired, whatever, I can just get in here. It's got a little recliner thing.
+[37:22.380 --> 37:23.280]  Craig's so happy.
+[37:23.360 --> 37:24.600]  It's like a Google pod.
+[37:26.840 --> 37:32.280]  Yeah, Google pod. Oh, that's pretty much my setup here.
+[37:32.560 --> 37:35.240]  It's the live in a pod, except it's my basement.
+[37:38.700 --> 37:41.160]  We never restarted the other services, did we?
+[37:41.680 --> 37:44.420]  No, I'm just checking to see if it's a problem on here.
+[37:46.520 --> 37:48.700]  How big index is still suspended?
+[37:51.080 --> 37:53.200]  It's just starting and stopping constantly.
+[37:54.200 --> 38:06.840]  What I'll do is I'll run in uninstall to uninstall WebView, then delete the database for the object indexer and then rerun the install.
+[38:07.300 --> 38:13.620]  It will recreate the object indexer database and nothing of value will be lost.
+[38:13.620 --> 38:18.660]  So, yeah.
+[38:24.600 --> 38:28.840]  I'm taking your guys' lead on that.
+[38:29.620 --> 38:43.400]  The other thing it could potentially be is the log file has, I've seen it get locked up before, now over object index database, logs.
+[38:44.320 --> 38:47.680]  Oh yeah, there's a log.bad. Yeah, this is actually a known issue. It'll be fixed.
+[38:48.900 --> 38:50.300]  Yeah, yeah, it's a bad file.
+[38:51.760 --> 38:53.640]  Let's get a quick little screenshot of that.
+[38:53.720 --> 38:55.480]  Well, that was roughly the time this started.
+[38:56.780 --> 39:01.360]  Do you want to plan to restart later? Yeah, we're going to restart later.
+[39:04.060 --> 39:05.280]  Good. It deletes it.
+[39:07.880 --> 39:12.580]  Okay. So, if that's all the issue was, I don't have to delete anything. I can just rerun the installer.
+[39:13.260 --> 39:17.220]  We're on 316.1. Where's the installer for that? C drive?
+[39:20.290 --> 39:21.490]  RC licenses? No.
+[39:24.150 --> 39:27.210]  I didn't do the install, so I don't know.
+[39:27.750 --> 39:31.080]  Right. Controls.com.
+[39:37.530 --> 39:40.510]  Yeah, and I don't have a login for that server.
+[39:41.110 --> 39:45.390]  Oh yeah, look at that. I've hacked into his account. No.
+[39:46.890 --> 39:49.010]  Oh, they've already shut him down.
+[39:51.050 --> 39:51.630]  That was quick.
+[39:51.730 --> 39:56.030]  He's already moved. I don't know if you guys know the whole story. They're moving to another one.
+[39:56.030 --> 39:59.410]  You're going to have to give me a minute to get that information.
+[40:00.410 --> 40:02.890]  That's fine. I can just copy it, I think. Copy it.
+[40:06.890 --> 40:09.910]  What's our license good for? License manager.
+[40:26.600 --> 40:33.380]  Let's see what's faster. Me going to the SharePoint drive and getting a link and then using that or copying and pasting it directly.
+[40:35.120 --> 40:36.420]  It says 10 minutes.
+[40:38.020 --> 40:42.620]  Oh my goodness. SharePoint. Load. Load. Load.
+[40:43.780 --> 40:44.580]  There we go.
+[40:47.280 --> 40:49.600]  It's 10 minutes. It sounds like it might be.
+[40:50.800 --> 40:51.740]  Did you hear about...
+[40:55.100 --> 40:59.220]  Microsoft found that
+[40:59.220 --> 41:01.060]  File Explorer was slow.
+[41:02.000 --> 41:08.060]  And the solution to it being really slow, the modern one with all the AI stuff, is to
+[41:10.260 --> 41:11.460]  preload it.
+[41:12.560 --> 41:20.460]  So instead of addressing the slowness, they're just loading it earlier so then you don't experience the slowness as much.
+[41:21.860 --> 41:23.040]  Problem fixed.
+[41:28.510 --> 41:30.250]  I knew you'd like it.
+[41:39.330 --> 41:42.490]  Man, I should have uploaded it to your machine in the copy from there.
+[41:44.230 --> 41:50.530]  Anticipating. You know, there's other File Explorer alternatives that are way faster.
+[41:51.470 --> 41:54.110]  I know of two off the top of my head.
+[41:55.370 --> 41:59.550]  And as far as I'm aware, have all the features. No, no, no. One is called Files.
+[42:00.570 --> 42:03.790]  Some sort of community project. The other one is File Pilot.
+[42:11.180 --> 42:18.780]  Hey, would you mind just putting those two names in this ticket so when I get the email, I'll have them so I can look for them?
+[42:19.460 --> 42:20.920]  I can just pull it up in your browser.
+[42:21.020 --> 42:24.160]  Because I can't move my mouse and I can't use my computer right now.
+[42:26.040 --> 42:26.920]  I blame Liam.
+[42:27.780 --> 42:30.940]  I know, right? File Pilot.
+[42:32.480 --> 42:33.200]  This guy.
+[42:34.840 --> 42:36.580]  And then Files Alternative.
+[42:37.980 --> 42:38.680]  Yeah, there we go.
+[42:40.300 --> 42:41.820]  And it's literally called Files.
+[42:43.020 --> 42:44.020]  Yep, that's it.
+[42:45.740 --> 42:46.860]  It looks very similar, right?
+[42:49.940 --> 42:50.300]  Yep.
+[42:53.280 --> 42:53.660]  Perfect.
+[42:53.760 --> 42:55.100]  So I can try them out.
+[42:55.980 --> 42:56.820]  Thank you.
+[43:05.070 --> 43:08.870]  How about you guys? Are you going to get together for the holidays and stuff?
+[43:09.670 --> 43:10.650]  That's the plan.
+[43:11.350 --> 43:11.710]  Yep.
+[43:15.090 --> 43:16.950]  Do you guys already have a Christmas party?
+[43:17.890 --> 43:19.650]  Yep, I don't know. I'm on Friday.
+[43:20.350 --> 43:21.750]  I have the wrong promise for that one.
+[43:23.650 --> 43:27.150]  Thomas is like, so you're coming to the Christmas party? He says that like every day.
+[43:27.610 --> 43:28.630]  I'm like, no.
+[43:28.770 --> 43:33.090]  And every day he's like, no. And I'm like, other people from Edmonton are coming.
+[43:35.650 --> 43:37.650]  Yeah, and I'm like, but they don't have kids.
+[43:39.970 --> 43:41.390]  They have fur babies.
+[43:42.550 --> 43:43.070]  Yep.
+[43:49.170 --> 43:50.690]  Sam is now in Edmonton.
+[43:50.790 --> 43:52.550]  I had to put one of my girls down.
+[43:53.750 --> 43:55.890]  I'm assuming you're talking about your fur baby?
+[43:57.770 --> 43:58.630]  Oh my goodness.
+[43:58.790 --> 43:59.210]  Yes.
+[44:02.430 --> 44:04.970]  Well, I'm sorry for your loss. That sucks.
+[44:07.070 --> 44:09.930]  Non-fur babies. We have a new granddaughter.
+[44:11.310 --> 44:11.830]  Congratulations.
+[44:16.030 --> 44:17.850]  Second grandchild. This one's a girl.
+[44:20.450 --> 44:22.690]  Now we've got a boy and a girl for grandchildren.
+[44:27.760 --> 44:29.300]  That must be exciting.
+[44:31.680 --> 44:35.200]  Oh, Thomas, do you want me to get the thing or do you want to get the thing?
+[44:36.340 --> 44:37.760]  Is there another call in the queue?
+[44:38.300 --> 44:39.340]  Oh, yeah.
+[44:41.000 --> 44:42.660]  It's only been 10 minutes.
+[44:43.680 --> 44:44.100]  Twice.
+[44:45.020 --> 44:47.800]  I don't know why I didn't see the first alarm.
+[44:47.800 --> 44:50.280]  I don't see the first one, actually.
+[44:50.640 --> 44:50.940]  I will go.
+[44:50.940 --> 44:51.500]  Did you see the first one?
+[44:51.820 --> 44:52.900]  Because you're doing shenanigans.
+[44:54.260 --> 44:55.660]  I am doing shenanigans.
+[44:57.120 --> 45:01.340]  Let me just save what I got here and then I will drop out.
+[45:01.720 --> 45:02.480]  Alright. Later, Greg.
+[45:04.360 --> 45:06.600]  Alright. Thank you. Is nothing else? Thanks, Thomas.
+[45:07.860 --> 45:08.820]  Happy holidays.
+[45:13.660 --> 45:15.060]  Yeah. Thomas dropped out, right?
+[45:15.580 --> 45:15.960]  Yep.
+[45:18.260 --> 45:21.520]  Alright, now I can talk crap about him.
+[45:22.520 --> 45:23.180]  No, he's good.
+[45:28.400 --> 45:33.460]  To say that if they haven't yet, they're going to start probably at some point in time making you guys critique each other.
+[45:33.940 --> 45:38.220]  So you'll be listening to this call or he'll be listening to this call eventually anyway.
+[45:39.320 --> 45:40.800]  Oh, I'm not worried about that at all.
+[45:43.700 --> 45:46.600]  No, I know you said you were going to talk crap about him.
+[45:46.600 --> 45:48.240]  Oh, yeah, yeah, yeah, yeah.
+[45:48.340 --> 45:50.660]  I was smiling and laughing about it.
+[45:52.440 --> 45:56.500]  Oh, I see. And then we'd have to review it. Yeah, yeah, yeah.
+[45:58.060 --> 45:58.540]  Yeah.
+[46:04.780 --> 46:07.280]  Oh, life's been going pretty good with the new business.
+[46:07.920 --> 46:11.400]  I say new, it's been going since February, but yeah, life's been going good.
+[46:13.560 --> 46:14.040]  Awesome.
+[46:16.800 --> 46:18.900]  I am not complaining at all.
+[46:18.900 --> 46:21.160]  I was going to say no regrets being in Florida.
+[46:25.440 --> 46:26.480]  Right, yeah.
+[46:27.800 --> 46:29.720]  I mean, I have regrets being up north.
+[46:33.720 --> 46:34.180]  What's that?
+[46:35.760 --> 46:37.860]  I certainly regret being up north.
+[46:38.320 --> 46:39.160]  So cold.
+[46:40.240 --> 46:42.440]  I was down in Arizona just like a month ago.
+[46:42.500 --> 46:44.040]  So it was it was really nice.
+[46:47.330 --> 46:49.230]  Oh, cool vacation and for work.
+[46:49.230 --> 46:50.590]  Yep. No, it was vacation.
+[46:51.030 --> 46:53.550]  If it wasn't for work, that'd be even better because I get paid for it.
+[46:53.570 --> 46:55.070]  Now I have to pay for this myself.
+[46:57.530 --> 46:58.210]  Yeah. Right.
+[46:58.590 --> 46:59.650]  Did a whole road trip.
+[47:00.130 --> 47:00.430]  Yeah.
+[47:00.730 --> 47:01.850]  Saw the Grand Canyon.
+[47:05.480 --> 47:05.900]  Oh, cool.
+[47:07.460 --> 47:07.760]  Yeah.
+[47:09.020 --> 47:10.200]  That's all good stuff.
+[47:18.320 --> 47:19.200]  Yeah, we're...
+[47:19.200 --> 47:25.760]  We went up and spent almost five weeks in Chicago when our granddaughter was born.
+[47:25.760 --> 47:30.700]  We were there for the birth and then got to spend the first few weeks with her.
+[47:31.580 --> 47:32.060]  Awesome.
+[47:32.680 --> 47:33.500]  That's awesome.
+[47:33.520 --> 47:34.220]  That's pretty cool.
+[47:46.900 --> 47:48.220]  Yeah, I miss talking to everybody.
+[47:48.800 --> 47:54.160]  So if you do ever get down this way, I'll take you out and buy you dinner.
+[47:55.200 --> 47:55.640]  Awesome.
+[47:55.720 --> 47:57.100]  I'll let you know if I'm ever in Florida.
+[47:57.340 --> 47:58.660]  I don't know what that would be.
+[47:58.920 --> 48:00.300]  I don't have any family in Florida.
+[48:01.520 --> 48:04.820]  So probably won't happen for a long time.
+[48:07.280 --> 48:10.080]  Well, there's a lot of tourist spots here.
+[48:10.200 --> 48:11.080]  I mean, I'm just saying.
+[48:13.160 --> 48:16.400]  Yeah. Well, Florida honestly looks amazing to visit.
+[48:17.520 --> 48:21.620]  But usually when I travel, it's to see other family.
+[48:22.740 --> 48:26.020]  So up north, west, east, south, whatever.
+[48:30.380 --> 48:33.100]  It's sort of the, I guess, blessing end and...
+[48:33.100 --> 48:35.180]  What is it?
+[48:35.480 --> 48:35.740]  Curse?
+[48:36.060 --> 48:36.840]  Blessing end curse?
+[48:36.840 --> 48:40.000]  You know, you got all the family, but you can't see them all all the time type thing.
+[48:40.100 --> 48:41.400]  You have to pick and choose.
+[48:41.940 --> 48:44.540]  Yeah, I got family in Yukon.
+[48:46.560 --> 48:47.220]  Oh, cool.
+[48:52.920 --> 48:53.900]  Yeah, that's awesome.
+[49:01.390 --> 49:04.290]  I think I saw on LinkedIn where they opened the new facility.
+[49:04.290 --> 49:05.230]  Is it up and running?
+[49:06.990 --> 49:12.190]  From my understanding, they're at the point now where they can actually make things.
+[49:12.330 --> 49:16.270]  I don't think they can make everything yet because they're still waiting for a couple of things to arrive.
+[49:16.270 --> 49:21.070]  But as far as I'm aware, they're able to make, I think it's flex ones right now.
+[49:23.880 --> 49:26.280]  I could be wrong about that. I'm pretty sure that's the case.
+[49:38.720 --> 49:39.920]  That is awesome.
+[49:46.620 --> 49:50.320]  Thanks for me because inevitably I want to get more equipment.
+[49:58.910 --> 49:59.990]  Yeah, that's always nice.
+[50:02.710 --> 50:20.750]  I may make it too victorious. So the manager of the company that owns this house, the CEO of it, has made a couple of comments that he's interested in seeing the facilities up in Victoria.
+[50:21.930 --> 50:22.450]  Yeah.
+[50:24.310 --> 50:35.070]  I'm not employed by reliable controls. I'm not doing anything with reliable controls other than trying to support customers. And they want me to be involved and go up to them.
+[50:36.950 --> 50:37.310]  Yeah.
+[50:38.770 --> 50:39.390]  That's kind of cool.
+[50:41.710 --> 50:43.630]  All right, we're done downloading.
+[50:44.790 --> 50:45.150]  Sweet.
+[50:48.440 --> 50:58.060]  Should make sure the license is good for the version that I just ran because I can't remember if it's a...
+[50:58.060 --> 51:04.460]  Oh, we restarted the server and we're getting ready to...
+[51:04.460 --> 51:05.200]  Yeah.
+[51:07.400 --> 51:10.720]  Keep fixing a problem or the trend logs wouldn't come up.
+[51:18.200 --> 51:23.900]  Three, four, five, six, seven, eight.
+[51:23.920 --> 51:24.480]  Sweet.
+[51:25.640 --> 51:28.480]  And it seems like the problem keeps growing up to the street.
+[51:36.720 --> 51:40.740]  All right, let me look at that one. I think it's 30%.
+[51:40.740 --> 51:41.440]  30B.
+[51:41.540 --> 51:43.800]  Yeah, 38%, 30B, we couldn't...
+[51:47.600 --> 51:48.760]  Oh, it's disabled?
+[51:50.100 --> 51:52.980]  Oh, does he know the admin by view password?
+[51:53.520 --> 51:58.040]  By the way...
+[51:58.640 --> 51:59.740]  I do not.
+[52:00.320 --> 52:01.620]  I can...
+[52:01.620 --> 52:03.120]  You can log in with mine now.
+[52:04.180 --> 52:06.420]  No, the reason why is I don't want to reset it.
+[52:06.680 --> 52:11.440]  So if you don't know it, then I can punch it back in as soon as I change it.
+[52:13.080 --> 52:16.320]  But it'd be best if I just knew what it was so I could just punch it in here.
+[52:17.600 --> 52:17.980]  Right?
+[52:20.320 --> 52:22.740]  Yeah, just put something in that...
+[52:22.740 --> 52:24.900]  It doesn't really matter because I've got admin rights.
+[52:24.920 --> 52:29.320]  I'll go in and I'll update it when I figure out what it is or I'll tell Seth it changed and he'll fix it.
+[52:33.280 --> 52:34.840]  Here's what I can do.
+[52:37.520 --> 52:38.900]  And I can do...
+[52:38.900 --> 52:39.700]  Long view.
+[52:40.480 --> 52:41.360]  Long view.
+[52:55.100 --> 52:56.560]  And do some other shit.
+[53:00.290 --> 53:00.890]  No, but it's good.
+[53:01.090 --> 53:01.570]  No, I'm leaving.
+[53:01.930 --> 53:03.270]  I told school camera I'm leaving.
+[53:04.870 --> 53:05.950]  Are you trying to beat traffic?
+[53:06.370 --> 53:06.430]  Yeah.
+[53:07.110 --> 53:10.150]  The last time I stayed here, it cost me $2.50 to get home.
+[53:10.390 --> 53:12.010]  And I told them, oh, I'm going to try it out.
+[53:12.090 --> 53:12.790]  I'm going to go over.
+[53:13.090 --> 53:14.950]  So I said, no, I can't do that.
+[53:18.410 --> 53:19.170]  That's why...
+[53:22.650 --> 53:26.630]  If I don't leave by four, I usually stay until 6.37.
+[53:26.870 --> 53:26.970]  Yeah.
+[53:27.890 --> 53:31.530]  Well, it takes 45 minutes to get off the arco and then you stay.
+[53:43.440 --> 53:43.900]  This...
+[53:54.500 --> 53:55.620]  Those are done.
+[53:56.820 --> 53:58.340]  Do yourself a favor.
+[53:58.900 --> 54:00.860]  Walk back and hand them to Mike or Jim.
+[54:02.320 --> 54:03.000]  You know what I mean?
+[54:03.000 --> 54:05.420]  Did you just say these need copied and scanned or whatever?
+[54:16.700 --> 54:22.660]  I would take them.
+[54:22.840 --> 54:25.840]  If you're unsure, scanning twice isn't a bad thing.
+[54:47.260 --> 54:49.320]  I got a message, Gary Bauer.
+[54:50.460 --> 54:50.920]  Yeah.
+[54:53.440 --> 54:56.020]  He's on vacation, but today is his birthday.
+[54:57.480 --> 54:58.000]  Oh.
+[55:05.780 --> 55:06.820]  He was...
+[55:06.820 --> 55:08.320]  I think he was going to Mexico.
+[55:08.480 --> 55:10.060]  I'm not sure.
+[55:45.850 --> 55:49.150]  It would be really funny if the admin password was actually Longview.
+[55:49.530 --> 55:51.030]  I'm going to find out real soon.
+[55:51.030 --> 55:52.590]  I'm going to put it in here because as soon as this is done,
+[55:53.250 --> 55:54.610]  I'm just going to overwrite it.
+[55:54.670 --> 55:59.130]  If it's the exact same, like the encrypted thing,
+[55:59.230 --> 56:01.830]  if it's the exact same, then I know it was Longview.
+[56:04.790 --> 56:05.190]  Sweet.
+[57:55.550 --> 57:55.870]  Sweet.
+[57:56.110 --> 57:59.210]  Do you use a small screwdriver or something to lift that little tab?
+[58:07.550 --> 58:08.270]  Uh-oh.
+[58:08.270 --> 58:09.030]  Well, I do.
+[58:09.630 --> 58:11.790]  I don't like getting home at 7 o'clock.
+[58:12.830 --> 58:14.130]  You know, because as soon as I get home,
+[58:14.170 --> 58:15.930]  I've got to go to bed and get up at 10 o'clock again.
+[58:16.710 --> 58:17.150]  You know?
+[58:19.150 --> 58:20.130]  I mean, what's the urgency?
+[58:20.730 --> 58:21.930]  We're not going to get you done yet.
+[58:21.930 --> 58:23.150]  Yeah, there's something back here.
+[58:26.810 --> 58:27.410]  All that for nothing?
+[58:27.430 --> 58:28.790]  Yeah, because they made it.
+[58:29.190 --> 58:30.990]  This will cost you a few hundred dollars.
+[58:31.430 --> 58:33.750]  Anyway, I'm just making it.
+[58:33.750 --> 58:35.390]  I'm just trying to find something.
+[58:35.850 --> 58:36.930]  We're going to be able to do that.
+[58:37.050 --> 58:38.750]  I'm just trying to figure out what to do.
+[58:39.810 --> 58:42.050]  So, I'm filming this video.
+[58:43.570 --> 58:44.370]  Let's go.
+[58:53.250 --> 58:53.770]  Okay.
+[58:55.090 --> 58:56.430]  There's not going to be a lot of...
+[58:57.590 --> 58:59.790]  There's something that's there.
+[59:00.430 --> 59:02.170]  We're going to be able to do that.
+[59:04.910 --> 59:06.850]  Yeah, this computer is not terribly fast.
+[59:09.530 --> 59:10.610]  Oh, it has one core.
+[59:11.090 --> 59:11.630]  What's that, Liam?
+[59:12.770 --> 59:14.450]  The server has a single core.
+[59:18.250 --> 59:19.770]  I thought he just upgraded it.
+[59:21.890 --> 59:23.990]  I'm looking at it right now.
+[59:26.210 --> 59:27.830]  I was like, why is this so slow?
+[59:27.910 --> 59:28.790]  It's a virtual machine.
+[59:29.050 --> 59:32.490]  He probably incidentally downgraded it.
+[59:36.330 --> 59:37.510]  Yeah, that's not good.
+[59:39.250 --> 59:40.310]  I'll get that changed.
+[59:41.310 --> 59:42.730]  Especially with SQL running on it.
+[59:42.750 --> 59:44.150]  He knows better than that with SQL.
+[59:45.850 --> 59:46.410]  Yeah.
+[59:49.800 --> 59:50.760]  Oh, yeah, 100%.
+[59:50.760 --> 59:51.800]  Look at it go.
+[59:54.240 --> 59:55.400]  Oh, yeah.
+[59:58.860 --> 59:59.440]  Weed.
+[01:00:01.220 --> 01:00:02.180]  Let's see.
+[01:00:03.160 --> 01:00:06.100]  Oh, yeah, that web worker is servicing clients.
+[01:00:09.880 --> 01:00:10.800]  All right.
+[01:00:11.080 --> 01:00:13.060]  Object indexer is now no longer broken.
+[01:00:13.380 --> 01:00:14.220]  I don't think.
+[01:00:14.620 --> 01:00:16.100]  There's still a suspended one.
+[01:00:16.640 --> 01:00:17.400]  The other one is running.
+[01:00:18.120 --> 01:00:19.220]  Is that running?
+[01:00:19.540 --> 01:00:22.760]  Okay, I think that was sitting there this whole time, this suspended one.
+[01:00:23.120 --> 01:00:24.700]  It's just been sitting there broken.
+[01:00:26.400 --> 01:00:28.080]  I don't think I can kill it.
+[01:00:28.560 --> 01:00:30.640]  It's in a funny...
+[01:00:34.220 --> 01:00:35.700]  I don't know what the word is.
+[01:00:35.700 --> 01:00:36.640]  Limbo.
+[01:00:39.940 --> 01:00:40.420]  Limbo.
+[01:00:41.520 --> 01:00:41.920]  Yeah.
+[01:00:42.620 --> 01:00:44.920]  Halfway between dead and alive.
+[01:00:46.720 --> 01:00:48.000]  Something like that.
+[01:00:49.620 --> 01:00:51.180]  Okay, well, that loads now, so that's great.
+[01:00:51.500 --> 01:00:52.040]  Look at that.
+[01:00:52.860 --> 01:00:57.860]  What we should probably do then is reboot the server and that will fix this, whatever that is.
+[01:00:59.760 --> 01:01:01.040]  And yeah.
+[01:01:01.840 --> 01:01:03.320]  That should be it, I think.
+[01:01:06.140 --> 01:01:06.620]  Okay.
+[01:01:07.320 --> 01:01:09.780]  I'm going to open up a new private window.
+[01:01:11.960 --> 01:01:13.360]  That's the wrong one.
+[01:01:30.550 --> 01:01:31.350]  Yeah, it is just long view.
+[01:01:31.510 --> 01:01:31.910]  All right.
+[01:01:32.010 --> 01:01:32.590]  That's fine.
+[01:01:33.190 --> 01:01:34.050]  Yeah, so reboot.
+[01:01:35.370 --> 01:01:36.950]  And well, there's updates as well.
+[01:01:42.270 --> 01:01:43.210]  It looks like there's updates.
+[01:01:44.490 --> 01:01:46.170]  Yeah, but they manage the server.
+[01:01:46.170 --> 01:01:49.190]  We don't, so I wasn't trying to get in and do those.
+[01:01:51.550 --> 01:01:53.290]  But yeah, reboot.
+[01:01:53.810 --> 01:01:55.130]  There was a .NET update.
+[01:01:56.330 --> 01:01:56.590]  Yeah.
+[01:01:56.730 --> 01:02:05.590]  Well, the .NET thing should now prevent the Windows update from being a problem because what would happen is Windows update would, for security reasons, update a component.
+[01:02:05.810 --> 01:02:10.090]  It's a web component of it, which is one of three components.
+[01:02:10.850 --> 01:02:12.210]  And that's what breaks up.
+[01:02:12.930 --> 01:02:17.030]  So they should just update all the components, but I'm not Microsoft.
+[01:02:18.470 --> 01:02:20.110]  So who knows what they're thinking?
+[01:02:21.070 --> 01:02:23.150]  The other thing, what was it?
+[01:02:23.990 --> 01:02:24.310]  Right.
+[01:02:24.390 --> 01:02:26.850]  So this is not working, but I would recommend rebooting.
+[01:02:27.170 --> 01:02:30.990]  So if they're good with rebooting, then we should do it.
+[01:02:34.440 --> 01:02:34.720]  All right.
+[01:02:34.720 --> 01:02:35.820]  I'll get that done.
+[01:02:39.220 --> 01:02:41.100]  And everything else you can go is out of... all right.
+[01:02:41.180 --> 01:02:41.400]  Thank you very much.
+[01:02:41.880 --> 01:02:42.420]  Appreciate it, Liam.
+[01:02:43.280 --> 01:02:43.600]  Yeah.
+[01:02:46.340 --> 01:02:47.560]  Thank you very much.
+[01:02:49.380 --> 01:02:53.600]  And we'll try to get things cleared away the rest of the way here.
+[01:03:02.240 --> 01:03:02.820]  Still there?
+[01:03:03.760 --> 01:03:03.980]  Yep.
+[01:03:04.880 --> 01:03:06.380]  Sorry, this is a big delay on our end.
+[01:03:06.500 --> 01:03:07.000]  Sorry about that.
+[01:03:07.220 --> 01:03:08.260]  Oh, okay.
+[01:03:19.810 --> 01:03:20.250]  Cool.
+[01:03:21.170 --> 01:03:23.850]  Yeah, I'm going to call their IP guy right now.
+[01:03:24.290 --> 01:03:25.550]  He's up in Toronto.
+[01:03:27.790 --> 01:03:29.590]  And make sure we can reboot this.
+[01:03:29.590 --> 01:03:32.570]  We should be able to, but I'm also going to talk to him about getting it updated.
+[01:03:34.070 --> 01:03:39.750]  Again, back up, because I'm pretty sure it had more than that before.
+[01:03:56.630 --> 01:03:57.310]  Still there, Liam?
+[01:03:57.870 --> 01:03:58.410]  Yep. Yep.
+[01:03:58.410 --> 01:03:58.990]  Still there.
+[01:03:59.030 --> 01:03:59.430]  Sorry.
+[01:04:00.050 --> 01:04:01.030]  I'm just thinking.
+[01:04:03.010 --> 01:04:04.950]  My brain's delayed now.
+[01:04:13.440 --> 01:04:14.400]  Yeah, so...
+[01:04:14.400 --> 01:04:15.700]  I think we're good, right?
+[01:04:16.000 --> 01:04:16.940]  Yeah, yeah, we're good.
+[01:04:20.910 --> 01:04:29.930]  All right, I will get this server updated again and get it restarted.
+[01:04:30.490 --> 01:04:31.310]  Okay, sounds good.
+[01:04:32.090 --> 01:04:32.290]  Yep.
+[01:04:33.310 --> 01:04:33.750]  Thanks, Liam.
+[01:04:34.190 --> 01:04:35.070]  Good talking to you, bud.
+[01:04:35.510 --> 01:04:35.630]  Bye.
+[01:04:35.750 --> 01:04:36.490]  Good talking with you too.
+[01:04:36.530 --> 01:04:36.730]  Bye.

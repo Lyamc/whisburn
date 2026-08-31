@@ -1,8 +1,10 @@
-# o3whisburn
+# whisburn
 
 Burn-based speech processing in Rust: transcription, translation, diarization, and TTS — with automatic model download and conversion.
 
-**o3whisburn** is a rewrite of [whisper-burn](https://github.com/Gadersd/whisper-burn) as a multi-crate workspace targeting **Burn 0.16**. Whisper, **Parakeet TDT v3**, and **Qwen3-ASR** are working end-to-end; additional backends are registered and being ported.
+**whisburn** is a rewrite of [whisper-burn](https://github.com/Gadersd/whisper-burn) as a multi-crate workspace targeting **Burn 0.16**. Whisper, **Parakeet TDT v3**, and **Qwen3-ASR** are working end-to-end; additional backends are registered and being ported.
+
+The default build uses **native TLS** (Schannel on Windows, Security framework on macOS, OpenSSL elsewhere) and a **pure-Rust** tokenizer regex backend. You do **not** need a C compiler or the `cc` crate to build.
 
 ## Features
 
@@ -14,33 +16,43 @@ Burn-based speech processing in Rust: transcription, translation, diarization, a
 - **Opus streaming** — chunked `audio/ogg` for in-browser preview
 - **Auto model management** — downloads from HuggingFace, converts safetensors → npy → Burn `.mpk`
 - **Burn inference** — WGPU backend (CPU/GPU via Burn)
-- **Functional pipeline** — composable task types in `o3whisburn-core`; conversion and decode paths favor iterators, folds, and pure helpers over imperative loops
+- **Functional pipeline** — composable task types in `whisburn-core`; conversion and decode paths favor iterators, folds, and pure helpers over imperative loops
 
 ## Quick start
 
 ### Prerequisites
 
 - [Rust](https://rustup.rs/) (2021 edition)
-- A WGPU-capable GPU driver (falls back to software rendering where supported)
+- A WGPU-capable GPU driver (falls back to software / ndarray where supported)
 - Optional: `HF_TOKEN` for gated HuggingFace models
 - Optional: [ffmpeg](https://ffmpeg.org/) with `libopus` for Opus transcoding and streaming on the server
+
+No C toolchain is required for a normal `cargo build`.
 
 ### Build
 
 ```bash
-cargo build -p o3whisburn-cli
+cd whisburn
+cargo build -p whisburn-cli
+```
+
+Release binary:
+
+```bash
+cargo build -p whisburn-cli --release
+# → target/release/whisburn
 ```
 
 ### Download a model
 
 ```bash
-cargo run -p o3whisburn-cli -- models download tiny_en --verbose
+cargo run -p whisburn-cli -- models download tiny_en --verbose
 ```
 
 ### Transcribe
 
 ```bash
-cargo run -p o3whisburn-cli -- transcribe --input path/to/audio.wav --model tiny_en
+cargo run -p whisburn-cli -- transcribe --input path/to/audio.wav --model tiny_en
 ```
 
 Output defaults to JSON. Use `--format txt`, `srt`, or `vtt` for other formats.
@@ -48,7 +60,7 @@ Output defaults to JSON. Use `--format txt`, `srt`, or `vtt` for other formats.
 ### Start the server
 
 ```bash
-cargo run -p o3whisburn-cli -- serve --port 8787 --model qwen3-asr-0.6b
+cargo run -p whisburn-cli -- serve --port 8787 --model qwen3-asr-0.6b
 ```
 
 Open **http://localhost:8787/** in a browser to upload audio, pick an output format, and download the transcript. The UI also auto-transcodes uploads to Opus for in-browser playback (requires ffmpeg).
@@ -73,21 +85,22 @@ curl -X POST "http://localhost:8787/v1/transcode?format=opus&bitrate=medium&down
 
 | Crate | Role |
 |-------|------|
-| [`o3whisburn-core`](crates/o3whisburn-core) | Shared types, `SpeechTask`, pipeline traits |
-| [`o3whisburn-audio`](crates/o3whisburn-audio) | Decode (Symphonia), resample, encode, transcode (WAV/Opus) |
-| [`o3whisburn-engine`](crates/o3whisburn-engine) | Burn inference (Whisper, Parakeet TDT, Qwen3-ASR, stubs for T-one/VibeVoice) |
-| [`o3whisburn-models`](crates/o3whisburn-models) | Registry, HF download, safetensors conversion |
-| [`o3whisburn-server`](crates/o3whisburn-server) | Axum HTTP API + embedded web UI |
-| [`o3whisburn-cli`](crates/o3whisburn-cli) | `serve`, `transcribe`, `models` commands |
+| [`whisburn-core`](crates/whisburn-core) | Shared types, `SpeechTask`, pipeline traits |
+| [`whisburn-audio`](crates/whisburn-audio) | Decode (Symphonia), resample, encode, transcode (WAV/Opus) |
+| [`whisburn-engine`](crates/whisburn-engine) | Burn inference (Whisper, Parakeet TDT, Qwen3-ASR, stubs for T-one/VibeVoice) |
+| [`whisburn-models`](crates/whisburn-models) | Registry, HF download, safetensors conversion |
+| [`whisburn-server`](crates/whisburn-server) | Axum HTTP API + embedded web UI |
+| [`whisburn-cli`](crates/whisburn-cli) | `serve`, `transcribe`, `models` commands (binary: `whisburn`) |
+| [`whisburn-app`](crates/whisburn-app) | Optional Iced desktop / WASM client |
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for data flow and crate dependencies.
 
 ## CLI reference
 
 ```
-o3whisburn serve       Start HTTP server (web UI at /)
-o3whisburn transcribe  Transcribe a local audio file
-o3whisburn models      Download or list models
+whisburn serve       Start HTTP server (web UI at /)
+whisburn transcribe  Transcribe a local audio file
+whisburn models      Download or list models
 ```
 
 ### `serve`
@@ -120,7 +133,7 @@ o3whisburn models      Download or list models
 | `-v, --verbose` | | Verbose logging |
 | `--debug` | | Debug mel / chunk logging |
 
-All major flags also read `O3WHISBURN_*` environment variables.
+All major flags also read `WHISBURN_*` environment variables.
 
 ### `models download`
 
@@ -139,7 +152,7 @@ Prints all registered models with category, VRAM estimate, and `burn_ready` stat
 Exercise multiple models × formats × settings and write artifacts for inspection:
 
 ```bash
-cargo run -p o3whisburn-cli -- verify --models "tiny_en,base_en" --sentences --diarize --out-dir verify-outputs
+cargo run -p whisburn-cli -- verify --models "tiny_en,base_en" --sentences --diarize --out-dir verify-outputs
 ```
 
 Useful to confirm json/txt/srt + diarization labels + sentence grouping work across Whisper / Parakeet / Qwen3 etc.
@@ -205,47 +218,48 @@ See [MODELS.md](MODELS.md) for the conversion pipeline and registry details.
 ```bash
 # CPU-friendly cross to static linux (great for containers)
 rustup target add x86_64-unknown-linux-musl
-cargo build -p o3whisburn-cli --target x86_64-unknown-linux-musl --release
+cargo build -p whisburn-cli --target x86_64-unknown-linux-musl --release
 
 # Run with CPU fallback on the target
-O3WHISBURN_DEVICE=cpu ./target/x86_64-unknown-linux-musl/release/o3whisburn transcribe ...
+WHISBURN_DEVICE=cpu ./target/x86_64-unknown-linux-musl/release/whisburn transcribe ...
 ```
 
 See [`.cargo/config.toml`](.cargo/config.toml) and [`scripts/cross-build.sh`](scripts/cross-build.sh) for more targets and helpers.
 
 Notes:
 - GPU acceleration (wgpu) requires appropriate drivers + graphics stack on the **target** machine.
-- `O3WHISBURN_DEVICE=cpu` selects wgpu's CPU path (portable, no native GPU required at runtime for basic use).
+- `WHISBURN_DEVICE=cpu` selects wgpu's CPU path (portable, no native GPU required at runtime for basic use).
 - Full CUDA/Metal cross builds need matching native toolchains.
+- Prefer targets where **native TLS** is available; rustls/`ring` is not used by default (avoids a C build dependency).
 
 ## Testing
 
 Integration tests (require downloaded models and bundled `samples/jfk.wav`):
 
 ```bash
-cargo test -p o3whisburn-engine --test jfk_mel
-cargo test -p o3whisburn-engine --test parakeet_parity
-cargo test -p o3whisburn-engine --test qwen3_greedy_parity
-cargo test -p o3whisburn-engine --test qwen3_audio_hf_mel
+cargo test -p whisburn-engine --test jfk_mel
+cargo test -p whisburn-engine --test parakeet_parity
+cargo test -p whisburn-engine --test qwen3_greedy_parity
+cargo test -p whisburn-engine --test qwen3_audio_hf_mel
 ```
 
 Download models before parity tests:
 
 ```bash
-cargo run -p o3whisburn-cli -- models download parakeet-tdt-0.6b-v3 --verbose
-cargo run -p o3whisburn-cli -- models download qwen3-asr-0.6b --verbose
+cargo run -p whisburn-cli -- models download parakeet-tdt-0.6b-v3 --verbose
+cargo run -p whisburn-cli -- models download qwen3-asr-0.6b --verbose
 ```
 
 Server API tests (no model weights required):
 
 ```bash
-cargo test -p o3whisburn-server
+cargo test -p whisburn-server
 ```
 
 Model source resolution:
 
 ```bash
-cargo test -p o3whisburn-models
+cargo test -p whisburn-models
 ```
 
 ## Environment variables
@@ -253,14 +267,14 @@ cargo test -p o3whisburn-models
 | Variable | Description |
 |----------|-------------|
 | `HF_TOKEN` | HuggingFace API token for gated models |
-| `O3WHISBURN_MODELS_DIR` | Model cache directory (default: `./models`) |
-| `O3WHISBURN_CONFIG` | Directory containing `settings.toml` |
-| `O3WHISBURN_DEFAULT_MODEL` | Default model for serve/transcribe |
-| `O3WHISBURN_PORT` | Server listen port (default 8787) |
-| `O3WHISBURN_DEVICE` | Device override (`cpu`, `0`, `1`, …) |
-| `O3WHISBURN_PRELOAD_MODELS` | Comma list or `all` for startup preload |
-| `O3WHISBURN_VERBOSE`, `O3WHISBURN_DEBUG` | Verbose/debug flags |
-| `RUST_LOG` | Log filter (e.g. `o3whisburn=debug`) |
+| `WHISBURN_MODELS_DIR` | Model cache directory (default: `./models`) |
+| `WHISBURN_CONFIG` | Directory containing `settings.toml` |
+| `WHISBURN_DEFAULT_MODEL` | Default model for serve/transcribe |
+| `WHISBURN_PORT` | Server listen port (default 8787) |
+| `WHISBURN_DEVICE` | Device override (`cpu`, `0`, `1`, …) |
+| `WHISBURN_PRELOAD_MODELS` | Comma list or `all` for startup preload |
+| `WHISBURN_VERBOSE`, `WHISBURN_DEBUG` | Verbose/debug flags |
+| `RUST_LOG` | Log filter (e.g. `whisburn=debug`) |
 
 CLI flags that support `--flag` also read the matching env (clap `env`). Priority: CLI > env > config file.
 

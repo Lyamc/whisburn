@@ -1,0 +1,381 @@
+[00:02.060 --> 00:04.160]  There we go. That should have fixed the delay.
+[00:04.600 --> 00:06.820]  Okay, good. That was probably annoying.
+[00:08.180 --> 00:11.640]  Well, it's fine for me, but it's probably worse for you.
+[00:12.920 --> 00:16.640]  I thought I would say something and it would be like five seconds and then you'd start talking.
+[00:17.140 --> 00:20.420]  I know, I know. It's a delay, yeah.
+[00:21.660 --> 00:24.420]  It's some weird routing thing in the back end that
+[00:24.420 --> 00:25.600]  I don't have any control over.
+[00:27.840 --> 00:29.860]  Right, so, yeah,
+[00:29.960 --> 00:33.660]  it's more to do with just descriptors. It's also the job configuration stuff.
+[00:34.600 --> 00:37.600]  The way that it currently updates...
+[00:37.600 --> 00:41.280]  I made the case and
+[00:41.280 --> 00:45.620]  logged in eRequest that I've been directing everyone to and it's currently
+[00:45.620 --> 00:49.180]  in the top ten for the eRequest.
+[00:51.140 --> 00:53.770]  Above graphical programming, if you can believe it.
+[00:53.770 --> 00:58.430]  Oh, yeah. I heard that coming down the pipe.
+[00:59.150 --> 01:02.330]  Yeah, it's pretty close to being
+[01:02.330 --> 01:02.810]  done.
+[01:06.310 --> 01:09.770]  I would recommend getting people to
+[01:10.990 --> 01:13.950]  rank the eRequest because it does affect...
+[01:13.950 --> 01:18.330]  They do look at it and it does affect what they end up
+[01:18.330 --> 01:21.590]  trying to work on. But yeah, I can see that after.
+[01:22.850 --> 01:25.590]  Doesn't help you now. So, let's do the fixing
+[01:25.590 --> 01:29.730]  things now. So, couple of
+[01:29.730 --> 01:33.030]  things. One of them is...
+[01:33.530 --> 01:35.170]  got RSC Studio.
+[01:37.810 --> 01:38.970]  Is that where all this stuff is?
+[01:41.930 --> 01:45.890]  Ah, that helps me. Does it take a while for those
+[01:45.890 --> 01:49.490]  I&I files to take effect? No, it should be pretty much
+[01:49.490 --> 01:52.750]  immediate. Cause I can get in the middle school now for some reason.
+[01:53.770 --> 01:57.390]  I don't know what happened here. I just thought hell with it. I'll try clicking
+[01:57.390 --> 02:01.430]  on it one more time. And now that file, as I logged off
+[02:01.430 --> 02:04.830]  and logged back on, I can see the 3000 controller in WebView.
+[02:05.450 --> 02:07.150]  Yeah, it should have been pretty much immediate.
+[02:09.870 --> 02:13.050]  I don't know how immediate, but pretty close to immediate.
+[02:13.710 --> 02:15.950]  Within two minutes, I would expect it.
+[02:17.310 --> 02:19.710]  So, yeah.
+[02:19.850 --> 02:24.050]  Anyways, can you show me the site that you connected to where you had the
+[02:24.050 --> 02:28.130]  descriptors go poof? Yes, this is the one I'm on
+[02:28.130 --> 02:29.970]  right now, the Winni County Schools.
+[02:31.810 --> 02:35.870]  So, I reloaded and saved them just about
+[02:35.870 --> 02:39.690]  half an hour ago, probably now. Oh, yeah,
+[02:39.690 --> 02:44.390]  I thought you'd take control of that one. So, I think there's
+[02:44.390 --> 02:48.390]  two possibilities. One is that there's something
+[02:48.390 --> 02:52.610]  getting into the descriptor file that is
+[02:52.610 --> 02:56.710]  let's say an invalid character, something like that, like UTF-8
+[02:56.710 --> 03:00.550]  type thing. Studio Reads Act goes, I can't interpret
+[03:00.550 --> 03:04.750]  that, and then nukes the file. That's one option.
+[03:05.130 --> 03:08.450]  The other option is that for some reason, the
+[03:08.450 --> 03:12.610]  index file, the .cdx file, gets out of
+[03:12.610 --> 03:16.830]  sync with the .dbf file. The current behavior when things get out of
+[03:16.830 --> 03:20.610]  sync is nuke the dbf. However,
+[03:20.770 --> 03:24.690]  it's sort of like one of those things of where we introduce some sort of
+[03:24.690 --> 03:28.370]  recovery code and it is applying to everything kind of blindly.
+[03:29.770 --> 03:32.610]  So, what's coming down in the next
+[03:32.610 --> 03:37.070]  release is if it detects there's an issue,
+[03:37.570 --> 03:40.610]  instead of just nuking it, it
+[03:40.610 --> 03:44.810]  rebuilds the index, which is a way less destructive thing, because
+[03:44.810 --> 03:46.450]  then all your descriptors are still there.
+[03:49.590 --> 03:52.610]  Now, it all depends on what the actual issue
+[03:52.610 --> 03:56.510]  is, though. I have seen cases where people had the
+[03:56.510 --> 04:00.730]  studio open, like this. Their computer runs out of power, crashes,
+[04:00.930 --> 04:04.070]  whatever. And when they come back, their system list is empty.
+[04:05.450 --> 04:08.390]  Now, in that case, what happened was
+[04:08.390 --> 04:12.510]  it went to write to the disk, and when you write to the disk, you
+[04:12.510 --> 04:16.350]  wipe it and then you write stuff. So, it either did the wipe
+[04:16.350 --> 04:20.510]  and it didn't do the write, or when it went to do the write, there was no memory.
+[04:21.030 --> 04:22.310]  So, it wrote nothing.
+[04:24.090 --> 04:28.650]  I don't know which one. But two of the other workers, at least in my company,
+[04:28.770 --> 04:32.330]  have the same issue. So, once you figure it all out, then it will be
+[04:32.330 --> 04:36.270]  cured for all of us. Actually, my old boss that sold the company,
+[04:36.270 --> 04:40.310]  he was so frustrated with that descriptor. Every time you got
+[04:40.310 --> 04:44.410]  a system just about, they weren't there anymore. So, this has
+[04:44.410 --> 04:48.270]  been a couple years running now. Do you guys synchronize it with
+[04:49.390 --> 04:52.290]  like a Dropbox type thing, where you've got
+[04:52.290 --> 04:55.750]  your RC studio in like a Dropbox or OneDrive or something?
+[04:56.310 --> 05:00.450]  No, that has always been a dream of ours. I guess we did try that years and years
+[05:00.450 --> 05:03.650]  ago, but it didn't work out too good, so we don't do that anymore.
+[05:03.650 --> 05:04.570]  Yeah.
+[05:16.570 --> 05:19.170]  There we go. That makes more sense.
+[05:22.210 --> 05:23.250]  Okay, so...
+[05:23.250 --> 05:24.870]  I'm going to do another backup.
+[05:27.510 --> 05:29.630]  And all you do is you just log out, log back in.
+[05:31.070 --> 05:35.110]  Do you want me to do that right now?
+[05:36.910 --> 05:37.430]  Yep.
+[05:38.030 --> 05:41.750]  Okay. Now, while you do it, I actually want to have
+[05:41.750 --> 05:45.130]  the file explorer on the left-hand side. I want to see
+[05:45.830 --> 05:48.770]  what's happening to the files as things are going.
+[05:49.410 --> 05:56.230]  Sure. Scratch studio down so we can watch that happen.
+[05:56.790 --> 05:57.850]  Does that work, I should say? Yep.
+[06:04.430 --> 06:09.430]  Alright, you ready? I'm just waiting for this screen to update here.
+[06:10.070 --> 06:16.050]  Okay. There we go.
+[06:16.050 --> 06:20.170]  Okay, go ahead and do the log out, log in.
+[06:22.800 --> 06:25.520]  I didn't buy it, but I can log back in that way.
+[06:26.520 --> 06:28.080]  Is that what you normally do, or do you exit?
+[06:30.960 --> 06:34.440]  I do usually just log off. I say buy,
+[06:34.520 --> 06:38.680]  and then I just hit this X here is what I do. Okay, go ahead and do it.
+[06:39.340 --> 06:39.780]  Okay.
+[06:42.080 --> 06:46.200]  And I'm just going to move you over here for a little bit so I can get that studio.
+[06:51.730 --> 06:53.330]  Get that out of the way again.
+[07:05.900 --> 07:07.980]  You want to be able to see the size of the file, right?
+[07:09.240 --> 07:12.140]  Let me try to log in down here again.
+[07:28.110 --> 07:31.910]  Oh, you're covering up the part I care about. Yeah, let me just
+[07:31.910 --> 07:36.010]  move this out of the way before I log in. Of course my battery
+[07:36.010 --> 07:39.410]  is going dead. Come on.
+[07:39.710 --> 07:44.310]  You can't because of the window that's right there. You have to hit escape or get out of it.
+[07:50.720 --> 07:52.020]  Just hit escape.
+[07:52.320 --> 07:55.380]  Just hit escape on your keyboard. Yeah, there you go.
+[07:58.850 --> 08:00.370]  Punches down away here.
+[08:02.770 --> 08:05.090]  Can you see that now? Yep.
+[08:25.950 --> 08:28.050]  I don't see anything change so far at least.
+[08:29.170 --> 08:33.010]  Can you do your regular process again? Like go access, buy, like imagine
+[08:33.010 --> 08:36.930]  I'm not even here. Just do it. Or you're like, okay, I've got to get to my next thing or whatever it is.
+[08:36.930 --> 08:40.330]  And I just do that. And I click yes.
+[08:41.030 --> 08:44.210]  And I'm out of there. That's what I do.
+[08:46.070 --> 08:48.930]  And I see the studio right there. Yep.
+[09:36.790 --> 09:38.290]  And it seems a bit random.
+[09:38.450 --> 09:41.310]  It doesn't lose it every time. It loses it sometime.
+[09:42.030 --> 09:46.370]  Yeah, well I'm thinking, I've seen some really weird things in my
+[09:46.370 --> 09:50.570]  time doing tech support. And one of them, this is crazy. This guy had an issue
+[09:50.570 --> 09:54.750]  where every time he connected he ran into some problem. It was some really weird error I've never seen before.
+[09:57.670 --> 09:58.570]  And I thought...
+[09:59.890 --> 10:01.950]  So, okay, is this the descriptors you're talking about?
+[10:02.610 --> 10:06.570]  Oh yeah, that. Anytime I want to look at anything with...
+[10:07.470 --> 10:08.870]  Is it in the...
+[10:08.870 --> 10:14.050]  Is it in the trend logs? Is it outside of the trend logs or is it both?
+[10:14.670 --> 10:18.710]  It's both. Like if I look at a VAV, our group name is the name on
+[10:18.710 --> 10:22.750]  the VAV box, right? So then they look at it and it says group one or whatever
+[10:22.750 --> 10:25.310]  that would be. So let me look at something over here once.
+[10:26.310 --> 10:28.350]  Oh, that one actually shows it.
+[10:31.760 --> 10:36.480]  Well I didn't see the descriptor file being nuked. But the reason I'm saying that is there's a difference
+[10:36.480 --> 10:40.660]  with the descriptors inside of the trend logs and the descriptors inside
+[10:40.660 --> 10:41.680]  of everywhere else.
+[10:44.000 --> 10:48.700]  And I think I know why you were losing the descriptors inside
+[10:48.700 --> 10:52.180]  of the trends.
+[10:53.200 --> 10:54.580]  Inside of the trends, yeah.
+[10:56.240 --> 11:00.700]  When you do a load...
+[11:01.240 --> 11:04.020]  Oh, go ahead with the description though.
+[11:05.880 --> 11:08.680]  Oh, actually I'm seeing that right now with
+[11:08.680 --> 11:10.740]  3000 group two. Is it just called group?
+[11:12.040 --> 11:16.920]  No. Where is that? Oh, look at the title. Yeah, right here.
+[11:16.920 --> 11:21.420]  Yeah, I feel like it should have a name. It should have a name to it, yes.
+[11:21.940 --> 11:24.760]  Can you go open up 3000? Sure.
+[11:27.930 --> 11:29.710]  3000 group two.
+[11:34.980 --> 11:38.240]  I should say this right here, area A.
+[11:39.100 --> 11:43.020]  So close and reopen that system group. Oh, now it has it.
+[11:44.140 --> 11:46.760]  It just loaded the descriptors, yeah.
+[11:47.020 --> 11:49.880]  Because I brought it up. Can you go to main?
+[11:51.460 --> 11:53.840]  And then PC setup.
+[11:55.960 --> 11:56.960]  And preferences.
+[11:58.100 --> 12:01.380]  No, it was right there. Yep, I just said that.
+[12:01.380 --> 12:07.340]  PC setup, preferences. Alright.
+[12:14.590 --> 12:15.850]  That's totally normal.
+[12:18.590 --> 12:20.390]  You can close that.
+[12:22.530 --> 12:25.470]  There's a setting there. That can stay
+[12:25.470 --> 12:29.070]  there as is. You don't have to change it.
+[12:36.200 --> 12:38.880]  Do you want to try that thing again where you go by
+[12:38.880 --> 12:42.760]  and then exit, open it, and then see what
+[12:42.760 --> 12:48.820]  happens again? Now there's been a change to the descriptor file.
+[13:00.010 --> 13:01.070]  Okay, so load descriptors
+[13:01.070 --> 13:05.090]  on worksheet. Automatically loads the descriptors for each worksheet into the workstation RAM
+[13:05.090 --> 13:08.750]  each time a worksheet is opened. So
+[13:08.750 --> 13:12.850]  if you have slower networks, that's not a good thing you want to do because it
+[13:12.850 --> 13:16.690]  will mean a lot of descriptor loading type stuff. Yep,
+[13:16.830 --> 13:20.810]  I gotcha. See, and this here says group 13 again where it doesn't
+[13:20.810 --> 13:24.190]  give a descriptor. So it looks like it did the same thing
+[13:24.710 --> 13:28.070]  in that respect. Yeah.
+[13:31.470 --> 13:32.430]  That's interesting.
+[13:32.910 --> 13:36.890]  I wonder if that's just a weird quirk because I'm sure that the descriptors are actually in there.
+[13:36.890 --> 13:39.950]  So one way I can check is I can go
+[13:41.410 --> 13:45.230]  group that and it pulls up all the descriptors
+[13:45.230 --> 13:48.190]  for it. Sure enough, it's there.
+[13:51.690 --> 13:52.690]  Not to school select.
+[13:52.910 --> 13:54.030]  What is this?
+[13:58.190 --> 14:00.970]  I think you found a weird little
+[14:00.970 --> 14:05.060]  bug here. A little minor bug in the title. The title bar didn't seem to
+[14:05.060 --> 14:07.620]  indicate the name of the thing most of the time, it seems.
+[14:07.840 --> 14:12.800]  Oh, direct access, huh? Yeah.
+[14:13.660 --> 14:17.380]  I hit F2 to pull that up. Oh, okay. Well, that came up with
+[14:17.380 --> 14:20.020]  the name right away. Is there a 4000?
+[14:25.440 --> 14:26.280]  Well, whatever.
+[14:28.920 --> 14:32.200]  This is a great way, by the way, to see all
+[14:32.200 --> 14:36.000]  the group links on your system. If you've got descriptors loaded,
+[14:36.000 --> 14:38.780]  you can just search through it like this.
+[14:38.880 --> 14:40.680]  Okay. Yeah.
+[14:44.600 --> 14:46.680]  That is a cool way. I'll have to remember that.
+[14:46.700 --> 14:50.760]  I do direct access often for points reports, stuff like that.
+[14:52.700 --> 14:56.100]  Yeah. I know, everything looks fine.
+[14:56.140 --> 15:00.120]  So let's go ahead and send descriptors. Do you ever receive the descriptors
+[15:00.120 --> 15:03.460]  from WebView? Do you ever try and do that? I have done that.
+[15:03.460 --> 15:07.500]  Does that seem to work? I was trying to do that on
+[15:07.500 --> 15:11.220]  every job because I was losing descriptors, but it never seems to work.
+[15:11.440 --> 15:14.800]  Yes. So there is a workflow. It's currently broken.
+[15:15.160 --> 15:19.400]  But there is a workflow. What you do is you
+[15:19.400 --> 15:22.920]  receive it like you were seeing before. So you drag it over.
+[15:23.140 --> 15:27.520]  You click the arrow, doesn't matter which one. And what will happen is it will write
+[15:27.520 --> 15:31.400]  it to this file here, descriptors.dbf, right there.
+[15:31.860 --> 15:35.440]  Okay. So I'm just going to wait for it to finish transferring.
+[15:38.080 --> 15:38.740]  See how it's updating.
+[15:39.540 --> 15:41.960]  That one just updated. Now this one's going.
+[15:43.440 --> 15:46.960]  Internet isn't terribly fast, so this is taking a little bit longer than I thought it would.
+[15:48.860 --> 15:51.680]  So now you've got the files here.
+[15:53.720 --> 15:55.680]  So there are two
+[15:55.680 --> 15:56.440]  options.
+[15:56.440 --> 16:00.680]  If you're comfortable enough with just
+[16:00.680 --> 16:04.840]  deleting and renaming things, you can do this. Go by.
+[16:06.980 --> 16:08.020]  I'm going to take these.
+[16:09.340 --> 16:09.780]  Delete.
+[16:12.240 --> 16:15.740]  You can multi-select and hit F2 to rename.
+[16:16.900 --> 16:18.440]  And it renames them all.
+[16:20.940 --> 16:22.400]  Another trick for you.
+[16:24.720 --> 16:26.480]  F2, yeah. So F2 is
+[16:26.480 --> 16:30.560]  rename. If you multi-select, it will rename everything all at once
+[16:30.560 --> 16:34.340]  that's in your selection. If they have duplicates,
+[16:34.700 --> 16:38.660]  duplicate names. So here they got the .cdx, .dbf, .des. So this works great.
+[16:39.120 --> 16:42.200]  There's no issues. If I did all of these,
+[16:42.340 --> 16:46.480]  it would do win, win one, win, win one, win,
+[16:46.540 --> 16:49.920]  win one, right? So it would duplicate the name. Anyways.
+[16:50.660 --> 16:53.800]  So now if I hit connect, it will load to these descriptors
+[16:53.800 --> 16:58.040]  that were just downloaded. Okay. So that's one way
+[16:58.040 --> 17:01.940]  to do it. There is another way that I would like it to do, but is
+[17:01.940 --> 17:06.060]  currently broken and will be fixed. And that is to do
+[17:06.060 --> 17:10.080]  the main descriptors open descriptor
+[17:10.080 --> 17:14.020]  file. Okay. So you
+[17:14.020 --> 17:17.960]  would open the one that you downloaded, the descriptor .dbf or
+[17:17.960 --> 17:21.700]  whatever, and then it would load it. The problem is
+[17:21.700 --> 17:25.760]  what I ran into with the current version is that immediately just
+[17:25.760 --> 17:27.880]  corrupts your descriptor.
+[17:28.700 --> 17:33.760]  Because what happens is it stops writing to it, but it does write to the index. So
+[17:33.760 --> 17:37.780]  it doesn't match anymore. And then like I was saying before, if it doesn't match,
+[17:37.920 --> 17:41.780]  it nukes it. Okay. I never used that option, the open
+[17:41.780 --> 17:45.260]  one. So that's what that is.
+[17:45.780 --> 17:46.820]  Yeah, that's it.
+[17:50.160 --> 17:52.260]  Well, this is good news, bad news.
+[17:53.840 --> 17:56.420]  Good news, it's not happening. Bad news, it's not happening.
+[18:00.380 --> 18:01.340]  But good news,
+[18:01.860 --> 18:05.340]  next release will have improvements to that. So it
+[18:05.340 --> 18:09.380]  shouldn't be deleting it nearly as often. Oh, there's one other thing. This is the
+[18:09.380 --> 18:13.380]  site. I remember now. This is the site that had some connection
+[18:13.380 --> 18:17.510]  issues and we're like, what's going on? It turns out the issue was due to
+[18:18.360 --> 18:21.480]  a setting in the system
+[18:21.480 --> 18:25.440]  list. Oh. Do you remember that?
+[18:26.380 --> 18:28.460]  Vaguely, yes. That sounds familiar.
+[18:30.200 --> 18:33.580]  Let's see if it's still in there. Just trying to get my computer plugged in
+[18:33.580 --> 18:37.340]  before we lose all hope here. Maybe that will introduce
+[18:37.340 --> 18:40.600]  the issue, I don't know. Plugging it in?
+[18:40.600 --> 18:44.380]  No, having it unplugged. Like having it die.
+[18:44.640 --> 18:48.700]  Right on purpose. Oh, yeah, right. That's too late on a Friday
+[18:48.700 --> 18:52.020]  to be trying new problems again.
+[18:56.260 --> 18:56.800]  So the
+[18:59.920 --> 19:01.040]  second UDP
+[19:03.840 --> 19:04.960]  port value
+[19:09.780 --> 19:10.340]  equals...
+[19:10.340 --> 19:14.620]  Okay, good. I did fix it. So the issue was
+[19:14.620 --> 19:18.740]  at one point, there was a whole bunch of these 47808s
+[19:18.740 --> 19:22.300]  that were in there and shouldn't have been in there. And that
+[19:22.300 --> 19:26.500]  wrecked all sorts of havoc on the system.
+[19:57.270 --> 19:58.770]  Is there a site where it happens
+[19:59.410 --> 20:02.290]  really consistently, like every time almost?
+[20:03.650 --> 20:07.250]  I can't do that for sure. It's so hard. I'm at different sites
+[20:07.250 --> 20:11.350]  every day and I wish I had time to just sit and troubleshoot
+[20:11.350 --> 20:15.430]  it. I've got one other thing to try before we call it.
+[20:16.530 --> 20:19.390]  Imagine you went to troubleshoot
+[20:19.390 --> 20:23.490]  some issue, whatever. You're going to check some graphics. So you would navigate to some room
+[20:23.490 --> 20:27.730]  that they're reporting the temperature is too low, right? Something like that.
+[20:27.790 --> 20:31.550]  That's probably a pretty normal thing. So go ahead and navigate like you normally
+[20:31.550 --> 20:35.310]  would. And then you found the thing, you call the guy, you're done,
+[20:35.310 --> 20:39.590]  so you're going to close out of studio. So let's see if that reproduces the issue.
+[20:40.750 --> 20:43.670]  Okay. Let's get to the main floor plan. I'll just
+[20:43.670 --> 20:46.050]  go in there. Oh, and I forgot to minimize that. Sorry.
+[20:50.010 --> 20:51.770]  There you go. Okay, go for it.
+[20:52.470 --> 20:57.190]  I'm going to check a room that we just worked on not too
+[20:57.190 --> 21:00.970]  long ago. So this cab heater was just put in.
+[21:06.720 --> 21:08.480]  So I'm just going to check a trend log
+[21:08.480 --> 21:13.080]  to make sure the temperature held today, say.
+[21:13.660 --> 21:17.080]  The strip is gone, but it's probably
+[21:17.080 --> 21:20.920]  A.I. 20, I'm assuming. That doesn't have any data in it.
+[21:21.260 --> 21:24.100]  Oh, it does. I just can't see it. I'm in too light a room here.
+[21:24.100 --> 21:28.360]  It's too squished, sorry. Yep. So anyways, I would look up the admin. You want me to just
+[21:28.360 --> 21:31.940]  log off after that? Yep. Yeah, just close out of studio like you normally would.
+[21:33.460 --> 21:36.640]  I usually try to close all my pages if I don't have to,
+[21:41.690 --> 21:43.390]  but then log on again.
+[21:44.910 --> 21:48.870]  Is that what you normally would do, or do you just exit? I'd close out completely and then I'd
+[21:48.870 --> 21:52.410]  stack up my computer, you know, do that. And then I'd
+[21:53.610 --> 21:56.290]  shut her down. Shut the computer down.
+[21:57.010 --> 21:58.730]  That's sort of how I do it.
+[22:02.310 --> 22:05.910]  And the files are still there. Oh, so
+[22:05.910 --> 22:10.090]  there is an interesting thing. Take a look
+[22:10.090 --> 22:11.830]  at the date modified.
+[22:15.930 --> 22:17.770]  Now, is this a back-net only system?
+[22:18.490 --> 22:21.790]  If it is, then that's normal. That's totally normal.
+[22:23.590 --> 22:26.210]  Yeah, we don't do any dual protocol.
+[22:31.690 --> 22:33.650]  Yeah, that seems pretty normal.
+[22:36.750 --> 22:38.290]  Does this computer ever get used
+[22:38.290 --> 22:42.290]  by other people where they're also using the C drive?
+[22:42.530 --> 22:42.970]  No.
+[22:44.730 --> 22:50.720]  Well, that pretty much eliminates all the things I could think of.
+[22:53.600 --> 22:56.500]  I'll tell you by anecdote and then we'll leave it at that.
+[22:56.920 --> 22:58.560]  But let me know if it happens again.
+[23:02.060 --> 23:04.280]  Man, it's tough because I want to know
+[23:04.280 --> 23:08.460]  the before and the after, but the only way you know what happens is by the after.
+[23:10.380 --> 23:10.820]  Yeah.
+[23:17.620 --> 23:18.500]  But, alternatively...
+[23:18.500 --> 23:20.620]  So, alternatively, we can wait until
+[23:20.620 --> 23:24.420]  the next release and see if the issue persists then, because that would
+[23:24.420 --> 23:28.160]  eliminate at least one section of things that it could potentially be.
+[23:28.180 --> 23:32.260]  But I'll give you my anecdote. So, there was a guy who was having an issue
+[23:32.260 --> 23:36.760]  every time he would do something, and it was consistent every time he would do it.
+[23:38.040 --> 23:41.000]  Maybe every once in a while it wouldn't happen, but most of the time
+[23:41.000 --> 23:45.240]  it happened, right? And it was really easy to reproduce on his machine. On my machine
+[23:45.240 --> 23:48.880]  couldn't reproduce at all. And I was thinking, well, his machine was
+[23:48.880 --> 23:52.400]  really slow. Now, normally that's not a huge deal, but I'm going to try it anyways.
+[23:54.620 --> 23:56.820]  So, I went into
+[23:56.820 --> 24:00.980]  my computer BIOS settings and reduced all of my
+[24:00.980 --> 24:04.980]  stuff to like one core and brought down the clock. And I made it as slow as I basically
+[24:04.980 --> 24:09.060]  possibly could. Booted in, tried the thing, hit the issue immediately.
+[24:10.000 --> 24:12.320]  Okay, the problem was there was a race condition.
+[24:13.120 --> 24:17.280]  It was a order in which things happen. And
+[24:17.280 --> 24:20.960]  normally the thing happens so fast you would never hit the race condition.
+[24:21.540 --> 24:25.080]  Like, your probability was so low the average
+[24:25.080 --> 24:28.900]  user would never hit it. But his machine was so slow
+[24:28.900 --> 24:32.860]  happened every time. It was slow because it was a virtual machine or something like that.
+[24:35.080 --> 24:37.180]  Anyways, so, I'm not saying your computer is slow.
+[24:37.240 --> 24:40.680]  What I'm saying is there's environmental things that might be something that
+[24:40.680 --> 24:44.920]  there is a bug. But until we know how it happens
+[24:45.680 --> 24:47.260]  there's not much I can do about it.
+[24:50.260 --> 24:53.780]  Yeah, I guess I'm still
+[24:54.500 --> 24:57.360]  unsure why the WebView resource or the INI didn't
+[24:57.360 --> 25:00.920]  update. I think it was just a bit of a delay there.
+[25:00.920 --> 25:03.060]  So it should be pretty much immediate.
+[25:06.100 --> 25:08.660]  So what happens is you send the file
+[25:08.660 --> 25:12.960]  it gets added to a list in the SQL database.
+[25:13.480 --> 25:16.980]  Every minute it goes through the list of items in the SQL
+[25:16.980 --> 25:19.320]  database, or sometimes faster than that.
+[25:20.500 --> 25:25.060]  And then it processes them, which clears the table of
+[25:25.060 --> 25:28.860]  the list or the items that succeeded, and writes the
+[25:28.860 --> 25:33.120]  contents of whatever that file was to the database or to other locations.
+[25:33.920 --> 25:36.620]  So that process typically completes within two minutes.
+[25:37.460 --> 25:40.780]  I don't know if you navigated with the two minutes. The second thing that might have
+[25:40.780 --> 25:44.400]  affected it is when you're navigating around in WebView
+[25:45.180 --> 25:48.700]  a lot of stuff is cached to try to improve performance.
+[25:49.060 --> 25:52.660]  You don't want to be re-downloading all the components. And it's very possible that the
+[25:52.660 --> 25:56.940]  cache in the browser happened to keep the
+[25:56.940 --> 26:01.180]  job file long enough that by the time we got on the call it already cleared, and then
+[26:01.180 --> 26:05.120]  when you tried to load it up or hit refresh or whatever it was, then it just worked
+[26:05.120 --> 26:08.160]  again. So it could be either of those two things.
+[26:10.080 --> 26:13.140]  Okay, well we'll see how it goes once. I mean, these updates
+[26:13.140 --> 26:17.140]  might certainly help. What is the latest version of WebView
+[26:17.140 --> 26:22.820]  now? Is it 3.1.6? Yeah, 3.1.6.1.1.
+[26:24.780 --> 26:25.220]  Before
+[26:25.220 --> 26:29.220]  you go to update it, if you plan to update it on this
+[26:29.220 --> 26:33.460]  particular site, you'll need to make sure that the SQL
+[26:33.460 --> 26:37.360]  database is a new enough server version, and
+[26:37.360 --> 26:41.380]  then the compatibility level is increased to a recent enough version.
+[26:41.940 --> 26:45.240]  We make use of some newer features in SQL Server,
+[26:45.240 --> 26:49.360]  so that's why. I know that I think I was on the
+[26:49.360 --> 26:53.220]  line with you guys when I updated my last couple because that was an issue.
+[26:53.220 --> 26:57.460]  I updated the SQL, but it still had some hurdles to
+[26:57.460 --> 27:01.000]  jump over, and that's beyond what I normally do.
+[27:02.980 --> 27:05.280]  Alright, that sounds good. Maybe we'll
+[27:06.300 --> 27:09.300]  just ask them about updating WebView in the
+[27:09.300 --> 27:12.840]  near future. It could be a combination of things happening here.
+[27:14.520 --> 27:17.440]  If we get them up to date, at least we know it's not a version
+[27:17.440 --> 27:18.700]  of WebView causing the issue.
+[27:20.200 --> 27:23.200]  A nice thing about the
+[27:23.200 --> 27:27.140]  since 3.16.1, the system group loading time is significantly
+[27:27.140 --> 27:31.040]  faster. I don't know if you've experienced that. It absolutely is. Even the
+[27:31.040 --> 27:34.560]  trend logs are faster. I think it's a
+[27:34.560 --> 27:38.780]  drastic improvement. We had one job that was almost unusable, and
+[27:39.540 --> 27:41.140]  it's come back to life. That's great.
+[27:43.800 --> 27:46.760]  Alright, I appreciate the help.
+[27:48.120 --> 27:51.000]  Hopefully we can get the descriptor sorted out in the next update,
+[27:51.780 --> 27:53.000]  and all will be well.
+[27:56.140 --> 27:58.960]  Alright, are you almost done for the day then?
+[28:00.240 --> 28:02.740]  Yep, pretty well. No, I'm not. I guess there's
+[28:02.740 --> 28:06.640]  another two and a half hours. Oh yeah, you're behind us a little bit.
+[28:08.260 --> 28:09.820]  Okay, sounds good.
+[28:10.400 --> 28:13.220]  Have a good weekend. Yep, you too.
+[28:13.220 --> 28:14.100]  Bye.
+[28:16.060 --> 28:16.100]  ...
+[28:16.100 --> 28:16.120]  ...
+[28:16.120 --> 28:16.880]  ...

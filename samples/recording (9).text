@@ -1,0 +1,908 @@
+Hello? Hi, this is Thomas from Reliable Controls. Is this Ryan? Yes. Hey, Ryan. I just was
+wondering if I could look at your WebView issue with you. Sure. Yeah. Give me a
+sec here. I'm just trying to get to my computer and then I'll connect to yours.
+Do we have... Well, I'll get a remote access session going and then we'll look
+at it here. And so, apparently, rebooting the computer seems to help? Or the
+services? So, services does nothing. Rebooting the computer appears to be the
+only thing that... Okay. ...actually coming back. And currently it's...
+Currently it's working? Currently it's working. However, the errors are still
+filing up. Is this your machine? Yeah. Yeah. So the log, it's still... I just want to log in. Yeah. And where do you see the error messages? Just as you're
+navigating and stuff? Or... Because I was seeing that... No. So, in the event viewer, the server itself, these were the errors that were there when it wasn't
+functional. And it's still, like, throwing them constantly. I have an idea on what's going on. I just want to check here. Yeah. All right. So, this is what's
+happening. So, every day... Oh, that's a weird time. And this is why the
+reboot fixes it, but the services don't. I bet this is the same thing.
+Yeah. Okay. So, I don't know why this is happening, but I can at least show you
+what is going on. So, I don't know what the trigger is. So, in the application
+pool, we have all of these services. What's happening is this is being
+disabled. Generally, when we see the... in the logs here, this 3 a.m. one
+happening, where it's disabling it, is when the auto services can't shut down. So,
+there's a rapid fail check that basically tries to shut down the
+application pool. So, what I mean by that is all of these are our worker
+processes for IIS. And when it goes to do a recycle, it dumps them all
+and then restarts them. And these worker processes are basically things in
+memory that allow IIS to load things quickly. So, if everybody always loads
+the same pages, that would be a worker process. If a lot of people open a
+certain trend log or the process of opening trend logs, that would be a
+worker process. When the recycling happens at 3 a.m., the
+rapid fail will try to close those processes 5 times. And if it fails, it
+shuts down the application pool for that website. I do not know why, but
+that's just what it does. So, that's what this one right here is. So, on
+the 22nd, it shut the application pool down. It has nothing to do with our
+services. It has everything to do with IIS. I'm super confused about this
+other one at 7 a.m., though, because that wouldn't have been the
+recycling time. But it, again, shut the application pool down.
+Yeah, here it tries to shut the pool down for the process. It will probably
+fail a bunch of times. And then it shuts the application pool down. So, if
+it does happen, the easiest and quickest way to kind of fix it is
+going into IIS. And here you will see a circle with a black box in it.
+Just right-click and then start. And that will get it up and running again.
+What we can also do is we can also turn off the rapid fail until we
+figure out what's causing it to get into this state. It's probably not
+suggested that we keep it that way, but at least for now, it means that
+it's not going to shut down the IIS application pool. Do we want to do
+that for now?
+I would say so for now.
+All right. Let's see if I remember how to do that here. It's been a
+while.
+I mean, one thing I will say is this server seems to be more
+finicky than the other servers. Like, for example, on the other
+servers, I can leave RC Studio open basically indefinitely.
+If I leave RC Studio open on this server and then try to log back
+into the remote desktop, generally RC Studio crashes.
+Interesting.
+I swear it was in here.
+Just asking for a co-worker on where the rapid fail was, because
+I was pretty sure it was in the advanced settings, but just
+advanced settings looks very limited to what I'd normally see.
+Oh,
+it is under application pool. Yeah, okay.
+Maybe. Ah, there we go.
+What are the other information warnings in the event log for
+like W3, WPEXE?
+I don't know about the warnings information ones. I usually
+don't worry about. I only really care about the errors and
+the warnings.
+Information is more, it's doing something in the background and
+it might be a concern. It probably isn't. It was able to
+figure out what it was supposed to.
+These ones here.
+Yeah, so that's something that comes up
+all the time. And then the Windows error reporting, like
+if you click on the Windows error reporting, that's where
+you're seeing the apps crashing.
+So that's what we looked at yesterday, and that's when
+they re-installed a different .NET framework.
+Yeah, I don't.
+I don't know what this is. It's Windows reporting it, so
+it's not one of our apps.
+Like W3W is the IIS work processes.
+Like this here.
+Right.
+Okay, let me turn off that rapid fail.
+And that will at least give you
+it for the
+3 AM one that was happening.
+I'm still curious on what happened at
+7 AM
+that caused it to happen again. This guy here.
+It was 8 AM.
+This morning, I don't know the exact time, or if you could
+probably figure it out, but I upgraded RC WebView as part of
+the, you know, the guidance. So the computer had to
+restart this morning.
+Yeah, that could be this.
+Find out.
+But it was not, yeah, it was not functional this morning
+when I logged in for the first time, probably around
+7.
+And it was the same error that you were getting before?
+On the website, it was showing up as, you know, 503 HTTP
+server unavailable.
+And then in the event log, it was the same list of
+errors that I just showed you, where it was, you know,
+information W3, whatever, app graph.
+And then just out of curiosity, I checked the other
+servers. None of them have these kind of
+warnings or, you know,
+I didn't really know what I'm looking at. But in the
+event viewer in the same spot, there's none of this stuff.
+Yeah. So I definitely, like the big red flag that I see
+is definitely the application pool shutting down.
+And that would definitely give you that error message
+that you were getting and having to reboot it, fixing
+it, but doing anything with those services wouldn't
+because it was actually IIS that was the problem.
+So all the symptoms that that is, to me,
+indicate 100% that this is the IIS shutting down the
+application pool.
+I don't know about those other errors.
+These are normal. As disgusting as I think they are,
+they are normal.
+Let's set this guy here.
+There was nothing else happening in the system.
+So why was it doing the application pool?
+OK. And you said you rebooted at a certain point?
+When you installed it?
+Yeah, after I installed it, it forced the restart.
+Yeah, it wasn't at eight o'clock, was it?
+It was after that? Because I can definitely see
+over here the processes were
+rebooting.
+To tell you the truth, I don't know the exact time.
+It was somewhere around
+somewhere between probably eight and nine AM.
+Yeah, so I have, I sent the email to my office
+at seven fifty seven that it was dead.
+And then
+seven fifty seven. OK.
+I sent another email at eight thirty eight that I
+dated RC WebView and it's currently running.
+There are still errors in the event viewer.
+Yeah, so seven fifty five is when the application pool stopped.
+Sorry, I'm just talking to a co-worker here about this.
+No worries.
+He also finds it weird that the application pool
+closed at seven fifty five this morning.
+I'd be curious going back.
+Is there a way to search if that happened?
+Like, I think the other errors were on the twenty twenty seconds.
+Yeah, I saw the twenty second.
+Yeah, that was three AM.
+Yeah, that was three AM.
+So, I mean, that that is when the auto
+whatever correction thing happens.
+So that would have happened one more time after that,
+I believe. After that or before that?
+So there's a twenty second three AM application pool closed.
+I believe it happened one more time after that because
+they called me that they couldn't log in. I restarted it.
+There was one before that on the nineteenth.
+OK, that's maybe that's when the first one occurred.
+That was also at three AM.
+Yeah, that's a three AM one, too.
+That's what I would expect. The seven AM one is the one
+that's completely throwing me off.
+I may have tried. Are you guys?
+Are you guys doing auto backups in WebView?
+For panel files?
+Not 100 percent sure, I think so.
+Can we check? Yeah.
+Oh, my goodness, it's been a while.
+If I remember correctly, it's.
+Here. No disabled.
+Are any others on?
+That's interesting, because I see panel files.
+It asked me to do a backup this morning.
+Yeah, something else.
+To while Liam is asking me questions here.
+Six cores.
+This is a pretty nice machine, actually, like the processing,
+like 16 and one percent, 36 processors.
+This seems pretty.
+Pretty good. If I recall, it was like $20,000 or something.
+OK, let me see. Did they talk to anybody? No.
+OK, so here's where we're sitting right now.
+One, I don't know why it's failing.
+And so this is something that I'm going to have to get the team
+to investigate, and I'm not sure what to collect with it.
+So I'm going to talk to them about it.
+Two, because I have turned off the rapid fail,
+it should mean that you should never see this problem again
+at the 3 a.m. recycling. OK.
+But what I don't understand is why you add it happened
+at almost eight o'clock this morning.
+Makes absolutely no sense to me because it should have never done
+the rapid fail, because it only does that during the recycle process.
+So I'm a little bit concerned about why that happened.
+But there's not much I could do about it.
+Maybe the turning the rapid fail will also stop it from doing it at that time.
+But again, it should only do that when it recycles.
+So very much confused on why I did that.
+But I'm hoping that with the changes we made, it's stable.
+And then we can at least investigate further on why it's happening.
+But your end user shouldn't run into any issues.
+OK, sounds good.
+Yeah, I mean, that sounds like the best we can do for now.
+I'm going to grab the logs.
+Here. And put that into the ticket.
+And I'm going to poke. The software support guy.
+Who's right now. Helping us, so see if he has any ideas.
+But just so I'm understanding, you don't think this has anything to do with any kind of.
+Back neck communications or no.
+I mean, I mean, maybe so.
+OK, go deeper into the application pools.
+So the application pool should be opening and closing.
+What it thinks it needs, right?
+So if it does the main page and nobody goes to the main page,
+it's supposed to drop it and it's supposed to grab a new one.
+And there's 10 of these processes that happen.
+When the recycling happens, it wants to dump them all and then it wants to make a new one.
+And usually they're like empty and pretty small.
+But when it fails, it's generally because something is holding it open.
+Something is using it. Now, it's very unlikely that.
+It is something so holding it open would be like somebody has loaded the website
+because it can recycle it in between when it loaded and when it.
+When they move off of it, like we're talking milliseconds here, right?
+So the chances of it failing five times is very, very small on the same process
+because it only matters when we ask for the information,
+not that the information is open, because then it drops it
+and then it just remakes it when somebody navigates into it.
+So the question is, is why are these processes getting locked and why can't we close them?
+And that could be because maybe we're updating things too quickly or something.
+I don't know. We'd have to talk to a developer to figure out
+why those processes aren't closing properly.
+OK.
+But it could be backnet communication. It could be something weird. But yeah.
+Yeah, I'm just curious. I mean, the only thing that has changed recently is three units were moved
+from the vivarium server to the academic server
+by changing the backnet VPN and putting them on a VLAN.
+That's the only change that has recently happened to...
+And then I guess another system was added in the last two months or so.
+Other than that, the server has been basically unchanged.
+Yeah.
+That's one of the reasons I was checking the resources,
+because the resources might be an indication that we might be hitting the maximum resources
+during this time period and it's unable to properly process the process workers.
+But, I mean, this machine is so good, I don't think that's an issue.
+Sorry, I'm just talking to the developer here.
+All right. Give me a sec here.
+Okay, I'm going to do a teams meeting with the developer and he's going to look at it with me.
+You're only going to get half the conversation, me, because you won't be able to hear him.
+And he won't be able to hear you. Good fun.
+First, he's in a meeting, so even though he says I can pull him in.
+I can't tell you, you're in a meeting.
+All right, let's try it.
+There we go.
+Hey, so I'm actually on the phone with him.
+No, but I can do it this way. It's just confusing because you guys can't hear each other.
+So the machine is really good. I do not think that the machine's resources are any issues.
+Yeah, look at how many cores.
+So I see three... or I was just going to make a copy of this, but I'll show you anyway.
+So I see three failures. I see one on the 19th and I see one on the 22nd.
+Where is it? Up here? No. Oh, I blew past it. There it is.
+That's the other one. So this is it trying to close the processes.
+Couldn't, and then it closed the application pool.
+The weird one is this guy down here.
+It's the normal processes ones, but they're all different numbers.
+So I don't know which one was the one that was hanging.
+Which is annoying.
+Yeah, but the rapid fail shouldn't shut the application pool down.
+So it should continue running. It might run slower because the processes aren't being recycled.
+And we could, but yeah, but that's only bandaging the situation, right?
+So this is the one that concerns me because this is not at 3 a.m. when the recycling is happening.
+So for some odd reason, it decided it was going to try to trash the processes, the application pool or the processes,
+and it wasn't able to, and it shut the application pool down.
+Yeah, I don't see anything in here. It's just IS.
+Oh, there, yeah, yeah. Could do that.
+Yeah.
+Oh.
+Oh.
+Would the rapid fail stop that too?
+No, but if I, okay, okay.
+So Ryan, let's talk to the developer. If you add new systems, it will also try to stop and start the processes.
+It doesn't recycle.
+So nobody added anything to the, okay, darn. Nobody added anything.
+Okay, and we're looking for...
+Oh, what did I do?
+No, okay.
+I was getting confused.
+I'm just quickly running down to the 22nd.
+I might not be able to get to the 22nd.
+Repeatedly.
+Boom, right there.
+So nothing.
+Just the emails.
+Ryan, according to these, just on a side note here...
+Okay, so nothing to worry about then?
+Okay.
+Okay, well, I don't care about that.
+That's not why we're here. And I don't think that's causing their issue.
+So I'm going to ignore that one for now.
+And that might be fixed in the future, so whatever.
+Oh, that would be cool.
+But again, nothing to do with this.
+What was the other one that you wanted to look at?
+You said exception logs, and you mentioned another one.
+The audit log. Okay, where do I find that one?
+Oh, all right.
+Oh, yeah, yeah, yeah, okay. Duh.
+Love that feature, by the way.
+Awesome.
+No, they're turning off the filter.
+Well, it was the 25th.
+I looked at the wrong one.
+Oh, shoot.
+Yeah, it's the 25th at 7.55.
+No, nothing in that time period.
+Except for the email errors.
+Oh, shoot.
+That means I was looking at the wrong place here.
+No, nothing here either.
+So we have no idea what triggered that.
+Oh, before they reboot the computer.
+Which process?
+There are a bunch of those.
+That's these guys, right?
+Oh, because it's going to be hammering.
+It's going to be huge.
+Well, on...
+Oh, and the application pool shuts.
+Right, because the app...
+Well, I mean, it might not be the last one.
+It may be...
+There might be three or something.
+But, yeah, regardless.
+Because the application pool...
+Oh, but they have...
+My only concern is that we might not see it.
+Because they do have other web-based things on this machine.
+So it would allocate those with other applications.
+Right?
+Because we should change that.
+Darn.
+So that doesn't tell us anything.
+And then we can get a dump.
+And then we can figure out...
+Yeah, okay.
+Yeah.
+Okay.
+Okay.
+I mean, with the rapid fail-off, we might not get any.
+Oh, yeah.
+He is concerned about this.
+Error message.
+And it seems to be hammering it.
+Sorry?
+Does this...
+Ryan, does this server...
+Is it on the Internet?
+It is not on the Internet.
+It is not on the Internet.
+Okay.
+Hey, Ryan, the other ones that you were checking on
+that you said didn't have the same error message,
+are they on the Internet?
+The other server that I checked, yes.
+It has an Internet connection.
+So what this is, is there is a crash that is happening in this
+and it is trying to send that crash information to Microsoft.
+And because it is not on the Internet,
+that is why it is producing this error message.
+Where do I put that?
+Oh, okay.
+I can do that.
+But, I mean, what is the error message that is happening
+that is causing it to try to send?
+Okay, I...
+It stopped.
+Oh, okay, I see, I see.
+And then it multi-spans it.
+Oh, well, that could have been the trigger at 7 o'clock then.
+Well, if it is trying...
+Oh, okay.
+I have to write this all down so that I can put it back.
+Okay, that is...
+Oh, really close.
+Good random hit.
+The archive message is also...
+Well, there is this one, but I do not know what that is from.
+Somebody is trying to...
+Pardon me?
+It seems to alternate between the two,
+that it is looking for something from archive,
+and then it goes into the...
+Yeah, I do not know what is trying to get in with the wrong password.
+Oh, I see, it is archive.
+Yeah.
+But, regardless, this is the time period, 7.55.
+I am in application and there is nothing there.
+Yeah, but I am in 5.48 and 5.58.
+And nothing between.
+Check the system one.
+7.55, was not it?
+Was not where I was sitting?
+No, you were at 5.55.
+Oh, gosh, numbers, I tell you.
+Oh, closer.
+Errrt.
+It is exactly the same.
+Oh, this is PM.
+Shit, day yesterday.
+Oh, man.
+See, this is why you do not let me do things.
+Oh, there was some red stuff there.
+Oh, he did update the software this morning.
+But not during that time.
+I am scrolling, by the way.
+Probably...
+That is useful.
+No, that is also useful.
+I mean, the first one happened on the 19th.
+I do not know if the log is going to go to the 19th.
+Sorry, I was just checking to see if there was anything on the 19th.
+I do not know, there is updates happening.
+Yeah.
+Good point.
+All right, sorry, what did you want me to look at?
+Like PowerShell?
+No.
+I am here now.
+Okay, what was it?
+Oh.
+I was writing copy-paste.
+I should ask, is this going to take a while?
+That is what they originally tackled on this ticket.
+They tried to update to, I believe, the latest bundles.
+Because they were getting different error messages before, if you look at the ticket.
+So they had 6.0, 15, 6.0, 35, and then 8.04.
+And I think...
+And I think we told them...
+I think we told them to upgrade to the 7 bundle.
+And then it was happy and then it crashed again.
+From the ticket?
+No, I do not think so.
+But I mean, the initial call was that the application pool was stopped.
+They tried to stop and start the services, which of course did not help.
+And then they rebooted the computer and then it worked.
+Because of course it did, because the application pool started again.
+He does have the event viewer from back then.
+No, it is only just going to tell us that the application pool had stopped and that is it.
+Yeah, I called you...
+No, I called you just before this one.
+And it went right to voicemail because I think you were still in the meeting.
+Well, I am sorry. I am pulling you out of a meeting.
+I am not.
+Wow, that is insane.
+Oh, hi.
+Is there anything that you want? Do you want like the event viewer thing?
+Well, the old one was from yesterday, so probably.
+They just won't have this morning's one.
+Wow, look at all the language packs they have installed on this thing.
+Interesting.
+Sure.
+I was going to give it to you, but I couldn't find it for some odd reason.
+My mouse go. Ah, crap. Oh, there it is.
+Oh, come on. Drop it in.
+Sorry, it is because I am trying to do things on my machine.
+And it is not letting me, because every time you click and move, it is trying to paste what I was trying to copy.
+No, no. Do yours. Do yours. It is fine.
+Yeah, go ahead, dig. I have the file on my machine. I can copy it into the ticket later.
+He has been on that call for a really long time.
+Where?
+Is that good or bad?
+Poor Ryan. I think he went for lunch.
+I am still here.
+I know.
+Maybe it is not on.
+That is a lie. The top one says 937.
+Oh, yeah, yeah.
+I am amazed you can read that.
+That is going to be a big one.
+That was like almost 10 gigabytes.
+Oh, megabytes. Yes, sorry.
+Almost everything on that page is all at the same time.
+Yes.
+I like nine something, I think.
+No idea.
+It is for now, it is almost two o'clock for them.
+Yes, but that is going to be relevant to their current location too, right?
+This could not have anything to do with like failed email alerts or anything like that, right?
+We do not think so.
+If it was sucking all the resources on the machine, maybe.
+But your machine is so beefy that I do not think that those emails or anything would cause problems.
+Right, because I had just seen when you were going before through that it seems...
+We have tried to configure email alarms and I just kind of forgot to...
+I have to bother their IT department. For some reason it appears that they are blocking port so we were never able to actually get the email alarms configured.
+So I just seen when you were scrolling through there, you know, giving a bunch of errors or not being able to send emails.
+Earlier when I was talking about that is not the problem we are having, I am ignoring that. That was that.
+Yeah, I think they are blocking a port or... I mean obviously the machine...
+Routing issue or something.
+Very difficult to get in touch with their IT or get anyone who is willing to help.
+Yeah, so we saw that. We saw that in the exception logs within WebView and we also saw it in your audit trail.
+Right.
+But we do not think it is an issue.
+Yeah. Well, so Chris, they are saying that they set it up but IT has basically not allowed it to happen.
+So the alarms are set up but it is not going anywhere.
+Correct. And they probably have not set up the ports or they have not set up routing so that it can get to the email server.
+So that is why they are getting the error messages.
+You should be able to copy it.
+Oh, really?
+Oh, is the scan now finished yet?
+Probably.
+There you go.
+Close it.
+I guess another question. Is it possible to force it to do the rapid...
+whatever it was called?
+The rapid tail?
+Yeah, instead of waiting until 3 a.m.
+Like, can you force it to see if that is causing it every single time or...
+Well, that is 100% what those two, three o'clock were.
+I do not know about the 7.55.
+Chris, is there a way of triggering the rapid fail so we can see what is going on?
+And then turn the rapid fail back on?
+Oh, and see if they end.
+Yeah? Do you want to try that?
+I currently have rapid fail off.
+I do not know how to do that. I was hoping you did.
+Do you just end task them all?
+Some of them are already getting pretty big.
+That should be fine.
+That is an excellent question, Chris.
+Sounds good.
+I guess then we will actually have the numbers...
+and the pin loops so we can see if any of them change.
+We are going to try, Ryan.
+We are going to reset the application pool and then see if any of the services get stuck.
+We have rapid fail off, so it should not...
+it should not shut it down, but we can see if any of the processes are getting stuck.
+And then we can grab that process if it is stuck,
+and then we can get a dump from it and figure out why it is in that state.
+That looks like it did them all.
+And it just got big.
+Oh, get a dump.
+I do not think it is going to finish.
+No, I do not think it is going to finish.
+Oh, it is going to continue doing that.
+Did you get it?
+Ah, no, it has got a squiggly line in there, so that is not going to paste.
+Yeah, all right.
+Fair.
+As long as there is not more than one.
+And then...
+it should just be a file.
+Man, look at it now, Chris.
+No, no, look at the size of it.
+Oh, I totally missed that.
+On the very bottom.
+Oh, it went down.
+No, it went up. But that size is bigger.
+Look at that bad boy.
+Oh, do we need to copy it first?
+Oh, no, you got it.
+No, 1K.
+Oh, do not delete this.
+If it still does not let you do it here,
+yeah, copy and then paste it just right in the same folder.
+Or, sure, desktop. Why not?
+And then you should be able to zip it.
+See how small it gets.
+Zipped pretty quick.
+All right.
+That is going to fail.
+Yeah.
+Screen Connect hates it when you do it this way.
+Oh, if you do that, it is going to hang for a while.
+Yep, exactly.
+And I do not want to do it while it is doing the other one.
+Yeah.
+I still have to copy it to my computer so I can put it in the ticket.
+So should we stop that process because it is still growing?
+Okay, fair.
+I am not even touching my computer.
+Yeah, I will probably get about 90% and then just fail.
+I should have done the send.
+I am wondering if Screen Connect does that on purpose so that you can't...
+hackers can't use it to pull all the information off the machines.
+That is true. That works. Yeah, true. I guess that is not the point.
+That is not going to fit in the ticket system either.
+I am probably going to have to make a link to a Dropbox.
+Oh, the ones from the pool?
+Or the event viewer?
+Not at 90 yet.
+It is still moving.
+I am assuming you want me to make a JIRA ticket for this?
+Okay. Yep.
+You are currently on the computer that I would make the JIRA ticket in, so I will wait.
+Oh, it worked.
+It is still growing.
+And process it?
+No, it is not.
+Oh, what is running? What it is doing?
+Analyze weight chain?
+Go to services?
+Oh, I just did a properties on it.
+And it says it is only 26 kilobytes.
+Oh, yeah, not memory.
+Yeah.
+Haha, that is me typing.
+I will let you type.
+Oh.
+I was about to say we did not make a picture. Oh, yeah.
+We did not make a picture to see. No, that is the same number, isn't it?
+Should we get a dump of that one, too?
+No, I think it is going to be the same as the other one.
+I am suspecting, too, when you look at the dump, that it is going to be the same stuff that is dropping into the memory.
+Because it seems to be the same size that it is incrementing it at.
+So it is taking whatever it is and just dumping it back into the memory and then do it again, do it again, do it again.
+Yeah.
+Well, the dump file is probably going to give you much better information on what is going on.
+That is what I was going to ask you.
+We have the new event viewer. We have the dump.
+I would like to not have it in this state when we leave.
+Can we end task or end the process?
+Yeah.
+Right. And that is why the rapid fail is triggering.
+Well, it is probably because it is writing to it at the same time that it is trying to shut it down.
+And that is why it is taking so much longer.
+Yeah, but I suspect that that is over time, right?
+This is rapidly growing.
+I did not see that with the others.
+But those high ones could be also what is causing the rapid fail to fail because it takes longer for that.
+Yeah, they are taking too long to restart.
+Now, we ran into a rapid fail issue many, many moons ago before I think you were even around.
+And we talked to Chris H. about potentially like maybe we should turn rapid fail off. Maybe we should increase it.
+And he basically said no.
+We could definitely do it here. We can try to increase the tries and the time.
+But that is meaning that this site is going to be set up differently than other sites?
+No.
+Currently, even the rapid fail being off is probably not the greatest thing, but it will potentially stop the 3 a.m. crash of the application pool.
+Yeah, so right click on the application pool.
+And then go...
+Oh, sorry. Just click on it.
+And then go to set application pool defaults.
+And then just where that is down a little bit.
+Right there.
+Yeah, off on fail interval. So five minutes and minimum fail. And then the yours recycling.
+Oh, recycling is currently off.
+Oh no, disabling is off. Why do we phrase things like that? Oh, horrible.
+But it's above that that you're looking at for the rapid fail protection.
+So we could increase the minutes there and we could increase the time. Or the times.
+Yeah.
+Do we want to grab that one and see why that one is increasing?
+Because you said that the processes shouldn't be as big as they were, right?
+Oh, the other ones stopped going up.
+The first one hasn't changed. And now the second one is expanding.
+Might be the same issue, just went to a different process.
+Well, I think that having that rapid fail off for now is going to make it so that they can actually not have to worry about it currently.
+No. Once the application shuts down, it shuts down.
+Well, let me just check mine here because...
+Yeah, yeah. Don't touch that. Let me just check. This is my machine.
+So that one is growing pretty big. But yeah, those are good sizes too.
+Oh yeah, that's true. Yeah. And now it's going down.
+So that must be the main thread that's moving around then.
+Now this one is going back up. Oh, so is this one. Yeah.
+Got this one too?
+Do you just need the DMP file?
+Because you already have the folder, right?
+And what's the other one you want?
+The big, the 500 one again? Okay.
+Whoa! I dumped it and it just doubled.
+Why?
+Oh, wow. Okay.
+All right.
+Yeah, looking at the dump files.
+Yep. All right.
+All right.
+Hey, Ryan. Yep.
+So much one-sided conversations. I apologize.
+So we're...
+I don't know if you're looking at the screen or not,
+but the interesting thing that we're seeing is these files,
+these processes are growing bigger and bigger and bigger.
+And when we try to reset it,
+it takes a very long time for those really big files
+to be actually closed.
+And so what we're thinking is happening is those big files
+are the ones that are causing the rapid fail to trigger
+and make it so that it can't close properly
+and then it closed the application pool.
+So I've grabbed all three dumps.
+So from the first one that we did and these two big files,
+and we're going to check to see
+why those are
+growing the way they are, because they shouldn't be.
+They should be small like these other ones,
+and they might go up to like
+this big here, the bottom one,
+and then kind of like go up and down as they go
+and not what they're doing.
+Big guy. Let's try the other way.
+File or receive a file? Receive a file.
+That's my computer.
+And a file.
+Up. Nope, that's my computer too.
+What?
+Up.
+Oh!
+Am I on your computer that's then connected to the server
+or am I actually on the server?
+You're on my computer,
+which is remote desktop into the server.
+Lovely. Okay, that's why I can't copy it across.
+What you're looking at now should be the server.
+So if you go up to the top, you should be able to get back.
+I'm trying to copy this big file.
+Right. I think you got to copy it to my computer first
+and then to my computer.
+Yeah, I'm trying to skip that and go straight to mine.
+Will it let you?
+The first one did.
+I already got the first one and I got the event viewer file
+and now I'm trying to grab this other two dump files,
+but they're even bigger.
+It says I'm at 5 minutes 30 seconds, so...
+Yeah, I'm on a cellular connection, so...
+Oh! Okay, even worse.
+Might be me slowing things down.
+No, it seems to be going surprisingly quick.
+It's not five minutes.
+It's a 332 megabyte file that it's copying.
+Well, while this copies, I'm going to go make a ticket here for Chris.
+We, of course, have multiple ticketing layers.
+Yay.
+And you have 316.1, correct?
+Yeah.
+But the nice thing is with the rapid fail down,
+it never caused you any issues.
+The thing never shut down or anything.
+So, good news.
+That being turned off seems to be helping.
+Right.
+I'd be curious if the other machines are...
+I mean, I would assume they have the rapid fail on.
+Yeah, but this machine is doing something different when it comes to the processes,
+and we're not sure what it is.
+It could be .NET, it could be something else,
+but that's basically what's making those processes expand.
+So, like, when I checked my machine, my machine had nothing over, like, 10 megabytes.
+And that was the main process.
+In this case, we're seeing processes expand, expand, expand.
+At one point, I wanted to do a dump, and when I failed.
+When I did the dump, it basically crashed.
+Gotcha.
+I mean, it didn't crash. It increased the size by double.
+So, it was like at 600 megabytes, and it went to 1.2 gigabytes.
+We're like, oh, that's not right.
+Got it.
+Not what I signed up for when I thought it was temperature control.
+I'm a mechanical guy.
+Yeah, I really feel bad.
+I'm now with this company in seven years,
+and in the seven years, I find that...
+And it's not just us, it's other manufacturers, too,
+but the technology and skill set that people need now
+in order to be able to do their HVAC systems is insane.
+Yeah.
+I don't think you went to school to figure out
+how to use IAS or SQL or SSMS.
+No, and honestly, I've never seen it.
+Ethernet networking and...
+Yeah.
+Steam? I love steam, but hot water or chilled water.
+I'm just always surprised.
+You feel like this stuff has been around for so long
+that you think by now it would just be so robust and straightforward.
+But even just trying to start up a chiller or something,
+it's still like...
+It feels like the first time every time for some reason.
+Yeah.
+Well, I mean, everything is changing, too, right?
+We have three lines of controllers now.
+We've been in the industry for 40 years or something, or 30 years,
+and we have three lines of a product.
+We have the Mock, we have the Mock Pro, and now we have the Flex.
+Right.
+And even those have versions within them.
+So every time we come up with something new,
+there's potential for one, change, and two,
+that something isn't working correctly right out of the gate.
+But then every time we add fixes, we also add features.
+Right. Yeah.
+I'm just saying from a mechanical perspective,
+it's just kind of funny because, I mean,
+a chiller from 1940 is basically the same as a chiller from 2025.
+That's true, yeah.
+But we're still doing the same stuff.
+Pumping water around, heating it up, cooling it down.
+I always thought that was weird, like computers depreciate in value
+because the technology surpasses the old technology,
+and the old technology becomes worthless, right?
+Right.
+But cars, we're still paying the same amount for cars,
+even though it's been around for like 150 years,
+and it's literally the same technology.
+Yeah. Yeah, no, I complain to my wife about that all the time.
+Especially when you have problems with your car or engine.
+I think GM has some ridiculous recall for like a million V8s or something,
+and it's like, has it been making V8s since 1950?
+What? What?
+Yeah.
+But all it is is just an explosion of pushing pistons
+that turns a crankshaft and turns the wheels.
+It's like...
+And then, yeah, but this one has a turbocharger,
+and it's like, oh, so you're pumping air into the engine.
+Like, it's still the same explosion.
+It's still the same motion.
+We just tweaked it more, and I have to pay...
+So that's why they start adding all the new features in cars, right?
+Oh, electric windows, so we can charge you still the same price.
+Oh, a rear view camera, so we can still charge you the same price.
+Yeah.
+It's ridiculous.
+Mind you, it's also super weird in the contents of...
+a car company makes cars,
+but the people that sell it determine how much they sell it for?
+Yeah, all of it is...
+very backwards.
+Gas is weird, too.
+Like, yeah, prices fluctuate,
+but you sell based on how much you paid for it,
+not what the market says it is worth.
+Right.
+Like, oh, the gas prices are going up. We're all increasing our prices.
+It's like, but you didn't pay it at the increased amount.
+Right, right.
+Like, shouldn't your prices go up after you buy the merchandise?
+But they wouldn't be able to make so many profits.
+Exactly, right?
+Because they probably know when the price is going up.
+They quickly get tankers to come in and fill their tanks.
+At the cheaper price.
+The price goes up, and then they all crank their prices up,
+and they make a huge margin.
+We live in an island, so our prices are actually a little bit more expensive than everybody else.
+I got the dumb part.
+Yeah, if things go completely sideways here in the US,
+I was like, ah, maybe Vancouver sounds nice.
+So our prices are a little bit more.
+We also pay a carbon tax.
+In the city.
+So it's a little bit more in the cities.
+Oh, where was I going to get to?
+Darn, I got derailed.
+I derailed myself.
+Oh, well.
+Oh, yeah, when it's long weekends, all the prices go up.
+Right before the long weekend.
+It's ridiculous.
+Alright, I've got the files.
+I think we should be good.
+I'm going to keep the auto or the rapid fire off.
+We're going to keep the recycling on.
+So it's going to try to recycle the pools when it can.
+At 3 a.m.
+There is a chance that
+some of the pools are going to get really big.
+So I guess kind of keep an eye on that.
+I don't even know what I'd be looking at.
+So is this something I should call back on Monday or?
+Yeah, we could look at it again on Monday.
+I mean, I assume you guys don't have anyone over the weekend, is there?
+No, we don't.
+Oh, that's the one that was open, the gateway.
+Okay, cool.
+I suspect with the rapid fail off, you're going to be okay.
+I don't think it's going to crash or anything like that.
+Okay.
+So the end user should be happy and that should be fine.
+But we've got the jump files.
+We'll look into what's happening there and then
+hopefully we'll get an answer to you on
+what we're doing or how we're going to fix it.
+Although it might be a bit before it fix.
+So for now, keeping the rapid fail off is fine.
+Okay.
+All right.
+Sounds good.
+Do you want me to call Daryl and give him an update?
+He has CC'd on the ticket.
+So if I just reply a ticket, it should be okay?
+Yeah.
+If you didn't mind calling him because he's a little more
+technical on this side of things than me.
+And he's the owner or one of the owners.
+He sent us an email about concern of this.
+And so, and then I did talk to him before I talked to you.
+And then he's like, please call Ryan.
+I'm like, all right.
+Yeah, basically, I'm the PM that runs NYU.
+So I have the most familiarity with it.
+But he's a little bit more savvy with the computer side of things.
+So yeah, just give him a call and just fill him in.
+I don't know if he's going to understand any more than I do.
+But I think he will.
+All right, cool. I will give him a call and just give him a heads up.
+All right. Thank you.
+All right. Bye.
+Have a good one.

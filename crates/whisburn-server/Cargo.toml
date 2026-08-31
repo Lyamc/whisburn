@@ -1,0 +1,38 @@
+[package]
+name = "whisburn-server"
+description = "HTTP API server for remote speech processing"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+whisburn-core = { workspace = true }
+whisburn-audio = { workspace = true }
+whisburn-engine = { workspace = true }
+whisburn-models = { workspace = true }
+burn = { workspace = true }
+axum = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+uuid = { workspace = true }
+tempfile = { workspace = true }
+clap = { workspace = true }
+tokio-util = { version = "0.7", features = ["io"] }
+tokio-stream = "0.1"
+futures-util = { version = "0.3", default-features = false, features = ["std"] }
+wgpu = "24"
+pollster = "0.4"
+
+[dev-dependencies]
+axum = { workspace = true }
+tokio = { workspace = true }
+tower = { workspace = true }
+http-body-util = "0.1"
+serde_json = { workspace = true }

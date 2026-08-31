@@ -1,0 +1,82 @@
+[00:03.160 --> 00:06.360]  Reliable Controls, Technical Support, Liam speaking.
+[00:07.540 --> 00:09.260]  Hi, Liam. Frank calling back.
+[00:10.380 --> 00:11.040]  Hey, what's going on?
+[00:11.100 --> 00:17.400]  Can we do... We got... Well, I checked in some licenses. We got 24 available.
+[00:18.200 --> 00:18.680]  Yeah.
+[00:18.880 --> 00:21.000]  But the license manager is not seeing that.
+[00:22.400 --> 00:24.780]  And when you try to add it, it says none are available?
+[00:26.640 --> 00:27.120]  Right.
+[00:27.700 --> 00:29.020]  What's the license you're trying to add?
+[00:29.020 --> 00:33.240]  Did you download it from the website or did you try and pull it in from the program data directory?
+[00:36.200 --> 00:36.640]  Both.
+[00:38.180 --> 00:42.760]  Well, it's definitely not going to work from the program data directory, but it should work from the downloaded version.
+[00:45.040 --> 00:46.340]  As long as you have what's available...
+[00:46.340 --> 00:46.880]  Are you a stream connector?
+[00:48.700 --> 00:49.140]  Sure.
+[00:55.780 --> 00:56.680]  Going with the code.
+[00:59.400 --> 01:04.780]  Code is 85630.
+[01:05.380 --> 01:06.300]  Say that again?
+[01:09.620 --> 01:10.460]  85630.
+[01:12.940 --> 01:53.040]  Do you want to try that again?
+[01:57.390 --> 01:58.870]  Now we're on this last one.
+[02:33.060 --> 02:34.480]  There it is.
+[02:35.260 --> 02:35.480]  Sweet.
+[02:36.420 --> 02:37.080]  There you are.
+[02:38.280 --> 02:39.240]  All right.
+[03:04.260 --> 03:04.820]  So...
+[03:04.820 --> 03:06.580]  2-3.
+[03:08.600 --> 03:09.420]  Do the copy.
+[03:15.100 --> 03:16.740]  Oh, it's already there. Okay, perfect.
+[03:16.920 --> 03:18.420]  And I'll just leave it.
+[03:19.960 --> 03:21.080]  And see...
+[03:21.080 --> 03:21.780]  Remains 20. Yep.
+[03:22.240 --> 03:24.000]  All that looks good so far.
+[03:24.860 --> 03:26.820]  So let's go to...
+[03:28.840 --> 03:29.960]  I should download.
+[03:31.020 --> 03:31.940]  Did I skip it?
+[03:31.940 --> 03:36.200]  Yeah, your scroll wheel is just like super jumpy. All right.
+[03:43.740 --> 03:44.220]  So...
+[03:44.220 --> 03:45.620]  You should just fill that out.
+[03:45.740 --> 03:46.840]  And that should be it.
+[03:49.020 --> 03:50.540]  Well, we did that already today.
+[03:51.340 --> 03:52.060]  Okay, and what happened?
+[03:54.360 --> 03:54.840]  Nothing.
+[03:55.780 --> 03:57.280]  Doesn't recognize it.
+[03:58.540 --> 04:00.140]  Well, if it got to this point,
+[04:00.800 --> 04:03.280]  filling out the stuff, then it definitely recognized it.
+[04:51.420 --> 04:52.700]  Okay, and...
+[04:54.360 --> 04:55.760]  And nothing appears.
+[04:57.540 --> 04:59.480]  Okay, so here's what we're going to do.
+[05:02.100 --> 05:04.840]  Going to...
+[05:05.520 --> 05:06.160]  uninstall.
+[05:11.620 --> 05:12.440]  Did you do that already?
+[05:15.600 --> 05:16.620]  No, I would have done studio.
+[05:52.180 --> 05:52.820]  Wowzers.
+[05:57.570 --> 05:57.870]  Okay.
+[06:03.490 --> 06:04.090]  Okay.
+[06:04.110 --> 06:07.310]  Kate, can you run the studio installer, wherever it is?
+[06:14.040 --> 06:14.640]  Um...
+[06:14.940 --> 06:15.240]  ...
+[06:19.320 --> 06:19.920]  ...
+[06:23.150 --> 06:23.750]  ...
+[06:23.750 --> 06:23.910]  ...
+[06:23.910 --> 06:24.550]  ...
+[06:24.550 --> 06:25.610]  ...
+[06:30.550 --> 06:31.950]  ...
+[06:31.950 --> 06:33.610]  ...
+[06:34.190 --> 06:34.250]  ...
+[06:34.250 --> 06:36.630]  ...
+[06:36.630 --> 06:36.730]  ...
+[06:36.730 --> 06:37.910]  ...
+[06:55.260 --> 06:56.660]  ...
+[08:08.650 --> 08:21.370]  Yep. So, this is N28. Yeah, just right click on that. See if it's got some property. It
+[08:21.370 --> 08:31.030]  needs to lock from the Internet. Lock... Okay, so unblock it. What? Yeah. Drop that. Okay.
+[09:13.480 --> 09:24.520]  There it is. You still early on? Yep. Still here. Yeah. So, I think what is happening
+[09:25.400 --> 09:32.160]  is the files were locked because they came from the Internet. Oh. When you unblock them.
+[09:36.600 --> 09:39.520]  So, I think that... At least that's what happened the last... That's what
+[09:39.860 --> 09:51.980]  happened. It's the last time. So... This one? No, it'll be...
+[09:51.980 --> 10:07.550]  This one? Yep. Are you plugged into the Internet?
+[10:09.430 --> 10:14.210]  Oh, you got to go up here. Okay. I think we're okay.
+[10:14.850 --> 10:19.170]  Okay. Sweet. That was weird, but I'm glad it's working.
+[10:20.970 --> 10:25.250]  Okay. Thanks. Yeah.
+[10:27.370 --> 10:29.350]  Bye. Okay. Bye.

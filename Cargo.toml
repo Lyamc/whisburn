@@ -1,29 +1,29 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/o3whisburn-core",
-    "crates/o3whisburn-audio",
-    "crates/o3whisburn-engine",
-    "crates/o3whisburn-models",
-    "crates/o3whisburn-server",
-    "crates/o3whisburn-cli",
-    "crates/o3whisburn-app",
+    "crates/whisburn-core",
+    "crates/whisburn-audio",
+    "crates/whisburn-engine",
+    "crates/whisburn-models",
+    "crates/whisburn-server",
+    "crates/whisburn-cli",
+    "crates/whisburn-app",
 ]
-default-members = ["crates/o3whisburn-cli"]
+default-members = ["crates/whisburn-cli"]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/Lyam/o3whisburn"
+repository = "https://github.com/Lyam/whisburn"
 
 [workspace.dependencies]
-o3whisburn-core = { path = "crates/o3whisburn-core" }
-o3whisburn-audio = { path = "crates/o3whisburn-audio" }
-o3whisburn-engine = { path = "crates/o3whisburn-engine" }
-o3whisburn-models = { path = "crates/o3whisburn-models" }
-o3whisburn-server = { path = "crates/o3whisburn-server" }
-o3whisburn-app = { path = "crates/o3whisburn-app" }
+whisburn-core = { path = "crates/whisburn-core" }
+whisburn-audio = { path = "crates/whisburn-audio" }
+whisburn-engine = { path = "crates/whisburn-engine" }
+whisburn-models = { path = "crates/whisburn-models" }
+whisburn-server = { path = "crates/whisburn-server" }
+whisburn-app = { path = "crates/whisburn-app" }
 
 burn = { version = "0.16.1", features = ["wgpu", "ndarray", "record-backward-compat", "fusion"] }
 serde = { version = "1.0", features = ["derive"] }
@@ -37,12 +37,15 @@ tower-http = { version = "0.6", features = ["cors", "trace", "limit", "catch-pan
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 clap = { version = "4.5", features = ["derive", "env"] }
-ureq = "2.12"
-hf-hub = "0.4"
+# native-tls (Schannel/Security.framework/OpenSSL) — avoids ring/cc at build time
+ureq = { version = "2.12", default-features = false, features = ["native-tls"] }
+# Vendored hf-hub with ureq default-features disabled (upstream forces rustls/ring via ureq defaults)
+hf-hub = { path = "third_party/hf-hub", default-features = false, features = ["ureq", "native-tls"] }
 symphonia = { version = "0.5", default-features = false, features = ["wav", "mp3", "flac", "ogg", "pcm", "aac", "isomp4", "mkv"] }
 rubato = "0.16"
 hound = "3.5"
-tokenizers = { version = "0.22", default-features = false, features = ["onig", "http"] }
+# fancy-regex instead of onig (onig_sys needs the `cc` crate / a C toolchain)
+tokenizers = { version = "0.22", default-features = false, features = ["fancy-regex", "progressbar"] }
 npy = { git = "https://github.com/Lyamc/npy-rs" }
 strum = "0.28"
 strum_macros = "0.28"

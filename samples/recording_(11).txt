@@ -1,0 +1,1527 @@
+[00:01.380 --> 00:03.560]  We are live on controls. Thomas speaking.
+[00:07.300 --> 00:08.200]  Hi, how are you today?
+[00:08.980 --> 00:12.440]  Hey, not bad. Hello? Yeah, can you hear me?
+[00:12.800 --> 00:16.160]  Hi, I'm just... Yeah, I can hear you. Can you hear me?
+[00:16.200 --> 00:20.280]  Alright, perfect. Yeah, yeah. Hello? Yeah, there's just a
+[00:20.280 --> 00:24.260]  big delay. Hi. Oh, that's okay.
+[00:24.520 --> 00:28.080]  If you're okay with it, I'm okay with it. Yeah, I'm fine with it. It's because we're trying to
+[00:28.080 --> 00:31.100]  get over the Rocky Mountains to get to you.
+[00:34.240 --> 00:35.640]  Well, pretty soon you'll be next door to us.
+[00:36.560 --> 00:38.820]  Do you have a quick question? Sure, go ahead.
+[00:44.000 --> 00:44.800]  Okay, I'm...
+[00:44.800 --> 00:48.440]  Oh, I'm not gonna call them. I don't know...
+[00:48.440 --> 00:51.880]  Sorry, I got a colleague talking to me. I'm looking at
+[00:51.880 --> 00:54.860]  RCWebView. I was supposed to give you a call by one of our texts.
+[00:56.020 --> 00:58.900]  What seems to be happening is their trend logs
+[00:58.900 --> 01:02.880]  are no longer loading and they're just getting kind of the
+[01:02.880 --> 01:06.640]  red circle of death, the red dot with the exclamation point.
+[01:10.480 --> 01:14.480]  I'm wondering, you were saying I need to call this...
+[01:14.480 --> 01:18.800]  No, go ahead. I was just gonna say, can I remote it and take a look?
+[01:21.580 --> 01:23.020]  Yeah, you can definitely remote it
+[01:23.020 --> 01:25.140]  to my computer and take a look.
+[01:26.860 --> 01:30.200]  Is there a specific software you guys use?
+[01:30.580 --> 01:34.500]  Yeah, so we use Screen Connect. So if you just open up a browser
+[01:35.010 --> 01:40.620]  and type in rcsupport.screenconnect.com
+[01:59.050 --> 02:00.750]  Okay, welcome. Join the code.
+[02:01.230 --> 02:04.050]  Okay, it's gonna be capital D as in delta
+[02:06.370 --> 02:06.810]  10088.
+[02:12.300 --> 02:16.260]  And it's gonna get you to download a piece of software. It's gonna be a zip file.
+[02:16.600 --> 02:19.800]  And then you go to your downloads folder and you just extract that
+[02:19.800 --> 02:22.240]  and then run the executable.
+[02:28.640 --> 02:29.760]  I acknowledge.
+[02:40.270 --> 02:42.290]  One second here.
+[02:52.860 --> 02:56.360]  I have a question. Is this gonna work if I'm VPN'd into someone else's computer?
+[02:57.260 --> 03:00.660]  Absolutely. Are we on the big screen?
+[03:00.660 --> 03:05.080]  Perfect. Okay. We are on the big screen, yeah.
+[03:05.240 --> 03:08.160]  So we're gonna click up to, I guess, this guy right here.
+[03:08.700 --> 03:11.120]  Yep, there is the red dot of death.
+[03:13.760 --> 03:16.780]  Yes, right? And so we went through, we did the
+[03:16.780 --> 03:21.080]  studio, updated the descriptors and all that. They're running 3.10
+[03:21.080 --> 03:24.660]  on studio and 3.15 on
+[03:27.740 --> 03:28.160]  WebView.
+[03:28.160 --> 03:32.320]  And so what we had also, as a kind of a workaround, I was told
+[03:32.320 --> 03:36.500]  to create a completely different subfolder and direct this
+[03:36.500 --> 03:39.400]  to it. And it did not work.
+[03:46.040 --> 03:49.940]  Oh, you're on the older one. Okay. What version is this?
+[03:50.800 --> 03:54.000]  Yeah. 3.15.
+[03:54.260 --> 03:57.860]  Oh, okay. Can we connect to the server?
+[04:01.710 --> 04:03.570]  What, to their server?
+[04:04.170 --> 04:04.550]  Yeah.
+[04:06.790 --> 04:10.270]  We are actually...
+[04:10.270 --> 04:14.470]  I was looking at this bar on the bottom. Yeah, yeah, okay.
+[04:16.110 --> 04:19.550]  Yep, sorry. I see it now.
+[04:19.570 --> 04:20.490]  I see it now.
+[04:32.890 --> 04:33.830]  Why are you
+[04:34.310 --> 04:34.670]  stopped?
+[04:36.330 --> 04:38.870]  Will not start. Okay.
+[04:47.420 --> 04:48.120]  Oh, that was your machine.
+[04:48.300 --> 04:51.560]  Do you want me to drag it open up on my own? No, I don't want yours.
+[04:51.740 --> 04:55.260]  I want this one. I'm going to do this a lot. Bear with me.
+[04:55.260 --> 04:55.660]  Okay.
+[05:00.540 --> 05:03.100]  I'm used to seeing it on the bottom. I'm sorry.
+[05:03.420 --> 05:05.480]  But it's a clever idea doing that.
+[05:07.640 --> 05:38.060]  Oh, I did yours again.
+[05:44.720 --> 05:46.640]  I'll get there in the end.
+[05:48.700 --> 05:49.600]  It's all good.
+[06:35.130 --> 06:37.770]  Oh, that's mine again.
+[06:40.750 --> 06:42.730]  Okay, it's running.
+[07:20.000 --> 07:20.620]  Oh, sorry.
+[07:23.500 --> 07:28.520]  Nope, that's yours. I'll get there in the end.
+[07:30.100 --> 07:31.220]  It says it's running.
+[07:37.660 --> 07:39.200]  Unless that's the wrong one.
+[07:39.960 --> 07:43.600]  So what I was told was that 315
+[07:44.820 --> 07:47.760]  is old. It doesn't work. Supposedly.
+[07:48.020 --> 07:51.300]  And I guess there's been a Windows update. Get them to update
+[07:52.400 --> 07:55.420]  3.1 sticks. That's what I was told by our tech in Calgary.
+[07:55.560 --> 07:59.520]  And I'm like, well, it's really hard to have something that was working
+[07:59.520 --> 08:02.500]  a couple days ago and then not working anymore.
+[08:03.720 --> 08:07.340]  Because of a firmware issue. Or I shouldn't say
+[08:07.340 --> 08:07.800]  a firmware.
+[09:36.270 --> 09:38.430]  All right.
+[09:40.250 --> 09:43.870]  It will not start. End test.
+[09:47.640 --> 09:50.320]  It fails because of this.
+[09:50.320 --> 09:52.300]  I've seen this before.
+[10:39.860 --> 10:41.800]  This sounds so familiar.
+[10:42.200 --> 10:43.660]  And I remember
+[10:43.660 --> 10:47.540]  seeing this before. And I'm trying to figure out
+[10:47.540 --> 10:48.960]  what the solution was.
+[10:52.780 --> 10:53.500]  Okay.
+[10:54.700 --> 10:56.100]  Any other questions?
+[10:58.020 --> 10:59.300]  Yeah, sorry.
+[10:59.900 --> 11:01.840]  I know I said I had to get the whole test done.
+[11:10.200 --> 11:10.880]  Okay.
+[11:11.880 --> 11:12.540]  Yeah.
+[11:13.600 --> 11:14.280]  Okay.
+[11:14.460 --> 11:14.960]  Okay.
+[11:15.180 --> 11:40.520]  All right. So, we think it's an... I'm sorry. I'm talking to other people. That's why I'm quiet here.
+[11:40.520 --> 11:44.120]  So, we're thinking that it's probably a document issue.
+[11:57.980 --> 11:59.520]  That's that thing, right?
+[11:59.880 --> 12:01.140]  That's what Joey gave us.
+[12:03.520 --> 12:05.800]  This might be a different iteration now.
+[12:07.420 --> 12:10.260]  Joey had given them...
+[12:12.540 --> 12:14.180]  Ignore the control panel.
+[12:15.880 --> 12:17.860]  But I don't see it come up right away.
+[12:18.160 --> 12:20.220]  I instantly know that I did it wrong.
+[12:27.020 --> 12:29.520]  Hey, you might want to watch this.
+[12:33.400 --> 12:35.980]  I think he's showing you how to determine what .NET you have.
+[12:37.960 --> 12:41.100]  Yeah, it looks okay.
+[12:46.280 --> 12:48.540]  I think this is a new version.
+[12:51.020 --> 12:51.240]  Yeah.
+[12:51.860 --> 12:56.940]  They installed... another stack still was giving them this, and they installed this this morning, and it still wasn't working.
+[12:57.600 --> 13:00.210]  So, I think that this is for the
+[13:00.880 --> 13:04.140]  earlier ones. But because this is
+[13:04.140 --> 13:08.100]  3.16, I think we need to put in an older one.
+[13:16.370 --> 13:17.790]  Okay. How do we do that?
+[13:19.510 --> 13:22.290]  We download it.
+[13:26.570 --> 13:27.510]  I'm trying to
+[13:27.510 --> 13:31.470]  remember which one we need here. So, give me a
+[13:31.470 --> 13:35.310]  sec here. I don't think it's 6. I'm thinking
+[13:35.310 --> 13:43.790]  it's 7. But I want to confirm.
+[13:47.010 --> 13:48.310]  Yeah, that's okay.
+[13:57.260 --> 13:58.640]  Oh, 6.
+[13:58.860 --> 13:59.800]  It's 6.
+[14:10.660 --> 14:11.400]  Oh, yeah.
+[14:14.640 --> 14:16.140]  Oh, did I open the wrong thing?
+[14:17.180 --> 14:18.200]  No, that's the right thing.
+[14:18.940 --> 14:27.280]  Where is it? Where's your remote session?
+[14:29.740 --> 14:30.480]  Did I close it?
+[14:33.360 --> 14:34.700]  Oh, it's in the window.
+[14:34.980 --> 14:37.580]  All right. So, I did totally open the wrong window. Cool.
+[14:37.840 --> 14:42.360]  You opened the wrong thing. Here, I'll get you a window within the window.
+[14:42.360 --> 14:43.100]  No, that's okay.
+[14:46.140 --> 14:46.260]  Okay.
+[14:51.620 --> 14:54.400]  The event viewer will actually tell you which version
+[14:54.400 --> 14:56.060]  to pull in.
+[14:56.060 --> 15:00.100]  So, let me check it out here.
+[15:16.960 --> 15:17.780]  Is it loading anything?
+[15:27.280 --> 15:28.760]  Oh, it's just
+[15:28.760 --> 15:30.420]  super slow.
+[15:38.720 --> 15:38.980]  Okay.
+[15:42.440 --> 15:43.060]  Yay!
+[15:43.060 --> 15:47.060]  All right.
+[15:56.940 --> 15:58.880]  There we go.
+[16:03.490 --> 16:04.810]  Look at all the errors.
+[16:09.470 --> 16:09.790]  Oh, that's
+[16:09.790 --> 16:10.250]  Oh!
+[16:13.530 --> 16:26.230]  Your hard drive is full. No, it isn't.
+[16:27.190 --> 16:36.880]  Oh, that one is. What's in here?
+[16:36.880 --> 16:37.980]  Is there anything that we're using?
+[16:40.640 --> 16:43.540]  Related stuff is all on the local disk speed.
+[16:44.880 --> 16:47.760]  Well, why is this saying...
+[16:47.760 --> 16:49.860]  Oh, could your databases be full?
+[16:52.260 --> 16:55.780]  Okay, I don't care about this, but we're going to look anyway because that's going to be
+[16:55.780 --> 16:58.160]  your problem in the event.
+[17:00.260 --> 17:03.620]  But unrelated to this...
+[17:08.260 --> 17:12.300]  Yeah, your Battle River SD is full.
+[17:14.300 --> 17:16.220]  So, that's what all these error messages are.
+[17:16.280 --> 17:17.640]  It can't write to the database.
+[17:22.700 --> 17:25.100]  So, make a note of that. That needs to be fixed.
+[17:31.560 --> 17:34.700]  What would you suggest to correct it?
+[17:34.860 --> 17:40.640]  Would it be like...
+[17:41.220 --> 17:44.000]  Actually, hang on. Jordan, are you archiving this stuff?
+[17:44.000 --> 17:47.000]  How much do you need to archive?
+[17:49.160 --> 17:51.620]  I think it is.
+[17:51.620 --> 17:53.440]  I didn't know we were archiving it.
+[17:54.420 --> 17:57.700]  You're trying to archive it, but your database is full.
+[18:02.940 --> 18:04.960]  That's why they can't open up.
+[18:06.380 --> 18:10.940]  Your event viewer is just packed with these error messages of it trying to write to the database,
+[18:11.060 --> 18:12.260]  but the database is full.
+[18:14.440 --> 18:17.000]  So, we should essentially be able to...
+[18:17.000 --> 18:19.740]  We should be able to read the previous one.
+[18:19.860 --> 18:21.680]  Is that why all those dates are not...
+[18:21.680 --> 18:25.260]  That's probably why the end dates are into last year.
+[18:26.080 --> 18:29.840]  One thing that we noticed, if you go to the trend logs,
+[18:30.860 --> 18:34.940]  the start dates and the stop dates are old.
+[18:35.900 --> 18:40.260]  Even though it's...
+[18:40.260 --> 18:44.860]  Yeah, I guess if it's full, it doesn't write anymore. I get that, but...
+[18:44.860 --> 18:48.040]  Well, hold your horses. It actually is doing stuff.
+[18:48.460 --> 18:52.260]  So, what it's doing is it's putting in...
+[18:54.180 --> 18:56.600]  It is putting it into the computer.
+[18:56.720 --> 19:00.400]  It just can't get it, and it's waiting for this to be
+[19:00.400 --> 19:04.000]  resolved, and then it's going to dump all the files into it.
+[19:04.000 --> 19:05.220]  No.
+[19:15.740 --> 19:17.540]  Oh, that's...
+[19:17.540 --> 19:18.260]  Data, not date.
+[19:22.180 --> 19:24.680]  So, this folder right here
+[19:24.680 --> 19:27.920]  is basically storing every single file
+[19:27.920 --> 19:33.360]  and transaction that has ever been sent to the
+[19:33.360 --> 19:37.460]  computer cannot be saved. This is going to build for a while.
+[19:41.660 --> 19:43.720]  We'll just let that... Oh, no.
+[19:44.060 --> 19:46.680]  I'm like, no way finished. It's going to be in the gigabytes.
+[19:48.060 --> 19:52.040]  But, anyway, while that's going on, I'm going to see if I can find this .net thing
+[19:53.120 --> 19:55.880]  and it's going to tell us what we need
+[19:55.880 --> 19:56.620]  to do.
+[20:06.230 --> 20:09.190]  Like, do we need to equal the stuff on the SQL?
+[20:09.190 --> 20:13.150]  So, this is why we've got that transition from construction to
+[20:13.150 --> 20:17.310]  service now, because we don't know. We really need to have
+[20:17.310 --> 20:21.230]  a huge part in... Like I said, I think Tristan just figured out that we had remote
+[20:21.230 --> 20:23.970]  access. I just found out today that we got remote access.
+[20:25.590 --> 20:29.010]  But yet, this project's probably been done for
+[20:29.010 --> 20:29.690]  two years.
+[20:34.270 --> 20:35.790]  I have one sec.
+[20:39.870 --> 20:40.350]  Hi.
+[20:40.930 --> 20:43.330]  I got Liam with me here.
+[20:45.170 --> 20:47.970]  So, what I think we'll do is we'll deal with
+[20:47.970 --> 20:51.970]  the immediate issue, which is the SQL server being full, unless you already dealt with that.
+[20:52.210 --> 20:55.370]  Then we'll restart the services and
+[20:56.030 --> 20:59.790]  see what the errors are coming up as. But we don't care about the
+[20:59.790 --> 21:02.750]  SQL server. It's still going.
+[21:03.650 --> 21:06.910]  They said the information's like two years old or something
+[21:06.910 --> 21:10.870]  that they can see. So, this data folder's going to be huge. But what they're
+[21:10.870 --> 21:14.670]  more concerned about is the TrendLog's not loading, because the DeviceComm is
+[21:14.670 --> 21:16.970]  crashing because of the .NET change.
+[21:18.310 --> 21:22.310]  Okay. We think it's .NET. Well, I think it's .NET. I think it's .NET also.
+[21:22.430 --> 21:26.690]  But I would like to find out for sure. There's only
+[21:26.690 --> 21:30.730]  one version installed, and that's 8. And I know 8 is used for 61.
+[21:31.470 --> 21:33.110]  Definitely the wrong one.
+[21:34.550 --> 21:37.970]  So, for 3.15, I believe they need 6.
+[21:38.590 --> 21:42.670]  Yeah, I think so. But I would like to know exactly
+[21:42.670 --> 21:46.930]  which version of 6, and that's the problem. And I can't get to it
+[21:46.930 --> 21:50.850]  because... So, we don't need to know exactly the version of 6.
+[21:50.930 --> 21:54.890]  We just need to know that it's 6. But I'll check that for you.
+[21:57.850 --> 21:58.870]  There's some app
+[21:58.870 --> 22:00.190]  crashes here.
+[22:01.990 --> 22:06.830]  Yes, it is .NET 6. So, that should be it.
+[22:07.390 --> 22:11.230]  No, not the bottom one. So, this here
+[22:11.230 --> 22:13.370]  on the right is the server.
+[22:16.030 --> 22:18.810]  This is one of the ones where it's gone on the side, so then
+[22:18.810 --> 22:23.130]  it makes it clear which one's which. I keep falling for it,
+[22:28.070 --> 22:29.970]  but... Yeah, we need the hosting bundle.
+[22:35.860 --> 22:37.540]  What usually happens is
+[22:37.540 --> 22:41.120]  IT comes along and goes, oh, version 6 is installed.
+[22:41.560 --> 22:45.180]  Well, that's the end of life. It's deprecated. It needs to be replaced
+[22:45.180 --> 22:47.580]  with a newer version. They just remove it.
+[22:51.650 --> 22:53.690]  So, upgrading is probably a good idea.
+[22:57.280 --> 22:58.980]  Depends on how much IT cares about security.
+[23:00.420 --> 23:02.560]  No, the WebView.
+[23:05.080 --> 23:05.800]  Okay, WebView.
+[23:06.280 --> 23:10.500]  So, 3.16.1. Look, if they don't care about security,
+[23:10.660 --> 23:11.400]  it's fine.
+[23:17.320 --> 23:18.820]  That's how you just gotta say it.
+[23:19.920 --> 23:22.360]  Yeah, just if you're in a meeting with them, just say it like that.
+[23:22.400 --> 23:24.600]  Yeah, if you don't care about security, it's fine.
+[23:32.080 --> 23:34.040]  I did end task the device
+[23:34.040 --> 23:37.780]  and hoping to come back online, but it didn't.
+[23:38.640 --> 23:39.460]  That's not surprising.
+[23:41.760 --> 23:44.600]  And we also have that. That also didn't help.
+[23:47.240 --> 23:49.900]  I just want to get that
+[23:49.900 --> 23:52.040]  column just in. The same thing happened.
+[23:52.700 --> 23:54.840]  They were saying it was working before.
+[23:56.240 --> 23:58.620]  I mean, that's what they always say before they change something.
+[23:58.620 --> 24:01.300]  They don't say what they changed.
+[24:01.440 --> 24:02.820]  That is exactly what it is.
+[24:05.400 --> 24:10.160]  So, I'll tell you exactly what changed. They went, oh, you guys have
+[24:10.160 --> 24:13.980]  unsecure HTTP. Better remove that.
+[24:15.540 --> 24:17.720]  Boy, howdy. Did they remove it?
+[24:18.900 --> 24:20.280]  Yeah, we're still pointed at 8180.
+[24:21.960 --> 24:25.780]  So, fix is straightforward. We just add 8180 back.
+[24:26.660 --> 24:29.740]  Like that. And they might be like,
+[24:29.820 --> 24:32.940]  oh, but that's insecure. We don't want people using it.
+[24:33.180 --> 24:37.440]  Well, simple solution. Here's the solution. It's revolutionary.
+[24:37.660 --> 24:40.620]  Check this out. You're not going to believe it.
+[24:42.500 --> 24:44.680]  Suppose I don't want any other devices.
+[24:45.680 --> 24:48.160]  Oh, now I know why. It's blocked.
+[24:50.220 --> 24:54.180]  Okay. So, the last call I was on,
+[24:54.180 --> 24:58.020]  I was talking with Sam about how there is another way to do this.
+[24:58.400 --> 25:02.020]  I don't like doing it because it's very custom. However,
+[25:03.960 --> 25:06.300]  sometimes it is necessary due to other
+[25:06.300 --> 25:10.380]  restrictions. We can do it. I really don't want to
+[25:10.380 --> 25:14.140]  do it. So, I'm just going to leave it like this. 8180. If they have a stink
+[25:14.140 --> 25:18.340]  about, oh, we can't have insecure stuff. Have them just
+[25:18.340 --> 25:22.360]  block incoming traffic to TCP port 8180. Straightforward
+[25:22.360 --> 25:26.360]  like that. This needs to work localhost. Unfortunately,
+[25:26.660 --> 25:30.320]  I cannot define an IP address interface as that.
+[25:30.560 --> 25:34.020]  I don't think it lets me. I've never tried, actually. Maybe it will.
+[25:35.300 --> 25:40.140]  Wouldn't that be wild? I'll try that.
+[25:44.180 --> 25:44.320]  Does it work?
+[25:47.260 --> 25:50.400]  Ah! Cool. Okay. Will it work if I do
+[25:50.400 --> 25:52.400]  the other address, the 10 dot whatever?
+[25:52.400 --> 25:57.740]  Oh, wait. That's not what I wanted.
+[26:02.020 --> 26:02.520]  Uh...
+[26:02.520 --> 26:06.440]  10 dot 1 dot...
+[26:07.160 --> 26:08.340]  I'm in the wrong place again.
+[26:11.840 --> 26:12.840]  91.90.
+[26:18.350 --> 26:21.770]  Yay! Look at that! Oh, wait.
+[26:23.210 --> 26:25.950]  Yep. That's right. Okay, good. I'm surprised
+[26:25.950 --> 26:29.210]  it's actually responding at all.
+[26:29.410 --> 26:32.650]  That's kind of weird.
+[26:34.050 --> 26:34.530]  Whatever.
+[26:40.750 --> 26:41.850]  Right, so that seems to be working.
+[26:41.950 --> 26:45.530]  Let's see if that takes this. We may have to restart the services.
+[26:46.270 --> 26:50.130]  Yeah, the reason why the services are stuck like that is probably because
+[26:50.130 --> 26:51.390]  they can't communicate.
+[26:51.390 --> 26:54.670]  My goodness, I'm clicking on the wrong thing. Yeah, exactly. They can't communicate.
+[26:55.590 --> 26:57.670]  Just probably restarting all the time.
+[26:59.450 --> 27:01.750]  No, it wasn't even booting up the device.com.
+[27:04.770 --> 27:07.110]  Oh, that would have been the dot net thing.
+[27:07.230 --> 27:07.730]  Yes.
+[27:10.470 --> 27:15.250]  We might have to reboot the computer, but this is the thing that is
+[27:15.250 --> 27:22.940]  probably giving us grief. Hopefully I can just do that
+[27:22.940 --> 27:25.360]  and then it should be fine.
+[27:33.400 --> 27:37.820]  Oh, still didn't work. Alright. Let's see what the
+[27:37.820 --> 27:40.180]  event viewer says about this one.
+[27:44.240 --> 27:44.960]  F5?
+[27:52.580 --> 27:53.620]  So many entries.
+[27:53.920 --> 27:57.980]  It's just mind-blogging. Blogging? Blowing? Whatever.
+[27:59.180 --> 28:01.100]  Oh, you have it filtered by something.
+[28:02.240 --> 28:04.400]  That's per second, not just the default one.
+[28:05.620 --> 28:08.780]  Oh, wow. Okay. I thought it was...
+[28:08.780 --> 28:10.580]  So many entries.
+[28:38.800 --> 28:39.320]  Wowzers.
+[28:41.380 --> 28:44.860]  And so you had fixed the issue around the database
+[28:44.860 --> 28:48.540]  but it's still processing all the files, is that right? No, we haven't touched it.
+[28:49.220 --> 28:51.140]  Okay, I did it again. My goodness.
+[28:52.080 --> 28:55.160]  Yeah, me too. That's what I keep saying too.
+[28:55.960 --> 29:00.640]  They don't know what they want to do yet on how they want to process
+[29:00.640 --> 29:04.300]  with archives. We don't know if we want to purge it
+[29:04.300 --> 29:06.440]  or if we want to just rename the database.
+[29:08.780 --> 29:11.980]  I think, right? Jordan?
+[29:13.880 --> 29:16.840]  Yeah, I don't...
+[29:16.840 --> 29:20.340]  I could call them but I would have to get their approval to purge it, I guess.
+[29:20.920 --> 29:24.780]  But if this isn't having... Do you think they would have noticed
+[29:24.780 --> 29:27.860]  if this hasn't been recording since 2024?
+[29:28.060 --> 29:31.480]  It's halfway three quarters through 2020.
+[29:33.120 --> 29:34.740]  May the 7th?
+[29:36.920 --> 29:40.160]  I don't know if that... I don't think that's a creative thing.
+[29:41.020 --> 29:43.640]  I mean, it might be.
+[29:43.640 --> 29:45.660]  Wrong one.
+[29:48.900 --> 29:51.720]  No, I don't think that's the date
+[29:51.720 --> 29:54.820]  modified there. That would have been when things were...
+[29:54.820 --> 29:55.900]  I think it would have been something else.
+[29:58.240 --> 30:04.080]  These ones are created...
+[30:04.080 --> 30:07.140]  Oh wow, there's only like 50 folders?
+[30:08.940 --> 30:11.640]  Yeah, because every time they get updated...
+[30:12.360 --> 30:15.900]  Yeah, he said about two years, dude.
+[30:20.320 --> 30:23.960]  A bit of a problem here. So, Thomas, you see what I'm seeing?
+[30:24.200 --> 30:24.700]  Yeah.
+[30:28.220 --> 30:31.860]  I've started by date modified. It should be sequential
+[30:31.860 --> 30:34.640]  with the dates. Yeah, but they're also different size, too.
+[30:35.500 --> 30:39.180]  No, that's what I'm saying. The numbers here should be sequential.
+[30:40.000 --> 30:40.480]  Yeah.
+[30:42.780 --> 30:46.940]  If you put it in the right order, what does it do? By name? No, that's what I'm saying.
+[30:47.500 --> 30:49.940]  The date modified should follow the order.
+[30:51.120 --> 30:55.380]  It's not. Which concerns me.
+[31:03.480 --> 31:04.880]  And I bet you you're running...
+[31:05.580 --> 31:10.020]  Yeah, that's what I'm saying, right? I don't know if all of this data can be
+[31:10.020 --> 31:13.900]  pulled into archive as it is right now. That's what I'm worried about. But some of the files are much
+[31:13.900 --> 31:17.940]  bigger than others. Some of them are zero. Yeah, it might just be that nothing
+[31:17.940 --> 31:22.180]  has changed. So, there's big gaps between them?
+[31:23.460 --> 31:25.860]  Well, that would be the zero kilobyte side.
+[31:32.150 --> 31:32.590]  Anywho,
+[31:32.810 --> 31:36.070]  that's awesome. Yeah. Not awesome, but
+[31:36.070 --> 31:36.830]  right.
+[31:42.840 --> 31:45.580]  Can we go to 3.12.1?
+[31:48.880 --> 31:51.440]  3.10 had an issue where it could only clear the first
+[31:51.440 --> 31:55.300]  ten of those files. And then it just... that's it. It just gets stacked.
+[32:00.590 --> 32:00.930]  It also
+[32:00.930 --> 32:03.770]  looks like we can update the version of WebView.
+[32:06.170 --> 32:08.790]  Again, they're going to have to ask permission to do that.
+[32:08.810 --> 32:12.850]  They can't just do it. Otherwise, they probably would have. Yeah, I'm just
+[32:12.850 --> 32:16.650]  checking what version...
+[32:16.650 --> 32:20.630]  May 6th is when it releases. So, it's just... you'd have to do...
+[32:20.630 --> 32:24.650]  if you were to update this, it would update...
+[32:25.170 --> 32:28.830]  what number is that? Is that month? Month, day, year?
+[32:28.950 --> 32:32.610]  Yeah, okay. Month, day, year. So, that would be 3.16.0
+[32:32.610 --> 32:33.950]  if you were to update.
+[32:38.550 --> 32:39.030]  Yeah.
+[32:42.070 --> 32:42.630]  Yeah.
+[32:43.350 --> 32:46.130]  That just expired.
+[32:47.310 --> 32:50.090]  Did we just release? Yeah. Archive.
+[32:50.250 --> 32:54.610]  So, this is month, day, right? For WebView,
+[32:55.250 --> 32:58.150]  the version that they could install would be 3.16.0.
+[32:59.030 --> 33:03.030]  3.16.1 came out May 6th. This is April 8th.
+[33:04.410 --> 33:07.010]  Archive, yeah, you can absolutely install the least version
+[33:07.010 --> 33:10.610]  of Archive. And do you need permission to install
+[33:10.610 --> 33:14.110]  server or any software on here?
+[33:14.770 --> 33:19.030]  Anyway, so, this...
+[33:19.030 --> 33:20.490]  Senator Askew, would you be okay?
+[33:22.570 --> 33:26.230]  If this fixes their problem, potentially...
+[33:32.490 --> 33:36.350]  We have to download the software anyway, so I'm going to go download it.
+[33:51.780 --> 33:54.100]  Another one that needs to be investigated, because
+[33:54.100 --> 33:59.900]  we have the matching proof that the RLM is the reason for that.
+[34:00.940 --> 34:03.740]  So, they say you need to pin again the number
+[34:03.740 --> 34:07.080]  of alarms that are inside the alarm system and wait for those.
+[34:07.320 --> 34:09.140]  Using the method that they gave you to go.
+[34:11.280 --> 34:17.320]  A little over 800 alarms have been fixed
+[34:17.320 --> 34:20.640]  in our history. May 31st is the result.
+[34:21.180 --> 34:25.360]  Certified alarm type is 46. You need to set up a number of alarms.
+[34:25.360 --> 34:29.260]  Using Archive scripts to run from the inventory
+[34:33.640 --> 34:36.340]  I get much more believable results
+[34:36.340 --> 34:38.100]  in 2024.
+[34:39.520 --> 34:42.440]  So, I notice the thing is, the announcement
+[34:42.440 --> 34:46.180]  from RLM is to give them an Archive script
+[34:46.180 --> 34:51.100]  as a way to generate the results they want. I can't figure out how to get this
+[34:51.100 --> 34:53.420]  to run anywhere, but on their control server.
+[34:53.900 --> 34:57.980]  So, they will probably continue to tell me about why they can't generate the results they want.
+[34:59.700 --> 35:01.180]  This will have to be remembered.
+[35:02.440 --> 35:05.840]  Yeah, because they will probably have to get their alarms as a control.
+[35:11.240 --> 35:12.640]  And these are
+[35:13.480 --> 35:16.620]  I just wanted to make sure that this stuff gets followed,
+[35:18.360 --> 35:20.480]  because I need to figure out
+[35:20.480 --> 35:23.360]  if we have any of these that we can use.
+[35:25.780 --> 35:39.460]  I think we might actually have to reboot to make the
+[35:39.460 --> 35:40.340]  .NET folie install.
+[35:41.740 --> 35:47.120]  I was looking for the other installation stuff, and I'm not seeing it.
+[36:04.190 --> 36:07.070]  The fact that it didn't say something like
+[36:07.070 --> 36:09.890]  Oh yeah, you want to repair
+[36:11.250 --> 36:14.710]  is telling me I don't think I've actually installed the desktop runtime.
+[36:16.030 --> 36:17.290]  Which is sort of what's needed.
+[36:19.630 --> 36:20.630]  Oh yeah, you're right.
+[36:22.750 --> 36:26.190]  The server hosting was already in there. That's when I ran it.
+[36:26.390 --> 36:28.770]  And now there should be some additional ones in there.
+[36:31.370 --> 36:32.990]  I just did.
+[36:35.410 --> 36:37.070]  I'm so confused.
+[36:38.610 --> 36:40.070]  Oh, there it is. Desktop runtime.
+[36:41.970 --> 36:44.430]  But then there should be another one that goes with it.
+[36:44.850 --> 36:45.750]  Where is it?
+[36:50.350 --> 36:51.190]  I don't understand.
+[36:54.290 --> 36:57.450]  Look, runtime is contained within desktop runtime.
+[36:57.590 --> 37:01.050]  Desktop runtime is contained within this. So installing this should install three things.
+[37:01.770 --> 37:03.670]  I installed this, I saw one thing.
+[37:04.050 --> 37:06.850]  I have two things.
+[37:13.600 --> 37:15.760]  This is the thing that I truly need.
+[37:15.760 --> 37:17.320]  That's supposed to be in the bundle.
+[37:18.320 --> 37:21.900]  Right! That's why I'm so confused.
+[37:23.260 --> 37:24.300]  Alright, let's try it again.
+[37:31.060 --> 37:32.560]  That was different.
+[37:32.560 --> 37:32.680]  ...
+[37:42.440 --> 37:43.840]  ...
+[37:50.550 --> 37:51.950]  ...
+[37:54.510 --> 37:55.910]  ...
+[38:02.970 --> 38:04.370]  ...
+[38:04.370 --> 38:04.390]  ...
+[38:05.830 --> 38:08.810]  He's in the meeting too.
+[38:09.410 --> 38:12.390]  He should probably let it know because he might...
+[38:17.480 --> 38:19.680]  And I'm in the wrong thing again. There we go.
+[38:23.330 --> 38:26.130]  There's so many errors it's really difficult to see.
+[38:26.250 --> 38:29.870]  I know! I was like, oh, it's easy.
+[38:29.970 --> 38:32.730]  I'm just going to look for this error message and then I'll know.
+[38:32.810 --> 38:35.190]  And I'm like, no, can't find it.
+[38:36.390 --> 38:39.990]  I can't believe how far down the error message gets.
+[38:45.130 --> 38:47.210]  We might have to just reinstall the device
+[38:47.210 --> 38:51.170]  like the WebView 3.15.
+[38:53.930 --> 38:55.610]  That's how it seems to be behaving
+[38:55.610 --> 38:58.470]  from my point of view. But we'll have to reboot either way.
+[38:58.710 --> 38:59.550]  Are we able to reboot?
+[39:02.790 --> 39:07.070]  Yeah, we'll have to reboot and then I'll have to remote back in.
+[39:07.830 --> 39:11.930]  Now, before doing that, I would like to
+[39:11.930 --> 39:15.070]  download and update at least Archive
+[39:16.050 --> 39:18.350]  WebView. I don't know if you want to update now, but
+[39:18.350 --> 39:21.230]  at least Archive.
+[39:25.920 --> 39:29.080]  But yeah, download the versions of software we need.
+[39:37.550 --> 39:37.710]  ...
+[39:40.110 --> 39:40.750]  ...
+[39:40.750 --> 39:41.570]  ...
+[39:48.280 --> 39:48.720]  ...
+[39:54.540 --> 39:54.980]  ...
+[39:56.780 --> 39:57.220]  ...
+[40:19.200 --> 40:22.160]  Alright. So, I'm not actually going to
+[40:22.160 --> 40:24.240]  install it, but I'm going to download that.
+[40:25.000 --> 40:27.940]  I don't even know if that's even on there.
+[40:28.380 --> 40:28.780]  The other one.
+[40:33.740 --> 40:35.620]  They can't update to that one though.
+[40:36.400 --> 40:38.200]  Oh, they can't? Oh, never mind then.
+[40:43.490 --> 40:45.510]  What current version of SQL is on here?
+[40:46.150 --> 40:47.130]  Oh, I did it again.
+[40:50.610 --> 40:54.110]  2014. Alright. That'll be a whole other thing.
+[40:54.110 --> 40:58.110]  Yeah, you're opening up a giant can of worms here.
+[40:59.250 --> 41:02.450]  One problem at a time, Liam. One problem at a time.
+[41:02.670 --> 41:06.410]  I know. I know. Alright. Toolkit.
+[41:06.850 --> 41:10.070]  No, we don't need toolkit. What am I looking for?
+[41:14.610 --> 41:16.670]  Archive and WebView. Remote access.
+[41:16.970 --> 41:20.350]  I think. What is it? Is there a remote access on the other one? Wrong computer.
+[41:21.730 --> 41:22.330]  Oh, you're right.
+[41:27.320 --> 41:29.240]  Maybe I'll never get used to it.
+[41:30.040 --> 41:32.480]  Years of academy training wasted.
+[41:37.330 --> 41:39.970]  I mean, even without the status bar on the side
+[41:39.970 --> 41:41.930]  like that.
+[41:47.890 --> 41:50.690]  WebView Archive. Okay, perfect. Excellent.
+[42:09.910 --> 42:11.770]  Oh, he's talking about the script I made.
+[42:13.090 --> 42:13.470]  Yep.
+[42:22.270 --> 42:23.670]  We're going to miss Chris going,
+[42:23.870 --> 42:24.450]  what?
+[42:26.010 --> 42:28.970]  Yeah, I'm going to be like, yeah, I told Karem, he said, yeah, use the script.
+[42:30.610 --> 42:31.010]  Okay.
+[42:41.650 --> 42:45.490]  I think I'll just hop out of the call and just mute myself for a little bit.
+[42:46.350 --> 42:50.570]  So I can answer any questions you come up with.
+[44:07.590 --> 44:11.930]  But it's not something that a regular theater or taxi would know
+[44:11.930 --> 44:14.210]  or want to know. I didn't know.
+[44:57.760 --> 45:02.040]  But that's exactly it, right? And I was just speaking with Robert
+[45:02.040 --> 45:25.110]  here. So that brings me to the next thing that I want to
+[45:25.110 --> 45:25.670]  talk about.
+[45:27.390 --> 45:31.670]  So right now I've got nine tickets with WebView.
+[45:33.980 --> 45:36.960]  All related to WebView.
+[45:36.960 --> 45:39.120]  And...
+[45:44.640 --> 45:46.040]  ...
+[45:46.040 --> 45:47.040]  ...
+[45:58.280 --> 45:59.680]  ...
+[45:59.680 --> 46:01.160]  ...
+[46:01.160 --> 46:02.480]  ...
+[46:02.480 --> 46:04.000]  ...
+[46:04.000 --> 46:04.120]  ...
+[46:08.620 --> 46:12.320]  Can you hear what's going on in the background?
+[46:12.580 --> 46:13.540]  Liam could hear it.
+[46:37.380 --> 46:38.140]  ...
+[46:43.280 --> 46:44.040]  ...
+[46:45.880 --> 46:46.640]  ...
+[46:46.640 --> 46:47.560]  ...
+[46:53.220 --> 46:54.620]  ...
+[47:03.220 --> 47:04.620]  ...
+[47:04.620 --> 47:06.340]  ...
+[47:06.340 --> 47:07.040]  ...
+[47:09.640 --> 47:11.040]  ...
+[47:11.040 --> 47:11.280]  ...
+[47:14.780 --> 47:15.680]  ...
+[47:20.340 --> 47:21.240]  ...
+[47:24.540 --> 47:25.440]  ...
+[47:32.020 --> 47:32.920]  ...
+[47:32.920 --> 47:32.960]  ...
+[47:32.960 --> 47:33.060]  ...
+[47:33.060 --> 47:39.180]  Yeah, it's probably stuck in trying to process all those data files.
+[48:00.030 --> 48:02.450]  Wrong machine.
+[48:18.060 --> 48:19.460]  ...
+[48:19.700 --> 48:20.400]  ...
+[48:21.900 --> 48:23.300]  ...
+[49:23.510 --> 49:24.350]  ...
+[49:24.910 --> 49:25.630]  ...
+[49:28.350 --> 49:29.070]  ...
+[49:40.530 --> 49:40.970]  ...
+[49:49.400 --> 50:07.260]  I'm going to put you guys down for a sec. Liam is still in the call,
+[50:07.320 --> 50:10.900]  but he's also in a meeting. But I'll be back in a sec.
+[50:17.060 --> 50:17.560]  ...
+[51:23.760 --> 51:25.480]  Did you want to reboot it?
+[51:27.920 --> 51:30.320]  So if we reboot, what will happen is
+[51:31.460 --> 51:33.320]  I'll have the remote back in
+[51:33.860 --> 51:50.250]  once it's done. Wrong machine.
+[51:50.670 --> 51:54.530]  Nope. Wrong one. Nope. Wrong one. Nope. There you go.
+[52:28.090 --> 52:30.590]  How long do you think it takes for a server to reboot, Logan?
+[52:33.740 --> 52:35.940]  How long do you think it takes for a server to reboot?
+[52:36.920 --> 52:39.800]  Approximately the same time as a regular computer.
+[52:43.760 --> 52:46.320]  But it all depends on how many other
+[52:46.320 --> 52:50.580]  processes and things are happening on the server at once.
+[52:51.960 --> 52:54.220]  Basically, yeah, it would be roughly
+[52:54.220 --> 52:56.860]  the same. Unless it's a really easy
+[53:05.620 --> 53:07.020]  ...
+[53:07.020 --> 53:08.560]  ...
+[53:08.560 --> 53:09.180]  ...
+[53:12.740 --> 53:14.960]  I'm back, by the way.
+[53:17.080 --> 53:17.440]  ...
+[53:17.440 --> 53:19.000]  ...
+[53:30.000 --> 53:30.800]  ...
+[54:08.500 --> 54:09.300]  ...
+[54:09.300 --> 54:09.540]  ...
+[54:43.640 --> 54:47.140]  Alright. Can you guys hear me? Yep.
+[54:50.580 --> 54:51.600]  We're back in.
+[54:51.680 --> 54:54.680]  It's restarted. Which one do you guys want to go into?
+[54:57.720 --> 54:59.400]  You can still see the screen, right?
+[55:00.040 --> 55:02.060]  Yeah, I can still see the screen. We're back in.
+[55:06.240 --> 55:07.060]  I guess
+[55:07.060 --> 55:11.260]  let's go to the services and see if the services
+[55:12.120 --> 55:14.320]  are loaded or starting up.
+[55:22.790 --> 55:27.010]  They are on the delayed reboot,
+[55:27.930 --> 55:30.970]  so they might have not started yet.
+[55:45.030 --> 55:45.850]  Stopped.
+[56:09.180 --> 56:16.850]  Fun with computers.
+[56:20.330 --> 56:20.890]  Yeah, right.
+[57:49.770 --> 57:52.430]  Services back up there.
+[58:08.620 --> 58:09.580]  Wrong computer.
+[58:14.220 --> 58:15.300]  The Archive was the
+[58:15.300 --> 58:19.400]  right computer, but whatever you punched before that, or after that, was the wrong one.
+[58:25.430 --> 58:26.610]  Archive is on the desktop.
+[58:37.870 --> 58:38.550]  Data config.
+[58:42.470 --> 58:42.950]  What?
+[58:47.790 --> 58:48.750]  Data config.
+[58:58.260 --> 58:59.180]  About 100 points.
+[59:07.040 --> 59:09.240]  Are we just testing to make sure everything is up and running?
+[59:28.840 --> 59:31.080]  What's the password to get into the controller?
+[59:32.420 --> 59:33.740]  Like when you connect to studio?
+[59:33.740 --> 59:36.360]  Just long view?
+[59:43.080 --> 59:45.920]  So that's connecting and working.
+[59:47.660 --> 59:50.180]  Archive looks somewhat happy.
+[59:50.980 --> 59:53.960]  I do an air quotes because the database is still
+[59:53.960 --> 59:54.460]  full.
+[59:57.120 --> 01:00:00.340]  At least it's loading and displaying things.
+[01:00:03.200 --> 01:00:04.380]  Wait, wasn't there more
+[01:00:04.380 --> 01:00:05.300]  networks than this?
+[01:00:05.640 --> 01:00:10.420]  With the database being full, does that mean
+[01:00:11.620 --> 01:00:16.340]  the trem logs are only getting stored on the controller and then getting erased every time they lapsed?
+[01:00:17.080 --> 01:00:17.520]  No.
+[01:00:22.540 --> 01:00:24.400]  So if the service is
+[01:00:24.400 --> 01:00:29.120]  running, which it is, it's putting it into that data folder that I was telling you about.
+[01:00:29.120 --> 01:00:33.440]  And when it can then back it up, it's going to take it
+[01:00:33.440 --> 01:00:37.240]  from the data folder and it's going to throw it into the database.
+[01:00:37.720 --> 01:00:40.920]  But currently the database is full so it can't put it anywhere.
+[01:00:41.160 --> 01:00:44.660]  So right now it's just in that folder, happily collecting.
+[01:00:45.440 --> 01:00:48.980]  Theoretically, we think it is, but because it is doing
+[01:00:48.980 --> 01:00:53.160]  some weird stuff when it comes to the files that Liam was talking about,
+[01:00:53.680 --> 01:00:57.120]  we're a little bit worried because you were on an older version of
+[01:00:57.840 --> 01:01:01.200]  the archive and there was some problems when it
+[01:01:01.200 --> 01:01:02.720]  came to
+[01:01:05.540 --> 01:01:07.000]  doing those files.
+[01:01:09.980 --> 01:01:13.060]  So we're a little bit concerned about that, but in theory
+[01:01:13.060 --> 01:01:17.060]  all of your data should be in this folder. I mean, the total
+[01:01:17.060 --> 01:01:21.080]  amount was still coming up to like 3
+[01:01:21.080 --> 01:01:25.020]  gigabytes, so that to us tells us that there is a
+[01:01:25.020 --> 01:01:26.740]  substantial amount of data there.
+[01:01:29.360 --> 01:01:32.740]  But this is kind of weird, the jumping. It does look like it's in order now.
+[01:01:33.500 --> 01:01:35.960]  Nah, this isn't. Yeah, up near the top.
+[01:01:36.880 --> 01:01:40.800]  The name is, but the date and time is not. So if we do
+[01:01:40.800 --> 01:01:45.340]  the date and time, it all of a sudden goes all screwy, which is
+[01:01:45.340 --> 01:01:54.570]  a bit of a concern. Yeah, like
+[01:01:54.570 --> 01:01:57.530]  it jumps all around. I'm back.
+[01:01:59.710 --> 01:02:01.650]  Yeah, sorry
+[01:02:01.650 --> 01:02:05.810]  about the bouncing around there. There is
+[01:02:05.810 --> 01:02:09.650]  something I needed to discuss in a meeting that everyone else was in, so I had to
+[01:02:09.650 --> 01:02:11.130]  jump into that for a little bit.
+[01:02:13.310 --> 01:02:17.950]  So I saw that device still didn't start up, which isn't great.
+[01:02:21.270 --> 01:02:21.830]  Because
+[01:02:21.830 --> 01:02:25.570]  Archive is still trying to do this stuff of connecting
+[01:02:25.570 --> 01:02:29.430]  to the database. We're going to keep on seeing those errors
+[01:02:29.430 --> 01:02:32.550]  increment, and that's not going to be a good time.
+[01:02:33.370 --> 01:02:37.810]  Yeah, I know, I keep on doing that. And also, the Windows thing is now
+[01:02:37.810 --> 01:02:38.630]  broken.
+[01:02:41.670 --> 01:02:42.430]  So that's awesome.
+[01:02:46.810 --> 01:02:50.130]  So what we could do is we could rename the database,
+[01:02:51.370 --> 01:02:53.850]  call it an older version, and then
+[01:02:53.850 --> 01:02:59.050]  Archive is going to happily take all those data files, hopefully, and dump them into
+[01:03:00.250 --> 01:03:02.130]  the new SQL database.
+[01:03:02.790 --> 01:03:05.910]  If they haven't asked about it, then maybe we might
+[01:03:05.910 --> 01:03:09.890]  be okay. And if they do ever ask for it in the future, we could still pull
+[01:03:09.890 --> 01:03:11.410]  data from those old databases.
+[01:03:14.370 --> 01:03:17.670]  Yeah, even then we don't really know how much we're going to
+[01:03:17.670 --> 01:03:20.950]  be able to keep from the other one.
+[01:03:21.670 --> 01:03:23.370]  From the missed data, you mean?
+[01:03:26.250 --> 01:03:29.090]  But we can at least start that. We could do
+[01:03:29.090 --> 01:03:30.470]  a rename, right?
+[01:03:34.680 --> 01:03:37.500]  Wow, the start menu just broken now?
+[01:03:38.300 --> 01:03:41.260]  What are you trying to do?
+[01:03:42.060 --> 01:03:48.120]  I'm trying to make the task manager actually work so that I can view the installed programs.
+[01:03:48.200 --> 01:03:51.920]  But apparently, it's just broken. So that's awesome.
+[01:03:53.340 --> 01:03:56.320]  I'm just going to use File Explorer and navigate to
+[01:03:56.920 --> 01:03:57.920]  the folder.
+[01:04:17.080 --> 01:04:18.480]  There we are.
+[01:04:21.640 --> 01:04:22.200]  Okay.
+[01:04:30.100 --> 01:04:33.760]  So, when you installed it the second time, I wasn't paying attention. Did it actually
+[01:04:34.340 --> 01:04:36.120]  allow it to install the service?
+[01:04:37.600 --> 01:04:40.240]  For Archive? Yeah, or did it complain?
+[01:04:40.720 --> 01:04:43.940]  No, it was happy as a clam. It did it.
+[01:04:44.160 --> 01:04:48.240]  I don't know what it got stuck on before. That was very strange.
+[01:04:52.520 --> 01:04:53.980]  Yeah, for
+[01:04:58.040 --> 01:04:58.480]  that...
+[01:05:01.500 --> 01:05:04.260]  Either way, we're going to have to purge some of the data.
+[01:05:05.660 --> 01:05:07.540]  Well, I don't think purge is an option.
+[01:05:09.000 --> 01:05:10.080]  It's too big.
+[01:05:10.420 --> 01:05:12.360]  Yeah, it's too big.
+[01:05:14.000 --> 01:05:17.940]  We wouldn't happen to have SMS, do we? No.
+[01:05:22.660 --> 01:05:24.680]  Probably hit the magnifying glass and type it in.
+[01:05:24.860 --> 01:05:27.600]  Because I click it and it doesn't do anything. I'm clicking.
+[01:05:28.560 --> 01:05:30.280]  Oh, that's what I'm saying. Broken!
+[01:05:32.140 --> 01:05:33.780]  Just straight up broken.
+[01:05:36.820 --> 01:05:38.000]  So, yeah.
+[01:05:38.140 --> 01:05:41.500]  Looks like I might have to install, yeah, I'll have to install SSMS.
+[01:05:42.080 --> 01:05:48.530]  Cool. Told you not to touch Archive!
+[01:05:50.090 --> 01:05:51.190]  Gotta fix it though!
+[01:05:51.770 --> 01:05:53.550]  Oh, I know, we gotta fix it.
+[01:05:55.890 --> 01:05:57.850]  Like, yep, well, that sucks. Bye!
+[01:06:00.670 --> 01:06:04.530]  I'm curious to see how you download it. Yeah, okay, you do the same
+[01:06:04.530 --> 01:06:08.690]  as mine. Cause it now does a visual... Yeah, it's a weird visual studio installer
+[01:06:08.690 --> 01:06:12.070]  thing, yeah. Yeah. I hate it.
+[01:06:12.790 --> 01:06:15.850]  I just want SSMS. That's all I want.
+[01:06:17.750 --> 01:06:20.050]  I mean, I would prefer it if I didn't even have to do that.
+[01:06:23.770 --> 01:06:26.570]  That it was installed with SQL? Exactly.
+[01:06:27.150 --> 01:06:31.010]  And the management thing that just dealt with
+[01:06:31.710 --> 01:06:34.870]  management. Like, almost like
+[01:06:35.430 --> 01:06:43.880]  SSMS. I think I understand why though.
+[01:06:44.060 --> 01:06:47.160]  SSMS itself is like 1.5 gigs after it's installed.
+[01:06:48.880 --> 01:06:52.160]  It might be more now that they moved over to this other installer. Oh, my goodness!
+[01:06:52.400 --> 01:06:56.180]  Even more! Yeah, this hit install. Yeah, more stuff that you don't need. More than
+[01:06:56.180 --> 01:06:59.620]  doubled. Yeah, I know, they've integrated with Azure and it's just...
+[01:06:59.620 --> 01:07:02.480]  They've also got two interfaces now. Yep.
+[01:07:03.840 --> 01:07:08.220]  We got the new shiny one. The old less shiny one.
+[01:07:39.060 --> 01:07:41.740]  I know, I know, I know.
+[01:07:41.940 --> 01:07:46.160]  Well, you know why, right? It's because of the priority they have.
+[01:07:47.520 --> 01:07:49.320]  They're working right now in
+[01:07:49.320 --> 01:07:54.760]  a bad way. They work on a small server.
+[01:07:55.160 --> 01:07:56.460]  They take one step forward.
+[01:08:02.130 --> 01:08:15.520]  And so...
+[01:08:16.620 --> 01:08:19.780]  Just reminded that skeleton meme I kept on sending you.
+[01:08:20.840 --> 01:08:23.360]  It's been my day today.
+[01:09:26.060 --> 01:09:28.200]  I just thought of something else as well.
+[01:09:34.020 --> 01:09:35.560]  Let's see when this was installed.
+[01:09:56.590 --> 01:09:58.370]  Where am I?
+[01:09:58.370 --> 01:10:10.890]  Yeah, we got this. Okay, we got that.
+[01:10:12.330 --> 01:10:14.850]  I want to see when WebView was installed. Alright, so
+[01:10:14.850 --> 01:10:17.970]  it had to have been broken recently, the WebView thing.
+[01:10:36.640 --> 01:10:38.300]  Now, what makes the device commons a little bit
+[01:10:38.300 --> 01:10:42.120]  unique is it actually does require or depend on that ASP.NET thing.
+[01:10:43.100 --> 01:10:46.240]  And I just noticed something with my little
+[01:10:46.240 --> 01:10:49.840]  eagle eye here. Back to that .NET 6 thing.
+[01:10:50.840 --> 01:10:54.020]  The version I had installed, or I thought
+[01:10:54.020 --> 01:10:59.330]  I had installed, was this. I'm absolutely
+[01:10:59.330 --> 01:11:03.510]  sure I installed it. But the version that is currently
+[01:11:03.510 --> 01:11:07.350]  installed is 18. How did
+[01:11:07.350 --> 01:11:18.860]  that happen? I don't know.
+[01:11:20.160 --> 01:11:22.660]  I think it didn't install it.
+[01:11:23.700 --> 01:11:25.120]  But it has today's date.
+[01:11:26.780 --> 01:11:29.140]  Oh, never mind. Never mind. Oh, I see it.
+[01:11:29.160 --> 01:11:32.080]  I'm getting confused. We're good. We're good. Yeah, 36. Okay.
+[01:11:32.300 --> 01:11:36.420]  Oh, my screen connect just died. Let me reconnect here.
+[01:11:42.190 --> 01:11:44.470]  Get all of our fingers in here, just poking around.
+[01:11:46.730 --> 01:11:49.270]  I'm trying not to move my mouse so it doesn't screw
+[01:11:49.270 --> 01:11:50.190]  you over.
+[01:12:12.240 --> 01:12:13.420]  You just reminded me of something.
+[01:12:14.080 --> 01:12:17.760]  I was playing a
+[01:12:17.760 --> 01:12:21.320]  beat-em-up fighting game against someone else at my house.
+[01:12:22.360 --> 01:12:24.600]  And I had my daughter crawling around and stuff.
+[01:12:26.040 --> 01:12:28.760]  I had the mouse for the computer
+[01:12:29.420 --> 01:12:32.500]  next to where we were playing, because I was playing with
+[01:12:33.420 --> 01:12:36.980]  on a screen with controllers, like TV or whatever.
+[01:12:37.400 --> 01:12:41.710]  But the mouse is still connected. It's wireless. She starts playing with it,
+[01:12:41.710 --> 01:12:45.350]  and it's making my character do all sorts of weird things, right?
+[01:12:45.930 --> 01:12:49.750]  And later on, in the same game, he starts screwing with it.
+[01:12:55.160 --> 01:12:55.980]  Your son?
+[01:12:58.140 --> 01:13:00.180]  No, this guy I was playing with.
+[01:13:00.680 --> 01:13:04.220]  Oh. Yeah. And he's just letting me blame her for it.
+[01:13:04.240 --> 01:13:06.920]  I'm like, oh, she's got it again. She's messing up my controls.
+[01:13:08.160 --> 01:13:15.790]  Beat me up. You figured out how to cheat the system.
+[01:13:16.450 --> 01:13:19.790]  Oh, I think Screen Connect just crashed on me.
+[01:13:21.530 --> 01:13:23.670]  One moment it was there, the next moment it was gone.
+[01:13:24.290 --> 01:13:27.010]  Yeah, it closed on me too. I had to reopen it.
+[01:13:27.430 --> 01:13:31.630]  Maybe there's some sort of a timeout.
+[01:13:31.870 --> 01:13:34.110]  Had I opened for too long, it was like, nope, sorry.
+[01:13:38.010 --> 01:13:43.250]  Maybe it's how they dealt with all those performance things they were running into before, where it took forever to log in.
+[01:13:46.350 --> 01:13:50.690]  You are going in to look at
+[01:13:50.690 --> 01:13:53.670]  the database for the archive.
+[01:13:53.690 --> 01:13:54.730]  Right. Archive, yeah.
+[01:13:58.620 --> 01:14:00.480]  And you want to do a report?
+[01:14:03.440 --> 01:14:04.580]  What are you looking at besides?
+[01:14:07.360 --> 01:14:11.280]  I already checked the data file folder, the thing is
+[01:14:11.280 --> 01:14:13.660]  more than 10 gigs.
+[01:14:14.840 --> 01:14:15.960]  Geez Louise.
+[01:14:18.660 --> 01:14:21.780]  Yeah, we can run a report and find out what's taking up all that space.
+[01:14:36.860 --> 01:14:37.360]  Oh!
+[01:14:39.740 --> 01:14:40.300]  Okay.
+[01:14:42.920 --> 01:14:45.300]  We still can't purge them.
+[01:14:47.500 --> 01:14:51.520]  Well, if you wipe them completely out, yes.
+[01:14:52.400 --> 01:14:53.500]  I can do a delete from.
+[01:14:54.200 --> 01:14:55.740]  Don't do that.
+[01:15:00.680 --> 01:15:03.500]  That's a runtime. Yeah, these are all runtimes.
+[01:15:04.760 --> 01:15:06.420]  I want to find out what they are.
+[01:15:09.440 --> 01:15:12.640]  So, this is a question for you Jordan, once it loads.
+[01:15:15.500 --> 01:15:18.060]  Do you really need 55 million entries?
+[01:15:18.520 --> 01:15:21.420]  Or whatever number it is. 25 million entries.
+[01:15:25.560 --> 01:15:26.680]  For 1000BV26.
+[01:15:26.680 --> 01:15:30.060]  Whatever that is.
+[01:15:30.460 --> 01:15:33.440]  Good answer.
+[01:15:36.620 --> 01:15:38.920]  You might have a programming issue.
+[01:15:40.600 --> 01:15:41.800]  So, you see this?
+[01:15:45.920 --> 01:15:47.030]  It is toggling.
+[01:15:48.820 --> 01:15:50.380]  How many times is this per second?
+[01:15:53.740 --> 01:15:55.060]  36 times.
+[01:15:55.060 --> 01:15:56.320]  Per second.
+[01:16:00.280 --> 01:16:03.040]  Almost certainly you guys have a programming error
+[01:16:03.040 --> 01:16:06.220]  that is causing it to toggle a gazillion times.
+[01:16:09.680 --> 01:16:11.060]  So, I think we should just
+[01:16:11.060 --> 01:16:14.780]  truncate the entire table because there's nothing useful that you can gain from this.
+[01:16:16.180 --> 01:16:17.660]  I like how diplomatic you are.
+[01:16:20.960 --> 01:16:23.700]  We can probably just purge the whole thing.
+[01:16:24.380 --> 01:16:26.400]  You're not going to use the utility?
+[01:16:27.760 --> 01:16:28.820]  No, this will be way faster.
+[01:16:29.980 --> 01:16:31.160]  It doesn't screw it up.
+[01:16:35.100 --> 01:16:37.860]  I can back it up for you.
+[01:16:42.280 --> 01:16:44.000]  Once this process starts,
+[01:16:44.760 --> 01:16:46.660]  you're not getting off this train.
+[01:16:56.420 --> 01:16:57.680]  This is just along for the ride.
+[01:17:00.450 --> 01:17:03.250]  Well, only one person has to push the buttons.
+[01:17:04.850 --> 01:17:05.830]  They're like, yep, Liam did that.
+[01:17:08.590 --> 01:17:11.110]  It was all him. It was his idea.
+[01:17:16.310 --> 01:17:16.790]  Absolutely.
+[01:17:17.710 --> 01:17:21.390]  Yep, it's absolutely correct.
+[01:17:26.910 --> 01:17:28.990]  No, boss. I don't know what you're talking about.
+[01:17:29.950 --> 01:17:31.730]  I was just supervising.
+[01:17:36.920 --> 01:17:40.220]  You helped maintain the screen can a client while mine crashed.
+[01:17:43.910 --> 01:17:46.430]  Kind of like that thing we were doing on Friday.
+[01:17:49.150 --> 01:17:52.190]  I don't know what you're talking about.
+[01:20:14.470 --> 01:20:14.870]  Yeah.
+[01:20:17.790 --> 01:20:18.390]  You guys still there?
+[01:20:19.070 --> 01:20:19.430]  Yep.
+[01:20:24.670 --> 01:20:26.930]  We're excitingly watching the database
+[01:20:28.570 --> 01:20:29.690]  back up.
+[01:20:29.950 --> 01:20:32.490]  Before I do horrible things to it.
+[01:20:35.750 --> 01:20:37.210]  It's our undo button.
+[01:20:37.350 --> 01:20:39.750]  The undo button takes a while to load.
+[01:20:55.900 --> 01:20:59.900]  Yeah, man. It never ends. Blah, blah, blah.
+[01:21:01.160 --> 01:21:02.020]  Blah, blah, land.
+[01:21:05.000 --> 01:21:06.300]  There's been another guy off.
+[01:21:06.300 --> 01:21:08.300]  Or not off.
+[01:21:12.200 --> 01:21:13.160]  But, yeah.
+[01:21:18.120 --> 01:21:21.980]  You know, he went to sleep for the weekend and I hang out with him on the ship.
+[01:21:23.560 --> 01:21:24.520]  And then
+[01:21:24.520 --> 01:21:29.700]  we have a project up there so he just drove his truck up and
+[01:21:29.700 --> 01:21:32.100]  did that, right? Stayed there.
+[01:21:33.820 --> 01:21:37.420]  And then we got another guy on holidays this week.
+[01:21:42.600 --> 01:21:44.620]  We've got one on holidays, too.
+[01:21:45.680 --> 01:21:46.720]  Selfish people.
+[01:21:48.740 --> 01:21:50.780]  How dare they look after themselves.
+[01:21:53.540 --> 01:21:53.900]  Right?
+[01:21:56.620 --> 01:22:00.640]  I mean, I don't say that when I go on holidays, but I'm different, right?
+[01:22:01.460 --> 01:22:04.480]  Look, the solution is to medicate, self-medicate
+[01:22:04.480 --> 01:22:06.760]  so you can make it through another day. Just keep pushing.
+[01:22:14.120 --> 01:22:14.860]  Start running
+[01:22:14.860 --> 01:22:15.620]  a little on fumes.
+[01:22:16.560 --> 01:22:19.660]  Start running on fumes. You gotta go and start siphoning some
+[01:22:19.660 --> 01:22:22.760]  gas tanks for someone else, you know.
+[01:22:26.640 --> 01:22:27.860]  Was I on mute on that one?
+[01:22:28.260 --> 01:22:30.300]  Nope, nope. Sorry.
+[01:22:31.760 --> 01:22:33.320]  I should have pressed the mute button.
+[01:22:33.320 --> 01:22:34.720]  No, that's not what it is.
+[01:22:50.410 --> 01:22:52.590]  Sometimes I'll ask someone, how many drinks
+[01:22:52.590 --> 01:22:56.330]  in are you? And I don't know whether or not they're
+[01:22:56.330 --> 01:22:59.170]  talking about coffee or something stronger.
+[01:23:07.990 --> 01:23:08.470]  Any number
+[01:23:08.470 --> 01:23:10.170]  higher than one? It could be either or.
+[01:23:11.590 --> 01:23:12.910]  I had a
+[01:23:14.510 --> 01:23:17.950]  phone call from a guy and he's like brand new to controls
+[01:23:17.950 --> 01:23:22.070]  and stuff like that. And he's like, hey, my boss wanted me to connect to
+[01:23:22.070 --> 01:23:25.430]  this system a different way than how I'm doing it. I'm like, okay, cool.
+[01:23:25.810 --> 01:23:29.750]  Let me remote in, take a look. And it's like, okay, well, you're connected.
+[01:23:29.910 --> 01:23:34.070]  It's working. How does he want you to connect a different way? And he's like, I'm not sure.
+[01:23:35.270 --> 01:23:37.550]  So I kind of went back and forth a little bit with him.
+[01:23:37.550 --> 01:23:41.250]  And I just couldn't figure out what he was asking for. And I'm like, I hate to do this.
+[01:23:41.290 --> 01:23:45.630]  And you're not in trouble, but can I talk to your boss? So you have to patch his boss in.
+[01:23:45.790 --> 01:23:49.390]  We figured out what he was talking about. And I got it all up and working
+[01:23:49.390 --> 01:23:53.490]  and fixed for him. And then I know his boss. And his boss starts talking to me.
+[01:23:53.490 --> 01:23:57.370]  And he's like, oh, you're still biking. And I got a new mountain bike and stuff.
+[01:23:57.650 --> 01:24:01.870]  And the new guy's just like, oh, okay, I guess it's not as bad as I thought it was.
+[01:24:01.950 --> 01:24:05.470]  So that's kind of cool. When you got like casual
+[01:24:05.470 --> 01:24:09.250]  conversations a little bit. There we go.
+[01:24:09.470 --> 01:24:11.550]  Yay, the undo button is ready.
+[01:24:14.030 --> 01:24:15.050]  So I'm going to send time.
+[01:24:17.950 --> 01:24:21.590]  Okay, so 27, 28. I need to make sure I don't typo
+[01:24:21.590 --> 01:24:25.150]  things or else. Don't worry about it.
+[01:24:25.870 --> 01:24:27.650]  Or else. That's all you got to know.
+[01:24:34.210 --> 01:24:36.810]  I guess we should put those in the ticket, eh?
+[01:24:36.810 --> 01:24:40.150]  So that they can look at it later.
+[01:24:50.540 --> 01:24:52.140]  I should probably take a look at
+[01:24:52.140 --> 01:24:55.240]  4001 and 4004 separately. I won't worry about those right now.
+[01:24:55.680 --> 01:24:59.820]  Those four, right here, consisted of like
+[01:24:59.820 --> 01:25:04.280]  80% of the total amount of space used up. There's no reason why this database
+[01:25:04.280 --> 01:25:06.140]  should have been nearly as full as it was.
+[01:25:09.190 --> 01:25:11.050]  That's a good screenshot of that.
+[01:25:11.870 --> 01:25:14.070]  No, those four points.
+[01:25:14.830 --> 01:25:19.490]  These four? You see? Like take a look at the space reserved and then just add it up.
+[01:25:20.410 --> 01:25:22.030]  So that's 2.3 gigs.
+[01:25:22.150 --> 01:25:27.410]  2.3 gigs, 2.3 gigs, and 2 gigs. So that's
+[01:25:27.410 --> 01:25:30.890]  9 gigabytes? Is my math right there?
+[01:25:32.590 --> 01:25:34.490]  That's 9 gigabytes. Yep.
+[01:25:34.490 --> 01:25:37.010]  3, 3, 4.
+[01:25:37.890 --> 01:25:39.350]  That's 9 gigabytes.
+[01:25:44.970 --> 01:25:46.690]  It's going to fill up right away
+[01:25:46.690 --> 01:25:49.510]  again because it's going to get a year of data.
+[01:25:51.410 --> 01:25:54.210]  Now suddenly we have all this space. Look at that. Space available.
+[01:25:55.550 --> 01:25:57.770]  Do you have to... oh no, you don't have to compress.
+[01:26:01.010 --> 01:26:02.070]  I think that's it.
+[01:26:02.770 --> 01:26:05.170]  I think we can just...
+[01:26:05.790 --> 01:26:08.770]  No, no, wrong one. You're on the wrong one.
+[01:26:10.470 --> 01:26:14.010]  Now that we've got that, let's look at the event viewer
+[01:26:14.010 --> 01:26:18.330]  and see what WebView is doing when it comes to the device coms.
+[01:26:18.410 --> 01:26:20.670]  Alright, yeah, yeah, yeah.
+[01:26:23.910 --> 01:26:25.590]  We'll start it up again.
+[01:26:26.130 --> 01:26:28.650]  Do it a couple of times so we can get some in there.
+[01:26:31.210 --> 01:26:32.850]  No, that's not going to work.
+[01:26:33.770 --> 01:26:35.430]  How are you going to find an event viewer?
+[01:26:37.130 --> 01:26:38.430]  I know how to get to it.
+[01:26:41.690 --> 01:26:43.910]  There's two ways we can go to it. Oh, right there.
+[01:26:44.030 --> 01:26:45.410]  The third on the top of the list.
+[01:26:49.750 --> 01:26:52.750]  This isn't usually broken enough for me to have to worry about that.
+[01:26:52.750 --> 01:26:53.790]  ...
+[01:26:59.330 --> 01:26:59.930]  ...
+[01:27:03.190 --> 01:27:03.790]  ...
+[01:27:04.550 --> 01:27:09.110]  I'll probably clear this log too because nothing in here is going to be useful.
+[01:27:15.610 --> 01:27:16.210]  ...
+[01:27:16.730 --> 01:27:20.590]  Do we want to delete the data folders for those four?
+[01:27:21.710 --> 01:27:23.850]  We might. No, we can't.
+[01:27:23.850 --> 01:27:27.990]  That gets messy. Well, if we delete the folders, it's fine.
+[01:27:28.210 --> 01:27:31.110]  It'll recover, but we'll lose the data that's in there.
+[01:27:31.790 --> 01:27:34.330]  No, but the number sequencing would be off too.
+[01:27:35.530 --> 01:27:39.390]  No, that's not a problem. The file sequencing should be sequential within there.
+[01:27:39.490 --> 01:27:43.590]  The actual numbers after that, it doesn't actually matter. It's just like
+[01:27:43.590 --> 01:27:45.250]  it's the first file.
+[01:27:45.250 --> 01:27:47.530]  It could be any number.
+[01:27:56.750 --> 01:28:00.810]  These are some of the most unhelpful messages I've ever seen.
+[01:28:01.250 --> 01:28:05.270]  Check this out. Stack Trace. At start service.
+[01:28:07.210 --> 01:28:10.190]  Normally, we see like line, line, line, line, line, line.
+[01:28:10.330 --> 01:28:13.290]  Like this thing at this place, at this place, at this thing, using this component.
+[01:28:13.290 --> 01:28:15.750]  No, it's just like, yeah, I tried to start it and it didn't work.
+[01:28:17.110 --> 01:28:21.050]  You could check the DeviceCom error messages and see if there's something there.
+[01:28:21.690 --> 01:28:25.430]  I kind of doubt it, because if it can't start, then it can't write anything, right?
+[01:28:25.810 --> 01:28:26.250]  Yeah.
+[01:28:29.450 --> 01:28:30.250]  What if?
+[01:28:36.350 --> 01:28:37.230]  Wild idea.
+[01:28:40.650 --> 01:28:41.530]  What if
+[01:28:41.530 --> 01:28:43.810]  DeviceCom doesn't actually exist?
+[01:28:45.290 --> 01:28:46.950]  I think I found a problem.
+[01:28:50.550 --> 01:28:51.150]  Awww.
+[01:28:53.530 --> 01:28:55.470]  Oh my god.
+[01:28:57.450 --> 01:29:00.690]  Everything that could be wrong is wrong. I hate this.
+[01:29:01.130 --> 01:29:03.350]  Never call me about this site again.
+[01:29:05.830 --> 01:29:06.690]  Oh, I did it again.
+[01:29:10.510 --> 01:29:11.890]  Fire! Fire!
+[01:29:11.950 --> 01:29:12.990]  Lots of fire!
+[01:29:13.990 --> 01:29:14.910]  Oh my goodness.
+[01:29:16.450 --> 01:29:18.690]  Well, now we have to run the installer.
+[01:29:22.310 --> 01:29:25.790]  I have to run the uninstall and then install it.
+[01:29:26.550 --> 01:29:27.630]  There's no other choice.
+[01:29:31.070 --> 01:29:33.690]  If I want to update, I have to update SQL.
+[01:29:33.690 --> 01:29:37.690]  If I want to update SQL, I first have to check for Windows Updates.
+[01:29:45.790 --> 01:29:46.950]  So sorry, guys.
+[01:29:49.470 --> 01:29:50.110]  It's okay.
+[01:29:55.130 --> 01:29:56.110]  I don't remember where...
+[01:29:56.770 --> 01:29:58.010]  Security Maintenance, there we go.
+[01:30:04.810 --> 01:30:06.710]  That's not where I thought it was going to be.
+[01:30:06.710 --> 01:30:08.730]  Where's Windows Updates? Programs?
+[01:30:11.900 --> 01:30:18.210]  I guess there. The last update.
+[01:30:19.510 --> 01:30:25.970]  Like a year ago? Am I blind?
+[01:30:26.590 --> 01:30:28.890]  There should be a separate thing called Windows Updates.
+[01:30:32.450 --> 01:30:32.890]  Update.
+[01:30:43.560 --> 01:30:45.080]  Am I just dumb?
+[01:30:47.320 --> 01:30:48.800]  Okay, sorry. What are we looking at?
+[01:30:50.060 --> 01:30:53.260]  Hey, I could have sworn...
+[01:30:53.260 --> 01:30:54.760]  Wait, this is a server, right?
+[01:30:55.920 --> 01:30:58.480]  Are you on the server that you've got that Windows selected?
+[01:31:00.900 --> 01:31:02.840]  Yeah, I'm on the right one there.
+[01:31:03.040 --> 01:31:04.380]  Is this a server?
+[01:31:06.320 --> 01:31:10.100]  No, this looks like Windows 11.
+[01:31:11.600 --> 01:31:14.160]  Here, if I go to command, and then
+[01:31:15.320 --> 01:31:16.680]  system info.
+[01:31:17.260 --> 01:31:19.640]  Yeah, Windows 10.
+[01:31:22.660 --> 01:31:23.340]  Alright.
+[01:31:31.530 --> 01:31:32.990]  What's the stupid file called?
+[01:31:35.390 --> 01:31:37.490]  It's not EXE, it's something else.
+[01:32:14.680 --> 01:32:16.720]  Okay, I think I've got it.
+[01:32:19.400 --> 01:32:21.600]  Forget about that. Alright.
+[01:32:22.240 --> 01:32:24.540]  Control. Name.
+[01:32:32.990 --> 01:32:36.870]  I think I'm actually missing...legitimately I'm missing a thing here.
+[01:32:42.700 --> 01:32:44.840]  Normally Windows Update is like...
+[01:32:46.220 --> 01:32:49.740]  Update me, update me, right? Here's like in my face about it.
+[01:32:50.040 --> 01:32:57.210]  I cannot find it. Sorry, what are we doing?
+[01:33:00.350 --> 01:33:01.750]  Oh, I think it's
+[01:33:01.750 --> 01:33:05.430]  the new settings page thing.
+[01:33:06.050 --> 01:33:07.750]  Setup? What are you looking for?
+[01:33:09.950 --> 01:33:13.030]  I'm trying to look at...find the Windows Update.
+[01:33:13.470 --> 01:33:17.270]  Oh, actually no, that's right. If it is Windows 10,
+[01:33:17.310 --> 01:33:21.450]  not Windows Server, I shouldn't need to worry about that. Okay, perfect. Never mind. We're all good.
+[01:33:22.570 --> 01:33:23.850]  Wow, that's different.
+[01:33:26.310 --> 01:33:26.790]  Okay.
+[01:33:31.810 --> 01:33:34.450]  Now you're going to pretend you didn't see something?
+[01:33:35.110 --> 01:33:38.290]  Yeah, I'm going to pretend I never saw that. Alright.
+[01:33:42.050 --> 01:33:46.250]  Okay, so I'm assuming we're...I'm assuming we need to
+[01:33:47.010 --> 01:33:49.530]  do RCWebView and fix the .NET folder?
+[01:33:50.190 --> 01:33:55.970]  Well, before I can do that, I have to uninstall that. But before I do that, I have
+[01:33:55.970 --> 01:33:57.690]  to update the version of SQL.
+[01:33:58.930 --> 01:34:03.350]  And we need to make sure that we got the upload folder copied across. Otherwise,
+[01:34:03.790 --> 01:34:05.410]  they potentially lose that.
+[01:34:07.510 --> 01:34:11.190]  Oh, man. Alright. There we go. Go ahead and log in again.
+[01:34:11.210 --> 01:34:14.190]  He doesn't remember his password. Yeah, he got it last time.
+[01:34:14.890 --> 01:34:16.950]  No, I thought they used somebody else's.
+[01:34:18.890 --> 01:34:19.130]  Oh,
+[01:34:19.130 --> 01:34:20.830]  he did use someone else's.
+[01:34:25.350 --> 01:34:28.550]  Oh, you did use someone else's. Okay, I looked away then.
+[01:34:32.050 --> 01:34:32.790]  He tried.
+[01:34:32.870 --> 01:34:37.350]  He couldn't remember it, so somebody else logged in.
+[01:34:39.130 --> 01:34:40.930]  Text support about resetting your password.
+[01:34:43.270 --> 01:34:45.210]  You want to go to troubleshooting.
+[01:34:45.370 --> 01:34:46.070]  Oh, right.
+[01:34:49.310 --> 01:34:49.750]  Yeah,
+[01:34:50.070 --> 01:34:53.470]  I don't think we can even reset the password if we wanted to.
+[01:34:54.990 --> 01:34:56.390]  No, we can't.
+[01:34:59.490 --> 01:35:01.970]  I'm glad that we can't. Can you imagine?
+[01:35:15.850 --> 01:35:18.450]  We get a surprising number of calls and stuff like...
+[01:35:18.450 --> 01:35:20.850]  I'm trying to log into WebView and I forgot the password.
+[01:35:32.280 --> 01:35:38.170]  Alright, before I do the...
+[01:35:38.170 --> 01:35:39.250]  What am I going to have to do?
+[01:35:49.890 --> 01:35:52.870]  These drivers, I'm probably going to have to uninstall them
+[01:35:52.870 --> 01:35:57.030]  to make the SQL helper thing actually install
+[01:35:59.250 --> 01:36:00.050]  SQL properly.
+[01:36:22.350 --> 01:36:25.830]  If it takes too long, I'll just do it myself. I think I might have just closed.
+[01:36:27.730 --> 01:36:30.010]  He tried to run and then just like went away.
+[01:36:32.250 --> 01:36:33.310]  I missed what are you doing?
+[01:36:33.310 --> 01:36:38.350]  Oh, the helper? Yeah, I think that something is closing it.
+[01:36:38.350 --> 01:36:39.410]  Should I try and run it?
+[01:36:40.810 --> 01:36:41.610]  It's gone.
+[01:36:46.200 --> 01:36:49.760]  It's thinking. It's still spinning, your icon.
+[01:36:50.900 --> 01:36:53.760]  Yeah, but like the process should just appear here, right?
+[01:36:58.590 --> 01:37:00.350]  See? It's still thinking.
+[01:37:01.570 --> 01:37:05.270]  What's it thinking about? I don't know. Did you unzip it first?
+[01:37:05.810 --> 01:37:06.250]  Yeah.
+[01:37:09.830 --> 01:37:12.970]  You didn't try to run it in the zip file, did you?
+[01:37:13.710 --> 01:37:17.370]  Hope I didn't. Oh, I did it again. Gosh, dang it.
+[01:37:21.050 --> 01:37:21.430]  Oh,
+[01:37:21.550 --> 01:37:24.410]  I think you're right. Maybe I did run it inside the zip.
+[01:37:25.250 --> 01:37:29.710]  I'm trying to do something horrible. Yeah, that looks better.
+[01:37:35.470 --> 01:37:37.510]  You do have the zip one still going in the
+[01:37:37.510 --> 01:37:38.750]  background, too.
+[01:37:42.270 --> 01:37:44.330]  Oh, just two running now.
+[01:37:46.390 --> 01:37:49.090]  No, it looks like they're not the zip.
+[01:37:50.210 --> 01:37:52.010]  Well, they're thinking. They're both trying to load.
+[01:37:53.990 --> 01:37:56.930]  Yeah, but they aren't the zip. That's the weird thing, though.
+[01:38:03.670 --> 01:38:06.570]  Well, while it does that, I might as well just download
+[01:38:06.570 --> 01:38:10.130]  Microsoft SQL 2022 Express and Seller.
+[01:38:13.050 --> 01:38:14.370]  Man, you didn't think this
+[01:38:14.370 --> 01:38:16.390]  call was going to end up this way, did you, Jordan?
+[01:38:21.170 --> 01:38:22.370]  Don't worry. It's really easy.
+[01:38:22.410 --> 01:38:26.130]  You just have to do these ten different, completely
+[01:38:26.130 --> 01:38:29.690]  different things that seemingly have nothing to do with each other.
+[01:38:30.610 --> 01:38:34.230]  And each of them have their own little catches. So make sure
+[01:38:34.230 --> 01:38:37.190]  you do everything absolutely correctly or your database explodes.
+[01:38:38.810 --> 01:38:40.970]  Don't scare them.
+[01:38:41.510 --> 01:38:45.310]  I'm glad you guys can do it. I'm trying to scare them away from touching
+[01:38:45.310 --> 01:38:48.570]  SQL. Okay, yeah, keep going.
+[01:38:50.950 --> 01:38:51.990]  Learn from my mistakes.
+[01:38:52.210 --> 01:38:56.350]  That's the best part is it's not only...
+[01:38:56.350 --> 01:39:01.230]  At this point, his eyes have glazed over. He's got his cell phone out and he's
+[01:39:01.230 --> 01:39:04.890]  playing Candy Crush. No, it's not Candy Crush now.
+[01:39:04.890 --> 01:39:05.790]  Pretty much.
+[01:39:08.910 --> 01:39:12.450]  What's the next Candy Crush? Candy Crush
+[01:39:12.450 --> 01:39:13.450]  Solitaire?
+[01:39:17.670 --> 01:39:19.770]  Okay, Jordan, I'm going to send you an email.
+[01:39:20.310 --> 01:39:25.130]  It covers the binary points that you need to look into those
+[01:39:25.130 --> 01:39:29.150]  four so that we
+[01:39:29.150 --> 01:39:32.630]  fill up right away. It's not important.
+[01:39:32.630 --> 01:39:36.770]  It's not really related too much about this ticket, but it's fun stuff that we
+[01:39:36.770 --> 01:39:40.330]  have found. And I don't want to lose it, so I sent it to you.
+[01:39:41.850 --> 01:39:44.070]  Do you want me to take the rest of the call in?
+[01:39:49.710 --> 01:39:50.710]  I'm sorry, I talked
+[01:39:50.710 --> 01:39:53.890]  over you. What were you saying? No, I heard what you said.
+[01:39:57.530 --> 01:39:58.610]  If you want,
+[01:39:59.450 --> 01:40:02.730]  I know what you're doing and I know how to do it. It's just time consuming.
+[01:40:04.970 --> 01:40:06.930]  Oh, did you copy the
+[01:40:06.930 --> 01:40:09.030]  supplies? Oh no, you're doing the SQL.
+[01:40:10.510 --> 01:40:14.570]  Make sure you get the upload folder. There is a way to get the stupid reboot thing.
+[01:40:14.630 --> 01:40:19.050]  I don't want to reboot again and I know how to get around it. Uninstall SSMS
+[01:40:19.050 --> 01:40:21.970]  or the ODE files.
+[01:40:22.870 --> 01:40:26.250]  I already did that part. No, it's to get around that other thing.
+[01:40:30.250 --> 01:40:31.130]  To run...
+[01:40:31.130 --> 01:40:33.850]  Okay, I'll let you go. I'm going to jump out, Jordan.
+[01:40:37.150 --> 01:40:37.490]  Okay.
+[01:40:40.210 --> 01:40:42.470]  You might not know it, but you're in good hands.
+[01:40:47.370 --> 01:40:48.150]  Thank you both
+[01:40:48.150 --> 01:40:50.830]  you guys. I've seen some things today I've never seen before.
+[01:40:52.870 --> 01:40:53.310]  Excellent.
+[01:40:56.510 --> 01:40:57.770]  I'm going to drop out
+[01:40:57.770 --> 01:41:00.630]  and talk to you later. Hopefully not.
+[01:41:01.450 --> 01:41:03.850]  Talk to you later. Thank you.
+[01:41:14.870 --> 01:41:17.490]  It is no longer...
+[01:41:17.490 --> 01:41:21.190]  That's why I did not like that at all. Let's try this again.
+[01:41:26.620 --> 01:41:27.000]  Ta-da.
+[01:41:31.800 --> 01:41:34.200]  Yeah, so my next
+[01:41:34.200 --> 01:41:37.400]  question is who's responsibility is for servers maintenance?
+[01:41:40.260 --> 01:41:41.540]  It's going to be them.
+[01:41:43.380 --> 01:41:45.660]  That's why we always try to call them today
+[01:41:45.660 --> 01:41:47.000]  to come to the AWS server.
+[01:41:50.340 --> 01:41:53.620]  Oh, it's a tip rule. Ah, that's what it is.
+[01:41:55.880 --> 01:41:56.300]  I will
+[01:41:58.040 --> 01:42:01.120]  talk to that guy. It sounds like a lot of things are already
+[01:42:03.520 --> 01:42:04.120]  mentioned.
+[01:42:05.660 --> 01:42:08.740]  It's often instructed as to what it should
+[01:42:08.740 --> 01:42:13.140]  be. Do you have an all-in-one experience with
+[01:42:13.140 --> 01:42:16.780]  managing servers or do you just tell it to them?
+[01:42:17.380 --> 01:42:20.200]  I mean, sometimes we do stuff like that.
+[01:42:22.120 --> 01:42:24.960]  It's kind of scary. Like RCMPK division
+[01:42:24.960 --> 01:42:28.660]  we have the exact same thing here. I've never seen
+[01:42:28.660 --> 01:42:31.760]  the back side of it. I don't know any of this.
+[01:42:31.960 --> 01:42:37.080]  I don't see past Studio. And sometimes, like I said, version 8
+[01:42:37.080 --> 01:42:40.700]  is getting new to me. I've always been Studio
+[01:42:40.700 --> 01:42:44.800]  2 global. The shit that needs to be fixed,
+[01:42:55.470 --> 01:42:56.730]  right?
+[01:43:00.160 --> 01:43:02.240]  tip and star
+[01:43:02.240 --> 01:43:02.880]  rules.
+[01:43:10.220 --> 01:43:15.840]  Alright, tip rules.
+[01:43:21.010 --> 01:43:22.430]  Oh, looks like that might work.
+[01:43:22.730 --> 01:43:23.850]  Alright.
+[01:43:48.710 --> 01:43:50.110]  ...
+[01:43:52.790 --> 01:43:54.190]  ...
+[01:43:55.830 --> 01:43:57.230]  ...
+[01:43:57.230 --> 01:43:58.090]  ...
+[01:43:58.090 --> 01:43:58.130]  ...
+[01:43:58.130 --> 01:43:58.230]  ...
+[01:43:58.230 --> 01:43:58.770]  ...
+[01:43:58.770 --> 01:44:00.890]  Looks like that's working.
+[01:44:01.350 --> 01:44:02.010]  Yes.
+[01:44:06.210 --> 01:44:07.890]  ...
+[01:44:07.890 --> 01:44:09.930]  ...
+[01:44:15.720 --> 01:44:16.400]  ...
+[01:44:28.730 --> 01:44:30.090]  ...
+[01:44:41.530 --> 01:44:42.850]  ...
+[01:44:42.850 --> 01:44:43.170]  ...
+[01:44:43.170 --> 01:44:43.190]  ...
+[01:44:43.190 --> 01:44:44.190]  ...
+[01:44:44.190 --> 01:44:46.370]  ...
+[01:44:46.370 --> 01:44:46.490]  ...
+[01:44:55.160 --> 01:44:56.560]  Alright.
+[01:44:57.320 --> 01:44:58.240]  Another thing.
+[01:45:49.120 --> 01:45:50.520]  ...
+[01:45:50.520 --> 01:45:52.380]  ...
+[01:45:52.380 --> 01:45:52.900]  ...
+[01:45:52.900 --> 01:45:52.920]  ...
+[01:45:52.920 --> 01:45:54.080]  ...
+[01:45:56.540 --> 01:45:57.240]  ...
+[01:46:04.700 --> 01:46:05.400]  ...
+[01:46:06.100 --> 01:46:06.420]  ...
+[01:46:10.240 --> 01:46:11.640]  ...
+[01:46:11.640 --> 01:46:12.120]  ...
+[01:46:15.440 --> 01:46:15.920]  ...
+[01:46:21.200 --> 01:46:23.280]  So many little catches.
+[01:46:25.740 --> 01:46:27.340]  I opened the wrong thing again.
+[01:46:33.060 --> 01:46:34.020]  ...
+[01:46:37.120 --> 01:46:38.080]  ...
+[01:46:38.080 --> 01:46:38.340]  ...
+[01:46:38.340 --> 01:46:38.740]  ...
+[01:46:44.320 --> 01:46:45.720]  ...
+[01:46:46.340 --> 01:46:47.060]  ...
+[01:46:47.060 --> 01:46:49.840]  ...
+[01:46:49.840 --> 01:46:49.940]  ...
+[01:46:49.940 --> 01:46:51.820]  ...
+[01:46:51.820 --> 01:46:52.980]  ...
+[01:46:52.980 --> 01:46:54.320]  ...
+[01:46:56.760 --> 01:46:57.460]  ...
+[01:47:03.840 --> 01:47:05.240]  ...
+[01:47:05.240 --> 01:47:07.300]  ...
+[01:47:29.800 --> 01:47:31.200]  ...
+[01:47:31.200 --> 01:47:32.460]  ...
+[01:47:49.030 --> 01:47:49.810]  ...
+[01:47:50.430 --> 01:47:51.350]  ...
+[01:47:51.350 --> 01:47:53.410]  ...
+[01:47:53.410 --> 01:47:53.470]  ...
+[01:47:53.470 --> 01:47:53.930]  ...
+[01:47:55.870 --> 01:47:57.550]  ...
+[01:48:07.090 --> 01:48:08.490]  ...
+[01:48:19.270 --> 01:48:20.670]  ...
+[01:48:20.670 --> 01:48:22.110]  ...
+[01:48:22.110 --> 01:48:22.870]  ...
+[01:48:22.870 --> 01:48:23.050]  ...
+[01:48:23.050 --> 01:48:23.390]  ...
+[01:48:23.390 --> 01:48:23.910]  ...
+[01:48:33.510 --> 01:48:34.910]  ...
+[01:48:34.910 --> 01:48:35.610]  ...
+[01:48:41.130 --> 01:48:42.530]  ...
+[01:48:42.530 --> 01:48:42.610]  ...
+[01:48:44.350 --> 01:48:45.750]  ...
+[01:48:45.750 --> 01:48:46.730]  ...
+[01:48:46.730 --> 01:48:47.370]  ...
+[01:48:52.830 --> 01:48:54.230]  ...
+[01:48:57.970 --> 01:48:58.730]  ...
+[01:49:01.650 --> 01:49:03.050]  ...
+[01:49:06.610 --> 01:49:07.310]  ...
+[01:49:08.010 --> 01:49:08.050]  ...
+[01:49:08.050 --> 01:49:09.190]  ...
+[01:49:09.190 --> 01:49:10.910]  ...
+[01:49:12.710 --> 01:49:14.110]  ...
+[01:49:18.730 --> 01:49:20.130]  ...
+[01:49:21.190 --> 01:49:22.050]  ...
+[01:49:22.050 --> 01:49:22.110]  ...
+[01:49:22.110 --> 01:49:22.330]  ...
+[01:49:22.330 --> 01:49:24.670]  ...
+[01:49:24.670 --> 01:49:25.530]  ...
+[01:49:33.830 --> 01:49:35.230]  ...
+[01:49:35.230 --> 01:49:35.550]  ...
+[01:49:55.780 --> 01:49:57.180]  ...
+[01:50:00.470 --> 01:50:03.030]  ...
+[01:50:03.030 --> 01:50:03.130]  ...
+[01:50:03.130 --> 01:50:05.430]  ...
+[01:50:08.830 --> 01:50:10.230]  ...
+[01:50:16.490 --> 01:50:17.890]  ...
+[01:50:17.890 --> 01:50:19.130]  ...
+[01:50:20.370 --> 01:50:20.430]  ...
+[01:50:20.430 --> 01:50:21.790]  ...
+[01:50:21.790 --> 01:50:23.450]  ...
+[01:50:23.450 --> 01:50:23.910]  ...
+[01:50:27.990 --> 01:50:29.390]  ...
+[01:50:36.850 --> 01:50:38.250]  ...
+[01:50:38.250 --> 01:50:39.870]  ...
+[01:50:48.310 --> 01:50:49.710]  ...
+[01:50:52.010 --> 01:50:53.410]  ...
+[01:50:58.930 --> 01:51:00.330]  ...
+[01:51:00.330 --> 01:51:00.990]  ...
+[01:54:07.110 --> 01:54:07.830]  ...
+[01:54:09.930 --> 01:54:11.330]  ...
+[01:54:11.330 --> 01:54:11.570]  ...
+[01:54:12.270 --> 01:54:13.210]  Oh, yes.
+[01:55:18.950 --> 01:55:19.470]  ...
+[01:55:37.480 --> 01:55:39.920]  Isn't this just the most wonderful experience
+[01:55:39.920 --> 01:55:40.400]  ever?
+[01:55:44.100 --> 01:55:47.960]  I like watching the green bar get bigger, but when it stops, you're kind of like, what's
+[01:55:47.960 --> 01:55:48.480]  going on?
+[01:55:50.560 --> 01:55:52.700]  Well, at least it's not going backwards this time.
+[01:56:31.170 --> 01:56:33.150]  Right, up to the things.
+[01:56:36.610 --> 01:56:37.130]  Alright.
+[01:56:39.530 --> 01:56:41.310]  Now I can do this part.
+[01:57:59.350 --> 01:58:03.470]  It's doing it. So, this is
+[01:58:03.470 --> 01:58:07.590]  just so I can get to the point so I can install a new version of WebView.
+[01:58:07.590 --> 01:58:11.690]  And the reason for doing it this way is I'm going to have to
+[01:58:11.690 --> 01:58:15.670]  uninstall the current version anyways. Then I'm going to have to
+[01:58:15.670 --> 01:58:19.630]  run the installer so that it's actually installed to the correct directory.
+[01:58:20.050 --> 01:58:23.710]  And then the upgrade will happen instead of having to rerun the installer for
+[01:58:23.710 --> 01:58:25.490]  WebView twice.
+[01:58:28.550 --> 01:58:31.570]  And the bigger the site, the more
+[01:58:31.570 --> 01:58:33.870]  time we save from doing it that way.
+[01:58:36.410 --> 01:58:38.210]  And I'm a big fan of
+[01:58:38.210 --> 01:58:42.190]  time saving, which is also why I was doing all this stuff in the command prompt you see me doing with all these command
+[01:58:42.190 --> 01:58:46.050]  windows. There's some particular commands I can do to prevent
+[01:58:46.050 --> 01:58:49.750]  it from requiring a reboot so then I can actually just
+[01:58:49.750 --> 01:58:56.140]  install the stuff. Well, that's what the other ones are for,
+[01:58:56.480 --> 01:58:59.120]  the stuff in PowerShell. Yeah.
+[01:59:00.900 --> 01:59:04.000]  Because otherwise what happens is every time I do something...
+[01:59:04.000 --> 01:59:08.160]  So, installing SSMS, oh, reboot required. Okay, then you install the
+[01:59:08.960 --> 01:59:11.960]  service pack update for server SQL 2014.
+[01:59:12.120 --> 01:59:15.820]  That's like, oh, reboot required. Then you install three
+[01:59:16.880 --> 01:59:20.100]  SQL Server 2022. And so, oh, reboot required.
+[01:59:21.020 --> 01:59:21.280]  Yeah.
+[02:02:05.930 --> 02:02:09.010]  Every time I think, wow, our installer takes a while. I'm just reminded of the
+[02:02:09.010 --> 02:02:09.770]  SQL installer.
+[02:02:14.570 --> 02:02:15.410]  Right there.
+[02:02:15.590 --> 02:02:17.070]  You said something and it started going again.
+[02:02:17.950 --> 02:02:20.250]  Yeah. It senses fear.
+[02:02:22.690 --> 02:02:26.030]  Yep. The task manager is coming.
+[02:03:07.910 --> 02:03:08.290]  Thank you.
+[02:03:13.130 --> 02:03:14.470]  Describing the cabinet.
+[02:03:15.750 --> 02:03:16.890]  Can you move on?
+[02:03:40.310 --> 02:03:41.150]  Yeah.
+[02:04:24.040 --> 02:04:26.980]  Hooray! Now I can do other things.
+[02:04:29.920 --> 02:04:31.340]  All of that
+[02:04:31.340 --> 02:04:33.680]  was just so I can do the next thing.
+[02:04:36.780 --> 02:04:37.620]  Alright.
+[02:04:39.520 --> 02:04:42.740]  Right, need to uninstall current version.
+[02:06:46.330 --> 02:06:47.810]  Oh, it's stinking.
+[02:06:57.140 --> 02:06:58.980]  Well, at least this is faster than the server
+[02:06:58.980 --> 02:07:00.700]  I was on Friday.
+[02:07:04.520 --> 02:07:07.980]  Why was it worse than this? Oh, it was way worse.
+[02:07:11.530 --> 02:07:14.230]  Every single, okay, like opening up the task manager,
+[02:07:14.730 --> 02:07:18.490]  I've never seen the task manager go non-responsive every 10 seconds
+[02:07:18.490 --> 02:07:21.250]  because it's refreshing the data and it's taking too long.
+[02:07:24.690 --> 02:07:25.330]  That's
+[02:07:25.330 --> 02:07:29.570]  even wilder. That machine had something like
+[02:07:29.570 --> 02:07:32.210]  36 cores and 72 threads.
+[02:07:34.470 --> 02:07:37.730]  Yeah. It had no business being that slow.
+[02:07:38.370 --> 02:07:41.390]  And yet it was the slowest computer I think I've ever
+[02:07:42.390 --> 02:07:45.410]  touched with my fingers. Even slow
+[02:07:45.410 --> 02:07:47.950]  computers are like 2 cores or something like that or 1 core.
+[02:07:48.630 --> 02:07:50.850]  At least task manager worked.
+[02:07:54.010 --> 02:07:55.150]  That's a real little bar.
+[02:08:04.630 --> 02:08:04.950]  Again,
+[02:08:05.350 --> 02:08:08.130]  there we go. Alright.
+[02:08:19.280 --> 02:08:21.700]  I've copy and paste stuff in here but I can't copy and paste
+[02:08:22.020 --> 02:08:23.320]  sometimes for some reason.
+[02:08:23.320 --> 02:08:26.800]  So I do it all manually.
+[02:08:32.330 --> 02:08:34.170]  Only 3 or 4 databases, sorry.
+[02:08:35.270 --> 02:08:38.990]  So not a huge deal but...
+[02:08:45.780 --> 02:08:47.920]  Alright. That looks good.
+[02:08:55.810 --> 02:08:57.670]  I did the wrong computer again.
+[02:09:02.680 --> 02:09:03.480]  Alright.
+[02:09:04.840 --> 02:09:06.320]  This one here.
+[02:09:07.120 --> 02:09:10.880]  This one here. That shouldn't be there.
+[02:09:12.740 --> 02:09:16.690]  This should be here.
+[02:09:16.990 --> 02:09:20.310]  Should be here. Should be here. Right there.
+[02:09:24.720 --> 02:09:27.460]  Perfect. Beautiful even.
+[02:09:28.700 --> 02:09:30.000]  Look at that. Alright.
+[02:09:35.040 --> 02:09:35.660]  Wrong one
+[02:09:35.660 --> 02:09:37.840]  again. Here we go.
+[02:09:39.600 --> 02:09:46.760]  316.0. Oh yeah.
+[02:09:46.820 --> 02:09:48.040]  It's probably going to say after reboot.
+[02:09:51.750 --> 02:10:49.110]  We'll see. Did you put in the admin password for this one?
+[02:10:49.130 --> 02:10:53.110]  If you know it. If not, just put in the password I guess. Now we'll do the new one.
+[02:10:56.710 --> 02:10:57.550]  Let me...
+[02:10:57.550 --> 02:11:01.110]  So this is the admin password for...
+[02:11:02.070 --> 02:11:04.750]  Oh. Give me one second. I just want to verify.
+[02:11:07.980 --> 02:11:10.340]  So I'm just going to put the same one that it was.
+[02:11:34.610 --> 02:11:35.050]  Install.
+[02:14:01.000 --> 02:14:02.320]  Is this a server?
+[02:14:03.680 --> 02:14:06.760]  I thought it was Windows 10 but now I'm not so sure.
+[02:14:10.940 --> 02:14:13.900]  Oh my goodness. It was Windows Server 2019 this whole time.
+[02:14:20.580 --> 02:14:23.020]  Can't right click anything on this right hand side.
+[02:14:26.650 --> 02:14:29.530]  Oh. One of the calls I had
+[02:14:29.530 --> 02:14:33.570]  today. SQL Server wouldn't launch and there was no useful errors
+[02:14:33.570 --> 02:14:36.970]  and it turns out the issue was Windows Update. Yeah. Just need to update.
+[02:15:06.950 --> 02:15:07.950]  I can't even
+[02:15:07.950 --> 02:15:11.690]  pin it. I wanted to pin it there so I wouldn't lose it. But I can't right click anything.
+[02:15:13.890 --> 02:15:15.230]  Ah. Alright.
+[02:15:17.650 --> 02:15:19.610]  Add HTTPS 443
+[02:15:20.430 --> 02:15:20.870]  hostname.
+[02:15:53.300 --> 02:15:55.700]  Go ahead and log. Oh. Maybe it's admin page.
+[02:15:58.980 --> 02:15:59.420]  Oh.
+[02:16:01.520 --> 02:16:05.160]  It's a non-admin one. There it is.
+[02:16:07.950 --> 02:16:08.390]  Yeah.
+[02:16:11.510 --> 02:16:14.490]  Go for it. Whatever your login is.
+[02:16:16.350 --> 02:16:16.810]  Alright.
+[02:16:32.370 --> 02:16:35.430]  Moment of truth, right? Uh oh. What's that?
+[02:16:36.090 --> 02:16:37.690]  This is just telling you new features.
+[02:16:39.510 --> 02:16:43.410]  Saying look there's a new live mode and manual points report now
+[02:16:43.410 --> 02:16:47.630]  and back to secure connect and now there's some password options.
+[02:16:47.830 --> 02:16:51.170]  It must be this and can't be that so we're good.
+[02:16:53.250 --> 02:16:53.550]  Alright.
+[02:16:55.570 --> 02:16:57.590]  I want to make sure trends work.
+[02:17:15.700 --> 02:17:16.140]  Yay!
+[02:17:18.040 --> 02:17:19.160]  Trends work.
+[02:17:23.780 --> 02:17:25.820]  So what was the issue then?
+[02:17:28.800 --> 02:17:29.920]  Many things.
+[02:17:30.360 --> 02:17:33.900]  Everything was out of date? There were a lot of problems.
+[02:17:35.460 --> 02:17:38.020]  Some of the problems I understand
+[02:17:38.340 --> 02:17:42.060]  and I can explain. Some of them I cannot because I do not understand
+[02:17:42.060 --> 02:17:46.100]  what they were. So for example, I do not know
+[02:17:46.100 --> 02:17:49.860]  why the device com service, which is what is responsible
+[02:17:49.860 --> 02:17:54.040]  for loading the actual data from the controller, it was not able
+[02:17:54.040 --> 02:17:58.380]  to start. I don't know why because Event Fever
+[02:17:58.380 --> 02:18:01.520]  literally could not tell me. It would just
+[02:18:02.040 --> 02:18:05.480]  say yeah here's what the error was. Could not start.
+[02:18:06.180 --> 02:18:10.100]  That is what it said. I've never seen that before. Every other time
+[02:18:10.100 --> 02:18:14.380]  it's something like oh yeah .NET error with this component of the software yada yada yada.
+[02:18:15.440 --> 02:18:17.980]  It didn't have any of that. It was like no
+[02:18:17.980 --> 02:18:20.940]  it's done. Sorry.
+[02:18:31.190 --> 02:18:32.990]  And so now they are no longer
+[02:18:32.990 --> 02:18:36.150]  3.1.5. They are 3.1.6.
+[02:18:37.590 --> 02:18:39.830]  If they want to go newer than that, they need to
+[02:18:39.830 --> 02:18:42.910]  renew the subscription but at least it should work
+[02:18:42.910 --> 02:18:43.530]  using this.
+[02:18:49.170 --> 02:18:51.190]  A zillion single point trend log
+[02:18:51.190 --> 02:18:52.730]  because that is taking a lot of load.
+[02:18:53.570 --> 02:18:57.190]  I want those right away. This one? They might not even have any single points.
+[02:18:58.470 --> 02:19:00.250]  Do they actually have single points?
+[02:19:01.110 --> 02:19:03.690]  I don't know. It loaded the multi-point trend log page.
+[02:19:05.970 --> 02:19:08.730]  Even if there is nothing, it should have loaded the things. So there's
+[02:19:08.730 --> 02:19:12.770]  got to be like a zillion of them I would think. Otherwise I don't
+[02:19:12.770 --> 02:19:14.370]  really know why it's sitting here loading.
+[02:19:24.690 --> 02:19:25.210]  I still
+[02:19:25.210 --> 02:19:27.250]  haven't even confirmed.
+[02:19:28.470 --> 02:19:32.910]  I don't know why it's doing that. If I go to multi-point
+[02:19:32.910 --> 02:19:37.410]  it loads right away. Look at all those.
+[02:19:37.410 --> 02:19:38.790]  My single point.
+[02:19:40.690 --> 02:19:49.470]  It's just not. I don't know what's going on there.
+[02:19:52.330 --> 02:19:53.250]  I see your
+[02:19:53.250 --> 02:19:54.170]  tools.
+[02:20:33.320 --> 02:20:34.000]  Yeah.
+[02:20:38.600 --> 02:20:39.020]  Alright.
+[02:20:42.840 --> 02:20:45.840]  I'm going to clear the logs in the
+[02:20:45.840 --> 02:20:49.260]  application side because there's so many and none of them are useful.
+[02:20:52.350 --> 02:21:02.600]  Just makes this take forever to load.
+[02:21:03.120 --> 02:21:17.600]  That's much better. Just tons of these
+[02:21:17.600 --> 02:21:18.380]  right?
+[02:21:22.820 --> 02:21:24.320]  There we go.
+[02:21:28.910 --> 02:21:31.350]  Apparently in Windows Update I just cannot open because it just
+[02:21:31.350 --> 02:21:34.810]  doesn't exist. I didn't even know that was possible but whatever.
+[02:21:36.270 --> 02:21:39.650]  So that's a thing. Don't know what's going on with this
+[02:21:39.650 --> 02:21:43.430]  here. Single point trend log on this guy works just
+[02:21:43.430 --> 02:21:47.350]  fine. So I'll add that to the list of
+[02:21:47.350 --> 02:21:51.370]  weird things that I don't understand. Like there's still also this
+[02:21:51.370 --> 02:21:54.950]  thing I cannot click on, cannot interact with.
+[02:21:56.490 --> 02:21:56.830]  Oh.
+[02:22:00.990 --> 02:22:05.610]  When it rains it pours apparently. I still need to check to make sure that
+[02:22:05.610 --> 02:22:09.110]  Archive is dealing with the data within the program data directory.
+[02:22:09.190 --> 02:22:11.430]  If it isn't I have to delete some files.
+[02:22:17.530 --> 02:22:32.200]  Good. It will take a while to process them all but
+[02:22:33.480 --> 02:22:36.180]  as long as it's actually processing them it's a good sign.
+[02:22:36.180 --> 02:22:40.060]  Do that.
+[02:22:40.720 --> 02:22:43.440]  That's significantly less than what was in there before I think.
+[02:22:45.580 --> 02:22:45.780]  Okay.
+[02:22:50.360 --> 02:22:51.960]  Or you've got the fluke one right?
+[02:22:52.100 --> 02:22:52.960]  I've got the fluke one.
+[02:22:56.160 --> 02:22:59.880]  I'm just going to take that just in case because that can do temperature and pressure.
+[02:23:01.020 --> 02:23:02.320]  There's one in my van.
+[02:23:02.320 --> 02:23:02.960]  Take that one.
+[02:23:06.600 --> 02:23:10.440]  Where is it? It should be in the back. You'll see it's easier probably to access
+[02:23:10.440 --> 02:23:14.040]  from the side door. Side door. Okay. Appreciate that.
+[02:23:14.940 --> 02:23:15.420]  Yeah.
+[02:23:28.450 --> 02:23:32.030]  It's stuck because I just restarted the ACLR card service
+[02:23:32.030 --> 02:23:34.670]  so it's currently writing to
+[02:23:35.550 --> 02:23:37.170]  some stuff so it's just taking a while.
+[02:23:37.170 --> 02:23:43.070]  Alright. You want to log in?
+[02:24:00.860 --> 02:24:01.200]  Click.
+[02:24:07.370 --> 02:24:07.650]  Click.
+[02:24:11.470 --> 02:24:14.370]  In. System tree loaded.
+[02:24:22.330 --> 02:24:24.230]  I'm just
+[02:24:24.230 --> 02:24:29.350]  thinking of how everything seems to be going wrong for you.
+[02:24:30.070 --> 02:24:31.690]  This particular one. Everything's broken.
+[02:24:31.950 --> 02:24:35.670]  I try studio and literally the first time I try to connect it crashes.
+[02:24:36.950 --> 02:24:38.270]  It's just comical.
+[02:25:02.970 --> 02:25:03.570]  Alright.
+[02:25:27.080 --> 02:25:29.420]  Do its thing there.
+[02:25:31.620 --> 02:25:33.500]  Back over to this battle river.
+[02:25:35.200 --> 02:25:35.640]  Alright.
+[02:25:50.290 --> 02:25:58.750]  Jeez Louise. Alright. Where were the ones that were giant?
+[02:25:58.870 --> 02:26:01.110]  Let me just see if I got the screen shot of that.
+[02:26:02.830 --> 02:26:03.270]  Alright.
+[02:26:06.010 --> 02:26:10.430]  This one. This one. And this one.
+[02:26:10.470 --> 02:26:11.310]  This one.
+[02:26:13.730 --> 02:26:17.110]  Yeah. So one of them I know is 1000BZ27.
+[02:26:18.190 --> 02:26:19.030]  Yeah.
+[02:26:20.930 --> 02:26:39.340]  Oh my goodness.
+[02:26:42.240 --> 02:26:43.740]  So whoever did the boiler program
+[02:26:43.740 --> 02:27:03.290]  really didn't. Alright.
+[02:27:03.990 --> 02:27:07.370]  So they both doing the same program?
+[02:27:08.830 --> 02:27:11.170]  36 and 27. Yeah.
+[02:27:12.630 --> 02:27:15.590]  Okay. So if C equals to that
+[02:27:15.590 --> 02:27:19.670]  then start that and stop that.
+[02:27:21.910 --> 02:27:23.590]  If that equals to two
+[02:27:24.270 --> 02:27:27.590]  also it's just toggling.
+[02:27:28.790 --> 02:27:29.550]  Fair eight.
+[02:27:35.930 --> 02:27:38.650]  The select keeps toggling you see.
+[02:27:40.650 --> 02:27:44.010]  I just refresh. There is a problem.
+[02:27:45.130 --> 02:27:47.810]  So if you guys can just fix it so then
+[02:27:47.810 --> 02:27:51.950]  there is a timer on fair eight being
+[02:27:51.950 --> 02:27:55.650]  changed here. So there is going to be
+[02:27:56.610 --> 02:28:05.170]  somewhere. Fair eight equals.
+[02:28:05.550 --> 02:28:08.830]  Okay here we go. Bar eight at the bottom. It's just running
+[02:28:08.830 --> 02:28:26.530]  all the time? What sort of short cycling is
+[02:28:26.530 --> 02:28:28.830]  going on on the outputs here?
+[02:28:34.210 --> 02:28:37.510]  I don't know. I'm pretty sure
+[02:28:37.510 --> 02:28:41.110]  one of these things is like if that happens
+[02:28:41.110 --> 02:28:43.990]  you wear out the thing real fast, right?
+[02:28:45.750 --> 02:28:47.810]  So you guys will want to get the result.
+[02:28:49.150 --> 02:28:52.630]  That relay is probably pooched.
+[02:28:57.980 --> 02:29:01.980]  Did it say 50,000 times today? Today.
+[02:29:04.740 --> 02:29:06.560]  Today. Today.
+[02:29:07.040 --> 02:29:09.800]  Wow. Gotta take a picture of that.
+[02:29:11.720 --> 02:29:13.860]  I don't know who Joey is but
+[02:29:13.860 --> 02:29:16.420]  I'm going to give Joey a shake.
+[02:29:17.720 --> 02:29:18.340]  Yeah.
+[02:29:20.860 --> 02:29:21.820]  That's awesome.
+[02:29:24.600 --> 02:29:27.080]  Let me just bring this
+[02:29:28.020 --> 02:29:28.660]  smaller.
+[02:29:43.830 --> 02:29:45.030]  There you go.
+[02:30:01.740 --> 02:30:03.400]  Four to twelve.
+[02:30:04.380 --> 02:30:06.160]  Is there a section on the network just down?
+[02:30:08.480 --> 02:30:10.600]  Or is it just offline when I tried to do stuff?
+[02:30:13.800 --> 02:30:15.960]  I thought they loaded today no problem.
+[02:30:17.680 --> 02:30:19.580]  Also I might have found a problem
+[02:30:19.580 --> 02:30:23.140]  a performance problem with this network as well.
+[02:30:26.420 --> 02:30:27.880]  Oh I just opened up the wrong thing.
+[02:30:28.500 --> 02:30:30.880]  I need to be on this machine.
+[02:30:33.380 --> 02:30:35.420]  Yeah. They might not have dual kit.
+[02:30:39.960 --> 02:30:42.240]  So they might have just been put on there
+[02:30:42.240 --> 02:30:44.240]  temporarily just to help.
+[02:30:48.570 --> 02:30:50.550]  That's the case I'll have to put another temp license on it.
+[02:30:53.750 --> 02:30:55.290]  Nope. My computer.
+[02:31:00.540 --> 02:31:00.980]  Software.
+[02:31:16.400 --> 02:31:18.460]  Fill that in and hit generate file.
+[02:31:25.180 --> 02:31:27.380]  That could be your own email address that you put in there.
+[02:32:21.330 --> 02:32:24.070]  Part of the reason why the computer is so slow right now is it's still processing
+[02:32:24.070 --> 02:32:26.910]  all these files in there.
+[02:32:31.190 --> 02:32:31.590]  Alright.
+[02:32:35.450 --> 02:32:36.510]  Log in here.
+[02:32:41.560 --> 02:32:42.100]  Alright.
+[02:32:48.660 --> 02:32:51.980]  I'll show you where I think the problem is. So see this advanced
+[02:32:52.410 --> 02:32:56.560]  maximum managers. That's normally fine on our stuff because it's a mixed
+[02:32:58.020 --> 02:33:00.440]  network. I bet you
+[02:33:00.440 --> 02:33:04.850]  the third party device is probably the last thing on the network. And it may be
+[02:33:05.500 --> 02:33:08.920]  needlessly checking for devices that don't exist
+[02:33:08.920 --> 02:33:12.880]  past it. But if not then we're good. But I just want to make sure
+[02:33:12.880 --> 02:33:16.340]  that's not the case here. Leaving performance on the table.
+[02:33:19.040 --> 02:33:19.580]  Yep.
+[02:33:24.110 --> 02:33:25.670]  By address.
+[02:33:28.190 --> 02:33:30.870]  So address has address as 50.
+[02:33:31.070 --> 02:33:33.910]  So that means I can change this to set the max
+[02:33:34.630 --> 02:33:38.840]  set the max managers to 50.
+[02:33:43.960 --> 02:33:45.400]  The only thing to note
+[02:33:46.020 --> 02:33:49.260]  is if you want to add something in the future
+[02:33:49.260 --> 02:33:53.440]  another controller or whatever to the network. You just need to be aware
+[02:33:53.440 --> 02:33:57.180]  that if you're trying to add a mac that is higher than 50 this has to be adjusted.
+[02:34:00.120 --> 02:34:01.720]  Yep. Yeah that will be
+[02:34:01.720 --> 02:34:03.760]  I guess future Jordan's problem.
+[02:34:04.740 --> 02:34:06.740]  Future Jordan's problem.
+[02:34:08.600 --> 02:34:09.820]  Yeah. Proof Richard Jordan.
+[02:34:12.800 --> 02:34:15.760]  Yep. Hopefully by the time I
+[02:34:17.000 --> 02:34:17.560]  retire.
+[02:34:32.600 --> 02:34:36.140]  If I unarm it I can arm it.
+[02:34:58.740 --> 02:35:03.060]  The trem logs are unloading. Right? So Joey sent him
+[02:35:03.060 --> 02:35:05.140]  that dot net thing.
+[02:35:06.080 --> 02:35:10.500]  The .8 one isn't meant for 3.5
+[02:35:10.500 --> 02:35:14.820]  3.15 in WebView. It really speeds you shit up.
+[02:35:15.140 --> 02:35:18.420]  And then we went down a rabbit hole to figure out what the whole issue was.
+[02:35:18.640 --> 02:35:21.140]  And the combination of the server was full.
+[02:35:23.520 --> 02:35:24.120]  Right?
+[02:35:26.300 --> 02:35:31.060]  And then the server was actually like
+[02:35:32.060 --> 02:35:35.120]  SQL. Was that a date to whatever? And they upgraded that.
+[02:35:35.820 --> 02:35:38.940]  They've actually been helpful. You never want to have to do it
+[02:35:38.940 --> 02:35:40.660]  again because you're trying to follow it.
+[02:35:53.060 --> 02:35:54.420]  Maybe he's got children.
+[02:38:47.540 --> 02:38:48.420]  Bowser's. Okay.
+[02:38:50.760 --> 02:38:53.920]  It is very busy. I think it is very busy doing things.
+[02:38:57.440 --> 02:38:57.960]  Oh.
+[02:39:05.930 --> 02:39:07.570]  The worst monitor.
+[02:39:08.770 --> 02:39:10.530]  Oh, did skin connectors close on me?
+[02:39:12.710 --> 02:39:13.670]  I was doing things.
+[02:39:15.550 --> 02:39:19.270]  I don't know how I've nuked it. Oh, it looks like it's still there.
+[02:39:19.970 --> 02:39:23.630]  Oh, they're connected. We're back.
+[02:39:38.150 --> 02:39:38.710]  Oh my god.
+[02:39:38.710 --> 02:39:52.810]  Look at that. Looks like it's having a stroke in the background.
+[02:40:21.820 --> 02:40:22.700]  Oh boy.
+[02:40:29.320 --> 02:40:40.130]  Oh, Dr. Runner is admin then? Fantastic.
+[02:41:03.680 --> 02:41:05.960]  Oh, that's not right. One piece in here.
+[02:43:30.310 --> 02:43:33.330]  All right. Resmon. That's what it is.
+[02:43:34.530 --> 02:43:36.730]  Resmon. Sorry, I was also working on something else in the background.
+[02:44:56.760 --> 02:44:57.800]  Oh, well.
+[02:44:58.460 --> 02:45:01.600]  Okay, sounds good.
+[02:45:03.720 --> 02:45:05.900]  See you man. What does this whole stuff mean?
+[02:45:08.200 --> 02:45:08.800]  The wiggles?
+[02:45:13.660 --> 02:45:20.350]  The wiggles here? Do you want to know? I can tell you.
+[02:45:22.190 --> 02:45:23.810]  Probably don't want to know though.
+[02:45:46.490 --> 02:45:49.130]  Trying to delete a gazillion
+[02:45:51.210 --> 02:45:51.790]  files.
+[02:46:41.010 --> 02:46:44.310]  Of course the directory is not empty. Oh my goodness.
+[02:48:56.430 --> 02:48:58.990]  I think I know what's going on.
+[02:49:01.700 --> 02:49:05.140]  I think it's deleting it as I'm trying to.
+[02:49:05.240 --> 02:49:07.740]  Or adding stuff in there while I'm trying to delete stuff.
+[02:49:16.120 --> 02:49:17.120]  That's what happened.
+[02:49:45.620 --> 02:49:46.660]  All right.
+[02:49:46.680 --> 02:49:49.460]  We need to delete 27 as well and 28.
+[02:50:51.970 --> 02:50:56.430]  It's master file tables because we're just deleting files directly from the table.
+[02:50:56.950 --> 02:50:59.730]  And it's very busy.
+[02:50:59.850 --> 02:51:06.710]  It's very busy doing that. I don't know how many files
+[02:51:06.710 --> 02:51:10.130]  were in there because it would take too long to count them, but
+[02:51:10.130 --> 02:51:11.430]  my guess?
+[02:51:14.390 --> 02:51:16.110]  Hundreds of millions.
+[02:53:31.440 --> 02:53:34.580]  Maybe we should just disable this boiler lead
+[02:53:34.580 --> 02:53:36.120]  switching program?
+[02:53:38.880 --> 02:53:42.840]  You know if this controls anything else aside from just switching between which one is leg
+[02:53:42.840 --> 02:53:57.410]  and which one is lead? I don't know if you're still there.
+[02:53:57.490 --> 02:59:39.880]  I'm going to have lost the call. Sorry Claire, there's an urgent issue
+[02:59:39.880 --> 02:59:41.140]  and I'm dealing with it right now.

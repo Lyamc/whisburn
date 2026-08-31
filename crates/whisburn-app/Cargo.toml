@@ -1,0 +1,49 @@
+[package]
+name = "whisburn-app"
+description = "Iced client for whisburn transcription (native + WASM)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "whisburn-app-web"
+path = "src/web_main.rs"
+
+[dependencies]
+whisburn-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+iced = { version = "0.13", default-features = false, features = ["advanced", "fira-sans", "wgpu", "tokio"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "multipart", "native-tls"] }
+tokio = { workspace = true }
+rfd = "0.15"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+iced = { version = "0.13", default-features = false, features = ["advanced", "fira-sans", "webgl", "tiny-skia"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "multipart"] }
+# Without wasm-bindgen, `instant` leaks a raw `env.now` import that breaks ES modules in the browser.
+instant = { version = "0.1", features = ["wasm-bindgen"] }
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+console_error_panic_hook = "0.1"
+web-sys = { version = "0.3", features = [
+    "Window",
+    "Document",
+    "HtmlInputElement",
+    "File",
+    "FileList",
+    "FileReader",
+    "ProgressEvent",
+    "Blob",
+    "DomStringList",
+] }
+js-sys = "0.3"
+gloo-storage = "0.3"
+getrandom = { version = "0.2", features = ["js"] }
+futures-channel = "0.3"

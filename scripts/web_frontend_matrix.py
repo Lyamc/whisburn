@@ -29,7 +29,7 @@ def request(url: str, data: bytes | None = None, headers: dict | None = None, ti
         return resp.status, dict(resp.headers), resp.read()
 
 
-def multipart(field: str, filename: str, payload: bytes, boundary: str = "----o3whisburn-matrix") -> tuple[bytes, str]:
+def multipart(field: str, filename: str, payload: bytes, boundary: str = "----whisburn-matrix") -> tuple[bytes, str]:
     body = (
         f"--{boundary}\r\n"
         f'Content-Disposition: form-data; name="{field}"; filename="{filename}"\r\n'
@@ -140,8 +140,8 @@ def run_matrix(base: str, include: list[str] | None, exclude: set[str], skip_com
     status, _, html = request(base + "/", timeout=30)
     page = html.decode("utf-8", errors="replace")
     ui_checks = {
-        "branding o3whisburn": "o3whisburn" in page,
-        "no leftover o2whisburn": "o2whisburn" not in page,
+        "branding whisburn": "whisburn" in page,
+        "no leftover whisburn": "whisburn" not in page,
         "batch queue": "Batch queue" in page,
         "multi-file input": 'id="file-input"' in page and "multiple" in page,
         "folder picker": 'id="btn-output-folder"' in page,

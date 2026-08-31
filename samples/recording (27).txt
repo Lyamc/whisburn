@@ -1,0 +1,38 @@
+[00:02.660 --> 00:05.500]  Allowable controls, technical support, Liam speaking.
+[00:08.340 --> 00:11.680]  Hi, Liam. Yeah, it's Frank from Sierra calling.
+[00:12.520 --> 00:12.840]  Yep.
+[00:16.330 --> 00:24.010]  And we've been having trouble with one of our tech workstations, finding a license for RC Studio.
+[00:25.570 --> 00:26.250]  Okay.
+[00:27.710 --> 00:31.770]  And we've had another machine with similar issues for some reason.
+[00:31.770 --> 00:32.730]  Okay.
+[00:33.410 --> 00:36.570]  And it can't find the license file.
+[00:38.730 --> 00:40.730]  Our license manager can't.
+[00:41.070 --> 00:44.010]  Okay, so it's missing from license manager, is that right?
+[00:47.010 --> 00:47.550]  Yeah.
+[00:48.650 --> 00:51.550]  Okay. And when you add it, what happens?
+[00:51.570 --> 00:53.610]  No, it has worked on this machine before.
+[00:55.470 --> 00:56.710]  When you add it.
+[00:57.230 --> 00:59.890]  Yeah. When you add the license, what happens?
+[01:02.690 --> 01:04.710]  How do you add the license? You drag it in?
+[01:06.890 --> 01:10.890]  There's a lot of things you can do. You can double click on it. That's one way to do it.
+[01:15.760 --> 01:18.900]  Well, it keeps saying none available for download.
+[01:19.320 --> 01:24.700]  So you need to return an authorized key. You need to like return and unlock authorization.
+[01:30.190 --> 01:30.590]  Okay.
+[01:36.000 --> 01:37.860]  And how do you do that?
+[01:38.480 --> 01:39.620]  You can do that from the website.
+[01:42.280 --> 01:45.520]  Oh, I see. Was that right? Okay.
+[01:45.940 --> 01:46.280]  Yeah.
+[01:50.320 --> 01:52.400]  How did it lose it?
+[01:53.120 --> 01:53.680]  No clue.
+[01:56.440 --> 01:57.360]  Oh, okay.
+[01:58.580 --> 02:04.040]  All I can say is that if you need to authorize something and it hasn't been returned,
+[02:04.040 --> 02:06.600]  then you need to return the thing that was authorized.
+[02:07.160 --> 02:09.260]  Then it will allow you to add it again.
+[02:13.000 --> 02:13.500]  Okay.
+[02:16.660 --> 02:17.160]  So...
+[02:17.160 --> 02:18.880]  All right. Well, I'll try that.
+[02:23.590 --> 02:24.110]  All right.
+[02:29.040 --> 02:29.940]  Anything else with that?
+[02:32.320 --> 02:35.220]  That was it. Okay. We'll try that.
+[02:37.120 --> 02:38.740]  Okay. All right. We're good. Thanks.
+[02:38.740 --> 02:41.000]  Yep, you're welcome. Bye.

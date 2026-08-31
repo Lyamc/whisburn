@@ -39,6 +39,11 @@ desktop.ini
 /tmp/
 /temp/
 notes/
+/agent-tools/
+/benchmark.csv
+
+# Local verify dumps (regenerate via `whisburn verify`)
+/verify-outputs/
 
 # Python (reference export scripts in parakeet-rs)
 __pycache__/

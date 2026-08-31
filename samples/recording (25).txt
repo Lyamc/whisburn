@@ -1,0 +1,57 @@
+[00:03.520 --> 00:07.080]  Reliable Controls, Technical Support, Liam speaking.
+[00:08.920 --> 00:12.220]  Hey, Liam, this is Sean with Comfort. Dan, how are you doing?
+[00:14.500 --> 00:21.360]  I have a question about adding the report recipient in RC Reporter.
+[00:22.620 --> 00:29.320]  I swear I just, you know, looked everywhere. I didn't see where I can add more recipients in emails.
+[00:32.530 --> 00:33.130]  Add button.
+[00:33.190 --> 00:42.540]  Do you know where? Yeah, where is the add button for the recipient?
+[00:44.880 --> 00:48.020]  That should be right there. Let me add. It's probably mine.
+[00:51.440 --> 01:05.060]  Okay. And I looked at the...searched it in the menu, and the menu never talked about how to add a recipient email.
+[01:05.060 --> 01:21.720]  All right. So, you go over to distribution, schedules, recipients, and there's just a plus button.
+[01:24.970 --> 01:28.070]  You're asking, like, you don't have a recipient...
+[01:28.070 --> 01:33.050]  Like, if you don't have a user to add, you can add a user, but that's a bit of a different thing.
+[01:35.110 --> 01:38.650]  Right. That's a different thing. User is a different thing, but this is the recipient.
+[01:39.750 --> 01:41.770]  Yeah. So, I am in the...
+[01:41.770 --> 01:44.310]  You're in manage distribution schedules.
+[01:46.370 --> 01:48.130]  Yes. I'm in there.
+[01:48.170 --> 01:51.750]  Okay. Recipients. It says no recipients. You click the same.
+[01:53.210 --> 01:53.730]  Okay.
+[01:54.190 --> 01:56.530]  Click the add a plus sign, right?
+[01:57.070 --> 01:58.050]  Right. Yeah.
+[02:00.350 --> 02:06.390]  Yes. So, it brings up the report recipients. There's no place I can add one.
+[02:07.010 --> 02:08.790]  That's what I'm saying. Those are users.
+[02:14.390 --> 02:16.550]  So, you're saying I have to add users, essentially.
+[02:17.490 --> 02:20.290]  Users have email addresses on them. Yes.
+[02:23.400 --> 02:28.260]  So, I need to add users then. That's all. I add a recipient.
+[02:28.960 --> 02:29.560]  That's right.
+[02:31.420 --> 02:41.540]  I see. And then when I try to add users, it asks for, for example...
+[02:41.540 --> 02:44.300]  Oh, I see. Okay.
+[02:45.300 --> 02:49.020]  It asks for like a other, like password or things like that.
+[02:49.400 --> 02:52.840]  And I don't need to put in one, right? Because they're just recipients.
+[02:54.080 --> 02:58.420]  Then just put in a password that is strong, but unique, and then don't worry about it.
+[02:59.140 --> 03:00.800]  You still have to put in a password.
+[03:03.260 --> 03:05.660]  I still have to put in a password. Okay. Right.
+[03:06.580 --> 03:11.580]  Okay. Yeah. If that's the case, then yeah, I know what to do.
+[03:12.360 --> 03:15.300]  I just think the user is different than the recipients.
+[03:19.980 --> 03:24.420]  But I suppose they are... If that's the case, then I guess they're...
+[03:24.420 --> 03:37.440]  Because I see the status is pending. So, does that mean it will send an email to this guy, and then he has to accept it or something?
+[03:41.760 --> 03:45.380]  That's the reset required. That's when they reset the password.
+[03:47.520 --> 03:51.100]  But you could just set their web access to status disabled.
+[03:54.510 --> 03:58.230]  Oh, the status to be disabled. Okay. Got it. Okay.
+[03:58.490 --> 04:05.270]  The status to be disabled. And then just putting the password. Okay. Yeah. Okay.
+[04:05.590 --> 04:11.590]  It should... I believe it does actually email the user when you hit save. Yeah. I believe it does actually email them.
+[04:12.210 --> 04:16.450]  If you want to disable the email...
+[04:16.450 --> 04:26.640]  Let's see here. My site settings.
+[04:29.560 --> 04:35.480]  Oh, I see a permitted report. I can actually attach the report directly to this user.
+[04:36.760 --> 04:38.000]  Okay. I see.
+[04:41.940 --> 04:54.160]  So, here's what you should do. So, when you're adding the users, I would suggest disabling SNTP on the site settings, then enabling or configuring whatever users.
+[04:54.780 --> 04:58.260]  Because I guess what happens is anytime it makes a change to a user, they're notified.
+[05:03.210 --> 05:07.450]  So, disable your SNTP, then add your users that you don't want to have notified.
+[05:09.510 --> 05:19.650]  And then they re-enable your SNTP. Right. I don't see a... Got it. I don't see a SNTP setting anywhere on this creating user page.
+[05:19.650 --> 05:25.650]  It's under site settings. It's under site settings. It's site-wide what I'm talking about.
+[05:25.870 --> 05:34.570]  Disable SNTP. Just disable it. Save. Add all the users you need. Then re-enable SNTP. That's what I'm saying.
+[05:34.570 --> 05:38.570]  Because you said you didn't want to send an email to all the people that you're adding.
+[05:40.770 --> 05:48.210]  Correct. Okay. Now I got it. Okay. Thanks for the tip.
+[05:48.990 --> 05:50.170]  Yep. You're welcome. Good way.
+[05:50.410 --> 05:51.250]  I'll give it a try.
+[05:52.170 --> 05:52.370]  Yep.
+[05:52.770 --> 05:53.070]  Okay.
