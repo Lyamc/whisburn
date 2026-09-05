@@ -131,16 +131,6 @@ pub(crate) struct Qwen3ThinkerAttention<B: Backend> {
 type KvLayerCache<B> = (Tensor<B, 4>, Tensor<B, 4>);
 
 impl<B: Backend> Qwen3ThinkerAttention<B> {
-    fn forward(
-        &self,
-        x: Tensor<B, 3>,
-        cos: &Tensor<B, 3>,
-        sin: &Tensor<B, 3>,
-        mask: &Tensor<B, 2>,
-    ) -> Tensor<B, 3> {
-        self.forward_with_cache(x, cos, sin, mask, None).0
-    }
-
     fn forward_with_cache(
         &self,
         x: Tensor<B, 3>,
@@ -297,7 +287,7 @@ impl<B: Backend> Qwen3Thinker<B> {
         let ids: Vec<i32> = input_ids.iter().map(|&id| id as i32).collect();
         let ids_tensor = Tensor::<B, 1, Int>::from_ints(ids.as_slice(), device).reshape([1, input_ids.len()]);
         let mut hidden = self.embed_tokens.forward(ids_tensor);
-        let [_, seq, h] = hidden.dims();
+        let [_, _seq, h] = hidden.dims();
         let pad_positions: Vec<usize> = input_ids
             .iter()
             .enumerate()
@@ -344,6 +334,57 @@ impl<B: Backend> Qwen3Thinker<B> {
             let ids_tensor = Tensor::<B, 1, Int>::from_ints(next_id.as_slice(), device).reshape([1, 1]);
             let token_hidden = self.embed_tokens.forward(ids_tensor);
             let (cos, sin) = mrope_embeddings_at_pos(pos, self.head_dim, self.rope_theta, &self.mrope_section, device);
+            let mask = Tensor::<B, 2>::zeros([1, pos + 1], device);
+            let mut x = token_hidden;
+            let mut layer_caches = caches;
+            for (layer, cache) in self.layers.iter().zip(layer_caches.iter_mut()) {
+                let (out, new_cache) = layer.forward_with_cache(x, &cos, &sin, &mask, cache.take());
+                *cache = Some(new_cache);
+                x = out;
+            }
+            hidden = self.norm.forward(x);
+            caches = layer_caches;
+            pos += 1;
+        }
+
+        generated
+    }
+
+    /// Text-only greedy decode (no audio embeddings). Used by the offline summarizer.
+    pub fn generate_greedy_text(
+        &self,
+        prefix_ids: &[usize],
+        eos_ids: &[usize],
+        max_new_tokens: usize,
+        device: &B::Device,
+    ) -> Vec<usize> {
+        if prefix_ids.is_empty() {
+            return Vec::new();
+        }
+        let ids: Vec<i32> = prefix_ids.iter().map(|&id| id as i32).collect();
+        let ids_tensor =
+            Tensor::<B, 1, Int>::from_ints(ids.as_slice(), device).reshape([1, prefix_ids.len()]);
+        let hidden = self.embed_tokens.forward(ids_tensor);
+        let (mut hidden, mut caches) = self.forward_hidden_with_cache(hidden, device, None);
+        let mut generated = Vec::new();
+        let mut pos = prefix_ids.len();
+
+        for _ in 0..max_new_tokens {
+            let logits = self.lm_head.forward(hidden.clone());
+            let [_, seq, vocab] = logits.dims();
+            let last = logits.slice([0..1, seq - 1..seq, 0..vocab]);
+            let next = last.argmax(2).into_data().to_vec::<i32>().unwrap()[0] as usize;
+            if eos_ids.contains(&next) {
+                break;
+            }
+            generated.push(next);
+
+            let next_id = vec![next as i32];
+            let ids_tensor =
+                Tensor::<B, 1, Int>::from_ints(next_id.as_slice(), device).reshape([1, 1]);
+            let token_hidden = self.embed_tokens.forward(ids_tensor);
+            let (cos, sin) =
+                mrope_embeddings_at_pos(pos, self.head_dim, self.rope_theta, &self.mrope_section, device);
             let mask = Tensor::<B, 2>::zeros([1, pos + 1], device);
             let mut x = token_hidden;
             let mut layer_caches = caches;

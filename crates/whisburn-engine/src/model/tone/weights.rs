@@ -125,7 +125,7 @@ pub struct ToneFeatParams {
 }
 
 pub fn load_tone_runtime(model_name: &str) -> ToneRuntimeConfig {
-    let path = format!("models/{model_name}/tone_runtime.json");
+    let path = whisburn_core::resolve_model_file(model_name, "tone_runtime.json");
     fs::read_to_string(&path)
         .ok()
         .and_then(|s| serde_json::from_str(&s).ok())

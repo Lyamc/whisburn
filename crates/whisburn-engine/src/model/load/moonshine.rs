@@ -12,7 +12,7 @@ pub fn load_moonshine_model<B: Backend>(
     device: &B::Device,
     verbose: bool,
 ) -> Result<(Gpt2Tokenizer, ModelConfig, Model<B>), Box<dyn Error>> {
-    let model_dir = format!("models/{model_name}");
+    let model_dir = whisburn_core::resolve_model_dir(model_name).display().to_string();
     let runtime_path = format!("{model_dir}/moonshine_runtime.json");
     if !Path::new(&runtime_path).exists() {
         return Err(format!(

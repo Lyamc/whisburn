@@ -9,7 +9,7 @@ use safetensors::SafeTensors;
 
 use crate::model::vibevoice::weights::dtype::bytes_to_f32;
 
-pub use load::load_qwen3_weights;
+pub use load::{load_qwen3_lm_weights, load_qwen3_weights};
 
 /// Map `Qwen3-ASR-*-hf` (`model.*`) keys onto the original `thinker.*` layout.
 pub fn canonicalize_qwen3_key(key: &str) -> String {
@@ -24,6 +24,19 @@ pub fn canonicalize_qwen3_key(key: &str) -> String {
     }
     if let Some(rest) = key.strip_prefix("model.audio_tower.") {
         return format!("thinker.audio_tower.{rest}");
+    }
+    // Text-only Qwen3-0.6B: `model.layers.*` / `model.embed_tokens.*` / `model.norm.*`
+    if let Some(rest) = key.strip_prefix("model.layers.") {
+        return format!("thinker.model.layers.{rest}");
+    }
+    if let Some(rest) = key.strip_prefix("model.embed_tokens.") {
+        return format!("thinker.model.embed_tokens.{rest}");
+    }
+    if let Some(rest) = key.strip_prefix("model.norm.") {
+        return format!("thinker.model.norm.{rest}");
+    }
+    if let Some(rest) = key.strip_prefix("lm_head.") {
+        return format!("thinker.lm_head.{rest}");
     }
     key.to_string()
 }
@@ -93,8 +106,11 @@ pub fn weights_present(model_dir: &Path) -> bool {
     let path = model_dir.join("model.safetensors");
     safetensors_header_keys(&path)
         .map(|keys| {
-            keys.iter()
-                .any(|k| canonicalize_qwen3_key(k) == "thinker.audio_tower.conv2d1.weight")
+            keys.iter().any(|k| {
+                let canon = canonicalize_qwen3_key(k);
+                canon == "thinker.audio_tower.conv2d1.weight"
+                    || canon == "thinker.model.layers.0.self_attn.q_proj.weight"
+            })
         })
         .unwrap_or(false)
 }
@@ -120,6 +136,14 @@ mod tests {
         assert_eq!(
             canonicalize_qwen3_key("thinker.audio_tower.conv2d1.weight"),
             "thinker.audio_tower.conv2d1.weight"
+        );
+        assert_eq!(
+            canonicalize_qwen3_key("model.layers.0.self_attn.q_proj.weight"),
+            "thinker.model.layers.0.self_attn.q_proj.weight"
+        );
+        assert_eq!(
+            canonicalize_qwen3_key("lm_head.weight"),
+            "thinker.lm_head.weight"
         );
     }
 }

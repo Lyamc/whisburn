@@ -1,5 +1,5 @@
 use axum::body::Body;
-use axum::extract::DefaultBodyLimit;
+
 use axum::http::{header, Request, StatusCode};
 use http_body_util::BodyExt;
 use tower::ServiceExt;
@@ -94,6 +94,7 @@ async fn root_endpoint_serves_web_ui() {
     );
     let body = response.into_body().collect().await.unwrap().to_bytes();
     let html = String::from_utf8_lossy(&body);
+    assert!(html.contains("</style>"), "unclosed <style> makes the browser render a blank page");
     assert!(html.contains("whisburn"));
     assert!(html.contains("Process &amp; download"));
     assert!(html.contains("Batch queue"));
@@ -111,6 +112,15 @@ async fn root_endpoint_serves_web_ui() {
     assert!(html.contains("btn-cancel"));
     assert!(html.contains("queue-card"));
     assert!(html.contains("model-meta"));
+    assert!(html.contains("id=\"summarize\""), "summarize toggle");
+    assert!(html.contains("id=\"steps\""), "wizard steps container");
+    assert!(html.contains("data-step=\"1\""));
+    assert!(html.contains("data-step=\"2\""));
+    assert!(html.contains("data-step=\"3\""));
+    assert!(html.contains("step-header"));
+    assert!(html.contains("btn-step-continue"));
+    assert!(html.contains("flex-direction: row"), "desktop steps sit in a row");
+    assert!(html.contains("flex-direction: column"), "phone steps stack vertically");
 }
 
 #[tokio::test]

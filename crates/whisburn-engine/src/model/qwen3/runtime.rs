@@ -35,6 +35,8 @@ pub struct Qwen3RuntimeConfig {
     pub asr_text_token_id: usize,
     pub eos_token_ids: Vec<usize>,
     pub inference_status: String,
+    #[serde(default)]
+    pub text_only: bool,
 }
 
 impl Default for Qwen3RuntimeConfig {
@@ -71,12 +73,13 @@ impl Default for Qwen3RuntimeConfig {
             asr_text_token_id: 151_704,
             eos_token_ids: vec![151_643, 151_645],
             inference_status: "ready".to_string(),
+            text_only: false,
         }
     }
 }
 
 pub fn load_qwen3_runtime(model_name: &str) -> Qwen3RuntimeConfig {
-    let path = format!("models/{model_name}/qwen3_runtime.json");
+    let path = whisburn_core::resolve_model_file(model_name, "qwen3_runtime.json");
     Path::new(&path)
         .exists()
         .then(|| std::fs::read_to_string(&path).ok())

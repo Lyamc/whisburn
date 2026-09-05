@@ -33,7 +33,13 @@
     .wrap {
       max-width: 760px;
       margin: 0 auto;
-      padding: 28px 20px 64px;
+      padding: 20px 16px 48px;
+    }
+    @media (min-width: 900px) {
+      .wrap {
+        max-width: 1180px;
+        padding: 28px 24px 64px;
+      }
     }
     header {
       display: flex;
@@ -82,6 +88,58 @@
       gap: 10px;
       text-transform: none;
     }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .step-card {
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .step-header:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 8px;
+    }
+    .step-title {
+      font-size: 0.92rem;
+      font-weight: 650;
+      flex: 1;
+      min-width: 0;
+    }
+    .step-summary {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 500;
+      max-width: 46%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .step-card.open .step-summary { display: none; }
+    .step-body {
+      display: none;
+      padding-top: 14px;
+    }
+    .step-card.open .step-body { display: block; }
     .step-num {
       width: 22px; height: 22px;
       border-radius: 999px;
@@ -90,6 +148,51 @@
       display: inline-flex; align-items: center; justify-content: center;
       font-size: 0.75rem; font-weight: 700; color: var(--muted);
       flex-shrink: 0;
+    }
+    .step-card.open .step-num {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .step-card.done .step-num {
+      background: var(--success);
+      border-color: var(--success);
+      color: #0c0e14;
+    }
+    @media (min-width: 900px) {
+      .steps {
+        flex-direction: row;
+        align-items: stretch;
+        min-height: min(68vh, 620px);
+      }
+      .step-card {
+        flex: 0 1 13.5rem;
+        transition: flex 0.2s ease;
+      }
+      .step-card.open {
+        flex: 1 1 0;
+      }
+      .step-card:not(.open) {
+        padding: 14px 14px;
+      }
+      .step-card:not(.open) .step-header {
+        flex-direction: column;
+        align-items: flex-start;
+        height: 100%;
+      }
+      .step-card:not(.open) .step-title {
+        flex: none;
+      }
+      .step-card:not(.open) .step-summary {
+        display: block;
+        max-width: 100%;
+        white-space: normal;
+        overflow: visible;
+      }
+      .step-card.open .step-body {
+        flex: 1;
+        overflow: auto;
+      }
     }
     label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
     select, input[type="text"] {
@@ -121,6 +224,7 @@
     }
     .tab.active { background: var(--surface-2); color: var(--text); font-weight: 600; }
     .dropzone {
+      position: relative;
       border: 2px dashed var(--border);
       border-radius: var(--radius);
       padding: 28px 16px;
@@ -128,6 +232,15 @@
       cursor: pointer;
       transition: border-color 0.15s, background 0.15s;
       background: var(--bg);
+    }
+    .dropzone-input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      font-size: 0;
     }
     .dropzone:hover, .dropzone.dragover {
       border-color: var(--accent);
@@ -201,7 +314,7 @@
     .progress-text { margin: 6px 0 0; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
     .progress-block + .progress-block { margin-top: 12px; }
     .hidden { display: none !important; }
-    input[type="file"] {
+    input[type="file"].sr-only {
       position: absolute;
       width: 1px;
       height: 1px;
@@ -265,7 +378,12 @@
     .help { font-size: 0.78rem; color: var(--muted); margin: 6px 0 0; }
     .result-toolbar { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 8px; }
     .action-card .btn-row { margin-top: 0; }
+    #queue-card {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
     #btn-refresh { padding: 6px 10px; font-size: 0.78rem; border-radius: 999px; }
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -281,155 +399,185 @@
       </div>
     </header>
 
-    <div class="card">
-      <h2><span class="step-num">1</span> Add audio</h2>
-      <input type="file" id="file-input" accept="audio/*,.wav,.mp3,.flac,.ogg,.opus,.m4a,.mkv" multiple />
-      <div class="tabs">
-        <button type="button" class="tab active" id="tab-upload">Upload files</button>
-        <button type="button" class="tab" id="tab-record" data-tab="record">Record microphone</button>
-      </div>
+    <div class="steps" id="steps">
+      <section class="card step-card open" data-step="1" id="step-1">
+        <button type="button" class="step-header" aria-expanded="true">
+          <span class="step-num">1</span>
+          <span class="step-title">Add audio</span>
+          <span class="step-summary" id="step-1-summary"></span>
+        </button>
+        <div class="step-body">
+          <div class="tabs">
+            <button type="button" class="tab active" id="tab-upload">Upload files</button>
+            <button type="button" class="tab" id="tab-record" data-tab="record">Record microphone</button>
+          </div>
 
-      <div id="panel-upload">
-        <div class="dropzone" id="dropzone">
-          <p><strong>Drop audio here</strong> or click to browse</p>
-          <p class="hint">WAV, MP3, FLAC, OGG, M4A. Several files run as a batch; each result downloads when it finishes.</p>
-        </div>
-        <p class="file-name" id="file-name">No file selected yet</p>
-        <div class="btn-row" style="margin-top:8px">
-          <label class="btn-secondary" for="file-input" style="display:inline-block;text-align:center;cursor:pointer">Browse files…</label>
-          <button type="button" class="btn-secondary" id="btn-sample">Try JFK sample</button>
-          <button type="button" class="btn-ghost" id="btn-preview" disabled>Listen to a preview</button>
-        </div>
-      </div>
+          <div id="panel-upload">
+            <div class="dropzone" id="dropzone">
+              <input type="file" id="file-input" class="dropzone-input" accept="audio/*,video/*,.wav,.mp3,.flac,.ogg,.opus,.m4a,.mkv,.webm,.aac,.wma,.mp4" multiple />
+              <p><strong>Drop audio here</strong> or click to browse</p>
+              <p class="hint">WAV, MP3, FLAC, OGG, M4A. Several files run as a batch; each result downloads when it finishes.</p>
+            </div>
+            <p class="file-name" id="file-name">No file selected yet</p>
+            <div class="btn-row" style="margin-top:8px">
+              <label class="btn-secondary" for="file-input" style="display:inline-block;text-align:center;cursor:pointer;position:relative;z-index:1">Browse files…</label>
+              <button type="button" class="btn-secondary" id="btn-sample">Try JFK sample</button>
+              <button type="button" class="btn-ghost" id="btn-preview" disabled>Listen to a preview</button>
+            </div>
+          </div>
 
-      <div id="panel-record" class="hidden">
-        <div class="record-panel">
-          <p class="help">Uses your microphone. Stop when you are done — the clip is queued like an upload.</p>
-          <p class="record-timer" id="record-timer">0:00</p>
-          <div class="btn-row" style="justify-content:center">
-            <button type="button" class="btn-primary" id="btn-record-start" style="flex:none">Start recording</button>
-            <button type="button" class="btn-danger hidden" id="btn-record-stop">Stop</button>
+          <div id="panel-record" class="hidden">
+            <div class="record-panel">
+              <p class="help">Uses your microphone. Stop when you are done — the clip is queued like an upload.</p>
+              <p class="record-timer" id="record-timer">0:00</p>
+              <div class="btn-row" style="justify-content:center">
+                <button type="button" class="btn-primary" id="btn-record-start" style="flex:none">Start recording</button>
+                <button type="button" class="btn-danger hidden" id="btn-record-stop">Stop</button>
+              </div>
+            </div>
+            <p class="file-name" id="record-name"></p>
+          </div>
+
+          <audio id="preview" controls class="hidden"></audio>
+
+          <div class="hidden" id="queue-card" style="margin-top:14px">
+            <h2>Batch queue <span id="queue-count" class="file-name" style="display:inline;margin:0"></span></h2>
+            <p class="help" id="batch-hint">Each finished file downloads automatically. You can also save copies into a folder.</p>
+            <div class="queue-toolbar">
+              <button type="button" class="btn-secondary" id="btn-output-folder">Save to folder…</button>
+              <button type="button" class="btn-ghost" id="btn-clear-queue">Clear finished</button>
+            </div>
+            <p class="file-name" id="output-folder-label">Browser downloads only (no folder selected)</p>
+            <ul id="queue-list" class="queue-list"></ul>
           </div>
         </div>
-        <p class="file-name" id="record-name"></p>
-      </div>
+      </section>
 
-      <audio id="preview" controls class="hidden"></audio>
-    </div>
+      <section class="card step-card" data-step="2" id="step-2">
+        <button type="button" class="step-header" aria-expanded="false">
+          <span class="step-num">2</span>
+          <span class="step-title">Choose output</span>
+          <span class="step-summary" id="step-2-summary"></span>
+        </button>
+        <div class="step-body">
+          <div class="grid-2">
+            <div>
+              <label for="output-type">I want</label>
+              <select id="output-type">
+                <option value="transcript" selected>A transcript (speech to text)</option>
+                <option value="audio">Converted audio (WAV or Opus)</option>
+              </select>
+            </div>
+            <div>
+              <label for="format">File format</label>
+              <select id="format">
+                <option value="json">JSON</option>
+                <option value="txt" selected>Plain text</option>
+                <option value="srt">SRT subtitles</option>
+                <option value="vtt">WebVTT</option>
+              </select>
+            </div>
+          </div>
+          <div id="model-wrap" style="margin-top:14px">
+            <label for="model">Model</label>
+            <select id="model"><option value="">Loading models…</option></select>
+            <p class="help">Smaller models are faster. Larger models are usually more accurate.</p>
+            <div id="model-meta"></div>
+            <p class="file-name" id="model-desc"></p>
+          </div>
+          <div id="summarize-wrap" style="margin-top:14px">
+            <label for="summarize" style="display:flex;align-items:center;gap:8px;color:var(--text)">
+              <input type="checkbox" id="summarize" />
+              Summarize transcript
+            </label>
+            <p class="help">Saves a second file named <code>…_summary.txt</code>. Uses a small offline English model (Qwen3-0.6B). Long recordings are summarized in chunks.</p>
+          </div>
+          <details class="advanced">
+            <summary>More options</summary>
+            <div class="grid-2" id="language-row" style="margin-top:8px">
+              <div id="language-wrap">
+                <label for="language">Language</label>
+                <input type="text" id="language" value="en" placeholder="en, or auto for Qwen3" />
+              </div>
+              <div id="timestamps-wrap">
+                <label for="timestamps">Timestamps in the file</label>
+                <select id="timestamps">
+                  <option value="true" selected>On</option>
+                  <option value="false">Off</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid-2" id="transcript-options-row" style="margin-top:14px">
+              <div id="diarize-wrap">
+                <label for="diarize">Label speakers</label>
+                <select id="diarize">
+                  <option value="false" selected>Off</option>
+                  <option value="true">On</option>
+                </select>
+              </div>
+              <div id="sentences-wrap">
+                <label for="sentences">Merge into sentences</label>
+                <select id="sentences">
+                  <option value="false" selected>Off</option>
+                  <option value="true">On</option>
+                </select>
+              </div>
+              <div id="file-ext-wrap">
+                <label for="file-extension">Save as</label>
+                <select id="file-extension">
+                  <option value="" selected>Match format (.txt, .srt, …)</option>
+                  <option value="txt">Always .txt</option>
+                  <option value="srt">Always .srt</option>
+                  <option value="vtt">Always .vtt</option>
+                  <option value="json">Always .json</option>
+                </select>
+              </div>
+            </div>
+            <div id="bitrate-wrap" class="hidden" style="margin-top:14px">
+              <label for="bitrate">Opus bitrate</label>
+              <select id="bitrate">
+                <option value="medium" selected>Medium (64 kbps)</option>
+                <option value="low">Low (32 kbps)</option>
+              </select>
+            </div>
+            <div class="btn-row">
+              <button type="button" class="btn-secondary" id="btn-prepare">Preload model</button>
+            </div>
+            <p class="help">Preload downloads weights now so the first run is faster. Optional — processing also loads the model.</p>
+          </details>
+          <div class="btn-row">
+            <button type="button" class="btn-primary" id="btn-step-continue">Continue</button>
+          </div>
+        </div>
+      </section>
 
-    <div class="card hidden" id="queue-card">
-      <h2>Batch queue <span id="queue-count" class="file-name" style="display:inline;margin:0"></span></h2>
-      <p class="help" id="batch-hint">Each finished file downloads automatically. You can also save copies into a folder.</p>
-      <div class="queue-toolbar">
-        <button type="button" class="btn-secondary" id="btn-output-folder">Save to folder…</button>
-        <button type="button" class="btn-ghost" id="btn-clear-queue">Clear finished</button>
-      </div>
-      <p class="file-name" id="output-folder-label">Browser downloads only (no folder selected)</p>
-      <ul id="queue-list" class="queue-list"></ul>
-    </div>
-
-    <div class="card">
-      <h2><span class="step-num">2</span> Choose output</h2>
-      <div class="grid-2">
-        <div>
-          <label for="output-type">I want</label>
-          <select id="output-type">
-            <option value="transcript" selected>A transcript (speech to text)</option>
-            <option value="audio">Converted audio (WAV or Opus)</option>
-          </select>
-        </div>
-        <div>
-          <label for="format">File format</label>
-          <select id="format">
-            <option value="json">JSON</option>
-            <option value="txt" selected>Plain text</option>
-            <option value="srt">SRT subtitles</option>
-            <option value="vtt">WebVTT</option>
-          </select>
-        </div>
-      </div>
-      <div id="model-wrap" style="margin-top:14px">
-        <label for="model">Model</label>
-        <select id="model"><option value="">Loading models…</option></select>
-        <p class="help">Smaller models are faster. Larger models are usually more accurate.</p>
-        <div id="model-meta"></div>
-        <p class="file-name" id="model-desc"></p>
-      </div>
-      <details class="advanced">
-        <summary>More options</summary>
-        <div class="grid-2" id="language-row" style="margin-top:8px">
-          <div id="language-wrap">
-            <label for="language">Language</label>
-            <input type="text" id="language" value="en" placeholder="en, or auto for Qwen3" />
+      <section class="card step-card action-card" data-step="3" id="step-3">
+        <button type="button" class="step-header" aria-expanded="false">
+          <span class="step-num">3</span>
+          <span class="step-title">Run</span>
+          <span class="step-summary" id="step-3-summary"></span>
+        </button>
+        <div class="step-body">
+          <div class="btn-row">
+            <button type="button" class="btn-primary" id="btn-transcribe" disabled>Process &amp; download</button>
+            <button type="button" class="btn-danger hidden" id="btn-cancel">Cancel</button>
+            <button type="button" class="btn-secondary" id="btn-download" disabled>Download again</button>
           </div>
-          <div id="timestamps-wrap">
-            <label for="timestamps">Timestamps in the file</label>
-            <select id="timestamps">
-              <option value="true" selected>On</option>
-              <option value="false">Off</option>
-            </select>
+          <p class="status-line" id="status"></p>
+          <div id="progress-wrap" class="progress-wrap hidden">
+            <div class="progress-block">
+              <p class="progress-label">Current file</p>
+              <div class="progress-bar"><div id="progress-task" class="progress-fill"></div></div>
+              <p id="progress-task-text" class="progress-text">—</p>
+            </div>
+            <div class="progress-block">
+              <p class="progress-label">Overall</p>
+              <div class="progress-bar overall"><div id="progress-overall" class="progress-fill overall"></div></div>
+              <p id="progress-overall-text" class="progress-text">0%</p>
+            </div>
           </div>
         </div>
-        <div class="grid-2" id="transcript-options-row" style="margin-top:14px">
-          <div id="diarize-wrap">
-            <label for="diarize">Label speakers</label>
-            <select id="diarize">
-              <option value="false" selected>Off</option>
-              <option value="true">On</option>
-            </select>
-          </div>
-          <div id="sentences-wrap">
-            <label for="sentences">Merge into sentences</label>
-            <select id="sentences">
-              <option value="false" selected>Off</option>
-              <option value="true">On</option>
-            </select>
-          </div>
-          <div id="file-ext-wrap">
-            <label for="file-extension">Save as</label>
-            <select id="file-extension">
-              <option value="" selected>Match format (.txt, .srt, …)</option>
-              <option value="txt">Always .txt</option>
-              <option value="srt">Always .srt</option>
-              <option value="vtt">Always .vtt</option>
-              <option value="json">Always .json</option>
-            </select>
-          </div>
-        </div>
-        <div id="bitrate-wrap" class="hidden" style="margin-top:14px">
-          <label for="bitrate">Opus bitrate</label>
-          <select id="bitrate">
-            <option value="medium" selected>Medium (64 kbps)</option>
-            <option value="low">Low (32 kbps)</option>
-          </select>
-        </div>
-        <div class="btn-row">
-          <button type="button" class="btn-secondary" id="btn-prepare">Preload model</button>
-        </div>
-        <p class="help">Preload downloads weights now so the first run is faster. Optional — processing also loads the model.</p>
-      </details>
-    </div>
-
-    <div class="card action-card">
-      <h2><span class="step-num">3</span> Run</h2>
-      <div class="btn-row">
-        <button type="button" class="btn-primary" id="btn-transcribe" disabled>Process &amp; download</button>
-        <button type="button" class="btn-danger hidden" id="btn-cancel">Cancel</button>
-        <button type="button" class="btn-secondary" id="btn-download" disabled>Download again</button>
-      </div>
-      <p class="status-line" id="status"></p>
-      <div id="progress-wrap" class="progress-wrap hidden">
-        <div class="progress-block">
-          <p class="progress-label">Current file</p>
-          <div class="progress-bar"><div id="progress-task" class="progress-fill"></div></div>
-          <p id="progress-task-text" class="progress-text">—</p>
-        </div>
-        <div class="progress-block">
-          <p class="progress-label">Overall</p>
-          <div class="progress-bar overall"><div id="progress-overall" class="progress-fill overall"></div></div>
-          <p id="progress-overall-text" class="progress-text">0%</p>
-        </div>
-      </div>
+      </section>
     </div>
 
     <div class="card">
@@ -502,6 +650,8 @@
       $("language-row").classList.toggle("hidden", audio);
       $("transcript-options-row").classList.toggle("hidden", audio);
       $("model-wrap").classList.toggle("hidden", audio);
+      const sumWrap = $("summarize-wrap");
+      if (sumWrap) sumWrap.classList.toggle("hidden", audio);
       btnPrepare.classList.toggle("hidden", audio);
 
       formatSelect.innerHTML = "";
@@ -531,6 +681,49 @@
     let activeTab = "upload";
     let previewInFlight = false;
     let processInFlight = false;
+    let pendingSummary = null;
+    let currentStep = 1;
+
+    function updateStepSummaries() {
+      const s1 = $("step-1-summary");
+      const s2 = $("step-2-summary");
+      const s3 = $("step-3-summary");
+      const n = fileQueue.length;
+      if (s1) {
+        s1.textContent = n === 0
+          ? ""
+          : n === 1
+            ? fileQueue[0].file.name
+            : `${n} files`;
+      }
+      if (s2) {
+        const model = modelSelect.value || "";
+        const kind = formatSelect.value || "";
+        const want = outputTypeSelect.value === "audio" ? "audio" : "transcript";
+        s2.textContent = model ? `${want} · ${kind} · ${model}` : want;
+      }
+      if (s3) {
+        if (processInFlight) s3.textContent = "Working";
+        else if (fileQueue.some((q) => q.status === "done")) s3.textContent = "Done";
+        else if (pendingCount()) s3.textContent = "Ready";
+        else s3.textContent = "";
+      }
+    }
+
+    function setActiveStep(n) {
+      currentStep = n;
+      document.querySelectorAll(".step-card").forEach((el) => {
+        const s = Number(el.dataset.step);
+        const open = s === n;
+        el.classList.toggle("open", open);
+        el.classList.toggle("done", s < n);
+        const header = el.querySelector(".step-header");
+        if (header) header.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      updateStepSummaries();
+    }
+
+
 
     function tierArrow(metric, tier) {
       const lowGood = metric === "size" || metric === "effort";
@@ -595,6 +788,7 @@
       } else {
         btnTranscribe.textContent = audio ? "Convert & download" : "Transcribe & download";
       }
+      btnTranscribe.disabled = processInFlight || n === 0;
     }
 
     function renderQueue() {
@@ -622,23 +816,55 @@
       }
       btnCancel.classList.toggle("hidden", !processInFlight);
       updateProcessButton();
+      updateStepSummaries();
+    }
+
+    function nextFileId() {
+      try {
+        if (globalThis.crypto && typeof crypto.randomUUID === "function") {
+          return crypto.randomUUID();
+        }
+      } catch (_) { /* insecure context */ }
+      return `f-${Date.now()}-${Math.random().toString(16).slice(2)}`;
     }
 
     function enqueueFiles(files) {
-      const list = [...files].filter((f) => f && f.size > 0);
-      if (!list.length) return;
-      for (const file of list) {
-        fileQueue.push({ id: crypto.randomUUID(), file, status: "pending", downloadName: null, savedToFolder: false });
+      try {
+        const raw = [...(files || [])].filter(Boolean);
+        if (!raw.length) {
+          setStatus("The file picker did not return any files. Try Browse files… or drag them onto the box.", "err");
+          return;
+        }
+        const empty = raw.filter((f) => !f.size);
+        const list = raw.filter((f) => f.size > 0);
+        const usable = list.length ? list : raw;
+        for (const file of usable) {
+          fileQueue.push({
+            id: nextFileId(),
+            file,
+            status: "pending",
+            downloadName: null,
+            savedToFolder: false,
+          });
+        }
+        setAudioFile(usable[usable.length - 1]);
+        renderQueue();
+        const names = usable.map((f) => `${f.name} (${formatBytes(f.size)})`).join(", ");
+        fileNameEl.textContent = names;
+        const extra = empty.length && list.length
+          ? ` Skipped ${empty.length} empty (0-byte) file(s).`
+          : "";
+        setStatus(
+          usable.length > 1
+            ? `${usable.length} files ready: ${names}.${extra} Choose output next.`
+            : `${usable[0].name} is ready.${extra} Choose output next.`,
+          "ok"
+        );
+        if (currentStep === 1) setActiveStep(2);
+      } catch (e) {
+        console.error("enqueueFiles", e);
+        setStatus(`Could not add files: ${e && e.message ? e.message : e}`, "err");
       }
-      setAudioFile(list[list.length - 1]);
-      renderQueue();
-      btnTranscribe.disabled = processInFlight || pendingCount() === 0;
-      setStatus(
-        list.length > 1
-          ? `${list.length} files ready. Click Transcribe to process them one by one.`
-          : `${list[0].name} is ready. Click Transcribe to start.`,
-        "ok"
-      );
     }
 
     function cancelProcessing() {
@@ -886,7 +1112,7 @@
       $("btn-preview").disabled = !file || processInFlight || previewInFlight;
       showUploadPanel();
       if (file) {
-        setStatus(`${file.name} is ready. Click Transcribe & download when you want to start.`, "ok");
+        setStatus(`${file.name} is ready.`, "ok");
       } else {
         preview.classList.add("hidden");
         preview.removeAttribute("src");
@@ -954,6 +1180,7 @@
         const serverLabel = $("server-label");
         if (serverLabel) serverLabel.textContent = "Ready";
         setStatus(`Ready. ${loadedCount} model(s) in GPU memory. ${gpuLine}. Recordings up to ${maxHrs}h.`, "ok");
+        updateStepSummaries();
       } catch (e) {
         const serverLabel = $("server-label");
         if (serverLabel) serverLabel.textContent = "Offline";
@@ -1127,7 +1354,7 @@
         clearInterval(progressTimer);
         showProgress(false);
         setBusy(false);
-        btnTranscribe.disabled = !audioFile;
+        updateProcessButton();
       }
     }
 
@@ -1194,6 +1421,9 @@
           ? `Complete in ${formatEta(ev.elapsed_secs) || ev.elapsed_secs.toFixed(0) + 's'}`
           : "Complete";
         setDualProgress(100, doneLabel, 100, "100%");
+        if (ev.summary) {
+          pendingSummary = { text: ev.summary, stem };
+        }
       }
     }
 
@@ -1206,6 +1436,7 @@
 
       setAudioFile(file);
       lastResultBlob = null;
+      pendingSummary = null;
       lastDownloadName = buildDownloadName(stem, format === "opus" ? "ogg" : format);
       showProgress(true);
       setDualProgress(0, `Uploading ${file.name}…`, 0, "0%");
@@ -1316,7 +1547,18 @@
         throw new Error("Transcription finished without a downloadable result");
       }
       const savedToFolder = await deliverOutput(lastResultBlob, lastDownloadName);
-      setStatus(`Done — ${lastDownloadName} downloaded.`, "ok");
+      let summaryNote = "";
+      if (pendingSummary && pendingSummary.text) {
+        const sumName = `${pendingSummary.stem}_summary.txt`;
+        const sumBlob = new Blob([pendingSummary.text], { type: "text/plain" });
+        if (!suppressAutoDownload) {
+          triggerDownload(sumBlob, sumName);
+          try { await writeToOutputFolder(sumBlob, sumName); } catch (_) { /* folder optional */ }
+        }
+        summaryNote = ` Summary saved as ${sumName}.`;
+        pendingSummary = null;
+      }
+      setStatus(`Done — ${lastDownloadName} downloaded.${summaryNote}`, "ok");
       return { blob: lastResultBlob, name: lastDownloadName, savedToFolder };
     }
 
@@ -1378,29 +1620,31 @@
       if (!(await ensureServer("processing"))) return;
 
       if (fileQueue.length === 0 && audioFile) {
-        fileQueue.push({ id: crypto.randomUUID(), file: audioFile, status: "pending", downloadName: null, savedToFolder: false });
+        fileQueue.push({ id: nextFileId(), file: audioFile, status: "pending", downloadName: null, savedToFolder: false });
         renderQueue();
       }
       if (!fileQueue.some((q) => q.status === "pending")) {
         setStatus("No files queued — drop or browse audio first.", "err");
+        setActiveStep(1);
         return;
       }
+      setActiveStep(3);
       await runQueue();
     }
 
     // --- Upload tab ---
-    dropzone.addEventListener("click", () => fileInput.click());
     dropzone.addEventListener("dragover", (e) => { e.preventDefault(); dropzone.classList.add("dragover"); });
     dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
     dropzone.addEventListener("drop", (e) => {
       e.preventDefault();
+      e.stopPropagation();
       dropzone.classList.remove("dragover");
       const files = e.dataTransfer?.files;
-      if (files?.length) enqueueFiles(files);
+      enqueueFiles(files);
     });
     fileInput.addEventListener("change", () => {
       const files = fileInput.files;
-      if (files?.length) enqueueFiles(files);
+      enqueueFiles(files);
       fileInput.value = "";
     });
 
@@ -1490,14 +1734,29 @@
     modelSelect.addEventListener("change", () => {
       preferredModel = modelSelect.value;
       updateModelDesc();
+      updateStepSummaries();
+      if (currentStep === 2) setActiveStep(3);
     });
-    outputTypeSelect.addEventListener("change", syncOutputControls);
+    outputTypeSelect.addEventListener("change", () => {
+      syncOutputControls();
+      updateStepSummaries();
+      if (currentStep === 2) setActiveStep(3);
+    });
     formatSelect.addEventListener("change", () => {
       $("bitrate-wrap").classList.toggle(
         "hidden",
         outputTypeSelect.value !== "audio" || formatSelect.value !== "opus"
       );
+      updateStepSummaries();
+      if (currentStep === 2) setActiveStep(3);
     });
+    document.querySelectorAll(".step-header").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const step = Number(btn.closest(".step-card")?.dataset.step);
+        if (step) setActiveStep(step);
+      });
+    });
+    $("btn-step-continue").addEventListener("click", () => setActiveStep(3));
     $("btn-refresh").addEventListener("click", loadCatalog);
     $("btn-sample").addEventListener("click", loadSample);
     $("btn-output-folder").addEventListener("click", chooseOutputFolder);
@@ -1507,6 +1766,7 @@
         audioFile = null;
         fileNameEl.textContent = "No file selected";
         btnTranscribe.disabled = true;
+        setActiveStep(1);
       }
       renderQueue();
     });
@@ -1546,6 +1806,10 @@
       if (diarizeSelect.value === "true") params.set("task", "diarize");
       const extOverride = fileExtSelect.value.trim();
       if (extOverride) params.set("file_extension", extOverride);
+      const sumEl = $("summarize");
+      if (sumEl && sumEl.checked && outputTypeSelect.value !== "audio") {
+        params.set("summarize", "true");
+      }
       return params;
     }
 

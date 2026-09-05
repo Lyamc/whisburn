@@ -12,7 +12,7 @@ pub struct Qwen3AsrPrompt {
 /// - system + user audio placeholders + assistant generation header
 /// - optional `language {Name}<asr_text>` suffix when forcing language
 pub fn build_asr_prompt(
-    runtime: &Qwen3RuntimeConfig,
+    _runtime: &Qwen3RuntimeConfig,
     mel_frames: usize,
     context: &str,
     forced_language: Option<&str>,

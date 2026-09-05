@@ -4,7 +4,6 @@ use std::ops::Div;
 use std::sync::Arc;
 
 use crate::model::load::helpers::load_tensor;
-use std::path::Path;
 
 pub fn waveform_to_mel_tensor<B: Backend>(
     waveform: Vec<f32>,
@@ -24,11 +23,13 @@ pub fn waveform_to_mel_tensor<B: Backend>(
     let mut processor = AudioProcessor::new(&device_clone, sample_rate as f64, n_mels, is_nemo, model_name);
     
     if is_nemo {
-        let mean_path = format!("models/{}/mean.npy", model_name);
-        let std_path = format!("models/{}/std.npy", model_name);
-        if Path::new(&mean_path).exists() && Path::new(&std_path).exists() {
-            let mean = load_tensor::<B, 2>("mean", &format!("models/{}", model_name), &device_clone).unwrap();
-            let std = load_tensor::<B, 2>("std", &format!("models/{}", model_name), &device_clone).unwrap();
+        let dir = whisburn_core::resolve_model_dir(model_name);
+        let mean_path = dir.join("mean.npy");
+        let std_path = dir.join("std.npy");
+        if mean_path.exists() && std_path.exists() {
+            let dir_str = dir.to_string_lossy();
+            let mean = load_tensor::<B, 2>("mean", dir_str.as_ref(), &device_clone).unwrap();
+            let std = load_tensor::<B, 2>("std", dir_str.as_ref(), &device_clone).unwrap();
             processor = processor.with_stats(mean, std);
         }
     }

@@ -29,6 +29,12 @@
 # If you need a specific musl linker:
 # rustflags = ["-C", "target-feature=+crt-static"]
 
+# User-level cargo config may set `linker = "lld-link"`. LLVM lld does not
+# resolve VS 2022 17.14 CRT symbols (`__guard_eh_cont_table`). MSVC `link.exe`
+# does. `cl.exe` is a compiler, not a linker, and cannot be used here.
+[target.x86_64-pc-windows-msvc]
+linker = "link.exe"
+
 [env]
 # Example: force a default log level when building release tools
 # RUST_LOG = "info"

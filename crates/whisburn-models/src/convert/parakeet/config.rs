@@ -6,7 +6,10 @@ pub struct ParakeetEncoderConfig {
     pub num_attention_heads: usize,
     pub num_hidden_layers: usize,
     pub num_mel_bins: usize,
+    /// Present on HF encoder configs (CTC sets true; TDT sets false). Burn applies the
+    /// matching scale from architecture, not this flag, but we keep it for round-trip JSON.
     #[serde(default)]
+    #[allow(dead_code)]
     pub scale_input: bool,
 }
 

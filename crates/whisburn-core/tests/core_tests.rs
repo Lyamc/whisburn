@@ -1,5 +1,5 @@
 use whisburn_core::{
-    compose, OutputFormat, Pipeline, PipelineStep, SpeechTask, TaskOptions, TranscriptSegment,
+    compose, OutputFormat, PipelineStep, SpeechTask, TaskOptions, TranscriptSegment,
     WhisburnResult,
 };
 

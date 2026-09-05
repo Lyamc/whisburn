@@ -20,9 +20,20 @@ pub use encoder::*;
 pub use decoder::*;
 pub use whisper::{Whisper, WhisperConfig};
 pub use parakeet::*;
-pub use tone::*;
-pub use qwen3::*;
-pub use vibevoice::*;
+pub use tone::{greedy_ctc_text, tone_log_mel, TONE, TONEConfig};
+pub use qwen3::{
+    build_asr_prompt, flatten_prompt, load_qwen3_lm_weights, load_qwen3_runtime, load_qwen3_weights,
+    parse_qwen3_asr_output, parse_qwen3_asr_output_parts, parse_qwen3_asr_output_parts_with_forced,
+    parse_qwen3_asr_output_with_forced, qwen3_forced_language_from_code, qwen3_language_name,
+    Qwen3ASR, Qwen3ASRConfig, Qwen3AsrPrompt, Qwen3AudioTower, Qwen3AudioTowerConfig,
+    Qwen3RuntimeConfig, Qwen3Thinker, Qwen3ThinkerConfig, QWEN3_DEFAULT_MAX_NEW_TOKENS,
+};
+pub use vibevoice::{
+    audio_duration_secs, build_vibevoice_config, load_vibevoice_runtime, normalize_dbfs,
+    pad_placeholders, vae_token_length, Qwen2Decoder, Qwen2DecoderConfig, SpeechConnector,
+    SpeechConnectorConfig, TokenizerEncoder, TokenizerEncoderConfig, VibeVoiceASR,
+    VibeVoiceASRConfig, VibeVoicePrompt, VibeVoiceRuntimeConfig,
+};
 
 use burn::{
     config::Config,

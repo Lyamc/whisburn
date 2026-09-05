@@ -45,15 +45,13 @@ version = "0.60"
 features = ["Win32_Foundation", "Win32_Storage_FileSystem", "Win32_System_IO"]
 optional = true
 
-[target.'cfg(unix)'.dependencies.libc]
-version = "0.2"
-optional = true
-
 [features]
 default = ["default-tls", "tokio", "ureq"]
 # These features are only relevant when used with the `tokio` feature, but this might change in the future.
 default-tls = ["native-tls"]
-native-tls = ["dep:reqwest", "reqwest?/default", "dep:native-tls", "dep:ureq", "ureq?/native-tls"]
+# Do not enable `dep:reqwest` here — whisburn uses the ureq backend.
+# `reqwest?/native-tls` only applies if the tokio/reqwest API is also enabled.
+native-tls = ["dep:native-tls", "ureq?/native-tls", "reqwest?/native-tls"]
 rustls-tls = ["reqwest?/rustls-tls"]
 tokio = [
   "dep:futures",
@@ -69,7 +67,6 @@ tokio = [
   "dep:thiserror",
   "dep:tokio",
   "tokio/rt-multi-thread",
-  "dep:libc",
   "dep:windows-sys",
 ]
 ureq = [
@@ -80,7 +77,6 @@ ureq = [
   "dep:serde_json",
   "dep:thiserror",
   "dep:ureq",
-  "dep:libc",
   "dep:windows-sys",
 ]
 

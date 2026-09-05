@@ -74,6 +74,7 @@ pub fn load_model<B: Backend>(
     device: &B::Device,
     verbose: bool,
 ) -> Result<(Gpt2Tokenizer, ModelConfig, Model<B>), Box<dyn Error>> {
+    tracing::info!(model = model_name, "initializing model load");
     if verbose {
         println!("Initializing model loading for: {}", model_name);
     }
@@ -109,36 +110,34 @@ pub fn load_model<B: Backend>(
         }
     };
 
-    let config_path1 = format!("models/{}/{}.cfg", model_name, model_name);
-    let config_path2 = format!("models/{}/config.cfg", model_name);
-    let config_path = if Path::new(&config_path1).exists() {
+    let dir = whisburn_core::resolve_model_dir(model_name);
+    let config_path1 = dir.join(format!("{}.cfg", model_name));
+    let config_path2 = dir.join("config.cfg");
+    let config_path = if config_path1.exists() {
         config_path1
-    } else if Path::new(&config_path2).exists() {
+    } else if config_path2.exists() {
         config_path2
     } else {
         // Search for ANY .cfg in the directory
-        let dir = format!("models/{}", model_name);
-        let mut found = String::new();
+        let mut found = None;
         if let Ok(entries) = std::fs::read_dir(&dir) {
             for entry in entries.flatten() {
-                if let Some(ext) = entry.path().extension() {
-                    if ext == "cfg" {
-                        found = entry.path().to_str().unwrap().to_string();
-                        break;
-                    }
+                if entry.path().extension().is_some_and(|ext| ext == "cfg") {
+                    found = Some(entry.path());
+                    break;
                 }
             }
         }
-        found
+        found.unwrap_or_default()
     };
 
-    if config_path.is_empty() {
+    if config_path.as_os_str().is_empty() {
         pb.finish_and_clear();
-        return Err(format!("Config file not found in models/{}", model_name).into());
+        return Err(format!("Config file not found in {}", dir.display()).into());
     }
 
     if verbose {
-        pb.println(format!("Using config file: {}", config_path));
+        pb.println(format!("Using config file: {}", config_path.display()));
     }
 
     let model_config = match ModelConfig::load(&config_path) {
@@ -148,49 +147,58 @@ pub fn load_model<B: Backend>(
                 Ok(w) => ModelConfig::Whisper(w),
                 Err(e) => {
                     pb.finish_and_clear();
-                    return Err(format!("Failed to load model config at {}: {}", config_path, e).into());
+                    return Err(format!("Failed to load model config at {}: {}", config_path.display(), e).into());
                 }
             }
         }
     };
 
-    let model_path = format!("models/{}/{}", model_name, model_name);
-    let mpk_path = format!("{}.mpk", model_path);
-    let gz_path = format!("{}.mpk.gz", model_path);
+    let named_stem = dir.join(model_name);
+    let mpk_path = named_stem.with_extension("mpk");
+    let gz_path = dir.join(format!("{model_name}.mpk.gz"));
 
-    let model_mpk_path = format!("models/{}/model.mpk", model_name);
-    let model_gz_path = format!("models/{}/model.mpk.gz", model_name);
+    let model_mpk_path = dir.join("model.mpk");
+    let model_gz_path = dir.join("model.mpk.gz");
 
-    let (final_path, final_gz_path) = if Path::new(&mpk_path).exists() || Path::new(&gz_path).exists() {
+    let (final_path, final_gz_path) = if mpk_path.exists() || gz_path.exists() {
         (mpk_path, gz_path)
     } else {
         (model_mpk_path, model_gz_path)
     };
 
-    if !Path::new(&final_path).exists() && Path::new(&final_gz_path).exists() {
-        pb.set_message(format!("Decompressing {}...", final_gz_path));
+    if !final_path.exists() && final_gz_path.exists() {
+        pb.set_message(format!("Decompressing {}...", final_gz_path.display()));
         let gz_file = std::fs::File::open(&final_gz_path)?;
         let mut decoder = GzDecoder::new(gz_file);
         let mut mpk_file = std::fs::File::create(&final_path)?;
         std::io::copy(&mut decoder, &mut mpk_file)?;
     }
 
-    if !Path::new(&final_path).exists() {
+    if !final_path.exists() {
         pb.finish_and_clear();
-        return Err(format!("Model weights not found: {}", final_path).into());
+        return Err(format!("Model weights not found: {}", final_path.display()).into());
     }
 
-    let load_path = final_path.strip_suffix(".mpk").unwrap_or(&final_path);
+    let final_path_str = final_path.to_string_lossy().into_owned();
+    let load_path = final_path_str
+        .strip_suffix(".mpk")
+        .unwrap_or(&final_path_str)
+        .to_string();
 
+    tracing::info!(
+        model = model_name,
+        path = %final_path.display(),
+        "loading model weights onto device"
+    );
     pb.set_message(format!("Loading model weights from {}...", load_path));
     let model: Model<B> = {
         // Prefer full precision — HF-converted bundles are recorded with FullPrecisionSettings.
         let mut result = NamedMpkFileRecorder::<FullPrecisionSettings>::new()
-            .load(load_path.to_string().into(), device);
+            .load(load_path.clone().into(), device);
 
         if result.is_err() {
             result = NamedMpkGzFileRecorder::<FullPrecisionSettings>::new()
-                .load(load_path.to_string().into(), device);
+                .load(load_path.clone().into(), device);
         }
 
         if result.is_err() {
@@ -198,11 +206,11 @@ pub fn load_model<B: Backend>(
                 pb.println("Failed FullPrecision, trying HalfPrecisionSettings...");
             }
             result = NamedMpkFileRecorder::<HalfPrecisionSettings>::new()
-                .load(load_path.to_string().into(), device);
+                .load(load_path.clone().into(), device);
 
             if result.is_err() {
                 result = NamedMpkGzFileRecorder::<HalfPrecisionSettings>::new()
-                    .load(load_path.to_string().into(), device);
+                    .load(load_path.clone().into(), device);
             }
         }
 
@@ -219,18 +227,20 @@ pub fn load_model<B: Backend>(
     let model = model.to_device(device);
 
     pb.finish_with_message(format!("Model '{}' loaded successfully.", model_name));
+    tracing::info!(model = model_name, "model loaded onto device");
 
     Ok((bpe, model_config, model))
 }
 
 pub fn get_model_stats<B: Backend>(model_name: &str, device: &B::Device) -> (Option<Tensor<B, 2>>, Option<Tensor<B, 2>>) {
-    let path = format!("models/{}", model_name);
-    let mean = if Path::new(&format!("{}/mean.npy", path)).exists() {
+    let dir = whisburn_core::resolve_model_dir(model_name);
+    let path = dir.to_string_lossy().into_owned();
+    let mean = if dir.join("mean.npy").exists() {
         load_tensor::<B, 2>("mean", &path, device).ok()
     } else {
         None
     };
-    let std = if Path::new(&format!("{}/std.npy", path)).exists() {
+    let std = if dir.join("std.npy").exists() {
         load_tensor::<B, 2>("std", &path, device).ok()
     } else {
         None

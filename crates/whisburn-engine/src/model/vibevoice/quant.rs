@@ -16,7 +16,9 @@ use burn::tensor::{backend::Backend, Tensor};
 pub struct QuantLinear<B: Backend> {
     qweight: Ignored<Arc<Vec<i8>>>,
     scale_host: Ignored<Arc<Vec<f32>>>,
+    #[module(ignore)]
     d_in: usize,
+    #[module(ignore)]
     d_out: usize,
     pub scale: Param<Tensor<B, 1>>,
     pub bias: Option<Param<Tensor<B, 1>>>,

@@ -35,13 +35,7 @@ pub fn download_generic_bundle(
         .filter(|remote| {
             fetch_repo_file(&repo, remote, dir, options)
                 .or_else(|_| {
-                    fetch_hf_http(
-                        source.repo_id(),
-                        remote,
-                        dir,
-                        &options.hf_token,
-                        options.verbose,
-                    )
+                    fetch_hf_http(source.repo_id(), remote, dir, options)
                 })
                 .is_ok()
         })

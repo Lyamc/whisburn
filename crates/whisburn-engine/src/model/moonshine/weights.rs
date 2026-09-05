@@ -71,7 +71,7 @@ pub struct MoonshineHfConfig {
 }
 
 pub fn load_moonshine_runtime(model_name: &str) -> MoonshineRuntimeConfig {
-    let path = format!("models/{model_name}/moonshine_runtime.json");
+    let path = whisburn_core::resolve_model_file(model_name, "moonshine_runtime.json");
     fs::read_to_string(&path)
         .ok()
         .and_then(|s| serde_json::from_str(&s).ok())

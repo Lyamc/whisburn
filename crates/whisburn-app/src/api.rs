@@ -4,6 +4,7 @@ use serde::Deserialize;
 #[derive(Debug, Clone, Deserialize)]
 pub struct ModelInfo {
     pub name: String,
+    #[allow(dead_code)]
     pub description: String,
     pub burn_ready: bool,
     pub loaded: bool,
@@ -12,6 +13,7 @@ pub struct ModelInfo {
 #[derive(Debug, Clone, Deserialize)]
 pub struct ServerConfig {
     pub default_model: String,
+    #[allow(dead_code)]
     pub preload_models: PreloadModels,
     pub loaded_models: Vec<String>,
 }

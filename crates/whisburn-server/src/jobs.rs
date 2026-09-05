@@ -10,7 +10,7 @@ use whisburn_audio::{
 };
 use whisburn_core::{SpeechTask, WhisburnError, TaskOptions, TranscriptResult, TranscriptSegment};
 use whisburn_models::diarize::assign_alternating_speakers;
-use whisburn_models::SharedModelManager;
+use whisburn_models::{PrepProgress, PrepProgressFn, SharedModelManager};
 use serde::Serialize;
 use tokio::sync::{mpsc, Semaphore, SemaphorePermit};
 use tracing::{info, warn};
@@ -39,6 +39,9 @@ pub struct TranscribeProgress {
     /// Estimated seconds remaining (best-effort, based on current overall progress).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub eta_secs: Option<f64>,
+    /// Offline English summary (`{stem}_summary.txt`) when the user enabled summarization.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub summary: Option<String>,
 }
 
 impl TranscribeProgress {
@@ -54,6 +57,7 @@ impl TranscribeProgress {
             latest_segment: None,
             elapsed_secs: None,
             eta_secs: None,
+            summary: None,
         }
     }
 }
@@ -86,6 +90,23 @@ fn with_timing(mut p: TranscribeProgress, start: Instant, overall_pct_override: 
         p.eta_secs = Some(remaining);
     }
     p
+}
+
+/// Map download/convert/GPU-load prep onto the transcribe overall bar.
+/// Download 6–40, convert 40–52, load 52–65.
+fn map_prep_progress(prep: &PrepProgress) -> TranscribeProgress {
+    let (phase, lo, span) = match prep.stage {
+        "download" => ("download", 6.0, 34.0),
+        "convert" => ("convert", 40.0, 12.0),
+        "load" => ("load", 52.0, 13.0),
+        _ => ("model", 6.0, 59.0),
+    };
+    TranscribeProgress::emit(
+        phase,
+        &prep.label,
+        prep.fraction * 100.0,
+        lo + prep.fraction * span,
+    )
 }
 
 fn estimate_chunks(duration_secs: Option<f64>, segmented: bool) -> Option<usize> {
@@ -170,6 +191,7 @@ pub async fn transcribe_upload_with_progress(
                 latest_segment: None,
                 elapsed_secs: Some(job_start.elapsed().as_secs_f64()),
                 eta_secs: Some(rough),
+                summary: None,
             }, job_start, Some(4.0)),
         );
     }
@@ -181,15 +203,39 @@ pub async fn transcribe_upload_with_progress(
 
     send_progress(
         &progress,
-        with_timing(TranscribeProgress::emit("model", "Loading model (download if needed)", 0.0, 5.0), job_start, Some(5.0)),
+        with_timing(TranscribeProgress::emit("model", "Preparing model (download / convert if needed)", 0.0, 5.0), job_start, Some(5.0)),
     );
 
-    ensure_model_job(manager.clone(), model.clone()).await?;
+    ensure_model_job(manager.clone(), model.clone(), progress.clone()).await?;
 
     send_progress(
         &progress,
-        with_timing(TranscribeProgress::emit("model", "Model ready", 100.0, 15.0), job_start, Some(15.0)),
+        with_timing(TranscribeProgress::emit("model", "Model files ready", 100.0, 52.0), job_start, Some(52.0)),
     );
+
+    if manager.is_loaded(&model) {
+        send_progress(
+            &progress,
+            with_timing(TranscribeProgress::emit("load", "Model already in GPU memory", 100.0, 65.0), job_start, Some(65.0)),
+        );
+    } else {
+        send_progress(
+            &progress,
+            with_timing(TranscribeProgress::emit("load", "Loading weights into GPU…", 0.0, 52.0), job_start, Some(52.0)),
+        );
+        info!(model = %model, "loading model weights into GPU");
+        let warm_manager = manager.clone();
+        let warm_name = model.clone();
+        tokio::task::spawn_blocking(move || warm_manager.warm_model_sync(&warm_name))
+            .await
+            .map_err(|e| ApiError::bad_request(format!("GPU load task panicked: {e}")))?
+            .map_err(ApiError::from)?;
+        send_progress(
+            &progress,
+            with_timing(TranscribeProgress::emit("load", "Model loaded on GPU", 100.0, 65.0), job_start, Some(65.0)),
+        );
+        info!(model = %model, "model ready on GPU");
+    }
 
     let progress_for_blocking = progress.clone();
     let model_name = model.clone();
@@ -200,12 +246,12 @@ pub async fn transcribe_upload_with_progress(
     if !segmented {
         send_progress(
             &progress,
-            with_timing(TranscribeProgress::emit("decode", "Decoding audio", 0.0, 15.0), job_start, Some(15.0)),
+            with_timing(TranscribeProgress::emit("decode", "Decoding audio", 0.0, 65.0), job_start, Some(65.0)),
         );
         let waveform = decode_upload(Bytes::from(bytes_vec), ext, None).await?;
         send_progress(
             &progress,
-            with_timing(TranscribeProgress::emit("decode", "Decoding audio", 100.0, 25.0), job_start, Some(25.0)),
+            with_timing(TranscribeProgress::emit("decode", "Decoding audio", 100.0, 72.0), job_start, Some(72.0)),
         );
         send_progress(
             &progress,
@@ -213,13 +259,14 @@ pub async fn transcribe_upload_with_progress(
                 phase: "transcribe".into(),
                 task_label: "Transcribing".into(),
                 task_pct: 0.0,
-                overall_pct: 25.0,
+                overall_pct: 72.0,
                 chunk: Some(1),
                 chunks_total: Some(1),
                 partial_text: None,
                 latest_segment: None,
                 elapsed_secs: None,
                 eta_secs: None,
+                summary: None,
             }, job_start, Some(25.0)),
         );
 
@@ -248,14 +295,15 @@ pub async fn transcribe_upload_with_progress(
                 phase: "transcribe".into(),
                 task_label: "Transcribing".into(),
                 task_pct: 100.0,
-                overall_pct: 95.0,
+                overall_pct: 98.0,
                 chunk: Some(1),
                 chunks_total: Some(1),
                 partial_text: Some(preview_text(&final_result, show_timestamps, diarize)),
                 latest_segment: final_result.segments.last().cloned(),
                 elapsed_secs: None,
                 eta_secs: None,
-            }, job_start, Some(95.0)),
+                summary: None,
+            }, job_start, Some(98.0)),
         );
         return Ok(final_result);
     }
@@ -279,13 +327,14 @@ pub async fn transcribe_upload_with_progress(
                 phase: "decode".into(),
                 task_label: "Decoding & transcribing segments".into(),
                 task_pct: 0.0,
-                overall_pct: 15.0,
+                overall_pct: 72.0,
                 chunk: Some(0),
                 chunks_total: Some(total),
                 partial_text: None,
                 latest_segment: None,
                 elapsed_secs: None,
                 eta_secs: None,
+                summary: None,
             }, job_start, Some(15.0)),
         );
 
@@ -319,7 +368,7 @@ pub async fn transcribe_upload_with_progress(
                 chunk_idx += 1;
 
                 let task_pct = (chunk_idx as f64 / total as f64) * 100.0;
-                let overall_pct = 15.0 + (chunk_idx as f64 / total as f64) * 80.0;
+                let overall_pct = 72.0 + (chunk_idx as f64 / total as f64) * 26.0;
                 send_progress(
                     &progress_for_blocking,
                     with_timing(TranscribeProgress {
@@ -333,6 +382,7 @@ pub async fn transcribe_upload_with_progress(
                         latest_segment: merged.segments.last().cloned(),
                         elapsed_secs: None,
                         eta_secs: None,
+                        summary: None,
                     }, job_start, Some(overall_pct)),
                 );
                 Ok(())
@@ -463,8 +513,19 @@ pub async fn encode_wav_job(waveform: Waveform) -> Result<Vec<u8>, ApiError> {
 pub async fn ensure_model_job(
     manager: SharedModelManager,
     name: String,
+    progress: Option<ProgressSender>,
 ) -> Result<std::path::PathBuf, ApiError> {
-    tokio::task::spawn_blocking(move || manager.ensure_model_sync(&name))
+    let job_start = Instant::now();
+    let progress_cb: Option<PrepProgressFn> = progress.clone().map(|tx| {
+        Arc::new(move |prep: PrepProgress| {
+            send_progress(
+                &Some(tx.clone()),
+                with_timing(map_prep_progress(&prep), job_start, None),
+            );
+        }) as PrepProgressFn
+    });
+
+    tokio::task::spawn_blocking(move || manager.ensure_model_sync_with_progress(&name, progress_cb))
         .await
         .map_err(|e| ApiError::bad_request(format!("ensure task panicked: {e}")))?
         .map_err(ApiError::from)

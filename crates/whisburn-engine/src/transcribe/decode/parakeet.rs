@@ -122,7 +122,7 @@ pub fn is_garbage_parakeet_text(text: &str) -> bool {
 }
 
 fn load_parakeet_decode_config(model_name: &str) -> ParakeetDecodeConfig {
-    let path = format!("models/{model_name}/parakeet_decode.json");
+    let path = whisburn_core::resolve_model_file(model_name, "parakeet_decode.json");
     Path::new(&path)
         .exists()
         .then(|| std::fs::read_to_string(&path).ok())
@@ -330,7 +330,7 @@ pub fn decode_parakeet<B: Backend>(
 }
 
 fn vocab_fallback_text(model_name: &str, decoded_tokens: &[usize]) -> String {
-    let vocab_path = format!("models/{model_name}/vocab.txt");
+    let vocab_path = whisburn_core::resolve_model_file(model_name, "vocab.txt");
     std::fs::read_to_string(vocab_path)
         .ok()
         .map(|content| {

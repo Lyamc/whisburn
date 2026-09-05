@@ -140,6 +140,19 @@ models/parakeet-tdt-0.6b-v3/
 | `parakeet-ctc-1.1b` | nvidia/parakeet-ctc-1.1b | `burn_ready: true` (42-layer encoder + CTC greedy) |
 | `t-one` | t-tech/T-one | `burn_ready: true` (8 kHz Conformer CTC, Russian, greedy) |
 
+## Offline summarizer (Qwen3-0.6B)
+
+Toggle **Summarize transcript** in the web UI (or `whisburn transcribe --summarize`) to run a small local English LLM after ASR. The transcript still downloads as usual; a sidecar `{stem}_summary.txt` is written next to it.
+
+- **Model** — `qwen3-0.6b` (`Qwen/Qwen3-0.6B`), ~0.6B parameters, ~1.8 GB VRAM. Downloaded on first use.
+- **Long files** — 4-hour calls are split into ~1800-word chunks, summarized, then merged. First load can take a minute while weights hit the GPU.
+- **English only** — prompts and chunking assume English speech.
+
+```bash
+cargo run -p whisburn-cli -- models download qwen3-0.6b
+cargo run -p whisburn-cli -- transcribe -i samples/jfk.wav --model tiny_en --format txt --summarize
+```
+
 ## Qwen3-ASR (working)
 
 [Qwen3-ASR](https://github.com/QwenLM/Qwen3-ASR/) is a speech-to-text model with an audio encoder (thinker audio tower) and Qwen3 text decoder. Burn inference loads weights directly from `model.safetensors` (no `.mpk` conversion).

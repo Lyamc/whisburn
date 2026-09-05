@@ -92,7 +92,7 @@ pub async fn ensure_model(
 ) -> Result<impl IntoResponse, ApiError> {
     let _permit = acquire_job(&state.job_semaphore).await?;
     let model_name = name.clone();
-    let path = ensure_model_job(state.manager.clone(), name).await?;
+    let path = ensure_model_job(state.manager.clone(), name, None).await?;
 
     Ok(axum::Json(EnsureModelResponse {
         name: model_name,
@@ -147,6 +147,8 @@ pub struct TranscribeQuery {
     pub file_extension: Option<String>,
     /// When true, use the SSE streaming endpoint semantics on the regular route too.
     pub stream: Option<bool>,
+    /// Offline English summary with Qwen3-0.6B; also writes `{stem}_summary.txt` in the UI.
+    pub summarize: Option<bool>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -283,12 +285,13 @@ pub async fn transcribe_stream(
     let manager = state.manager.clone();
     let bytes = upload.bytes;
     let extension = upload.extension;
-    let (tx, rx) = tokio::sync::mpsc::channel::<TranscribeProgress>(64);
+    let summarize = query.summarize.unwrap_or(false);
+    let (tx, rx) = tokio::sync::mpsc::channel::<TranscribeProgress>(256);
     let stream_start = std::time::Instant::now();
 
     tokio::spawn(async move {
         match transcribe_upload_with_progress(
-            manager,
+            manager.clone(),
             model,
             bytes,
             extension,
@@ -301,11 +304,66 @@ pub async fn transcribe_stream(
                 let encoded = encode_result_with_options(&result, format, include_timestamps, sentences)
                     .map(|b| String::from_utf8(b).unwrap_or_else(|_| result.text.clone()))
                     .unwrap_or_else(|_| result.text.clone());
+                let summary = if summarize && !result.text.trim().is_empty() {
+                    let _ = tx
+                        .send(TranscribeProgress {
+                            phase: "summarize".into(),
+                            task_label: "Summarizing with offline Qwen3-0.6B…".into(),
+                            task_pct: 0.0,
+                            overall_pct: 98.0,
+                            chunk: None,
+                            chunks_total: None,
+                            partial_text: Some(encoded.clone()),
+                            latest_segment: result.segments.last().cloned(),
+                            elapsed_secs: Some(stream_start.elapsed().as_secs_f64()),
+                            eta_secs: None,
+                            summary: None,
+                        })
+                        .await;
+                    let text = result.text.clone();
+                    let tx_prog = tx.clone();
+                    let progress = std::sync::Arc::new(move |i: usize, n: usize, label: &str| {
+                        let pct = if n == 0 { 100.0 } else { (i as f64 / n as f64) * 100.0 };
+                        let overall = 98.0 + (pct / 100.0) * 1.5;
+                        let _ = tx_prog.try_send(TranscribeProgress {
+                            phase: "summarize".into(),
+                            task_label: label.to_string(),
+                            task_pct: pct,
+                            overall_pct: overall,
+                            chunk: Some(i + 1),
+                            chunks_total: Some(n),
+                            partial_text: None,
+                            latest_segment: None,
+                            elapsed_secs: None,
+                            eta_secs: None,
+                            summary: None,
+                        });
+                    });
+                    match tokio::task::spawn_blocking(move || manager.summarize_text(&text, Some(progress)))
+                        .await
+                    {
+                        Ok(Ok(s)) => Some(s),
+                        Ok(Err(e)) => {
+                            tracing::warn!("offline summarize failed: {e}");
+                            Some(format!("(summary failed: {e})"))
+                        }
+                        Err(e) => {
+                            tracing::warn!("offline summarize panicked: {e}");
+                            Some(format!("(summary failed: {e})"))
+                        }
+                    }
+                } else {
+                    None
+                };
                 let elapsed = stream_start.elapsed().as_secs_f64();
                 let _ = tx
                     .send(TranscribeProgress {
                         phase: "done".into(),
-                        task_label: "Complete".into(),
+                        task_label: if summary.as_ref().is_some_and(|s| !s.starts_with("(summary failed")) {
+                            "Complete (transcript + summary)".into()
+                        } else {
+                            "Complete".into()
+                        },
                         task_pct: 100.0,
                         overall_pct: 100.0,
                         chunk: None,
@@ -314,6 +372,7 @@ pub async fn transcribe_stream(
                         latest_segment: result.segments.last().cloned(),
                         elapsed_secs: Some(elapsed),
                         eta_secs: Some(0.0),
+                        summary,
                     })
                     .await;
             }
@@ -330,6 +389,7 @@ pub async fn transcribe_stream(
                         latest_segment: None,
                         elapsed_secs: None,
                         eta_secs: None,
+                        summary: None,
                     })
                     .await;
             }

@@ -44,6 +44,10 @@ pub fn convert_whisper_from_hf(
         );
     }
 
+    options.report(crate::download::PrepProgress::convert(
+        format!("Converting {model_name} weights"),
+        0.05,
+    ));
     if options.verbose {
         tracing::info!("converting whisper weights from HF safetensors for '{model_name}'");
     }
@@ -61,8 +65,10 @@ pub fn convert_whisper_from_hf(
     dump.write_scalar("encoder/n_layer.npy", config.encoder_layers as f32)?;
     dump.write_scalar("decoder/n_layer.npy", config.decoder_layers as f32)?;
 
+    let names: Vec<String> = tensors.names().into_iter().map(|s| s.to_string()).collect();
+    let total = names.len().max(1);
     let mut written = 0usize;
-    for key in tensors.names() {
+    for (i, key) in names.iter().enumerate() {
         let tensor = tensors.tensor(key)?;
         let shape: Vec<usize> = tensor.shape().iter().copied().collect();
         let floats = bytes_to_f32(tensor.data(), tensor.dtype())?;
@@ -71,6 +77,12 @@ pub fn convert_whisper_from_hf(
             let (data, shape) = burn_linear_layout(&rel, &floats, &shape);
             dump.write_f32(&rel, &data, &shape)?;
             written += 1;
+        }
+        if i % 10 == 0 || i + 1 == total {
+            options.report(crate::download::PrepProgress::convert(
+                format!("Mapping tensors {}/{total}", i + 1),
+                (i + 1) as f64 / total as f64 * 0.7,
+            ));
         }
     }
 
@@ -89,6 +101,10 @@ pub fn convert_whisper_from_hf(
 
     dump.flush_shapes()?;
 
+    options.report(crate::download::PrepProgress::convert(
+        format!("Mapped {written} tensors, writing Burn bundle"),
+        0.75,
+    ));
     if options.verbose {
         tracing::info!("mapped {written} tensors, running burn mpk conversion");
     }

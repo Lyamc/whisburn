@@ -94,6 +94,8 @@ pub struct Qwen3RuntimeConfig {
     pub asr_text_token_id: usize,
     pub eos_token_ids: Vec<usize>,
     pub inference_status: String,
+    #[serde(default)]
+    pub text_only: bool,
 }
 
 impl Qwen3RuntimeConfig {
@@ -138,6 +140,78 @@ impl Qwen3RuntimeConfig {
             asr_text_token_id: 151_704,
             eos_token_ids: vec![151_643, 151_645],
             inference_status: "ready".to_string(),
+            text_only: false,
         }
     }
+
+    pub fn from_text_hf(text: &Qwen3TextOnlyHfConfig) -> Self {
+        let mrope_section = text
+            .rope_scaling
+            .as_ref()
+            .and_then(|r| r.mrope_section.clone())
+            .unwrap_or_else(|| vec![24, 20, 20]);
+        let head_dim = if text.head_dim > 0 {
+            text.head_dim
+        } else {
+            128
+        };
+        Self {
+            burn_bundle_version: super::BURN_BUNDLE_VERSION.to_string(),
+            sample_rate: 16_000,
+            num_mel_bins: 0,
+            audio_d_model: 0,
+            audio_layers: 0,
+            audio_heads: 0,
+            audio_ffn_dim: 0,
+            audio_output_dim: 0,
+            downsample_hidden_size: 0,
+            n_window: 0,
+            n_window_infer: 0,
+            conv_chunksize: 0,
+            max_source_positions: 0,
+            text_hidden_size: text.hidden_size,
+            text_layers: text.num_hidden_layers,
+            text_heads: text.num_attention_heads,
+            text_kv_heads: text.num_key_value_heads,
+            text_head_dim: head_dim,
+            text_intermediate_size: text.intermediate_size,
+            vocab_size: text.vocab_size,
+            rms_norm_eps: text.rms_norm_eps,
+            rope_theta: text.rope_theta,
+            mrope_section,
+            audio_start_token_id: 0,
+            audio_end_token_id: 0,
+            audio_pad_token_id: 0,
+            im_start_token_id: 151_644,
+            im_end_token_id: 151_645,
+            asr_text_token_id: 0,
+            eos_token_ids: vec![151_643, 151_645],
+            inference_status: "text-lm".to_string(),
+            text_only: true,
+        }
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Qwen3TextOnlyHfConfig {
+    pub hidden_size: usize,
+    pub num_hidden_layers: usize,
+    pub num_attention_heads: usize,
+    pub num_key_value_heads: usize,
+    pub intermediate_size: usize,
+    pub vocab_size: usize,
+    #[serde(default)]
+    pub head_dim: usize,
+    #[serde(default = "default_rms")]
+    pub rms_norm_eps: f64,
+    #[serde(default = "default_theta")]
+    pub rope_theta: f64,
+    pub rope_scaling: Option<Qwen3RopeScaling>,
+}
+
+fn default_rms() -> f64 {
+    1e-6
+}
+fn default_theta() -> f64 {
+    1_000_000.0
 }

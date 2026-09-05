@@ -17,7 +17,7 @@ struct HfGenerationConfig {
 }
 
 pub fn load_whisper_decode_config(model_name: &str) -> WhisperDecodeConfig {
-    let path = format!("models/{model_name}/config.json");
+    let path = whisburn_core::resolve_model_file(model_name, "config.json");
     if !Path::new(&path).exists() {
         return WhisperDecodeConfig::default();
     }

@@ -7,6 +7,26 @@ use std::io;
 use std::process::Command;
 use crate::model::registry::find_model;
 
+fn native_agent() -> ureq::Agent {
+    use std::sync::OnceLock;
+    use ureq::tls::{TlsConfig, TlsProvider};
+    static AGENT: OnceLock<ureq::Agent> = OnceLock::new();
+    AGENT
+        .get_or_init(|| {
+            let config = ureq::config::Config::builder()
+                .tls_config(
+                    TlsConfig::builder()
+                        .provider(TlsProvider::NativeTls)
+                        .build(),
+                )
+                .build();
+            ureq::Agent::new_with_config(config)
+        })
+        .clone()
+}
+
+
+
 fn get_hf_id(name: &str) -> String {
     if let Some(info) = find_model(name) {
         return info.hf_id.to_string();
@@ -64,7 +84,7 @@ pub fn run_download_logic(
         }
     };
 
-    let output_dir = format!("models/{}", model_name);
+    let output_dir = whisburn_core::model_dir(model_name).display().to_string();
     fs::create_dir_all(&output_dir)?;
 
     let files = ["config.cfg", "tokenizer.json", "model.mpk"];
@@ -81,9 +101,9 @@ pub fn run_download_logic(
 
         if verbose { println!("Downloading {}...", url); }
         
-        let mut request = ureq::get(&url);
+        let mut request = native_agent().get(&url);
         if let Some(ref token) = hf_token {
-            request = request.set("Authorization", &format!("Bearer {}", token));
+            request = request.header("Authorization", format!("Bearer {token}"));
         }
         
         let response = request.call();
@@ -108,9 +128,9 @@ pub fn run_download_logic(
                         let gz_url = format!("{}.gz", url);
                         if verbose { println!("Trying .gz: {}...", gz_url); }
                         
-                        let mut request = ureq::get(&gz_url);
+                        let mut request = native_agent().get(&gz_url);
                         if let Some(ref token) = hf_token {
-                            request = request.set("Authorization", &format!("Bearer {}", token));
+                            request = request.header("Authorization", format!("Bearer {token}"));
                         }
                         
                         if let Ok(res) = request.call() {
@@ -129,9 +149,9 @@ pub fn run_download_logic(
 
                 if verbose { println!("Trying alternative {}...", alt_url); }
                 
-                let mut request = ureq::get(&alt_url);
+                let mut request = native_agent().get(&alt_url);
                 if let Some(ref token) = hf_token {
-                    request = request.set("Authorization", &format!("Bearer {}", token));
+                    request = request.header("Authorization", format!("Bearer {token}"));
                 }
                 
                 match request.call() {
@@ -143,9 +163,9 @@ pub fn run_download_logic(
                         let gz_url = format!("{}.gz", alt_url);
                         if verbose { println!("Trying .gz: {}...", gz_url); }
                         
-                        let mut request = ureq::get(&gz_url);
+                        let mut request = native_agent().get(&gz_url);
                         if let Some(ref token) = hf_token {
-                            request = request.set("Authorization", &format!("Bearer {}", token));
+                            request = request.header("Authorization", format!("Bearer {token}"));
                         }
                         
                         if let Ok(res) = request.call() {
@@ -159,9 +179,9 @@ pub fn run_download_logic(
                              };
                              if verbose { println!("Trying root {}...", root_url); }
                              
-                             let mut request = ureq::get(&root_url);
+                             let mut request = native_agent().get(&root_url);
                              if let Some(ref token) = hf_token {
-                                 request = request.set("Authorization", &format!("Bearer {}", token));
+                                 request = request.header("Authorization", format!("Bearer {token}"));
                              }
                              
                              if let Ok(res) = request.call() {
@@ -169,9 +189,9 @@ pub fn run_download_logic(
                              } else {
                                  let root_gz_url = format!("{}.gz", root_url);
                                  
-                                 let mut request = ureq::get(&root_gz_url);
+                                 let mut request = native_agent().get(&root_gz_url);
                                  if let Some(ref token) = hf_token {
-                                     request = request.set("Authorization", &format!("Bearer {}", token));
+                                     request = request.header("Authorization", format!("Bearer {token}"));
                                  }
                                  
                                  if let Ok(res) = request.call() {
@@ -189,12 +209,21 @@ pub fn run_download_logic(
     Ok(())
 }
 
-fn save_response(res: ureq::Response, output_dir: &str, target_file: &str, decompress: bool, verbose: bool) -> anyhow::Result<()> {
+fn save_response(
+    res: ureq::http::Response<ureq::Body>,
+    output_dir: &str,
+    target_file: &str,
+    decompress: bool,
+    verbose: bool,
+) -> anyhow::Result<()> {
     let path = Path::new(output_dir).join(target_file);
     let mut file = fs::File::create(&path)?;
     
     let pb = if !verbose {
-        let len = res.header("Content-Length")
+        let len = res
+            .headers()
+            .get("content-length")
+            .and_then(|v| v.to_str().ok())
             .and_then(|s| s.parse::<u64>().ok())
             .unwrap_or(0);
         let p = ProgressBar::new(len);
@@ -207,10 +236,11 @@ fn save_response(res: ureq::Response, output_dir: &str, target_file: &str, decom
         None
     };
 
+    let reader = res.into_body().into_reader();
     let mut reader: Box<dyn io::Read> = if let Some(ref p) = pb {
-        Box::new(p.wrap_read(res.into_reader()))
+        Box::new(p.wrap_read(reader))
     } else {
-        Box::new(res.into_reader())
+        Box::new(reader)
     };
 
     if decompress && target_file.ends_with(".gz") {

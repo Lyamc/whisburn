@@ -58,7 +58,7 @@ mod tests {
         let hf_token = std::env::var("HF_TOKEN").ok();
 
         for model_info in MODEL_REGISTRY {
-            let model_dir = format!("models/{}", model_info.name);
+            let model_dir = whisburn_core::resolve_model_dir(model_info.name).display().to_string();
             if !Path::new(&model_dir).exists() {
                 println!("Model '{}' not found. Attempting to download and convert...", model_info.name);
                 if let Err(e) = crate::cli::download::run_download_logic(model_info.name, None, true, false, hf_token.clone()) {

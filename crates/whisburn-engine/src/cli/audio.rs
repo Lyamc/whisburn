@@ -53,7 +53,7 @@ pub fn record_audio(sender: mpsc::Sender<Vec<i16>>) {
     // Create a stream with the default input format
     let (mut producer, mut consumer) = RingBuffer::<i16>::new(16384);
     let stream = device.build_input_stream(
-        &config.config(),
+        config.config(),
         move |data: &[f32], _: &cpal::InputCallbackInfo| {
             let data_16k = normalize_audio_data_to_16k(data, &sample_rate);
             let vad_data_i16_16k: Vec<i16> = data_16k.iter().map(|x| (*x * 32767.0) as i16).collect();

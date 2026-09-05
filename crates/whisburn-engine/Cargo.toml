@@ -29,8 +29,9 @@ regex = { workspace = true }
 safetensors = { workspace = true }
 half = { workspace = true }
 termsize = "0.1"
-cpal = "0.17"
+cpal = "0.18"
 clap = { workspace = true }
+tracing = { workspace = true }
 
 [features]
 default = ["wgpu", "cpu"]
@@ -40,5 +41,5 @@ cpu = ["burn/ndarray"]
 
 [dev-dependencies]
 indicatif = { workspace = true }
-sysinfo = "0.33"
+sysinfo = "0.39"
 whisburn-audio = { workspace = true }

@@ -46,12 +46,14 @@ pub fn probe_gpu() -> GpuInfo {
 }
 
 fn probe_wgpu_adapter() -> Option<(String, Option<u32>)> {
-    let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+    let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::new_without_display_handle());
     let adapter = pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions {
         power_preference: wgpu::PowerPreference::HighPerformance,
         compatible_surface: None,
         force_fallback_adapter: false,
-    }))?;
+        ..Default::default()
+    }))
+    .ok()?;
     let info = adapter.get_info();
     let name = info.name.clone();
     let vram_mb = match info.device_type {

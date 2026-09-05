@@ -65,7 +65,7 @@ impl Default for VibeVoiceRuntimeConfig {
 }
 
 pub fn load_vibevoice_runtime(model_name: &str) -> VibeVoiceRuntimeConfig {
-    let path = format!("models/{model_name}/vibevoice_runtime.json");
+    let path = whisburn_core::resolve_model_file(model_name, "vibevoice_runtime.json");
     Path::new(&path)
         .exists()
         .then(|| std::fs::read_to_string(&path).ok())

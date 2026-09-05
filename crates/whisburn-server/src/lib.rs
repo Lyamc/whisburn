@@ -80,11 +80,44 @@ pub async fn run_server(config: ServerConfig) -> anyhow::Result<()> {
         .with_state(state);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], config.port));
-    info!("whisburn server listening on http://{addr}");
-    info!("web UI: http://{addr}/");
-    info!("desktop UI: run `whisburn app` (Iced client)");
+    let local = format!("http://127.0.0.1:{}", config.port);
+    println!("whisburn web UI: {local}/");
+    println!("API:            {local}/v1/  (health at {local}/health)");
+    println!("desktop client: whisburn app");
+    info!("whisburn listening on {local} (bound {addr})");
 
     let listener = TcpListener::bind(addr).await?;
+    if config.open_browser {
+        open_browser(&format!("{local}/"));
+    }
     axum::serve(listener, app).await?;
     Ok(())
+}
+
+fn open_browser(url: &str) {
+    let result = {
+        #[cfg(windows)]
+        {
+            std::process::Command::new("cmd")
+                .args(["/C", "start", "", url])
+                .spawn()
+                .map(|_| ())
+        }
+        #[cfg(target_os = "macos")]
+        {
+            std::process::Command::new("open").arg(url).spawn().map(|_| ())
+        }
+        #[cfg(all(unix, not(target_os = "macos")))]
+        {
+            std::process::Command::new("xdg-open").arg(url).spawn().map(|_| ())
+        }
+        #[cfg(not(any(windows, unix)))]
+        {
+            Ok(())
+        }
+    };
+    if let Err(e) = result {
+        tracing::warn!("could not open browser for {url}: {e}");
+        println!("Open {url} in a browser for the upload UI");
+    }
 }

@@ -28,6 +28,7 @@ pub fn zero_pad1d<B: burn::tensor::backend::Backend>(
 }
 
 /// Output time length of a causal SConv1d (padding_total left + extra right, then stride).
+#[cfg(test)]
 pub fn conv_out_len(length: usize, kernel_size: usize, stride: usize) -> usize {
     let pad = padding_total(kernel_size, stride, 1);
     let extra = extra_padding_for_conv1d(length, kernel_size, stride, pad);

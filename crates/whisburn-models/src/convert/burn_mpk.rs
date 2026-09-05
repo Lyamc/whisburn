@@ -18,6 +18,10 @@ pub fn save_model_from_npy(name: &str, options: &DownloadOptions) -> anyhow::Res
         );
     }
 
+    options.report(crate::download::PrepProgress::convert(
+        format!("Building Burn weight file for '{name}'"),
+        0.8,
+    ));
     if options.verbose {
         tracing::info!("converting npy dump to burn mpk for '{name}'");
     }
@@ -46,6 +50,10 @@ pub fn save_model_from_npy(name: &str, options: &DownloadOptions) -> anyhow::Res
 
     decompress_gz_to_aliases(&dump_dir, name)?;
 
+    options.report(crate::download::PrepProgress::convert(
+        format!("Burn bundle saved for '{name}'"),
+        1.0,
+    ));
     if options.verbose {
         tracing::info!("burn bundle saved to {}", dump_dir.display());
     }

@@ -7,8 +7,8 @@ use whisburn_engine::model::registry::{find_model, ModelCategory};
 use whisburn_engine::runtime::InferenceRuntime;
 
 use crate::diarize::assign_alternating_speakers;
-use crate::download::{download_model, DownloadOptions};
-use crate::paths::{is_model_ready, model_dir};
+use crate::download::{download_model, DownloadOptions, PrepProgressFn};
+use crate::paths::{is_model_ready, resolve_model_dir};
 
 pub struct ModelManager {
     runtime: InferenceRuntime,
@@ -21,7 +21,10 @@ impl ModelManager {
     pub fn new(device: Option<String>, verbose: bool, debug: bool) -> Self {
         Self {
             runtime: InferenceRuntime::new(device, verbose, debug),
-            download_options: DownloadOptions::default(),
+            download_options: DownloadOptions {
+                verbose,
+                ..DownloadOptions::default()
+            },
             gate: Mutex::new(()),
             sync_gate: StdMutex::new(()),
         }
@@ -34,12 +37,12 @@ impl ModelManager {
 
     pub async fn ensure_model(&self, name: &str) -> WhisburnResult<PathBuf> {
         if is_model_ready(name) {
-            return Ok(model_dir(name));
+            return Ok(resolve_model_dir(name));
         }
 
         let _guard = self.gate.lock().await;
         if is_model_ready(name) {
-            return Ok(model_dir(name));
+            return Ok(resolve_model_dir(name));
         }
 
         download_model(name, &self.download_options)
@@ -50,9 +53,25 @@ impl ModelManager {
         self.runtime.loaded_models()
     }
 
+    pub fn is_loaded(&self, name: &str) -> bool {
+        self.runtime.loaded_models().iter().any(|n| n == name)
+    }
+
     pub async fn warm_model(&self, name: &str) -> WhisburnResult<()> {
         self.ensure_model(name).await?;
         self.runtime.warm_model(name)
+    }
+
+    pub fn warm_model_sync(&self, name: &str) -> WhisburnResult<()> {
+        self.ensure_model_sync(name)?;
+        tracing::info!(
+            model = name,
+            backend = %self.runtime.backend_name(),
+            "loading model weights"
+        );
+        self.runtime.warm_model(name)?;
+        tracing::info!(model = name, "model weights loaded");
+        Ok(())
     }
 
     pub async fn process_waveform(
@@ -69,7 +88,7 @@ impl ModelManager {
 
     pub fn ensure_model_sync(&self, name: &str) -> WhisburnResult<PathBuf> {
         if is_model_ready(name) {
-            return Ok(model_dir(name));
+            return Ok(resolve_model_dir(name));
         }
 
         let _guard = self
@@ -77,11 +96,42 @@ impl ModelManager {
             .lock()
             .map_err(|e| WhisburnError::Model(e.to_string()))?;
         if is_model_ready(name) {
-            return Ok(model_dir(name));
+            return Ok(resolve_model_dir(name));
         }
 
-        download_model(name, &self.download_options)
-            .map_err(|e| WhisburnError::Model(e.to_string()))
+        self.download_with_progress(name, None)
+    }
+
+    pub fn ensure_model_sync_with_progress(
+        &self,
+        name: &str,
+        progress: Option<PrepProgressFn>,
+    ) -> WhisburnResult<PathBuf> {
+        if is_model_ready(name) {
+            return Ok(resolve_model_dir(name));
+        }
+
+        let _guard = self
+            .sync_gate
+            .lock()
+            .map_err(|e| WhisburnError::Model(e.to_string()))?;
+        if is_model_ready(name) {
+            return Ok(resolve_model_dir(name));
+        }
+
+        self.download_with_progress(name, progress)
+    }
+
+    fn download_with_progress(
+        &self,
+        name: &str,
+        progress: Option<PrepProgressFn>,
+    ) -> WhisburnResult<PathBuf> {
+        let mut opts = self.download_options.clone();
+        if progress.is_some() {
+            opts.progress = progress;
+        }
+        download_model(name, &opts).map_err(|e| WhisburnError::Model(e.to_string()))
     }
 
     pub fn process_waveform_sync(
@@ -108,6 +158,21 @@ impl ModelManager {
         }
 
         Ok(result)
+    }
+
+    pub fn summarize_text(
+        &self,
+        text: &str,
+        progress: Option<whisburn_engine::model::qwen3::summarize::SummarizeProgress>,
+    ) -> WhisburnResult<String> {
+        let name = whisburn_engine::model::qwen3::summarize::DEFAULT_SUMMARIZER_MODEL;
+        let prep = progress.clone().map(|cb| {
+            std::sync::Arc::new(move |p: crate::download::PrepProgress| {
+                cb(0, 1, &p.label);
+            }) as crate::download::PrepProgressFn
+        });
+        self.ensure_model_sync_with_progress(name, prep)?;
+        self.runtime.summarize_text(text, name, progress)
     }
 
     fn validate_task(&self, model_name: &str, options: &TaskOptions) -> WhisburnResult<()> {

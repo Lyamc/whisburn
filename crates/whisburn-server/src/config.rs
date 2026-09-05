@@ -9,6 +9,7 @@ pub struct ServerConfig {
     pub hf_token: Option<String>,
     pub verbose: bool,
     pub debug: bool,
+    pub open_browser: bool,
     pub max_upload_bytes: usize,
     pub max_audio_seconds: u64,
     pub preload_models: PreloadModels,
@@ -24,6 +25,7 @@ impl Default for ServerConfig {
             hf_token: std::env::var("HF_TOKEN").ok(),
             verbose: std::env::var("WHISBURN_VERBOSE").is_ok(),
             debug: std::env::var("WHISBURN_DEBUG").is_ok(),
+            open_browser: true,
             max_upload_bytes: 512 * 1024 * 1024,
             max_audio_seconds: 24 * 60 * 60,
             preload_models: std::env::var("WHISBURN_PRELOAD_MODELS")
@@ -43,6 +45,7 @@ impl ServerConfig {
         hf_token: Option<String>,
         verbose: bool,
         debug: bool,
+        open_browser: bool,
     ) -> Self {
         Self {
             port: port.unwrap_or(file.server_port),
@@ -52,6 +55,7 @@ impl ServerConfig {
             hf_token,
             verbose,
             debug,
+            open_browser,
             ..Self::default()
         }
     }

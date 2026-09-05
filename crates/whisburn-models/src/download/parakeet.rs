@@ -77,13 +77,7 @@ fn download_parakeet_v2(
     }
 
     fetch_required_hf_file(repo, source.repo_id(), V2_NEMO, dir, options)?;
-    let _ = fetch_hf_http(
-        V2_ONNX_VOCAB_REPO,
-        "vocab.txt",
-        dir,
-        &options.hf_token,
-        options.verbose,
-    );
+    let _ = fetch_hf_http(V2_ONNX_VOCAB_REPO, "vocab.txt", dir, options);
 
     if dir.join("model.safetensors").exists() && dir.join("config.json").exists() {
         return Ok(());

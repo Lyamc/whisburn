@@ -17,7 +17,8 @@ pub use prompt::{
 };
 pub use runtime::{load_qwen3_runtime, Qwen3RuntimeConfig};
 pub use thinker::{Qwen3Thinker, Qwen3ThinkerConfig};
-pub use weights::load_qwen3_weights;
+pub use weights::{load_qwen3_lm_weights, load_qwen3_weights};
+pub mod summarize;
 
 /// HF default `max_new_tokens` from `Qwen3ASRModel.from_pretrained`.
 pub const QWEN3_DEFAULT_MAX_NEW_TOKENS: usize = 512;

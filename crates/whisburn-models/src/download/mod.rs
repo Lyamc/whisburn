@@ -19,11 +19,11 @@ use crate::convert::{
     is_moonshine_model, is_parakeet_model, is_qwen3_model, is_tone_model, is_vibevoice_model,
     is_whisper_model, needs_reconversion_for,
 };
-use crate::paths::{has_burn_bundle, model_dir, models_dir};
+use crate::paths::{has_burn_bundle, model_dir, models_dir, resolve_model_dir};
 use crate::sources::resolve_download_source;
 
 pub use cleanup::save_response_gz;
-pub use options::DownloadOptions;
+pub use options::{DownloadOptions, PrepProgress, PrepProgressFn};
 
 use bundle::download_generic_bundle;
 use cleanup::clear_stale_artifacts;
@@ -45,13 +45,13 @@ pub fn download_model(name: &str, options: &DownloadOptions) -> anyhow::Result<P
         );
     }
 
-    let dir = model_dir(name);
-    if !options.force && has_burn_bundle(&dir, name) && !needs_reconversion_for(name, &dir) {
-        if options.verbose {
-            tracing::info!("model '{name}' already present at {}", dir.display());
-        }
-        return Ok(dir);
+    let resolved = resolve_model_dir(name);
+    if !options.force && has_burn_bundle(&resolved, name) && !needs_reconversion_for(name, &resolved) {
+        tracing::info!("model '{name}' already present at {}", resolved.display());
+        return Ok(resolved);
     }
+
+    let dir = model_dir(name);
 
     if options.force {
         clear_stale_artifacts(&dir);
@@ -63,6 +63,12 @@ pub fn download_model(name: &str, options: &DownloadOptions) -> anyhow::Result<P
     let source = resolve_download_source(name)
         .ok_or_else(|| anyhow::anyhow!("could not resolve download source for '{name}'"))?;
 
+    options.report(crate::download::options::PrepProgress::download(
+        format!("Preparing '{name}' from {}", source.repo_id()),
+        0.0,
+        None,
+        None,
+    ));
     if options.verbose {
         tracing::info!(
             "preparing model '{name}' from {} ({:?})",

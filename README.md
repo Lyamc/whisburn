@@ -27,7 +27,7 @@ The default build uses **native TLS** (Schannel on Windows, Security framework o
 - Optional: `HF_TOKEN` for gated HuggingFace models
 - Optional: [ffmpeg](https://ffmpeg.org/) with `libopus` for Opus transcoding and streaming on the server
 
-No C toolchain is required for a normal `cargo build`.
+No C toolchain is required for a normal `cargo build`. On Windows, use the MSVC target and MSVC `link.exe` (the project `.cargo/config.toml` overrides a user-level `lld-link`, which fails against recent VS 2022 CRTs).
 
 ### Build
 
@@ -63,7 +63,9 @@ Output defaults to JSON. Use `--format txt`, `srt`, or `vtt` for other formats.
 cargo run -p whisburn-cli -- serve --port 8787 --model qwen3-asr-0.6b
 ```
 
-Open **http://localhost:8787/** in a browser to upload audio, pick an output format, and download the transcript. The UI also auto-transcodes uploads to Opus for in-browser playback (requires ffmpeg).
+`serve` is the API **and** the web UI. It binds the API under `/v1/` and serves the upload page at `/`. `whisburn serve` opens **http://127.0.0.1:8787/** in your browser (pass `--no-open` to skip). Use `http://127.0.0.1:8787/`, not `http://0.0.0.0:8787/`.
+
+The UI auto-transcodes uploads to Opus for in-browser playback (requires ffmpeg). For the Iced desktop client, run `whisburn app`.
 
 **curl example:**
 
@@ -111,7 +113,7 @@ whisburn models      Download or list models
 | `--model` | `tiny_en` | Default model for `/v1/transcribe` |
 | `--device` | auto | Burn device override |
 | `--hf-token` | `$HF_TOKEN` | HuggingFace API token |
-| `--prefetch` | `true` | Download default model on startup |
+| `--no-open` | off | Do not open the web UI in a browser |
 | `-v, --verbose` | | Verbose logging |
 
 ### `transcribe`

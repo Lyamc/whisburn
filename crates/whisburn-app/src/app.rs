@@ -86,7 +86,7 @@ impl From<&Settings> for SettingsDraft {
 }
 
 #[derive(Debug, Clone)]
-struct AppInit {
+pub struct AppInit {
     settings: Settings,
     models: Vec<ModelInfo>,
     default_model: String,
@@ -342,7 +342,7 @@ impl App {
 
     fn status_indicator(&self) -> Element<'_, Message> {
         let color = self.server_status.color(self.blink_on);
-        let dot = container(Space::new(Length::Fixed(14.0), Length::Fixed(14.0)))
+        let dot = container(Space::new().width(Length::Fixed(14.0)).height(Length::Fixed(14.0)))
             .style(move |_theme| container::Style {
                 background: Some(color.into()),
                 border: Border {
@@ -393,7 +393,7 @@ impl App {
         column![
             row![
                 text("whisburn").size(26),
-                Space::with_width(Length::Fill),
+                Space::new().width(Length::Fill),
                 self.status_indicator(),
                 button("Settings").on_press(Message::OpenSettings),
                 button("Refresh").on_press(Message::Refresh),
@@ -520,14 +520,21 @@ async fn refresh_catalog(server_url: String) -> Result<AppInit, String> {
     let models = api::fetch_models(&server_url)
         .await
         .map_err(|e| e.to_string())?;
-    let config_result = api::fetch_config(&server_url).await;
-    let server_warning = config_result.is_err();
-    let default_model = config_result
-        .ok()
-        .map(|c| c.default_model)
+    let config = api::fetch_config(&server_url).await;
+    let server_warning = config.is_err();
+    let config = config.ok();
+    let default_model = config
+        .as_ref()
+        .map(|c| c.default_model.clone())
         .unwrap_or_else(|| settings.default_model.clone());
-    let models_loaded = models.iter().any(|m| m.loaded);
-    let loaded = models.iter().filter(|m| m.loaded).count();
+    let models_loaded = config
+        .as_ref()
+        .map(|c| !c.loaded_models.is_empty())
+        .unwrap_or_else(|| models.iter().any(|m| m.loaded));
+    let loaded = config
+        .as_ref()
+        .map(|c| c.loaded_models.len())
+        .unwrap_or_else(|| models.iter().filter(|m| m.loaded).count());
     let status_line = if server_warning {
         format!(
             "Warning: config endpoint unavailable. Loaded {loaded} model(s) in GPU memory. Default: {default_model}"

@@ -26,7 +26,7 @@ pub struct Qwen3AudioTowerConfig {
 impl Qwen3AudioTowerConfig {
     pub fn mel_after_conv(&self) -> usize {
         let m = self.n_mels;
-        ((((m + 1) / 2 + 1) / 2 + 1) / 2)
+        (((m + 1) / 2 + 1) / 2 + 1) / 2
     }
 
     pub fn init<B: Backend>(&self, device: &B::Device) -> Qwen3AudioTower<B> {

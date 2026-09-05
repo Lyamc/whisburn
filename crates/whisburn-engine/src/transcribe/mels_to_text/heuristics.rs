@@ -1,5 +1,3 @@
-use std::f32;
-
 use crate::token::Gpt2Tokenizer;
 
 use super::BeamSearchToken;
@@ -10,7 +8,7 @@ pub fn special_tokens_maskout(
     end_token: usize,
     include_timestamps: bool,
 ) -> Vec<f32> {
-    let neg_infty = -f32::INFINITY;
+    let neg_infty = f32::NEG_INFINITY;
     (0..vocab_size)
         .map(|token| {
             if token == end_token {

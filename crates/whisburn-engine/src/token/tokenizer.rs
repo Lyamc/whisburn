@@ -20,25 +20,27 @@ struct Qwen3TokenizerConfig {
     added_tokens_decoder: Option<HashMap<String, Qwen3AddedTokenEntry>>,
 }
 
-fn read_qwen3_added_tokens(config_path: &str) -> Option<Vec<AddedToken>> {
+fn read_qwen3_added_tokens(config_path: &std::path::Path) -> Option<Vec<AddedToken>> {
     let config_raw = fs::read_to_string(config_path).ok()?;
     let config = serde_json::from_str::<Qwen3TokenizerConfig>(&config_raw).ok()?;
     let added = config.added_tokens_decoder?;
     let mut tokens: Vec<AddedToken> = added
         .values()
-        .map(|entry| AddedToken::from(entry.content.as_str(), true))
+        .map(|entry| AddedToken::from(entry.content.as_str(), entry.special.unwrap_or(true)))
         .collect();
     tokens.sort_by_key(|t| t.content.clone());
     Some(tokens)
 }
 
 fn load_qwen3_tokenizer(model_name: &str) -> Result<tokenizers::Tokenizer> {
-    let model_dir = format!("models/{model_name}");
-    let vocab_path = format!("{model_dir}/vocab.json");
-    let merges_path = format!("{model_dir}/merges.txt");
-    let config_path = format!("{model_dir}/tokenizer_config.json");
+    let model_dir = whisburn_core::resolve_model_dir(model_name);
+    let vocab_path = model_dir.join("vocab.json");
+    let merges_path = model_dir.join("merges.txt");
+    let config_path = model_dir.join("tokenizer_config.json");
 
-    let (mut vocab, merges) = BPE::read_file(&vocab_path, &merges_path)
+    let vocab_s = vocab_path.to_string_lossy();
+    let merges_s = merges_path.to_string_lossy();
+    let (mut vocab, merges) = BPE::read_file(vocab_s.as_ref(), merges_s.as_ref())
         .map_err(|e| format!("failed to read Qwen3 vocab/merges: {e}"))?;
 
     if let Ok(config_raw) = fs::read_to_string(&config_path) {
@@ -60,7 +62,9 @@ fn load_qwen3_tokenizer(model_name: &str) -> Result<tokenizers::Tokenizer> {
 
     let mut tokenizer = tokenizers::Tokenizer::new(bpe);
     if let Some(specials) = read_qwen3_added_tokens(&config_path) {
-        tokenizer.add_special_tokens(&specials);
+        tokenizer
+            .add_special_tokens(specials)
+            .map_err(|e| format!("failed to add Qwen3 special tokens: {e}"))?;
     }
     Ok(tokenizer)
 }
@@ -73,12 +77,12 @@ pub struct Gpt2Tokenizer {
 
 impl Gpt2Tokenizer {
     pub fn new(model_name: &str) -> Result<Self> {
-        let json_path = format!("models/{}/tokenizer.json", model_name);
-        
-        let vocab_path = format!("models/{}/vocab.json", model_name);
-        let merges_path = format!("models/{}/merges.txt", model_name);
+        let dir = whisburn_core::resolve_model_dir(model_name);
+        let json_path = dir.join("tokenizer.json");
+        let vocab_path = dir.join("vocab.json");
+        let merges_path = dir.join("merges.txt");
 
-        let is_qwen_family = model_name.contains("qwen3-asr")
+        let is_qwen_family = model_name.contains("qwen3")
             || model_name.contains("vibevoice")
             || model_name.contains("bitnet")
             || model_name.contains("moonshine")
@@ -92,7 +96,9 @@ impl Gpt2Tokenizer {
         {
             load_qwen3_tokenizer(model_name)?
         } else if Path::new(&vocab_path).exists() && Path::new(&merges_path).exists() {
-            let bpe = tokenizers::models::bpe::BPE::from_file(&vocab_path, &merges_path)
+            let vocab_s = vocab_path.to_string_lossy();
+            let merges_s = merges_path.to_string_lossy();
+            let bpe = tokenizers::models::bpe::BPE::from_file(vocab_s.as_ref(), merges_s.as_ref())
                 .build()
                 .map_err(|e| format!("failed to load BPE from vocab/merges: {e}"))?;
             tokenizers::Tokenizer::new(bpe)
@@ -101,7 +107,9 @@ impl Gpt2Tokenizer {
         };
 
         if !is_qwen_family {
-            tokenizer.add_special_tokens(crate::token::special::construct_special_tokens().as_slice());
+            tokenizer
+                .add_special_tokens(crate::token::special::construct_special_tokens())
+                .map_err(|e| format!("failed to add special tokens: {e}"))?;
         }
 
         Ok(Self { tokenizer })

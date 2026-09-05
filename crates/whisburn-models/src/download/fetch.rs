@@ -65,21 +65,31 @@ pub fn fetch_required_hf_file(
             if options.verbose {
                 tracing::info!("using cached {} ({} bytes)", dest.display(), len);
             }
+            options.report(crate::download::options::PrepProgress::download(
+                format!("Using cached {remote_path}"),
+                1.0,
+                Some(len),
+                Some(len),
+            ));
             return Ok(dest);
         }
     }
 
-    fetch_repo_file(repo, remote_path, dest_dir, options).or_else(|e1| {
-        fetch_hf_http(
-            repo_id,
-            remote_path,
-            dest_dir,
-            &options.hf_token,
-            options.verbose,
-        )
-        .map_err(|e2| {
-            anyhow::anyhow!("failed to fetch {remote_path} from {repo_id}: {e1}; http: {e2}")
-        })
+    options.report(crate::download::options::PrepProgress::download(
+        format!("Fetching {remote_path}"),
+        0.0,
+        None,
+        None,
+    ));
+
+    let via_http = || {
+        fetch_hf_http(repo_id, remote_path, dest_dir, options)
+    };
+
+    // HTTP first so byte progress (and serve logs) stay live; hf-hub is a silent fallback.
+    via_http().or_else(|e1| {
+        fetch_repo_file(repo, remote_path, dest_dir, options)
+            .map_err(|e2| anyhow::anyhow!("http: {e1}; hub: {e2}"))
     })
 }
 

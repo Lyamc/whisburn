@@ -47,6 +47,7 @@ pub enum ModelCapability {
     Vad,
     Tts,
     Sts,
+    Llm,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

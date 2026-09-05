@@ -96,11 +96,20 @@ async fn lock_file(mut path: PathBuf) -> Result<Handle, ApiError> {
 mod unix {
     use std::os::fd::AsRawFd;
 
+    // BSD/Linux flock constants. Bound directly so this crate does not need the `libc` crate.
+    const LOCK_EX: i32 = 2;
+    const LOCK_NB: i32 = 4;
+    const LOCK_UN: i32 = 8;
+
+    unsafe extern "C" {
+        fn flock(fd: i32, operation: i32) -> i32;
+    }
+
     pub(crate) fn lock(file: &tokio::fs::File) -> i32 {
-        unsafe { libc::flock(file.as_raw_fd(), libc::LOCK_EX | libc::LOCK_NB) }
+        unsafe { flock(file.as_raw_fd(), LOCK_EX | LOCK_NB) }
     }
     pub(crate) fn unlock(file: &tokio::fs::File) -> i32 {
-        unsafe { libc::flock(file.as_raw_fd(), libc::LOCK_UN) }
+        unsafe { flock(file.as_raw_fd(), LOCK_UN) }
     }
 }
 #[cfg(target_family = "unix")]

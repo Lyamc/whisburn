@@ -28,10 +28,18 @@ pub fn prepare_qwen3_bundle(
         );
     }
 
-    let hf: config::Qwen3HfConfig =
-        serde_json::from_str(&fs::read_to_string(&config_path).context("read config.json")?)?;
-
-    let runtime = Qwen3RuntimeConfig::from_hf(&hf);
+    let config_raw = fs::read_to_string(&config_path).context("read config.json")?;
+    options.report(crate::download::PrepProgress::convert(
+        "Writing Qwen3 runtime config",
+        0.9,
+    ));
+    let runtime = if let Ok(hf) = serde_json::from_str::<config::Qwen3HfConfig>(&config_raw) {
+        Qwen3RuntimeConfig::from_hf(&hf)
+    } else {
+        let text: config::Qwen3TextOnlyHfConfig =
+            serde_json::from_str(&config_raw).context("parse Qwen3 text config.json")?;
+        Qwen3RuntimeConfig::from_text_hf(&text)
+    };
     fs::write(
         model_dir.join("qwen3_runtime.json"),
         serde_json::to_string_pretty(&runtime)?,
@@ -56,7 +64,7 @@ pub fn prepare_qwen3_bundle(
 }
 
 pub fn is_qwen3_model(name: &str) -> bool {
-    matches!(name, "qwen3-asr-0.6b" | "qwen3-asr-1.7b")
+    matches!(name, "qwen3-asr-0.6b" | "qwen3-asr-1.7b" | "qwen3-0.6b")
 }
 
 pub fn needs_qwen3_reconversion(model_dir: &Path) -> bool {

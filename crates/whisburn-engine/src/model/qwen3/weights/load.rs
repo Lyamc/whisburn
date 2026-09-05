@@ -37,6 +37,23 @@ pub fn load_qwen3_weights<B: Backend>(
     Ok(())
 }
 
+pub fn load_qwen3_lm_weights<B: Backend>(
+    thinker: &mut Qwen3Thinker<B>,
+    model_dir: &Path,
+    device: &B::Device,
+    verbose: bool,
+) -> Result<(), Box<dyn Error>> {
+    let mut store = Qwen3WeightStore::open(model_dir).map_err(|e| format!("{e}"))?;
+    if !store.has_key("thinker.model.layers.0.self_attn.q_proj.weight") {
+        return Err("Qwen3 text weights not found (expected model.layers.* in safetensors)".into());
+    }
+    *thinker = load_thinker(&mut store, thinker, device)?;
+    if verbose {
+        println!("Qwen3 LM: loaded thinker weights from safetensors");
+    }
+    Ok(())
+}
+
 fn weights_present(model_dir: &Path) -> bool {
     super::weights_present(model_dir)
 }

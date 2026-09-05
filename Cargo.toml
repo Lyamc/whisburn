@@ -25,38 +25,40 @@ whisburn-models = { path = "crates/whisburn-models" }
 whisburn-server = { path = "crates/whisburn-server" }
 whisburn-app = { path = "crates/whisburn-app" }
 
-burn = { version = "0.16.1", features = ["wgpu", "ndarray", "record-backward-compat", "fusion"] }
+# default-features would enable burn-core's optional tch/dataset backends
+# (libtorch / sqlite via `cc`). Inference only needs wgpu + ndarray.
+burn = { version = "0.16.1", default-features = false, features = ["std", "wgpu", "ndarray", "record-backward-compat", "fusion"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 thiserror = "2.0"
 anyhow = "1.0"
-tokio = { version = "1.43", features = ["full"] }
+tokio = { version = "1", features = ["full"] }
 axum = { version = "0.8", features = ["multipart"] }
 tower = "0.5"
-tower-http = { version = "0.6", features = ["cors", "trace", "limit", "catch-panic"] }
+tower-http = { version = "0.7", features = ["cors", "trace", "limit", "catch-panic"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 clap = { version = "4.5", features = ["derive", "env"] }
 # native-tls (Schannel/Security.framework/OpenSSL) — avoids ring/cc at build time
-ureq = { version = "2.12", default-features = false, features = ["native-tls"] }
+ureq = { version = "3", default-features = false, features = ["native-tls"] }
 # Vendored hf-hub with ureq default-features disabled (upstream forces rustls/ring via ureq defaults)
 hf-hub = { path = "third_party/hf-hub", default-features = false, features = ["ureq", "native-tls"] }
 symphonia = { version = "0.5", default-features = false, features = ["wav", "mp3", "flac", "ogg", "pcm", "aac", "isomp4", "mkv"] }
-rubato = "0.16"
+rubato = "5"
 hound = "3.5"
 # fancy-regex instead of onig (onig_sys needs the `cc` crate / a C toolchain)
-tokenizers = { version = "0.22", default-features = false, features = ["fancy-regex", "progressbar"] }
+tokenizers = { version = "0.23", default-features = false, features = ["fancy-regex", "progressbar"] }
 npy = { git = "https://github.com/Lyamc/npy-rs" }
 strum = "0.28"
 strum_macros = "0.28"
 flate2 = "1.0"
-indicatif = "0.17"
+indicatif = "0.18"
 regex = "1.11"
 chrono = "0.4"
-uuid = { version = "1.15", features = ["v4", "serde", "js"] }
-tempfile = "3.17"
-safetensors = "0.4"
-half = "2.4"
+uuid = { version = "1", features = ["v4", "serde", "js"] }
+tempfile = "3"
+safetensors = "0.8"
+half = "2"
 
 [profile.release]
 opt-level = 1

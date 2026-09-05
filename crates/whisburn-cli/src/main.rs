@@ -2,7 +2,7 @@ use anyhow::{anyhow, Result};
 use clap::{Parser, Subcommand};
 use tracing_subscriber::EnvFilter;
 
-use whisburn_core::{load_settings, group_segments_into_sentences, OutputFormat, PreloadModels, SpeechTask, TaskOptions};
+use whisburn_core::{load_settings, OutputFormat, PreloadModels, SpeechTask, TaskOptions};
 use whisburn_models::{download_model, DownloadOptions, ModelManager};
 use whisburn_server::ServerConfig;
 
@@ -34,7 +34,7 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
-    /// Start the HTTP API server (web UI at http://localhost:8787/)
+    /// Start the server and open the web UI (http://127.0.0.1:8787/)
     Serve {
         #[arg(long, env = "WHISBURN_PORT")]
         port: Option<u16>,
@@ -48,6 +48,9 @@ enum Commands {
         verbose: bool,
         #[arg(long, env = "WHISBURN_DEBUG")]
         debug: bool,
+        /// Do not open a browser tab for the web UI.
+        #[arg(long = "no-open")]
+        no_open: bool,
         /// Load models into GPU memory at startup. Omit for lazy load on first audio.
         /// Pass alone or `all` for every burn_ready model; pass names for specific models.
         #[arg(long = "preload-models", value_delimiter = ',', num_args = 0.., env = "WHISBURN_PRELOAD_MODELS")]
@@ -88,6 +91,9 @@ enum Commands {
         max_tokens: usize,
         #[arg(long)]
         sentences: bool,
+        /// Also write `{input_stem}_summary.txt` using the offline English Qwen3-0.6B model.
+        #[arg(long)]
+        summarize: bool,
         #[arg(short, long)]
         verbose: bool,
         #[arg(long)]
@@ -137,13 +143,41 @@ enum ModelsCommand {
     List,
 }
 
+fn init_tracing(verbose: bool, debug: bool) {
+    let default = if debug { "debug" } else { "info" };
+    let filter = EnvFilter::try_from_default_env().unwrap_or_else(|_| {
+        let crates = [
+            "whisburn",
+            "whisburn_cli",
+            "whisburn_server",
+            "whisburn_engine",
+            "whisburn_models",
+            "whisburn_audio",
+        ];
+        let spec = crates
+            .iter()
+            .map(|c| format!("{c}={default}"))
+            .collect::<Vec<_>>()
+            .join(",");
+        let _ = verbose;
+        EnvFilter::new(spec)
+    });
+    tracing_subscriber::fmt().with_env_filter(filter).init();
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
-    tracing_subscriber::fmt()
-        .with_env_filter(EnvFilter::from_default_env())
-        .init();
-
     let cli = Cli::parse();
+    let (verbose, debug) = match &cli.command {
+        Commands::Serve { verbose, debug, .. }
+        | Commands::Transcribe { verbose, debug, .. }
+        | Commands::Verify { verbose, debug, .. } => (*verbose, *debug),
+        Commands::Models {
+            action: ModelsCommand::Download { verbose, .. },
+        } => (*verbose, false),
+        _ => (false, false),
+    };
+    init_tracing(verbose, debug);
 
     match cli.command {
         Commands::Serve {
@@ -153,6 +187,7 @@ async fn main() -> Result<()> {
             hf_token,
             verbose,
             debug,
+            no_open,
             preload_models,
         } => {
             let file_settings = load_settings();
@@ -167,6 +202,7 @@ async fn main() -> Result<()> {
                 hf_token,
                 verbose,
                 debug,
+                !no_open,
             );
             whisburn_server::run_server(config).await?;
         }
@@ -186,6 +222,7 @@ async fn main() -> Result<()> {
                         hf_token,
                         verbose,
                         force,
+                        progress: None,
                     },
                 )?;
                 println!("model ready at {}", path.display());
@@ -213,6 +250,7 @@ async fn main() -> Result<()> {
             beam_size,
             max_tokens,
             sentences,
+            summarize,
             verbose,
             debug,
         } => {
@@ -296,6 +334,22 @@ async fn main() -> Result<()> {
 
             let encoded = whisburn_audio::encode_result_with_options(&result, output_format, include_timestamps, sentences)?;
             std::io::Write::write_all(&mut std::io::stdout(), &encoded)?;
+
+            if summarize {
+                eprintln!("Summarizing transcript with offline Qwen3-0.6B…");
+                let summary = manager.summarize_text(&result.text, None)?;
+                let stem = std::path::Path::new(&input)
+                    .file_stem()
+                    .and_then(|s| s.to_str())
+                    .unwrap_or("transcript");
+                let parent = std::path::Path::new(&input)
+                    .parent()
+                    .filter(|p| !p.as_os_str().is_empty())
+                    .unwrap_or_else(|| std::path::Path::new("."));
+                let sum_path = parent.join(format!("{stem}_summary.txt"));
+                std::fs::write(&sum_path, summary)?;
+                eprintln!("Wrote summary to {}", sum_path.display());
+            }
         }
         Commands::Verify {
             input,

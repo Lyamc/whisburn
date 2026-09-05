@@ -55,6 +55,7 @@ pub enum ModelCategory {
     Vad,
     Diarization,
     Tts,
+    Llm,
 }
 
 impl ModelCategory {
@@ -64,6 +65,7 @@ impl ModelCategory {
             Self::Vad => ModelCapability::Vad,
             Self::Diarization => ModelCapability::Diarization,
             Self::Tts => ModelCapability::Tts,
+            Self::Llm => ModelCapability::Llm,
         }
     }
 }
@@ -87,6 +89,7 @@ pub const MODEL_REGISTRY: &[ModelInfo] = &[
     model!("t-one", "t-tech/T-one", "T-Tech T-one Russian 8 kHz Conformer CTC (Burn offline greedy).", ModelCategory::Asr, 500, true, ModelTier::Low, ModelTier::Medium, ModelTier::Low, ModelTier::Low, 50, "Russian telephony ASR"),
     model!("moonshine-tiny", "UsefulSensors/moonshine-tiny", "Moonshine tiny English ASR (raw 16 kHz, Burn greedy decode).", ModelCategory::Asr, 300, true, ModelTier::Low, ModelTier::Low, ModelTier::Low, ModelTier::Low, 25, "Tiny edge ASR"),
     model!("moonshine-base", "UsefulSensors/moonshine-base", "Moonshine base English ASR (raw 16 kHz, Burn greedy decode).", ModelCategory::Asr, 500, true, ModelTier::Low, ModelTier::Medium, ModelTier::Low, ModelTier::Medium, 40, "Small edge ASR"),
+    model!("qwen3-0.6b", "Qwen/Qwen3-0.6B", "Qwen3-0.6B instruct (offline English transcript summarizer).", ModelCategory::Llm, 1800, true, ModelTier::Low, ModelTier::Medium, ModelTier::Low, ModelTier::High, 45, "Fast English summaries"),
     model!("qwen3-asr-0.6b", "Qwen/Qwen3-ASR-0.6B", "Qwen3-ASR 0.6B (Burn inference: audio tower + thinker + greedy decode).", ModelCategory::Asr, 2500, true, ModelTier::Medium, ModelTier::High, ModelTier::Medium, ModelTier::Medium, 60, "Qwen ASR, many langs"),
     model!("qwen3-asr-1.7b", "Qwen/Qwen3-ASR-1.7B-hf", "Qwen3-ASR 1.7B (Burn inference: audio tower + thinker + greedy decode).", ModelCategory::Asr, 4500, true, ModelTier::High, ModelTier::High, ModelTier::High, ModelTier::High, 75, "Top Qwen accuracy"),
     model!("vibevoice-asr", "microsoft/VibeVoice-ASR-HF", "Microsoft VibeVoice-ASR 7B (INT8 Qwen2.5 decoder + dual encoders, Burn greedy STT).", ModelCategory::Asr, 8_000, true, ModelTier::High, ModelTier::High, ModelTier::High, ModelTier::Low, 40, "Large STT, INT8 decoder"),

@@ -38,6 +38,27 @@ pub struct InferenceRuntime {
     warmed: Mutex<HashSet<String>>,
 }
 
+fn summarize_on<B: Backend>(
+    model_name: &str,
+    device: &B::Device,
+    text: &str,
+    verbose: bool,
+    progress: Option<crate::model::qwen3::summarize::SummarizeProgress>,
+) -> WhisburnResult<String> {
+    let _ = verbose;
+    tracing::info!(model = model_name, chars = text.len(), "loading offline summarizer");
+    let (tokenizer, thinker) =
+        crate::model::qwen3::summarize::load_summarizer::<B>(model_name, device, verbose)?;
+    tracing::info!(model = model_name, "summarizer ready");
+    crate::model::qwen3::summarize::summarize_with_thinker(
+        &thinker,
+        &tokenizer,
+        text,
+        device,
+        progress,
+    )
+}
+
 fn wants_cpu(device: &Option<String>) -> bool {
     device
         .as_deref()
@@ -69,6 +90,30 @@ impl InferenceRuntime {
         match &self.backend {
             BackendRuntime::Wgpu { device, .. } => get_backend_info(device),
             BackendRuntime::NdArray { .. } => "NdArray (CPU)".to_string(),
+        }
+    }
+
+    /// Offline English summarization with Qwen3-0.6B. Clears the ASR GPU cache first
+    /// so a 4 GB card can load the small text model.
+    pub fn summarize_text(
+        &self,
+        text: &str,
+        model_name: &str,
+        progress: Option<crate::model::qwen3::summarize::SummarizeProgress>,
+    ) -> WhisburnResult<String> {
+        {
+            let mut warmed = self.warmed.lock().expect("warmed lock");
+            warmed.clear();
+        }
+        match &self.backend {
+            BackendRuntime::Wgpu { device, cache } => {
+                cache.lock().expect("cache lock").clear();
+                summarize_on::<Wgpu>(model_name, device, text, self.verbose, progress)
+            }
+            BackendRuntime::NdArray { device, cache } => {
+                cache.lock().expect("cache lock").clear();
+                summarize_on::<NdArray>(model_name, device, text, self.verbose, progress)
+            }
         }
     }
 

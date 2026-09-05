@@ -9,6 +9,7 @@ use crate::model::attention::{RelPosMultiHeadAttention, RelPosMultiHeadAttention
 #[derive(Module, Debug)]
 pub struct RMSNorm<B: Backend> {
     pub gamma: Param<Tensor<B, 1>>,
+    #[module(ignore)]
     pub epsilon: f64,
 }
 

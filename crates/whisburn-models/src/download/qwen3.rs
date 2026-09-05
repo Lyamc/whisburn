@@ -50,7 +50,7 @@ pub fn download_qwen3_hf(
     let repo = api.model(source.repo_id().to_string());
 
     if options.verbose {
-        tracing::info!("downloading Qwen3-ASR weights from {}", source.repo_id());
+        tracing::info!("downloading Qwen3 weights from {}", source.repo_id());
     }
 
     for file in QWEN3_REQUIRED {
@@ -64,7 +64,7 @@ pub fn download_qwen3_hf(
     let has_bpe_files = dir.join("vocab.json").exists() && dir.join("merges.txt").exists();
     if !has_tokenizer_json && !has_bpe_files {
         anyhow::bail!(
-            "Qwen3-ASR '{name}' is missing tokenizer.json and vocab.json/merges.txt from {}",
+            "Qwen3 '{name}' is missing tokenizer.json and vocab.json/merges.txt from {}",
             source.repo_id()
         );
     }

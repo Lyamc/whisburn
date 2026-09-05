@@ -101,8 +101,8 @@ pub fn build_vibevoice_config(
     model_name: &str,
     runtime: &VibeVoiceRuntimeConfig,
 ) -> Result<VibeVoiceASRConfig, String> {
-    let model_dir = format!("models/{model_name}");
-    let (acoustic, semantic) = hf_config::load_encoder_configs(&model_dir)?;
+    let model_dir = whisburn_core::resolve_model_dir(model_name);
+    let (acoustic, semantic) = hf_config::load_encoder_configs(&model_dir.to_string_lossy())?;
     Ok(VibeVoiceASRConfig::from_runtime_and_encoders(
         runtime, acoustic, semantic,
     ))

@@ -1,18 +1,9 @@
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
-pub fn models_dir() -> PathBuf {
-    std::env::var("WHISBURN_MODELS_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|_| PathBuf::from("models"))
-}
-
-pub fn model_dir(name: &str) -> PathBuf {
-    models_dir().join(name)
-}
+pub use whisburn_core::{model_dir, models_dir, resolve_model_dir};
 
 pub fn is_model_ready(name: &str) -> bool {
-    let dir = model_dir(name);
-    has_burn_bundle(&dir, name)
+    has_burn_bundle(&resolve_model_dir(name), name)
 }
 
 pub fn needs_reconversion(name: &str, dir: &Path) -> bool {
