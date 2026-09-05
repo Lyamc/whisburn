@@ -88,6 +88,10 @@ pub fn fetch_required_hf_file(
 
     // HTTP first so byte progress (and serve logs) stay live; hf-hub is a silent fallback.
     via_http().or_else(|e1| {
+        let msg = e1.to_string();
+        if msg.contains("404") || msg.contains("curl exited") && msg.contains("22") {
+            return Err(e1);
+        }
         fetch_repo_file(repo, remote_path, dest_dir, options)
             .map_err(|e2| anyhow::anyhow!("http: {e1}; hub: {e2}"))
     })
