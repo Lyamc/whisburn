@@ -6,7 +6,7 @@ use burn::{
     module::Module,
 };
 
-#[derive(Config)]
+#[derive(Config, Debug)]
 pub struct MLPConfig {
     pub n_state: usize,
 }

@@ -53,12 +53,12 @@ Whisper models always download from **upstream HuggingFace** (e.g. `openai/whisp
 2. **Convert** (`convert/whisper.rs`):
    - Map HF tensor names to Burn module paths
    - Cast F16 weights to F32
-   - Transpose linear layers: HF `[out, in]` → Burn 0.16 `[in, out]`
+   - Transpose linear layers: HF `[out, in]` → Burn 0.21 `[in, out]`
    - Write 1D flattened `.npy` files + `shapes.json`
 3. **Record** (`convert/burn_mpk.rs`):
    - Load npy dump on WGPU
    - Save `model.mpk` via `NamedMpkGzFileRecorder`
-   - Write `config.cfg` and `.burn_version` (`0.16.1`)
+   - Write `config.cfg` and `.burn_version` (`0.21.0`)
 
 ### Ready bundle contents
 
@@ -68,7 +68,7 @@ models/tiny_en/
 ├── config.cfg             # Architecture config
 ├── config.json            # HF generation config (suppress_tokens, etc.)
 ├── tokenizer.json
-├── .burn_version          # "0.16.1"
+├── .burn_version          # "0.21.0"
 └── preprocessor_config.json
 ```
 
@@ -106,10 +106,10 @@ Parakeet TDT **v3** downloads transformers `model.safetensors` from `nvidia/para
 1. **Download** — v3: `model.safetensors` + `config.json` + `tokenizer.json`. v2: official `.nemo` (weights lifted to the same layout; `vocab.txt` → `tokenizer.json`).
 2. **Convert** (`convert/parakeet/`):
    - Map HF NeMo tensor names to Burn Conformer + TDT decoder paths
-   - Transpose linear layers where Burn 0.16 layout differs
+   - Transpose linear layers where Burn 0.21 layout differs
    - Write `parakeet_decode.json` (blank token, vocab, duration indices)
    - Run `save_model_from_npy()` and remove npy intermediates
-3. **Record** — `model.mpk`, `config.cfg`, `.burn_version` (`0.16.1`)
+3. **Record** — `model.mpk`, `config.cfg`, `.burn_version` (`0.21.0`)
 
 ### Ready bundle contents
 
@@ -185,7 +185,7 @@ models/qwen3-asr-0.6b/
 ├── vocab.json
 ├── merges.txt
 ├── qwen3_runtime.json      # Burn runtime metadata
-└── .burn_version           # "0.16.1-qwen3"
+└── .burn_version           # "0.21.0-qwen3"
 ```
 
 ### Inference notes
@@ -245,7 +245,7 @@ models/vibevoice-asr/
 ├── tokenizer.json
 ├── processor_config.json
 ├── vibevoice_runtime.json             # Burn runtime metadata
-└── .burn_version                      # "0.16.1-vibevoice-stt"
+└── .burn_version                      # "0.21.0-vibevoice-stt"
 ```
 
 ### Download
@@ -332,6 +332,6 @@ Remove-Item -Recurse -Force target
 | `unknown model` | Run `models list`; name must match registry exactly |
 | `Burn backend is not yet implemented` | Model has `burn_ready: false` |
 | Stale weights after upgrade | `models download <name> --force --verbose` |
-| `incompatible burn version` | Delete model dir and reconvert; check `.burn_version` is `0.16.1` |
+| `incompatible burn version` | Delete model dir and reconvert; check `.burn_version` is `0.21.0` |
 | Opus preview fails in web UI | Install ffmpeg with `libopus`; WAV transcode still works without it |
 | Qwen3 garbage tokens | Rebuild after engine fixes; run `qwen3_greedy_parity` against HF refs |

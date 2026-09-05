@@ -20,19 +20,19 @@ impl ParakeetConfig {
         let encoder = self.encoder.init(device);
         
         let conv1 = Conv2dConfig::new([1, 256], [3, 3])
-            .with_padding(PaddingConfig2d::Explicit(1, 1))
+            .with_padding(PaddingConfig2d::Explicit(1, 1, 1, 1))
             .with_stride([2, 2])
             .init(device);
         let conv2 = Conv2dConfig::new([256, 256], [3, 3])
             .with_groups(256)
-            .with_padding(PaddingConfig2d::Explicit(1, 1))
+            .with_padding(PaddingConfig2d::Explicit(1, 1, 1, 1))
             .with_stride([2, 2])
             .init(device);
         let conv3 = Conv2dConfig::new([256, 256], [1, 1])
             .init(device);
         let conv4 = Conv2dConfig::new([256, 256], [3, 3])
             .with_groups(256)
-            .with_padding(PaddingConfig2d::Explicit(1, 1))
+            .with_padding(PaddingConfig2d::Explicit(1, 1, 1, 1))
             .with_stride([2, 2])
             .init(device);
         let conv5 = Conv2dConfig::new([256, 256], [1, 1])
@@ -199,7 +199,7 @@ impl<B: Backend> Parakeet<B> {
 
         while frame_idx < valid_frames && steps < max_steps {
             let enc_frame = enc.clone().slice([0..1, frame_idx..frame_idx + 1, 0..640])
-                .squeeze::<2>(1);
+                 .squeeze_dim::<2>(1);
             let update_decoder = current_token != blank_token_id;
             let dec_frame = decoder.forward_step(
                 current_token,

@@ -17,9 +17,9 @@ pub fn load_audio_encoder<B: Backend>(
     let n_audio_state = load_usize::<B>("n_audio_state", path, device)?;
 
     let conv1_config =
-        Conv1dConfig::new(n_mels, n_audio_state, 3).with_padding(PaddingConfig1d::Explicit(1));
+        Conv1dConfig::new(n_mels, n_audio_state, 3).with_padding(PaddingConfig1d::Explicit(1, 1));
     let conv2_config = Conv1dConfig::new(n_audio_state, n_audio_state, 3)
-        .with_padding(PaddingConfig1d::Explicit(1))
+        .with_padding(PaddingConfig1d::Explicit(1, 1))
         .with_stride(2);
 
     let conv1 = if tensor_exists("weight", &format!("{}/{}", path, "conv1")) {

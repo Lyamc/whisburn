@@ -42,7 +42,7 @@ pub struct Qwen3RuntimeConfig {
 impl Default for Qwen3RuntimeConfig {
     fn default() -> Self {
         Self {
-            burn_bundle_version: "0.16.1-qwen3".to_string(),
+            burn_bundle_version: "0.21.0-qwen3".to_string(),
             sample_rate: 16_000,
             num_mel_bins: 128,
             audio_d_model: 896,

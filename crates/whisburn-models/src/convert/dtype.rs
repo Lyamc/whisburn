@@ -12,7 +12,7 @@ pub fn bytes_to_f32(data: &[u8], dtype: safetensors::Dtype) -> anyhow::Result<Ve
     })
 }
 
-/// Transpose HF linear weights `[out, in]` → Burn 0.16 `[in, out]`.
+/// Transpose HF linear weights `[out, in]` → Burn 0.21 `[in, out]`.
 ///
 /// Data must be permuted, not only the shape metadata. A shape-only swap
 /// leaves square attention matrices unchanged but scrambles MLP `fc1`/`fc2`

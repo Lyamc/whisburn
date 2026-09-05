@@ -120,31 +120,31 @@ fn pre_encode_feat_out(n_mels: usize) -> usize {
 
 #[derive(Module, Debug)]
 pub struct TONE<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     d_model: usize,
-    #[module(ignore)]
+    #[module(skip)]
     n_heads: usize,
-    #[module(ignore)]
+    #[module(skip)]
     n_mels: usize,
-    #[module(ignore)]
+    #[module(skip)]
     n_vocab: usize,
-    #[module(ignore)]
+    #[module(skip)]
     rope_dim: usize,
-    #[module(ignore)]
+    #[module(skip)]
     chunk_size: usize,
-    #[module(ignore)]
+    #[module(skip)]
     reduction_position: usize,
-    #[module(ignore)]
+    #[module(skip)]
     upsample_position: usize,
-    #[module(ignore)]
+    #[module(skip)]
     mhsa_left: usize,
-    #[module(ignore)]
+    #[module(skip)]
     mhsa_stateless: usize,
     pub pre_norm: RMSNorm<B>,
     pub conv0: Conv2d<B>,
-    pub bn0: BatchNorm<B, 2>,
+    pub bn0: BatchNorm<B>,
     pub conv1: Conv2d<B>,
-    pub bn1: BatchNorm<B, 2>,
+    pub bn1: BatchNorm<B>,
     pub pre_out: Linear<B>,
     pub out_norm: RMSNorm<B>,
     pub layers: Vec<ToneLayer<B>>,
@@ -278,7 +278,7 @@ fn upsample_add<B: Backend>(x: Tensor<B, 3>, residual: Tensor<B, 3>, factor: usi
 
 #[derive(Module, Debug)]
 pub struct ToneLayer<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     recompute: bool,
     pub norm_ff1: RMSNorm<B>,
     pub ff1_g: Linear<B>,
@@ -294,7 +294,7 @@ pub struct ToneLayer<B: Backend> {
     pub norm_conv: RMSNorm<B>,
     pub pw1: Conv1d<B>,
     pub dw: Conv1d<B>,
-    pub bn: BatchNorm<B, 1>,
+    pub bn: BatchNorm<B>,
     pub pw2: Conv1d<B>,
     pub norm_ff2: RMSNorm<B>,
     pub ff2_g: Linear<B>,

@@ -11,7 +11,7 @@ use crate::download::DownloadOptions;
 pub use config::Qwen3RuntimeConfig;
 pub use mapping::{map_hf_tensor, should_skip_key};
 
-pub const BURN_BUNDLE_VERSION: &str = "0.16.1-qwen3";
+pub const BURN_BUNDLE_VERSION: &str = "0.21.0-qwen3";
 
 pub fn prepare_qwen3_bundle(
     model_dir: &Path,

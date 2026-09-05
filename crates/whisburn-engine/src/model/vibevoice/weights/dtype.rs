@@ -18,7 +18,7 @@ pub fn bytes_to_f32(data: &[u8], dtype: Dtype) -> Result<Vec<f32>, String> {
     })
 }
 
-/// Transpose HF linear weights `[out, in]` → Burn 0.16 `[in, out]`.
+/// Transpose HF linear weights `[out, in]` → Burn 0.21 `[in, out]`.
 pub fn transpose_linear_weight(data: &[f32], shape: &[usize]) -> (Vec<f32>, [usize; 2]) {
     let [rows, cols] = [shape[0], shape[1]];
     let transposed = (0..cols)

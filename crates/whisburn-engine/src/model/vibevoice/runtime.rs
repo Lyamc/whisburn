@@ -41,7 +41,7 @@ fn default_rope_theta() -> f64 {
 impl Default for VibeVoiceRuntimeConfig {
     fn default() -> Self {
         Self {
-            burn_bundle_version: "0.16.1-vibevoice-stt".to_string(),
+            burn_bundle_version: "0.21.0-vibevoice-stt".to_string(),
             sample_rate: 24_000,
             speech_compress_ratio: 3200,
             target_dbfs: -25.0,

@@ -114,11 +114,11 @@ impl Qwen3ThinkerLayerConfig {
 
 #[derive(Module, Debug)]
 pub(crate) struct Qwen3ThinkerAttention<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     n_heads: usize,
-    #[module(ignore)]
+    #[module(skip)]
     n_kv_heads: usize,
-    #[module(ignore)]
+    #[module(skip)]
     head_dim: usize,
     pub(crate) q_proj: Linear<B>,
     pub(crate) k_proj: Linear<B>,
@@ -232,15 +232,15 @@ impl<B: Backend> Qwen3ThinkerLayer<B> {
 
 #[derive(Module, Debug)]
 pub struct Qwen3Thinker<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     pub hidden_size: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub vocab_size: usize,
-    #[module(ignore)]
+    #[module(skip)]
     head_dim: usize,
-    #[module(ignore)]
+    #[module(skip)]
     rope_theta: f64,
-    #[module(ignore)]
+    #[module(skip)]
     mrope_section: Vec<usize>,
     pub embed_tokens: Embedding<B>,
     pub(crate) layers: Vec<Qwen3ThinkerLayer<B>>,

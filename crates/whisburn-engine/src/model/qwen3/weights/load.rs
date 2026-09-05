@@ -235,7 +235,7 @@ fn load_layer_norm<B: Backend>(
     };
     let mut record = ln.clone().into_record();
     record.gamma = Param::from_tensor(weight);
-    record.beta = Param::from_tensor(bias);
+    record.beta = Some(Param::from_tensor(bias));
     Ok(ln.load_record(record))
 }
 

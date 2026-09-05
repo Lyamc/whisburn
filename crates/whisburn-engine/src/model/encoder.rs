@@ -24,11 +24,11 @@ pub struct AudioEncoderConfig {
 impl AudioEncoderConfig {
     pub fn init<B: Backend>(&self, tensor_device_ref: &B::Device) -> AudioEncoder<B> {
         let conv1 = Conv1dConfig::new(self.n_mels, self.n_audio_state, 3)
-            .with_padding(PaddingConfig1d::Explicit(1))
+            .with_padding(PaddingConfig1d::Explicit(1, 1))
             .init(tensor_device_ref);
         let gelu1 = nn::Gelu::new();
         let conv2 = Conv1dConfig::new(self.n_audio_state, self.n_audio_state, 3)
-            .with_padding(PaddingConfig1d::Explicit(1))
+            .with_padding(PaddingConfig1d::Explicit(1, 1))
             .with_stride(2)
             .init(tensor_device_ref);
         let gelu2 = nn::Gelu::new();
@@ -116,7 +116,7 @@ impl<B: Backend> AudioEncoder<B> {
     }
 }
 
-#[derive(Config)]
+#[derive(Config, Debug)]
 pub struct ResidualEncoderAttentionBlockConfig {
     pub n_state: usize,
     pub n_head: usize,

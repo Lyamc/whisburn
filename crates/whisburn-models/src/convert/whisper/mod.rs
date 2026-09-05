@@ -15,7 +15,7 @@ use crate::download::DownloadOptions;
 use layout::{burn_linear_layout, write_attn_heads};
 use mapping::map_hf_tensor;
 
-const BURN_VERSION: &str = "0.16.1";
+const BURN_VERSION: &str = "0.21.0";
 /// Bump when the HF → npy → mpk layout changes so existing bundles reconvert.
 const WHISPER_LAYOUT_REV: &str = "linear-T2";
 

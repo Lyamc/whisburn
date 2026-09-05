@@ -73,7 +73,7 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
         let weight = load_tensor::<B, 4>("weight", &format!("{}/encoder/conv1", path), device)?;
         let [out_ch, in_ch, k1, k2] = weight.dims();
         let cfg = nn::conv::Conv2dConfig::new([in_ch, out_ch], [k1, k2])
-            .with_padding(nn::PaddingConfig2d::Explicit(k1 / 2, k2 / 2))
+            .with_padding(nn::PaddingConfig2d::Explicit(k1 / 2, k2 / 2, k1 / 2, k2 / 2))
             .with_stride([2, 2]);
         load_conv2d(&format!("{}/encoder/conv1", path), cfg, device)?
     };
@@ -84,7 +84,7 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
         let groups = out_ch; // For depthwise, groups == out_channels
         let in_ch = in_ch_per_group * groups; 
         let cfg = nn::conv::Conv2dConfig::new([in_ch, out_ch], [k1, k2])
-            .with_padding(nn::PaddingConfig2d::Explicit(k1 / 2, k2 / 2))
+            .with_padding(nn::PaddingConfig2d::Explicit(k1 / 2, k2 / 2, k1 / 2, k2 / 2))
             .with_stride([2, 2])
             .with_groups(groups);
         load_conv2d(&format!("{}/encoder/conv2", path), cfg, device)?
@@ -103,7 +103,7 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
         let groups = out_ch;
         let in_ch = in_ch_per_group * groups;
         let cfg = nn::conv::Conv2dConfig::new([in_ch, out_ch], [k1, k2])
-            .with_padding(nn::PaddingConfig2d::Explicit(k1 / 2, k2 / 2))
+            .with_padding(nn::PaddingConfig2d::Explicit(k1 / 2, k2 / 2, k1 / 2, k2 / 2))
             .with_stride([2, 2])
             .with_groups(groups);
         load_conv2d(&format!("{}/encoder/conv4", path), cfg, device)?

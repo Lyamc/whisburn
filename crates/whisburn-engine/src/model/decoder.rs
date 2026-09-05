@@ -104,7 +104,7 @@ impl<B: Backend> TextDecoder<B> {
     }
 }
 
-#[derive(Config)]
+#[derive(Config, Debug)]
 pub struct ResidualDecoderAttentionBlockConfig {
     pub n_state: usize,
     pub n_head: usize,

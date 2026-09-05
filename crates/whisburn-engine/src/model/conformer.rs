@@ -9,7 +9,7 @@ use crate::model::attention::{RelPosMultiHeadAttention, RelPosMultiHeadAttention
 #[derive(Module, Debug)]
 pub struct RMSNorm<B: Backend> {
     pub gamma: Param<Tensor<B, 1>>,
-    #[module(ignore)]
+    #[module(skip)]
     pub epsilon: f64,
 }
 
@@ -166,7 +166,7 @@ impl ConvolutionModuleConfig {
         let point_conv1 = Conv1dConfig::new(self.d_model, self.d_model * 2, 1).init(device);
         let depth_conv = Conv1dConfig::new(self.d_model, self.d_model, self.kernel_size)
             .with_groups(self.d_model)
-            .with_padding(PaddingConfig1d::Explicit(self.kernel_size / 2))
+            .with_padding(PaddingConfig1d::Explicit(self.kernel_size / 2, self.kernel_size / 2))
             .init(device);
         let bn = BatchNormConfig::new(self.d_model).init(device);
         let point_conv2 = Conv1dConfig::new(self.d_model, self.d_model, 1).init(device);
@@ -180,7 +180,7 @@ pub struct ConvolutionModule<B: Backend> {
     pub ln: LayerNorm<B>,
     pub point_conv1: Conv1d<B>,
     pub depth_conv: Conv1d<B>,
-    pub bn: BatchNorm<B, 1>,
+    pub bn: BatchNorm<B>,
     pub point_conv2: Conv1d<B>,
 }
 

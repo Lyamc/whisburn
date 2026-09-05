@@ -68,7 +68,7 @@ pub struct VibeVoiceASR<B: Backend> {
     pub acoustic_connector: SpeechConnector<B>,
     pub semantic_connector: SpeechConnector<B>,
     pub decoder: Qwen2Decoder<B>,
-    #[module(ignore)]
+    #[module(skip)]
     pub acoustic_fix_std: f32,
 }
 

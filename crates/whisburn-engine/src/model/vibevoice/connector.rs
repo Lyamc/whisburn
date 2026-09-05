@@ -25,7 +25,7 @@ pub struct SpeechConnector<B: Backend> {
     pub fc1: Linear<B>,
     pub norm_gamma: Param<Tensor<B, 1>>,
     pub fc2: Linear<B>,
-    #[module(ignore)]
+    #[module(skip)]
     pub eps: f64,
 }
 

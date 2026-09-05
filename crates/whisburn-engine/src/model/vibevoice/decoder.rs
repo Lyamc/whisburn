@@ -70,11 +70,11 @@ impl Qwen2DecoderConfig {
 
 #[derive(Module, Debug)]
 pub(crate) struct Qwen2Attention<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     pub(crate) n_heads: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub(crate) n_kv_heads: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub(crate) head_dim: usize,
     pub(crate) q_proj: QuantLinear<B>,
     pub(crate) k_proj: QuantLinear<B>,
@@ -212,13 +212,13 @@ impl<B: Backend> Qwen2DecoderLayer<B> {
 
 #[derive(Module, Debug)]
 pub struct Qwen2Decoder<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     pub hidden_size: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub vocab_size: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub(crate) head_dim: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub(crate) rope_theta: f64,
     pub embed_tokens: Embedding<B>,
     pub(crate) layers: Vec<Qwen2DecoderLayer<B>>,

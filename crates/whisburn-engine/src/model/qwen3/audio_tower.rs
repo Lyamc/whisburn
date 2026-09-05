@@ -34,7 +34,7 @@ impl Qwen3AudioTowerConfig {
         let conv_cfg = |in_ch, out_ch| {
             Conv2dConfig::new([in_ch, out_ch], [3, 3])
                 .with_stride([2, 2])
-                .with_padding(PaddingConfig2d::Explicit(1, 1))
+                .with_padding(PaddingConfig2d::Explicit(1, 1, 1, 1))
         };
         let layers = (0..self.n_layers)
             .map(|_| Qwen3AudioEncoderLayerConfig::new(self.d_model, self.n_heads, self.ffn_dim).init(device))
@@ -111,9 +111,9 @@ impl Qwen3AudioAttentionConfig {
 
 #[derive(Module, Debug)]
 pub(crate) struct Qwen3AudioAttention<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     n_heads: usize,
-    #[module(ignore)]
+    #[module(skip)]
     head_dim: usize,
     pub(crate) q_proj: Linear<B>,
     pub(crate) k_proj: Linear<B>,
@@ -166,19 +166,19 @@ impl<B: Backend> Qwen3AudioEncoderLayer<B> {
 
 #[derive(Module, Debug)]
 pub struct Qwen3AudioTower<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     pub n_mels: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub output_dim: usize,
-    #[module(ignore)]
+    #[module(skip)]
     n_window: usize,
-    #[module(ignore)]
+    #[module(skip)]
     n_window_infer: usize,
-    #[module(ignore)]
+    #[module(skip)]
     conv_chunksize: usize,
-    #[module(ignore)]
+    #[module(skip)]
     max_source_positions: usize,
-    #[module(ignore)]
+    #[module(skip)]
     d_model: usize,
     pub(crate) conv2d1: Conv2d<B>,
     pub(crate) conv2d2: Conv2d<B>,

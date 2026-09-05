@@ -4,7 +4,7 @@ use burn::tensor::{backend::Backend, Tensor};
 #[derive(Module, Debug)]
 pub struct ConvRmsNorm<B: Backend> {
     pub weight: Param<Tensor<B, 1>>,
-    #[module(ignore)]
+    #[module(skip)]
     pub eps: f64,
 }
 

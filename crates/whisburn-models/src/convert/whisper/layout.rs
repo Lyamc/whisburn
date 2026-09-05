@@ -1,7 +1,7 @@
 use crate::convert::dtype::transpose_linear_weight;
 use crate::convert::npy::NpyDump;
 
-/// Burn 0.16 `Linear` stores weights as `[d_input, d_output]`; HF uses `[out, in]`.
+/// Burn 0.21 `Linear` stores weights as `[d_input, d_output]`; HF uses `[out, in]`.
 pub fn burn_linear_layout(rel: &str, data: &[f32], shape: &[usize]) -> (Vec<f32>, Vec<usize>) {
     let is_linear_weight = rel.ends_with("/weight.npy")
         && !rel.contains("token_embedding")

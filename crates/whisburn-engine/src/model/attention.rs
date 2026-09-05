@@ -75,8 +75,8 @@ impl RelPosMultiHeadAttentionConfig {
             value,
             out,
             pos,
-            pos_bias_u: Param::from_tensor(pos_bias_u.squeeze::<3>(0).squeeze::<2>(1)),
-            pos_bias_v: Param::from_tensor(pos_bias_v.squeeze::<3>(0).squeeze::<2>(1)),
+            pos_bias_u: Param::from_tensor(pos_bias_u.squeeze_dim::<3>(0).squeeze_dim::<2>(1)),
+            pos_bias_v: Param::from_tensor(pos_bias_v.squeeze_dim::<3>(0).squeeze_dim::<2>(1)),
         }
     }
 }

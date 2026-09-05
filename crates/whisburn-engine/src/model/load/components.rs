@@ -86,16 +86,15 @@ pub fn load_layer_norm<B: Backend>(
         .map(|t| t.into_data().to_vec::<f32>().unwrap()[0] as f64)
         .unwrap_or(1e-5);
 
-    let ln = LayerNormConfig::new(n_state).init(device);
+    let ln = LayerNormConfig::new(n_state).with_epsilon(eps).init(device);
     let mut record = ln.clone().into_record();
     record.gamma = Param::from_tensor(weight);
-    record.beta = Param::from_tensor(bias);
-    record.epsilon = <f64 as Module<B>>::into_record(eps);
+    record.beta = Some(Param::from_tensor(bias));
 
     Ok(ln.load_record(record))
 }
 
-pub fn load_batch_norm<B: Backend>(path: &str, n_state: usize, device: &B::Device) -> Result<BatchNorm<B, 1>, Box<dyn Error>> {
+pub fn load_batch_norm<B: Backend>(path: &str, n_state: usize, device: &B::Device) -> Result<BatchNorm<B>, Box<dyn Error>> {
     let weight = if tensor_exists("weight", path) { load_tensor::<B, 1>("weight", path, device)? } else { Tensor::ones([n_state], device) };
     let bias = if tensor_exists("bias", path) { load_tensor::<B, 1>("bias", path, device)? } else { Tensor::zeros([n_state], device) };
     let mean = if tensor_exists("running_mean", path) { load_tensor::<B, 1>("running_mean", path, device)? } else { Tensor::zeros([n_state], device) };
@@ -176,7 +175,7 @@ pub fn load_convolution_module<B: Backend>(path: &str, d_model: usize, _kernel_s
     let [dc_out, dc_in_reduced, dc_k] = dc_weight.dims();
     let dc_in = if dc_in_reduced == 1 { dc_out } else { dc_in_reduced };
     let mut depth_conv_cfg = nn::conv::Conv1dConfig::new(dc_in, dc_out, dc_k)
-        .with_padding(nn::PaddingConfig1d::Explicit(dc_k / 2));
+        .with_padding(nn::PaddingConfig1d::Explicit(dc_k / 2, dc_k / 2));
     if dc_in_reduced == 1 { depth_conv_cfg = depth_conv_cfg.with_groups(dc_in); }
     let depth_conv = load_conv1d(&format!("{}/{}", path, "depth_conv"), depth_conv_cfg, device)?;
     

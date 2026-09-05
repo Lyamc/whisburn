@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 use super::{MoonshineASR, MoonshineDecoderLayer, MoonshineEncoderLayer};
 use crate::model::vibevoice::weights::dtype::{bytes_to_f32, transpose_linear_weight};
 
-pub const BURN_BUNDLE_VERSION: &str = "0.16.1-moonshine";
+pub const BURN_BUNDLE_VERSION: &str = "0.21.0-moonshine";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MoonshineRuntimeConfig {
@@ -262,7 +262,7 @@ fn load_ln<B: Backend>(
     };
     let mut record = ln.clone().into_record();
     record.gamma = Param::from_tensor(weight);
-    record.beta = Param::from_tensor(bias);
+    record.beta = Some(Param::from_tensor(bias));
     Ok(ln.load_record(record))
 }
 

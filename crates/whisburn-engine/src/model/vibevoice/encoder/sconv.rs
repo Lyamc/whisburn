@@ -8,13 +8,13 @@ use super::pad::{extra_padding_for_conv1d, padding_total, zero_pad1d};
 #[derive(Module, Debug)]
 pub struct SConv1d<B: Backend> {
     pub conv: Conv1d<B>,
-    #[module(ignore)]
+    #[module(skip)]
     pub kernel_size: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub stride: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub padding_total: usize,
-    #[module(ignore)]
+    #[module(skip)]
     pub groups: usize,
 }
 
@@ -32,7 +32,7 @@ impl<B: Backend> SConv1d<B> {
         let conv = Conv1dConfig::new(in_ch, out_ch, kernel_size)
             .with_stride(stride)
             .with_groups(groups)
-            .with_padding(PaddingConfig1d::Explicit(0))
+            .with_padding(PaddingConfig1d::Explicit(0, 0))
             .init(device);
         Self {
             conv,

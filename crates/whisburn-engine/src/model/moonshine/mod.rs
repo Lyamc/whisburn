@@ -107,27 +107,27 @@ fn ln<B: Backend>(n: usize, device: &B::Device) -> LayerNorm<B> {
 
 #[derive(Module, Debug)]
 pub struct MoonshineASR<B: Backend> {
-    #[module(ignore)]
+    #[module(skip)]
     hidden_size: usize,
-    #[module(ignore)]
+    #[module(skip)]
     n_heads: usize,
-    #[module(ignore)]
+    #[module(skip)]
     n_kv_heads: usize,
-    #[module(ignore)]
+    #[module(skip)]
     head_dim: usize,
-    #[module(ignore)]
+    #[module(skip)]
     rotary_dim: usize,
-    #[module(ignore)]
+    #[module(skip)]
     head_pad: usize,
-    #[module(ignore)]
+    #[module(skip)]
     rope_theta: f64,
-    #[module(ignore)]
+    #[module(skip)]
     vocab_size: usize,
-    #[module(ignore)]
+    #[module(skip)]
     decoder_start_token_id: usize,
-    #[module(ignore)]
+    #[module(skip)]
     eos_token_id: usize,
-    #[module(ignore)]
+    #[module(skip)]
     max_new_tokens: usize,
     pub conv1: Conv1d<B>,
     pub conv2: Conv1d<B>,

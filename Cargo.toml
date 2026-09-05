@@ -12,7 +12,7 @@ members = [
 default-members = ["crates/whisburn-cli"]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/Lyam/whisburn"
@@ -27,7 +27,7 @@ whisburn-app = { path = "crates/whisburn-app" }
 
 # default-features would enable burn-core's optional tch/dataset backends
 # (libtorch / sqlite via `cc`). Inference only needs wgpu + ndarray.
-burn = { version = "0.16.1", default-features = false, features = ["std", "wgpu", "ndarray", "record-backward-compat", "fusion"] }
+burn = { version = "0.21", default-features = false, features = ["std", "wgpu", "ndarray", "fusion"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 thiserror = "2.0"

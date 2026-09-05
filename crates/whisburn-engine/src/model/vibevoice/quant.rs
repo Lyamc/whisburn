@@ -9,16 +9,18 @@
 use std::fmt;
 use std::sync::Arc;
 
-use burn::module::{Ignored, Module, Param};
+use burn::module::{Module, Param};
 use burn::tensor::{backend::Backend, Tensor};
 
 #[derive(Module)]
 pub struct QuantLinear<B: Backend> {
-    qweight: Ignored<Arc<Vec<i8>>>,
-    scale_host: Ignored<Arc<Vec<f32>>>,
-    #[module(ignore)]
+    #[module(skip)]
+    qweight: Arc<Vec<i8>>,
+    #[module(skip)]
+    scale_host: Arc<Vec<f32>>,
+    #[module(skip)]
     d_in: usize,
-    #[module(ignore)]
+    #[module(skip)]
     d_out: usize,
     pub scale: Param<Tensor<B, 1>>,
     pub bias: Option<Param<Tensor<B, 1>>>,
@@ -29,7 +31,7 @@ impl<B: Backend> fmt::Debug for QuantLinear<B> {
         f.debug_struct("QuantLinear")
             .field("d_in", &self.d_in)
             .field("d_out", &self.d_out)
-            .field("packed_bytes", &self.qweight.0.len())
+            .field("packed_bytes", &self.qweight.len())
             .finish()
     }
 }
@@ -37,8 +39,8 @@ impl<B: Backend> fmt::Debug for QuantLinear<B> {
 impl<B: Backend> QuantLinear<B> {
     pub fn empty(d_in: usize, d_out: usize, with_bias: bool, device: &B::Device) -> Self {
         Self {
-            qweight: Ignored(Arc::new(Vec::new())),
-            scale_host: Ignored(Arc::new(vec![1.0; d_out])),
+            qweight: Arc::new(Vec::new()),
+            scale_host: Arc::new(vec![1.0; d_out]),
             d_in,
             d_out,
             scale: Param::from_tensor(Tensor::<B, 1>::ones([d_out], device)),
@@ -59,8 +61,8 @@ impl<B: Backend> QuantLinear<B> {
         let scale_t = Tensor::<B, 1>::from_floats(scale.as_slice(), device);
         let bias = bias.map(|b| Param::from_tensor(Tensor::<B, 1>::from_floats(b.as_slice(), device)));
         Self {
-            qweight: Ignored(Arc::new(qweight)),
-            scale_host: Ignored(Arc::new(scale)),
+            qweight: Arc::new(qweight),
+            scale_host: Arc::new(scale),
             d_in,
             d_out,
             scale: Param::from_tensor(scale_t),
@@ -84,8 +86,8 @@ impl<B: Backend> QuantLinear<B> {
     }
 
     fn dequant(&self, device: &B::Device) -> Tensor<B, 2> {
-        let q = self.qweight.0.as_slice();
-        let sc = self.scale_host.0.as_slice();
+        let q = self.qweight.as_slice();
+        let sc = self.scale_host.as_slice();
         let mut w = vec![0f32; self.d_in * self.d_out];
         for i in 0..self.d_in {
             let row = i * self.d_out;

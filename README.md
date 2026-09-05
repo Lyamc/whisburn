@@ -2,7 +2,7 @@
 
 Burn-based speech processing in Rust: transcription, translation, diarization, and TTS — with automatic model download and conversion.
 
-**whisburn** is a rewrite of [whisper-burn](https://github.com/Gadersd/whisper-burn) as a multi-crate workspace targeting **Burn 0.16**. Whisper, **Parakeet TDT v3**, and **Qwen3-ASR** are working end-to-end; additional backends are registered and being ported.
+**whisburn** is a rewrite of [whisper-burn](https://github.com/Gadersd/whisper-burn) as a multi-crate workspace targeting **Burn 0.21**. Whisper, **Parakeet TDT v3**, and **Qwen3-ASR** are working end-to-end; additional backends are registered and being ported.
 
 The default build uses **native TLS** (Schannel on Windows, Security framework on macOS, OpenSSL elsewhere) and a **pure-Rust** tokenizer regex backend. You do **not** need a C compiler or the `cc` crate to build.
 

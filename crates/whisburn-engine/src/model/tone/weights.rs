@@ -12,7 +12,7 @@ use super::{ToneLayer, TONE};
 use crate::model::conformer::RMSNorm;
 use crate::model::vibevoice::weights::dtype::{bytes_to_f32, transpose_linear_weight};
 
-pub const BURN_BUNDLE_VERSION: &str = "0.16.1-tone";
+pub const BURN_BUNDLE_VERSION: &str = "0.21.0-tone";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ToneRuntimeConfig {
@@ -366,34 +366,34 @@ fn load_ln<B: Backend>(
     };
     let mut record = ln.clone().into_record();
     record.gamma = Param::from_tensor(weight);
-    record.beta = Param::from_tensor(bias);
+    record.beta = Some(Param::from_tensor(bias));
     Ok(ln.load_record(record))
 }
 
 fn load_bn1d<B: Backend>(
     store: &Store,
     prefix: &str,
-    bn: BatchNorm<B, 1>,
+    bn: BatchNorm<B>,
     device: &B::Device,
-) -> Result<BatchNorm<B, 1>, Box<dyn std::error::Error>> {
+) -> Result<BatchNorm<B>, Box<dyn std::error::Error>> {
     load_bn(store, prefix, bn, device)
 }
 
 fn load_bn2d<B: Backend>(
     store: &Store,
     prefix: &str,
-    bn: BatchNorm<B, 2>,
+    bn: BatchNorm<B>,
     device: &B::Device,
-) -> Result<BatchNorm<B, 2>, Box<dyn std::error::Error>> {
+) -> Result<BatchNorm<B>, Box<dyn std::error::Error>> {
     load_bn(store, prefix, bn, device)
 }
 
-fn load_bn<B: Backend, const D: usize>(
+fn load_bn<B: Backend>(
     store: &Store,
     prefix: &str,
-    bn: BatchNorm<B, D>,
+    bn: BatchNorm<B>,
     device: &B::Device,
-) -> Result<BatchNorm<B, D>, Box<dyn std::error::Error>> {
+) -> Result<BatchNorm<B>, Box<dyn std::error::Error>> {
     let n = bn.gamma.val().dims()[0];
     let gamma = store
         .tensor_f32(&format!("{prefix}.weight"))

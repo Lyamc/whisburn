@@ -18,7 +18,7 @@ Each model directory typically contains:
 
 | File | Purpose |
 |------|---------|
-| `model.mpk` | Burn weight record (Burn 0.16.1) — Whisper, Parakeet |
+| `model.mpk` | Burn weight record (Burn 0.21.0) — Whisper, Parakeet |
 | `model.safetensors` | Direct runtime weights — Qwen3-ASR (no mpk) |
 | `config.cfg` / `{name}.cfg` | Model architecture config |
 | `config.json` | HuggingFace generation config (suppress tokens, etc.) |

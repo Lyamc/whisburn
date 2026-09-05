@@ -232,7 +232,7 @@ pub fn decode_parakeet<B: Backend>(
     if decode_cfg.num_durations == 0 {
         let raw_ids = logits
             .argmax(2)
-            .squeeze::<2>(0)
+             .squeeze_dim::<2>(0)
             .into_data()
             .to_vec::<i32>()
             .unwrap();
@@ -262,7 +262,7 @@ pub fn decode_parakeet<B: Backend>(
             let top_5 = frame_logits
                 .clone()
                 .argsort(2)
-                .squeeze::<2>(0)
+                 .squeeze_dim::<2>(0)
                 .into_data()
                 .to_vec::<i32>()
                 .unwrap();
@@ -273,7 +273,7 @@ pub fn decode_parakeet<B: Backend>(
 
     let raw_ids = token_logits
         .argmax(2)
-        .squeeze::<2>(0)
+         .squeeze_dim::<2>(0)
         .into_data()
         .to_vec::<i32>()
         .unwrap();
@@ -288,7 +288,7 @@ pub fn decode_parakeet<B: Backend>(
             logits
                 .slice([0..1, 0..n_frames, decode_cfg.duration_start..d_limit])
                 .argmax(2)
-                .squeeze::<2>(0)
+                 .squeeze_dim::<2>(0)
                 .into_data()
                 .to_vec::<i32>()
                 .unwrap()

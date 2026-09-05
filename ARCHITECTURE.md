@@ -2,7 +2,7 @@
 
 ## Overview
 
-whisburn is a Rust workspace that separates **types and tasks**, **audio I/O**, **inference**, **model lifecycle**, **HTTP serving**, and **CLI** into distinct crates. Inference runs on [Burn](https://github.com/tracel-ai/burn) 0.16 with the WGPU backend.
+whisburn is a Rust workspace that separates **types and tasks**, **audio I/O**, **inference**, **model lifecycle**, **HTTP serving**, and **CLI** into distinct crates. Inference runs on [Burn](https://github.com/tracel-ai/burn) 0.21 with the WGPU backend.
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
@@ -13,7 +13,7 @@ whisburn is a Rust workspace that separates **types and tasks**, **audio I/O**, 
        └───────────────────┼───────────────────────┘
                            ▼
                   ┌─────────────────┐
-                  │ whisburn-engine │◀── Burn 0.16 / WGPU
+                  │ whisburn-engine │◀── Burn 0.21 / WGPU
                   └────────┬────────┘
                            │
               ┌────────────┴────────────┐
@@ -84,7 +84,7 @@ Model download and conversion:
 
 - Resolves HuggingFace source per registry entry (always upstream HF for Whisper)
 - Downloads `model.safetensors`, `config.json`, `tokenizer.json`
-- Converts weights: HF layout → npy dump → `NamedMpkGzFileRecorder` (Burn 0.16.1)
+- Converts weights: HF layout → npy dump → `NamedMpkGzFileRecorder` (Burn 0.21.0)
 - `ModelManager` — async ensure + `process_waveform` used by server and CLI
 
 ### whisburn-server
@@ -200,7 +200,7 @@ encoder/*.npy + decoder/*.npy + shapes.json
 save_model_from_npy()         [whisburn-models::convert::burn_mpk]
     │  WGPU load + NamedMpkGzFileRecorder
     ▼
-model.mpk + config.cfg + .burn_version (0.16.1)
+model.mpk + config.cfg + .burn_version (0.21.0)
 ```
 
 ### Parakeet conversion flow
@@ -241,9 +241,9 @@ greedy decode (no .mpk intermediate)
 
 ## Design decisions
 
-### Burn 0.16, not Gadersd bundles
+### Burn 0.21, not Gadersd bundles
 
-[Gadersd/whisper-burn](https://huggingface.co/Gadersd/whisper-burn) ships pre-converted `.mpk.gz` for Burn **0.8**. This workspace uses Burn **0.16.1**; weights are converted locally from upstream HF safetensors.
+[Gadersd/whisper-burn](https://huggingface.co/Gadersd/whisper-burn) ships pre-converted `.mpk.gz` for Burn **0.8**. This workspace uses Burn **0.21.0**; weights are converted locally from upstream HF safetensors. Existing 0.16.1 `.mpk` bundles must be reconverted (`models download <name> --force`).
 
 ### English-only Whisper prompts
 
