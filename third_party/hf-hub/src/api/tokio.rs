@@ -307,7 +307,7 @@ impl ApiBuilder {
         }
     }
 
-    /// Wether to show a progressbar
+    /// Whether to show a progressbar
     pub fn with_progress(mut self, progress: bool) -> Self {
         self.progress = progress;
         self
@@ -409,11 +409,29 @@ impl ApiBuilder {
     }
 }
 
+/// File metadata.
 #[derive(Debug)]
-struct Metadata {
+pub struct Metadata {
     commit_hash: String,
     etag: String,
     size: usize,
+}
+
+impl Metadata {
+    /// Get the commit hash of the file.
+    pub fn commit_hash(&self) -> &str {
+        &self.commit_hash
+    }
+
+    /// Get the etag of the file.
+    pub fn etag(&self) -> &str {
+        &self.etag
+    }
+
+    /// Get the file size.
+    pub fn size(&self) -> usize {
+        self.size
+    }
 }
 
 /// The actual Api used to interact with the hub.
@@ -505,7 +523,8 @@ impl Api {
         &self.client
     }
 
-    async fn metadata(&self, url: &str) -> Result<Metadata, ApiError> {
+    /// Get metadata for the file at the given URL.
+    pub async fn metadata(&self, url: &str) -> Result<Metadata, ApiError> {
         let response = self
             .relative_redirect_client
             .get(url)
@@ -532,7 +551,7 @@ impl Api {
             .to_str()?
             .to_string();
 
-        // The response was redirected o S3 most likely which will
+        // The response was redirected to S3 most likely which will
         // know about the size of the file
         let response = if response.status().is_redirection() {
             self.client
@@ -821,10 +840,8 @@ impl ApiRepo {
         }
     }
 
-    /// Downloads a remote file (if not already present) into the cache directory
+    /// Downloads a remote file into the cache directory
     /// to be used locally.
-    /// This functions require internet access to verify if new versions of the file
-    /// exist, even if a file is already on disk at location.
     /// ```no_run
     /// # use hf_hub::api::tokio::Api;
     /// # tokio_test::block_on(async {
@@ -1346,13 +1363,14 @@ mod tests {
             json!({
                 "_id": "621ffdc136468d709f17ddb4",
                 "author": "mcpotato",
+                "config": {},
                 "createdAt": "2022-03-02T23:29:05.000Z",
                 "disabled": false,
                 "downloads": 0,
                 "gated": false,
                 "id": "mcpotato/42-eicar-street",
                 "lastModified": "2022-11-30T19:54:16.000Z",
-                "likes": 3,
+                "likes": 4,
                 "modelId": "mcpotato/42-eicar-street",
                 "private": false,
                 "sha": "8b3861f6931c4026b0cd22b38dbc09e7668983ac",
@@ -1398,7 +1416,7 @@ mod tests {
                         "size": 31
                     }
                 ],
-                "spaces": [],
+                "spaces": ["szk2024/est"],
                 "tags": ["pytorch", "region:us"],
                 "usedStorage": 22
             })
@@ -1443,7 +1461,7 @@ mod tests {
             .build()
             .expect("failed to build API");
 
-        let repo = api.model("google-bert/bert-base-uncased".to_string());
+        let repo = api.model("danieldk/private-test".to_string());
         let error = repo
             .info()
             .await
