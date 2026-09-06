@@ -7,9 +7,25 @@ pub const GADERSD_WHISPER_BURN: &str = "Gadersd/whisper-burn";
 pub const WHISBURN_BURN_REPO: &str = "lyamc/whisburn";
 
 const WHISBURN_PUBLISHED_MODELS: &[&str] = &[
+    "tiny",
     "tiny_en",
+    "base",
+    "base_en",
+    "small",
+    "small_en",
+    "medium",
     "medium_en",
+    "large-v3-turbo",
+    "distil-medium-en",
+    "distil-large-v3",
     "parakeet-tdt-0.6b-v3",
+    "parakeet-ctc-0.6b",
+    "parakeet-ctc-1.1b",
+    "t-one",
+    "moonshine-tiny",
+    "moonshine-base",
+    "qwen3-0.6b",
+    "bitnet-asr",
 ];
 
 /// Whisper models with ready-made Burn artifacts on Gadersd/whisper-burn.
