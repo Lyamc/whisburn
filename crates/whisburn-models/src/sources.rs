@@ -3,30 +3,8 @@ use whisburn_engine::model::registry::{find_model, ModelInfo};
 /// Pre-converted Burn Whisper bundles published by Gadersd.
 pub const GADERSD_WHISPER_BURN: &str = "Gadersd/whisper-burn";
 
-/// Burn 0.21 runtime bundles published for whisburn (skip local conversion).
+/// Burn 0.21 runtime bundles published for whisburn (tried first; convert is fallback).
 pub const WHISBURN_BURN_REPO: &str = "lyamc/whisburn";
-
-const WHISBURN_PUBLISHED_MODELS: &[&str] = &[
-    "tiny",
-    "tiny_en",
-    "base",
-    "base_en",
-    "small",
-    "small_en",
-    "medium",
-    "medium_en",
-    "large-v3-turbo",
-    "distil-medium-en",
-    "distil-large-v3",
-    "parakeet-tdt-0.6b-v3",
-    "parakeet-ctc-0.6b",
-    "parakeet-ctc-1.1b",
-    "t-one",
-    "moonshine-tiny",
-    "moonshine-base",
-    "qwen3-0.6b",
-    "bitnet-asr",
-];
 
 /// Whisper models with ready-made Burn artifacts on Gadersd/whisper-burn.
 const GADERSD_WHISPER_MODELS: &[&str] = &[
@@ -81,9 +59,6 @@ impl DownloadSource {
 
 pub fn published_bundle_source(name: &str) -> Option<DownloadSource> {
     find_model(name)?;
-    if !WHISBURN_PUBLISHED_MODELS.contains(&name) {
-        return None;
-    }
     Some(DownloadSource::WhisburnBurn {
         repo_id: WHISBURN_BURN_REPO,
         model_name: name.to_string(),
@@ -128,6 +103,21 @@ mod tests {
         let source = published_bundle_source("tiny_en").unwrap();
         assert!(matches!(source, DownloadSource::WhisburnBurn { .. }));
         assert_eq!(source.repo_id(), WHISBURN_BURN_REPO);
+    }
+
+    #[test]
+    fn every_registered_model_tries_whisburn_repo_first() {
+        for name in [
+            "parakeet-tdt-0.6b-v2",
+            "qwen3-asr-0.6b",
+            "qwen3-asr-1.7b",
+            "vibevoice-asr",
+            "bitnet-asr",
+        ] {
+            let source = published_bundle_source(name).unwrap();
+            assert_eq!(source.repo_id(), WHISBURN_BURN_REPO, "{name}");
+        }
+        assert!(published_bundle_source("not-a-real-model").is_none());
     }
 
     #[test]

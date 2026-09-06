@@ -52,7 +52,7 @@ Burn model definitions and inference:
 - **Whisper** — encoder/decoder, mel preprocessing, beam search decode
 - **Parakeet TDT** — Conformer encoder, TDT greedy decode, NeMo mel preprocessing
 - **Qwen3-ASR** — audio tower (conv + transformer encoder) + Qwen3 thinker (GQA, MRoPE), greedy decode
-- **VibeVoice-ASR** — safetensors bundle download, waveform prep, `SpeechConnector` scaffold; Qwen2.5-7B decoder WIP
+- **VibeVoice-ASR** — GGUF Q4_K (or safetensor shards) → dequant → Burn INT8 Qwen2.5-7B greedy STT; host embeddings + tiled `lm_head`. Loads, but is not a 1:1 ggml/GGUF runtime (slow; prefer `bitnet-asr`).
 - **T-one** — stub
 - **Model registry** — static `MODEL_REGISTRY` with HF IDs and `burn_ready` flags
 - **Loader** — reads `.mpk` + `.cfg` + `tokenizer.json` from model cache; Qwen3 loads `model.safetensors` directly

@@ -40,9 +40,10 @@ pub fn flatten_prompt(prompt: &Qwen3AsrPrompt, bpe: &crate::token::Gpt2Tokenizer
 
 /// Qwen3 forced-language suffix for the assistant prompt, if the user requested one.
 ///
-/// HF default is auto-detect: returns `None` for `auto`, `en`, and unsupported codes.
+/// HF default is auto-detect (`None`) for `auto`. Explicit ISO codes, including `en`,
+/// append `language {Name}<asr_text>` so the decoder emits transcript text only.
 pub fn qwen3_forced_language_from_code(iso: &str) -> Option<&'static str> {
-    if iso.eq_ignore_ascii_case("auto") || iso == "en" {
+    if iso.eq_ignore_ascii_case("auto") {
         return None;
     }
     qwen3_language_name(iso)
@@ -116,9 +117,9 @@ mod tests {
     }
 
     #[test]
-    fn forced_language_skips_auto_and_default_en() {
+    fn forced_language_skips_auto_only() {
         assert_eq!(qwen3_forced_language_from_code("auto"), None);
-        assert_eq!(qwen3_forced_language_from_code("en"), None);
+        assert_eq!(qwen3_forced_language_from_code("en"), Some("English"));
         assert_eq!(qwen3_forced_language_from_code("zh"), Some("Chinese"));
         assert_eq!(qwen3_forced_language_from_code("xx"), None);
     }

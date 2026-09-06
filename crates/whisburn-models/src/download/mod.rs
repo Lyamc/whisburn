@@ -63,6 +63,43 @@ pub fn download_model(name: &str, options: &DownloadOptions) -> anyhow::Result<P
     let source = resolve_download_source(name)
         .ok_or_else(|| anyhow::anyhow!("could not resolve download source for '{name}'"))?;
 
+    let api = build_api(&options.hf_token)?;
+
+    if let Some(published) = published_bundle_source(name) {
+        options.report(crate::download::options::PrepProgress::download(
+            format!("Trying published '{name}' from {}", published.repo_id()),
+            0.0,
+            None,
+            None,
+        ));
+        if options.verbose {
+            tracing::info!(
+                "trying published bundle '{name}' from {} before upstream {}",
+                published.repo_id(),
+                source.repo_id()
+            );
+        }
+        match download_published_bundle(&api, &published, &dir, name, options) {
+            Ok(()) => {
+                tracing::info!(
+                    "using published bundle '{name}' from {}",
+                    published.repo_id()
+                );
+                return Ok(dir);
+            }
+            Err(err) => {
+                tracing::warn!(
+                    "published bundle for '{name}' unavailable ({err}); converting from {}",
+                    source.repo_id()
+                );
+                if dir.exists() {
+                    let _ = fs::remove_dir_all(&dir);
+                }
+                fs::create_dir_all(&dir)?;
+            }
+        }
+    }
+
     options.report(crate::download::options::PrepProgress::download(
         format!("Preparing '{name}' from {}", source.repo_id()),
         0.0,
@@ -75,23 +112,6 @@ pub fn download_model(name: &str, options: &DownloadOptions) -> anyhow::Result<P
             source.repo_id(),
             source
         );
-    }
-
-    let api = build_api(&options.hf_token)?;
-
-    if let Some(published) = published_bundle_source(name) {
-        match download_published_bundle(&api, &published, &dir, name, options) {
-            Ok(()) => {
-                if has_burn_bundle(&dir, name) {
-                    return Ok(dir);
-                }
-            }
-            Err(err) => {
-                tracing::warn!(
-                    "published bundle for '{name}' unavailable ({err}); converting from upstream"
-                );
-            }
-        }
     }
 
     if is_whisper_model(name) {

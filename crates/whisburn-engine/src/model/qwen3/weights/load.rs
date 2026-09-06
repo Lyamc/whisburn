@@ -19,10 +19,11 @@ pub fn load_qwen3_weights<B: Backend>(
     verbose: bool,
 ) -> Result<(), Box<dyn Error>> {
     if !weights_present(model_dir) {
-        if verbose {
-            println!("Qwen3: no safetensors weights found");
-        }
-        return Ok(());
+        return Err(format!(
+            "Qwen3 safetensors missing audio/thinker keys in {}",
+            model_dir.display()
+        )
+        .into());
     }
 
     let store = Qwen3WeightStore::open(model_dir).map_err(|e| format!("{e}"))?;

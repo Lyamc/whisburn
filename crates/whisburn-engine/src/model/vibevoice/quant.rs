@@ -3,8 +3,9 @@
 //! * 7B (`vibevoice-asr`): per-output-channel INT8.
 //! * 1.5B BitNet (`bitnet-asr`): per-tensor absmean ternary `{-1,0,+1}` (I2_S).
 //!
-//! Weights stay packed as `i8` on the host. Each forward dequantizes one layer
-//! into f32, runs the matmul, then drops the f32 copy.
+//! Weights stay packed as `i8` on the host. Each forward dequantizes **one tile**
+//! into f32 (never the full 7B `lm_head` 2.18 GB matrix), runs the matmul, then
+//! drops the tile.
 
 use std::fmt;
 use std::sync::Arc;
@@ -77,25 +78,42 @@ impl<B: Backend> QuantLinear<B> {
     pub fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
         let [b, s, d] = x.dims();
         debug_assert_eq!(d, self.d_in);
-        let w = self.dequant(&x.device());
-        let mut y = x.reshape([b * s, d]).matmul(w).reshape([b, s, self.d_out]);
+        let device = x.device();
+        let x2 = x.reshape([b * s, d]);
+        // Cap each dequant tile at 64 MiB so the 7B lm_head (3584×152064 f32 = 2.18 GB)
+        // never lands on the GPU as one buffer.
+        const MAX_F32: usize = 16 * 1024 * 1024;
+        let chunk_out = (MAX_F32 / self.d_in.max(1)).max(1).min(self.d_out.max(1));
+        let mut parts = Vec::new();
+        let mut col = 0usize;
+        while col < self.d_out {
+            let col1 = (col + chunk_out).min(self.d_out);
+            let w = self.dequant_cols(col, col1, &device);
+            parts.push(x2.clone().matmul(w));
+            col = col1;
+        }
+        let mut y = Tensor::cat(parts, 1).reshape([b, s, self.d_out]);
         if let Some(bias) = &self.bias {
             y = y + bias.val().unsqueeze::<2>().unsqueeze::<3>();
         }
         y
     }
 
-    fn dequant(&self, device: &B::Device) -> Tensor<B, 2> {
+    fn dequant_cols(&self, col0: usize, col1: usize, device: &B::Device) -> Tensor<B, 2> {
+        let w_out = col1 - col0;
         let q = self.qweight.as_slice();
         let sc = self.scale_host.as_slice();
-        let mut w = vec![0f32; self.d_in * self.d_out];
-        for i in 0..self.d_in {
-            let row = i * self.d_out;
-            for j in 0..self.d_out {
-                w[row + j] = q[row + j] as f32 * sc[j];
+        let mut w = vec![0f32; self.d_in * w_out];
+        if q.len() == self.d_in * self.d_out {
+            for i in 0..self.d_in {
+                let src = i * self.d_out + col0;
+                let dst = i * w_out;
+                for j in 0..w_out {
+                    w[dst + j] = q[src + j] as f32 * sc[col0 + j];
+                }
             }
         }
-        Tensor::<B, 1>::from_floats(w.as_slice(), device).reshape([self.d_in, self.d_out])
+        Tensor::<B, 1>::from_floats(w.as_slice(), device).reshape([self.d_in, w_out])
     }
 }
 

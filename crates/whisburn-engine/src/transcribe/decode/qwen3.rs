@@ -50,6 +50,20 @@ pub fn decode_qwen3<B: Backend>(
 
     let device = model.device();
     let input_ids = flatten_prompt(&prompt, bpe);
+    let encoded_pads = input_ids
+        .iter()
+        .filter(|&&id| id == runtime.audio_pad_token_id)
+        .count();
+    if encoded_pads != tokens {
+        return (
+            format!(
+                "Qwen3 encoded pad mismatch: encoder={tokens}, encoded pads={encoded_pads} \
+                 (pad_id={}). Tokenizer did not emit one token per <|audio_pad|>.",
+                runtime.audio_pad_token_id
+            ),
+            Vec::new(),
+        );
+    }
     let generated = model.thinker.generate_greedy(
         &input_ids,
         audio_features,

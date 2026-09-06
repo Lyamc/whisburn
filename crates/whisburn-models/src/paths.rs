@@ -10,7 +10,25 @@ pub fn needs_reconversion(name: &str, dir: &Path) -> bool {
     crate::convert::needs_reconversion_for(name, dir)
 }
 
+fn has_vibevoice_gguf(dir: &Path) -> bool {
+    let has_gguf = dir.join("vibevoice-asr-q4_k.gguf").is_file()
+        || std::fs::read_dir(dir)
+            .ok()
+            .map(|it| {
+                it.flatten()
+                    .any(|e| e.path().extension().and_then(|s| s.to_str()) == Some("gguf"))
+            })
+            .unwrap_or(false);
+    has_gguf
+        && dir.join("tokenizer.json").exists()
+        && dir.join("config.json").exists()
+        && dir.join("vibevoice_runtime.json").exists()
+}
+
 fn has_vibevoice_bundle(dir: &Path) -> bool {
+    if has_vibevoice_gguf(dir) {
+        return true;
+    }
     let index_path = dir.join("model.safetensors.index.json");
     if !index_path.exists() || !dir.join("tokenizer.json").exists() || !dir.join("config.json").exists() {
         return false;

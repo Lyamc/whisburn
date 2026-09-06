@@ -28,11 +28,37 @@ pub fn prepare_vibevoice_bundle(
     let processor_path = model_dir.join("processor_config.json");
     let index_path = model_dir.join("model.safetensors.index.json");
 
-    if !index_path.exists() {
+    let has_gguf = model_dir.join("vibevoice-asr-q4_k.gguf").exists()
+        || std::fs::read_dir(model_dir).ok().is_some_and(|it| {
+            it.flatten()
+                .any(|e| e.path().extension().and_then(|s| s.to_str()) == Some("gguf"))
+        });
+
+    if !index_path.exists() && !has_gguf {
         anyhow::bail!(
-            "missing model.safetensors.index.json in {} — download weight shards first",
+            "missing model.safetensors.index.json or GGUF in {} — download weights first",
             model_dir.display()
         );
+    }
+
+    if has_gguf && !index_path.exists() {
+        let hf_config: config::VibeVoiceHfConfig =
+            serde_json::from_str(&fs::read_to_string(&config_path).context("read config.json")?)?;
+        let processor: config::VibeVoiceProcessorConfig = fs::read_to_string(&processor_path)
+            .ok()
+            .and_then(|s| serde_json::from_str(&s).ok())
+            .unwrap_or_else(default_processor_config);
+        let runtime = VibeVoiceRuntimeConfig::from_hf(&hf_config, &processor);
+        fs::write(
+            model_dir.join("vibevoice_runtime.json"),
+            serde_json::to_string_pretty(&runtime)?,
+        )?;
+        ensure_qwen_audio_special_tokens(model_dir)?;
+        fs::write(model_dir.join(".burn_version"), BURN_BUNDLE_VERSION)?;
+        if options.verbose {
+            tracing::info!("vibevoice bundle ready from GGUF Q4 (Burn INT8 at load)");
+        }
+        return Ok(());
     }
 
     let hf_config: config::VibeVoiceHfConfig =

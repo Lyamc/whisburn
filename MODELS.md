@@ -224,28 +224,28 @@ cargo test -p whisburn-engine --test qwen3_audio_hf_mel
 cargo test -p whisburn-engine --test qwen3_mel
 ```
 
-## VibeVoice-ASR (Burn INT8 decoder)
+## VibeVoice-ASR (experimental Burn path — not recommended)
 
 Microsoft [VibeVoice-ASR](https://huggingface.co/microsoft/VibeVoice-ASR) is a **9B-parameter** speech-to-text model (Qwen2.5-7B + dual causal conv encoders). It uses **raw 24 kHz waveform** input (not mel spectrograms).
 
-The 7B language-model weights are **per-channel INT8** in Burn (not GGUF/ggml). That keeps inference on the Burn path while cutting decoder RAM ~4× versus f32. On-disk HuggingFace shards stay f32 (~16 GB); they are quantized while loading. GGUF runtimes (llama.cpp, VibeASR.cpp) are a different stack and are not used.
+> **Warning:** this Burn backend **technically loads and runs**, but it is **not a one-to-one GGUF/ggml runtime** and is **not recommended** for real work. Prefer **`bitnet-asr`** in whisburn, or run the 7B model with [CrispASR](https://github.com/CrispStrobe/CrispASR) / ggml on `cstr/vibevoice-asr-GGUF`.
+>
+> What Burn actually does: download **Q4_K GGUF** (~5 GB), dequantize each tensor to f32, then **re-quantize the decoder to per-channel INT8**. That is a second quant step (Q4 → f32 → INT8), not native Q4 matmul. Embeddings stay in host RAM; `lm_head` is applied in ~64 MB tiles so a 2.18 GB f32 table never lands on the GPU. The result fits in memory but greedy decode is very slow compared with ggml.
 
 ### Source
 
-Downloads from **`microsoft/VibeVoice-ASR-HF`** (Transformers port with `tokenizer.json` and `processor_config.json`).
+Tokenizer/config from **`microsoft/VibeVoice-ASR-HF`**. Weights prefer **`cstr/vibevoice-asr-GGUF`** `vibevoice-asr-q4_k.gguf`. If that fetch fails, the loader falls back to the 8× ~17 GB f32 safetensor shards.
 
 ### Bundle layout
 
 ```
 models/vibevoice-asr/
-├── model-00001-of-00008.safetensors   # ~17 GB total (8 shards)
-├── ...
-├── model.safetensors.index.json
+├── vibevoice-asr-q4_k.gguf            # ~5 GB Q4_K (preferred)
 ├── config.json
 ├── tokenizer.json
 ├── processor_config.json
-├── vibevoice_runtime.json             # Burn runtime metadata
-└── .burn_version                      # "0.21.0-vibevoice-stt"
+├── vibevoice_runtime.json
+└── .burn_version                      # "0.21.0-vibevoice-stt-2"
 ```
 
 ### Download
@@ -254,17 +254,16 @@ models/vibevoice-asr/
 cargo run -p whisburn-cli -- models download vibevoice-asr --verbose
 ```
 
-Requires ~20 GB disk and a stable network connection. Speech encoders, connectors, and the **Qwen2.5-7B greedy STT decoder** are loaded from safetensors. The 7B decoder is ~20 GB in f32 — use `WHISBURN_DEVICE=cpu` (or `--device cpu`) if GPU VRAM is under ~20 GB.
+Requires ~6 GB disk for the GGUF path (or ~20 GB for the f32 shard fallback).
 
 ### Architecture notes
 
-| Component | HF prefix | Burn status |
-|-----------|-----------|-------------|
-| Acoustic encoder | `acoustic_tokenizer_encoder.*` | Loaded at runtime |
-| Semantic encoder | `semantic_tokenizer_encoder.*` | Loaded at runtime |
-| Speech connectors | `multi_modal_projector.{acoustic,semantic}_*` | Loaded at runtime |
-| Qwen2.5-7B LLM | `language_model.model.*` | Greedy decode |
-| LM head | `language_model.lm_head.weight` | Loaded |
+| Component | Loaded from |
+|-----------|-------------|
+| Acoustic / semantic encoders | GGUF (`at_enc.*` / `st_enc.*`) or HF safetensors |
+| Speech connectors | GGUF (`at_conn.*` / `se_conn.*`) or HF projector keys |
+| Qwen2.5-7B | Dequant GGUF → Burn INT8 (`lm.*`) |
+| LM head | Tiled INT8 (never a full 2.18 GB GPU buffer) |
 
 Speech compression: **3200×** (7.5 Hz frames at 24 kHz). Audio normalized to **-25 dBFS**.
 
@@ -294,7 +293,7 @@ Requires ~12 GB disk. The 1.5B ternary decoder is much smaller than the 7B INT8 
 |------|----------|--------------|
 | `moonshine-tiny` | ASR | greedy STT (raw 16 kHz) |
 | `moonshine-base` | ASR | greedy STT (raw 16 kHz, 61M) |
-| `vibevoice-asr` | ASR | greedy STT (7B; prefer CPU if VRAM < 20 GB) |
+| `vibevoice-asr` | ASR | experimental 7B (GGUF Q4 → INT8; not recommended) |
 | `bitnet-asr` | ASR | greedy STT (1.5B ternary I2_S, Burn) |
 | `silero-vad` | VAD | false |
 | `ten-vad` | VAD | false |

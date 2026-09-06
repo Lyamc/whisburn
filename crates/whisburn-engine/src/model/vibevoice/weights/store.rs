@@ -5,18 +5,33 @@ use std::path::Path;
 use safetensors::SafeTensors;
 
 use super::dtype::bytes_to_f32;
+use super::gguf::{gguf_shorten, GgufFile};
 use super::index::VibeVoiceWeightIndex;
 
+enum StoreInner {
+    Safetensors {
+        index: VibeVoiceWeightIndex,
+        shard_cache: HashMap<String, Vec<u8>>,
+    },
+    Gguf(GgufFile),
+}
+
 pub struct VibeVoiceWeightStore {
-    index: VibeVoiceWeightIndex,
-    shard_cache: HashMap<String, Vec<u8>>,
+    inner: StoreInner,
 }
 
 impl VibeVoiceWeightStore {
     pub fn open(model_dir: &Path) -> Result<Self, String> {
+        if let Some(gguf) = find_gguf(model_dir) {
+            return Ok(Self {
+                inner: StoreInner::Gguf(GgufFile::open(&gguf)?),
+            });
+        }
         Ok(Self {
-            index: VibeVoiceWeightIndex::open(model_dir)?,
-            shard_cache: HashMap::new(),
+            inner: StoreInner::Safetensors {
+                index: VibeVoiceWeightIndex::open(model_dir)?,
+                shard_cache: HashMap::new(),
+            },
         })
     }
 
@@ -26,43 +41,71 @@ impl VibeVoiceWeightStore {
 
     pub fn resolve(&self, key: &str) -> Option<String> {
         for cand in key_aliases(key) {
-            if self.index.has_key(&cand) {
-                return Some(cand);
+            match &self.inner {
+                StoreInner::Safetensors { index, .. } => {
+                    if index.has_key(&cand) {
+                        return Some(cand);
+                    }
+                }
+                StoreInner::Gguf(gguf) => {
+                    let short = gguf_shorten(&cand);
+                    if gguf.has_name(&short) {
+                        return Some(short);
+                    }
+                    if gguf.has_name(&cand) {
+                        return Some(cand);
+                    }
+                }
             }
         }
         None
     }
 
     pub fn tensor_f32(&mut self, key: &str) -> Result<(Vec<f32>, Vec<usize>), String> {
-        let key = self
+        let resolved = self
             .resolve(key)
             .ok_or_else(|| format!("tensor key not in index: {key}"))?;
-        let shard_path = self.index.shard_path(&key)?;
-        let shard_name = shard_path
-            .file_name()
-            .and_then(|n| n.to_str())
-            .ok_or_else(|| "invalid shard path".to_string())?
-            .to_string();
+        match &mut self.inner {
+            StoreInner::Gguf(gguf) => gguf.tensor_f32(&resolved),
+            StoreInner::Safetensors { index, shard_cache } => {
+                let shard_path = index.shard_path(&resolved)?;
+                let shard_name = shard_path
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .ok_or_else(|| "invalid shard path".to_string())?
+                    .to_string();
 
-        if !self.shard_cache.contains_key(&shard_name) {
-            // Keep a single shard in RAM — the 8-shard 7B checkpoint is ~16 GB.
-            self.shard_cache.clear();
-            let bytes = fs::read(&shard_path)
-                .map_err(|e| format!("read shard {}: {e}", shard_path.display()))?;
-            self.shard_cache.insert(shard_name.clone(), bytes);
+                if !shard_cache.contains_key(&shard_name) {
+                    shard_cache.clear();
+                    let bytes = fs::read(&shard_path)
+                        .map_err(|e| format!("read shard {}: {e}", shard_path.display()))?;
+                    shard_cache.insert(shard_name.clone(), bytes);
+                }
+
+                let bytes = shard_cache.get(&shard_name).unwrap();
+                let tensors = SafeTensors::deserialize(bytes)
+                    .map_err(|e| format!("deserialize {}: {e}", shard_path.display()))?;
+                let tensor = tensors
+                    .tensor(&resolved)
+                    .map_err(|e| format!("tensor {resolved} in {}: {e}", shard_path.display()))?;
+
+                let shape: Vec<usize> = tensor.shape().iter().copied().collect();
+                let floats = bytes_to_f32(tensor.data(), tensor.dtype())?;
+                Ok((floats, shape))
+            }
         }
-
-        let bytes = self.shard_cache.get(&shard_name).unwrap();
-        let tensors = SafeTensors::deserialize(bytes)
-            .map_err(|e| format!("deserialize {}: {e}", shard_path.display()))?;
-        let tensor = tensors
-            .tensor(&key)
-            .map_err(|e| format!("tensor {key} in {}: {e}", shard_path.display()))?;
-
-        let shape: Vec<usize> = tensor.shape().iter().copied().collect();
-        let floats = bytes_to_f32(tensor.data(), tensor.dtype())?;
-        Ok((floats, shape))
     }
+}
+
+fn find_gguf(dir: &Path) -> Option<std::path::PathBuf> {
+    let preferred = dir.join("vibevoice-asr-q4_k.gguf");
+    if preferred.is_file() {
+        return Some(preferred);
+    }
+    fs::read_dir(dir).ok()?.flatten().find_map(|e| {
+        let p = e.path();
+        (p.extension().and_then(|s| s.to_str()) == Some("gguf")).then_some(p)
+    })
 }
 
 /// HF Transformers (`VibeVoice-ASR-HF`) vs original (`VibeVoice-ASR` / BitNet) key spellings.
@@ -110,5 +153,26 @@ mod tests {
         assert!(aliases.iter().any(|k| k == "model.language_model.embed_tokens.weight"));
         let head = key_aliases("language_model.lm_head.weight");
         assert!(head.iter().any(|k| k == "lm_head.weight"));
+    }
+
+    #[test]
+    fn gguf_shorten_matches_crispasr() {
+        use super::super::gguf::gguf_shorten;
+        assert_eq!(
+            gguf_shorten("model.language_model.layers.0.self_attn.q_proj.weight"),
+            "lm.layers.0.attn.q_proj.weight"
+        );
+        assert_eq!(
+            gguf_shorten("language_model.embed_tokens.weight"),
+            "lm.tok_emb.weight"
+        );
+        assert_eq!(
+            gguf_shorten("model.acoustic_connector.fc1.weight"),
+            "at_conn.fc1.weight"
+        );
+        assert_eq!(
+            gguf_shorten("acoustic_tokenizer.encoder.downsample_layers.0.0.conv.conv.weight"),
+            "at_enc.ds.0.0.conv.weight"
+        );
     }
 }

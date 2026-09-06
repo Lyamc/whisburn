@@ -2,6 +2,7 @@ mod connector;
 mod decoder;
 pub mod dtype;
 mod encoder;
+mod gguf;
 mod index;
 mod store;
 

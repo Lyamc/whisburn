@@ -6,6 +6,7 @@ use serde::ser::StdError;
 use std::collections::HashMap;
 use std::result;
 use tokenizers::models::bpe::{BpeBuilder, BPE};
+use tokenizers::pre_tokenizers::byte_level::ByteLevel;
 use tokenizers::AddedToken;
 use crate::token::special::SpecialToken;
 
@@ -61,6 +62,16 @@ fn load_qwen3_tokenizer(model_name: &str) -> Result<tokenizers::Tokenizer> {
         .map_err(|e| format!("failed to build Qwen3 BPE: {e}"))?;
 
     let mut tokenizer = tokenizers::Tokenizer::new(bpe);
+    // Qwen2Tokenizer is GPT-2 byte-level BPE. Without this decoder, `decode()` emits raw
+    // Ġ-prefixed pieces instead of spaces (JFK looked like "And Ġso , Ġmy Ġfellow...").
+    let pretok = ByteLevel::default()
+        .add_prefix_space(false)
+        .trim_offsets(false);
+    tokenizer.with_pre_tokenizer(Some(pretok));
+    let decoder = ByteLevel::default()
+        .add_prefix_space(true)
+        .trim_offsets(false);
+    tokenizer.with_decoder(Some(decoder));
     if let Some(specials) = read_qwen3_added_tokens(&config_path) {
         tokenizer
             .add_special_tokens(specials)
@@ -149,10 +160,11 @@ impl Gpt2Tokenizer {
     }
 
     pub fn decode(&self, tokens: &[usize], skip_special: bool) -> Result<String> {
-        self.tokenizer.decode(
+        let text = self.tokenizer.decode(
             &tokens.iter().map(|t| *t as u32).collect::<Vec<u32>>(),
             skip_special,
-        )
+        )?;
+        Ok(normalize_bpe_decode(&text))
     }
 
     pub fn is_special(&self, token: usize) -> bool {
@@ -186,5 +198,27 @@ impl Gpt2Tokenizer {
             }
         }
         None
+    }
+}
+
+/// GPT-2 / Qwen byte-level BPE uses U+0120 (Ġ) for spaces. Collapse leftovers if a
+/// tokenizer was loaded without a ByteLevel decoder.
+fn normalize_bpe_decode(text: &str) -> String {
+    let replaced = text.replace('\u{0120}', " ").replace('\u{2581}', " ");
+    let collapsed = replaced.split_whitespace().collect::<Vec<_>>().join(" ");
+    collapsed
+}
+
+#[cfg(test)]
+mod tests {
+    use super::normalize_bpe_decode;
+
+    #[test]
+    fn strips_gpt2_space_markers() {
+        let raw = "And \u{0120}so , \u{0120}my \u{0120}fellow \u{0120}Americans";
+        assert_eq!(
+            normalize_bpe_decode(raw),
+            "And so , my fellow Americans"
+        );
     }
 }

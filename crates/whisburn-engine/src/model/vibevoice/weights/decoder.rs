@@ -1,5 +1,4 @@
-use burn::module::{Module, Param};
-use burn::nn::Embedding;
+use burn::module::Param;
 use burn::tensor::{backend::Backend, Tensor};
 use std::error::Error;
 
@@ -7,6 +6,7 @@ use super::dtype::transpose_linear_weight;
 use super::store::VibeVoiceWeightStore;
 use crate::model::conformer::RMSNorm;
 use crate::model::vibevoice::decoder::{Qwen2Attention, Qwen2Decoder, Qwen2DecoderLayer, Qwen2Mlp};
+use crate::model::vibevoice::host_embed::HostEmbedding;
 use crate::model::vibevoice::quant::{quantize_linear, LinearQuant, QuantLinear};
 
 const LM: &str = "language_model.model";
@@ -17,7 +17,7 @@ pub fn load_decoder<B: Backend>(
     proj_quant: LinearQuant,
     device: &B::Device,
 ) -> Result<Qwen2Decoder<B>, Box<dyn Error>> {
-    let embed = load_embedding(store, &format!("{LM}.embed_tokens.weight"), &decoder.embed_tokens, device)?;
+    let embed = load_embedding(store, &format!("{LM}.embed_tokens.weight"), device)?;
     let layers = decoder
         .layers
         .iter()
@@ -85,17 +85,13 @@ fn load_layer<B: Backend>(
 fn load_embedding<B: Backend>(
     store: &mut VibeVoiceWeightStore,
     key: &str,
-    embedding: &Embedding<B>,
     device: &B::Device,
-) -> Result<Embedding<B>, Box<dyn Error>> {
+) -> Result<HostEmbedding<B>, Box<dyn Error>> {
     let (data, shape) = store.tensor_f32(key)?;
     if shape.len() != 2 {
         return Err(format!("{key}: expected rank-2 embedding, got {shape:?}").into());
     }
-    let weight = Tensor::<B, 1>::from_floats(data.as_slice(), device).reshape([shape[0], shape[1]]);
-    let mut record = embedding.clone().into_record();
-    record.weight = Param::from_tensor(weight);
-    Ok(embedding.clone().load_record(record))
+    Ok(HostEmbedding::from_weight(data, shape[0], shape[1], device))
 }
 
 fn load_rms<B: Backend>(

@@ -209,8 +209,8 @@ Whisper models (`tiny` through `large-v3-turbo`, distil variants) are **Burn-rea
 | Working | Parakeet TDT (`parakeet-tdt-0.6b-v3`, `parakeet-tdt-0.6b-v2`) |
 | Working | Qwen3-ASR (`qwen3-asr-0.6b`, `qwen3-asr-1.7b`) |
 | Registered, conversion WIP | Parakeet CTC, T-one |
-| Working | VibeVoice-ASR (`vibevoice-asr`, Qwen2.5-7B INT8 decoder + dual encoders) |
 | Working | VibeVoice-ASR-BitNet (`bitnet-asr`, Qwen2.5-1.5B ternary I2_S decoder) |
+| Experimental, not recommended | VibeVoice-ASR 7B (`vibevoice-asr`: GGUF Q4 → f32 → Burn INT8; not a ggml 1:1) |
 | Planned | VAD, diarization, TTS |
 
 See [MODELS.md](MODELS.md) for the conversion pipeline and registry details.

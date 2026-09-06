@@ -1,11 +1,11 @@
 use burn::config::Config;
 use burn::module::Module;
-use burn::nn::{Embedding, EmbeddingConfig};
 use burn::tensor::{activation::silu, backend::Backend, Tensor, Int};
 
 use crate::model::attention::attn_decoder_mask;
 use crate::model::conformer::RMSNorm;
 
+use super::host_embed::HostEmbedding;
 use super::quant::QuantLinear;
 use super::runtime::VibeVoiceRuntimeConfig;
 
@@ -60,7 +60,7 @@ impl Qwen2DecoderConfig {
             vocab_size: self.vocab_size,
             head_dim: self.head_dim,
             rope_theta: self.rope_theta,
-            embed_tokens: EmbeddingConfig::new(self.vocab_size, self.hidden_size).init(device),
+            embed_tokens: HostEmbedding::empty(self.vocab_size, self.hidden_size, device),
             layers,
             norm: RMSNorm::with_eps(self.hidden_size, self.rms_norm_eps, device),
             lm_head: QuantLinear::empty(self.hidden_size, self.vocab_size, false, device),
@@ -220,7 +220,7 @@ pub struct Qwen2Decoder<B: Backend> {
     pub(crate) head_dim: usize,
     #[module(skip)]
     pub(crate) rope_theta: f64,
-    pub embed_tokens: Embedding<B>,
+    pub embed_tokens: HostEmbedding<B>,
     pub(crate) layers: Vec<Qwen2DecoderLayer<B>>,
     pub(crate) norm: RMSNorm<B>,
     pub lm_head: QuantLinear<B>,

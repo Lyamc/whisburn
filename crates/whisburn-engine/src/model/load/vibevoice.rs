@@ -40,7 +40,7 @@ pub fn load_vibevoice_model<B: Backend>(
             );
         } else {
             println!(
-                "VibeVoice: initializing Qwen2.5-7B INT8 decoder (GGUF not used — Burn INT8, ~4× smaller than f32)"
+                "VibeVoice: initializing Qwen2.5-7B INT8 decoder (host embeddings + tiled lm_head, no 2.18GB GPU buffer)"
             );
         }
     }
@@ -60,15 +60,21 @@ fn load_vibevoice_weights<B: Backend>(
     device: &B::Device,
     verbose: bool,
 ) -> Result<(), Box<dyn Error>> {
-    let index_path = Path::new(model_dir).join("model.safetensors.index.json");
-    if !index_path.exists() {
+    let dir = Path::new(model_dir);
+    let has_index = dir.join("model.safetensors.index.json").exists();
+    let has_gguf = dir.join("vibevoice-asr-q4_k.gguf").exists()
+        || std::fs::read_dir(dir).ok().is_some_and(|it| {
+            it.flatten()
+                .any(|e| e.path().extension().and_then(|s| s.to_str()) == Some("gguf"))
+        });
+    if !has_index && !has_gguf {
         if verbose {
-            println!("VibeVoice: no safetensors index — using uninitialized weights");
+            println!("VibeVoice: no safetensors index or GGUF — using uninitialized weights");
         }
         return Ok(());
     }
 
-    let mut store = VibeVoiceWeightStore::open(Path::new(model_dir))
+    let mut store = VibeVoiceWeightStore::open(dir)
         .map_err(|e| format!("VibeVoice weight store: {e}"))?;
 
     if store.has_key("multi_modal_projector.acoustic_linear_1.weight")

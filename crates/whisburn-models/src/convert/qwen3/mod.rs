@@ -35,6 +35,8 @@ pub fn prepare_qwen3_bundle(
     ));
     let runtime = if let Ok(hf) = serde_json::from_str::<config::Qwen3HfConfig>(&config_raw) {
         Qwen3RuntimeConfig::from_hf(&hf)
+    } else if let Ok(flat) = serde_json::from_str::<config::Qwen3AsrFlatHfConfig>(&config_raw) {
+        Qwen3RuntimeConfig::from_flat_hf(&flat)
     } else {
         let text: config::Qwen3TextOnlyHfConfig =
             serde_json::from_str(&config_raw).context("parse Qwen3 text config.json")?;

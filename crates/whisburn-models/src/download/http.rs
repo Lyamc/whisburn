@@ -9,7 +9,52 @@ use std::sync::{
 use std::thread;
 use std::time::{Duration, Instant};
 
+use serde::Deserialize;
+
 use super::options::{format_bytes, DownloadOptions, PrepProgress};
+
+#[derive(Debug, Deserialize)]
+struct HfTreeEntry {
+    #[serde(rename = "type")]
+    kind: String,
+    path: String,
+}
+
+/// List files under `prefix/` in a Hugging Face model repo (`tree/main/{prefix}`).
+pub fn list_hf_repo_files(
+    repo_id: &str,
+    prefix: &str,
+    token: &Option<String>,
+) -> anyhow::Result<Vec<String>> {
+    let url = format!(
+        "https://huggingface.co/api/models/{repo_id}/tree/main/{prefix}?limit=1000"
+    );
+    let mut request = native_agent().get(&url);
+    if let Some(token) = token {
+        request = request.header("Authorization", format!("Bearer {token}"));
+    }
+    let response = match request.call() {
+        Ok(r) => r,
+        Err(err) => {
+            let msg = err.to_string();
+            if msg.contains("404") {
+                anyhow::bail!("no published folder '{prefix}' on {repo_id}");
+            }
+            anyhow::bail!("list {url}: {err}");
+        }
+    };
+    let body = response
+        .into_body()
+        .read_to_string()
+        .map_err(|e| anyhow::anyhow!("read tree {url}: {e}"))?;
+    let entries: Vec<HfTreeEntry> = serde_json::from_str(&body)
+        .map_err(|e| anyhow::anyhow!("parse tree {url}: {e}"))?;
+    Ok(entries
+        .into_iter()
+        .filter(|e| e.kind == "file")
+        .map(|e| e.path)
+        .collect())
+}
 
 fn native_agent() -> ureq::Agent {
     use std::sync::OnceLock;

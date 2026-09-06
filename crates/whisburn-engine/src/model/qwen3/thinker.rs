@@ -324,7 +324,7 @@ impl<B: Backend> Qwen3Thinker<B> {
             let logits = self.lm_head.forward(hidden.clone());
             let [_, seq, vocab] = logits.dims();
             let last = logits.slice([0..1, seq - 1..seq, 0..vocab]);
-            let next = last.argmax(2).into_data().to_vec::<i32>().unwrap()[0] as usize;
+            let next = argmax_id(last);
             if eos_ids.contains(&next) {
                 break;
             }
@@ -373,7 +373,7 @@ impl<B: Backend> Qwen3Thinker<B> {
             let logits = self.lm_head.forward(hidden.clone());
             let [_, seq, vocab] = logits.dims();
             let last = logits.slice([0..1, seq - 1..seq, 0..vocab]);
-            let next = last.argmax(2).into_data().to_vec::<i32>().unwrap()[0] as usize;
+            let next = argmax_id(last);
             if eos_ids.contains(&next) {
                 break;
             }
@@ -419,6 +419,17 @@ impl<B: Backend> Qwen3Thinker<B> {
         }
         (self.norm.forward(x), out_caches)
     }
+}
+
+fn argmax_id<B: Backend>(last: Tensor<B, 3>) -> usize {
+    let data = last.argmax(2).into_data();
+    data.clone()
+        .to_vec::<i64>()
+        .or_else(|_| {
+            data.to_vec::<i32>()
+                .map(|v| v.into_iter().map(i64::from).collect())
+        })
+        .expect("argmax ids")[0] as usize
 }
 
 fn apply_rope<B: Backend>(x: Tensor<B, 4>, cos: &Tensor<B, 3>, sin: &Tensor<B, 3>) -> Tensor<B, 4> {

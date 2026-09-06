@@ -4,14 +4,19 @@ use std::path::Path;
 use hf_hub::api::sync::{Api, ApiRepo};
 
 use crate::convert::save_model_from_npy;
+use crate::paths::has_burn_bundle;
 use crate::sources::DownloadSource;
 
 use super::cleanup::decompress_mpk_gz_variants;
-use super::fetch::fetch_repo_file;
-use super::http::fetch_hf_http;
+use super::fetch::{fetch_repo_file, fetch_required_hf_file};
+use super::http::{fetch_hf_http, list_hf_repo_files};
 use super::options::DownloadOptions;
 
 /// Fetch a pre-converted Burn 0.21 folder from `lyamc/whisburn/{name}/`.
+///
+/// Lists that folder on the Hub and downloads whatever is there (`.mpk.gz` Whisper/Parakeet
+/// bundles, Qwen3 safetensors, VibeVoice shards, …). Incomplete folders error so the
+/// caller can fall back to upstream convert.
 pub fn download_published_bundle(
     api: &Api,
     source: &DownloadSource,
@@ -19,57 +24,40 @@ pub fn download_published_bundle(
     name: &str,
     options: &DownloadOptions,
 ) -> anyhow::Result<()> {
-    let repo = api.model(source.repo_id().to_string());
-    let files = [
-        "model.mpk.gz",
-        "model.mpk",
-        "config.cfg",
-        "tokenizer.json",
-        "config.json",
-        "preprocessor_config.json",
-        "parakeet_decode.json",
-        ".burn_version",
-        ".whisper_layout",
-        "tiny_en.cfg",
-        "medium_en.cfg",
-        "parakeet-tdt-0.6b-v3.cfg",
-    ];
-
-    let mut got_weights = false;
-    let mut got_cfg = false;
-    let mut got_tok = false;
-    for file in files {
-        let remote = format!("{name}/{file}");
-        match fetch_repo_file(&repo, &remote, dir, options).or_else(|_| {
-            fetch_hf_http(source.repo_id(), &remote, dir, options)
-        }) {
-            Ok(_) => {
-                if file.ends_with(".mpk") || file.ends_with(".mpk.gz") {
-                    got_weights = true;
-                }
-                if file.ends_with(".cfg") {
-                    got_cfg = true;
-                }
-                if file == "tokenizer.json" {
-                    got_tok = true;
-                }
-            }
-            Err(err) => {
-                if options.verbose {
-                    tracing::info!("optional {remote}: {err}");
-                }
-            }
-        }
-    }
-
-    if !got_weights || !got_cfg || !got_tok {
+    let files = list_hf_repo_files(source.repo_id(), name, &options.hf_token)?;
+    if files.is_empty() {
         anyhow::bail!(
-            "published bundle for '{name}' on {} is incomplete (weights={got_weights} cfg={got_cfg} tok={got_tok})",
+            "published folder '{name}' on {} has no files",
             source.repo_id()
         );
     }
 
+    options.report(crate::download::options::PrepProgress::download(
+        format!("Fetching published '{name}' from {}", source.repo_id()),
+        0.0,
+        None,
+        None,
+    ));
+    if options.verbose {
+        tracing::info!(
+            "published bundle: {} files in {}/{name}",
+            files.len(),
+            source.repo_id()
+        );
+    }
+
+    let repo = api.model(source.repo_id().to_string());
+    for remote in &files {
+        fetch_required_hf_file(&repo, source.repo_id(), remote, dir, options)?;
+    }
+
     decompress_mpk_gz_variants(dir, name, options.verbose)?;
+    if !has_burn_bundle(dir, name) {
+        anyhow::bail!(
+            "published bundle for '{name}' on {} is incomplete after download",
+            source.repo_id()
+        );
+    }
     Ok(())
 }
 

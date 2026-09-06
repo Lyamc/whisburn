@@ -73,12 +73,27 @@ pub fn decode_vibevoice<B: Backend>(
         );
     }
 
+    if pad_id == 0
+        || pad_positions == 0
+        || pad_positions != pad_count
+        || pad_positions != speech_tokens
+        || eos_ids.is_empty()
+    {
+        return (
+            format!(
+                "VibeVoice prompt mismatch: pad_id={pad_id}, encoded pads={pad_positions}/{pad_count}, \
+                 eos={eos_ids:?}. Refusing to run unbounded 7B decode."
+            ),
+            Vec::new(),
+        );
+    }
+
     let tokens = model.decoder.generate_greedy(
         &prefix_ids,
         speech,
         pad_id,
         &eos_ids,
-        256,
+        128,
         &device,
     );
     let text = unwrap_vibevoice_text(&bpe.decode(&tokens, true).unwrap_or_default());

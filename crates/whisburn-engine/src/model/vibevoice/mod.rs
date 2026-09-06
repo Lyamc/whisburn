@@ -1,6 +1,7 @@
 mod connector;
 pub mod decoder;
 pub mod encoder;
+pub mod host_embed;
 pub mod quant;
 mod hf_config;
 mod prompt;
