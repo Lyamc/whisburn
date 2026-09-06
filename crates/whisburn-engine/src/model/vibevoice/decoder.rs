@@ -262,8 +262,10 @@ impl<B: Backend> Qwen2Decoder<B> {
         audio_features: Tensor<B, 3>,
         pad_token_id: usize,
         eos_ids: &[usize],
+        banned_ids: &[usize],
         max_new_tokens: usize,
         device: &B::Device,
+        mut should_stop: impl FnMut(&[usize]) -> bool,
     ) -> Vec<usize> {
         let prefix_len = prefix_ids.len();
         if prefix_len == 0 {
@@ -271,24 +273,24 @@ impl<B: Backend> Qwen2Decoder<B> {
         }
 
         let hidden = self.merge_audio_embeds(prefix_ids, audio_features, pad_token_id, device);
-        let (mut hidden, mut caches) = self.forward_hidden_with_cache(hidden, device);
+        let (hidden, mut caches) = self.forward_hidden_with_cache(hidden, device);
+        let [_, seq, h] = hidden.dims();
+        // Only the last position is scored. Running lm_head on the full prefix
+        // (146 × 152064) was the main reason JFK never finished.
+        let mut last_h = hidden.slice([0..1, seq - 1..seq, 0..h]);
         let mut generated = Vec::new();
         let mut pos = prefix_len;
 
         for _ in 0..max_new_tokens {
-            let logits = self.lm_head.forward(hidden.clone());
-            let [_, seq, vocab] = logits.dims();
-            let last = logits.slice([0..1, seq - 1..seq, 0..vocab]);
-            let data = last.argmax(2).into_data();
-            let next = data
-                .clone()
-                .to_vec::<i64>()
-                .or_else(|_| data.to_vec::<i32>().map(|v| v.into_iter().map(i64::from).collect()))
-                .expect("argmax ids")[0] as usize;
+            let logits = self.lm_head.forward(last_h);
+            let next = greedy_id(logits, banned_ids);
             if eos_ids.contains(&next) {
                 break;
             }
             generated.push(next);
+            if should_stop(&generated) {
+                break;
+            }
 
             let next_id = vec![next as i32];
             let ids_tensor =
@@ -302,7 +304,7 @@ impl<B: Backend> Qwen2Decoder<B> {
                 *cache = Some(new_cache);
                 x = out;
             }
-            hidden = self.norm.forward(x);
+            last_h = self.norm.forward(x);
             pos += 1;
         }
 
@@ -326,6 +328,21 @@ impl<B: Backend> Qwen2Decoder<B> {
         }
         (self.norm.forward(x), caches)
     }
+}
+
+fn greedy_id<B: Backend>(logits: Tensor<B, 3>, banned: &[usize]) -> usize {
+    let data = logits.into_data();
+    let mut v = data.to_vec::<f32>().expect("lm_head logits f32");
+    for &b in banned {
+        if b < v.len() {
+            v[b] = f32::NEG_INFINITY;
+        }
+    }
+    v.iter()
+        .enumerate()
+        .max_by(|a, b| a.1.total_cmp(b.1))
+        .map(|(i, _)| i)
+        .unwrap_or(0)
 }
 
 fn apply_rope<B: Backend>(x: Tensor<B, 4>, cos: &Tensor<B, 3>, sin: &Tensor<B, 3>) -> Tensor<B, 4> {

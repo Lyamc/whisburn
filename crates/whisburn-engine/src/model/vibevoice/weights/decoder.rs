@@ -27,8 +27,13 @@ pub fn load_decoder<B: Backend>(
     let dim = decoder.hidden_size;
     let norm = load_rms(store, &format!("{LM}.norm.weight"), decoder.norm.epsilon, dim, device)?;
     // lm_head is not BitNet-trained (I2_S is q/k/v/o/gate/up/down only).
+    // 7B keeps the dequantized f32 head (tiled); BitNet still packs INT8.
     let lm_head = if store.has_key("language_model.lm_head.weight") {
-        load_quant_linear(store, "language_model.lm_head", LinearQuant::Int8, device)?
+        if matches!(proj_quant, LinearQuant::Ternary) {
+            load_quant_linear(store, "language_model.lm_head", LinearQuant::Int8, device)?
+        } else {
+            load_f32_linear(store, "language_model.lm_head", device)?
+        }
     } else {
         load_quant_linear(store, &format!("{LM}.embed_tokens"), LinearQuant::Int8, device)?
     };
@@ -127,4 +132,19 @@ fn load_quant_linear<B: Backend>(
         .ok()
         .map(|(b, _)| b);
     Ok(QuantLinear::from_quantized(q, scale, bias, d_in, d_out, device))
+}
+
+fn load_f32_linear<B: Backend>(
+    store: &mut VibeVoiceWeightStore,
+    prefix: &str,
+    device: &B::Device,
+) -> Result<QuantLinear<B>, Box<dyn Error>> {
+    let (data, shape) = store.tensor_f32(&format!("{prefix}.weight"))?;
+    let (weight_data, [d_in, d_out]) = transpose_linear_weight(&data, &shape);
+    drop(data);
+    let bias = store
+        .tensor_f32(&format!("{prefix}.bias"))
+        .ok()
+        .map(|(b, _)| b);
+    Ok(QuantLinear::from_f32(weight_data, bias, d_in, d_out, device))
 }

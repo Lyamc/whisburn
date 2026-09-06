@@ -40,7 +40,7 @@ pub fn load_vibevoice_model<B: Backend>(
             );
         } else {
             println!(
-                "VibeVoice: initializing Qwen2.5-7B INT8 decoder (host embeddings + tiled lm_head, no 2.18GB GPU buffer)"
+                "VibeVoice: initializing Qwen2.5-7B INT8 decoder (host embeddings + tiled f32 lm_head)"
             );
         }
     }
@@ -118,8 +118,8 @@ fn load_vibevoice_weights<B: Backend>(
         model.decoder = load_decoder(&mut store, &model.decoder, proj_quant, device)?;
         if verbose {
             let label = match proj_quant {
-                LinearQuant::Ternary => "ternary I2_S",
-                LinearQuant::Int8 => "INT8",
+                LinearQuant::Ternary => "ternary I2_S (INT8 lm_head)",
+                LinearQuant::Int8 => "INT8 attn/MLP + f32 tiled lm_head",
             };
             println!("VibeVoice: loaded Qwen2.5 language model as {label} (greedy STT)");
         }

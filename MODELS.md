@@ -228,9 +228,9 @@ cargo test -p whisburn-engine --test qwen3_mel
 
 Microsoft [VibeVoice-ASR](https://huggingface.co/microsoft/VibeVoice-ASR) is a **9B-parameter** speech-to-text model (Qwen2.5-7B + dual causal conv encoders). It uses **raw 24 kHz waveform** input (not mel spectrograms).
 
-> **Warning:** this Burn backend **technically loads and runs**, but it is **not a one-to-one GGUF/ggml runtime** and is **not recommended** for real work. Prefer **`bitnet-asr`** in whisburn, or run the 7B model with [CrispASR](https://github.com/CrispStrobe/CrispASR) / ggml on `cstr/vibevoice-asr-GGUF`.
+> **Warning:** this Burn backend **loads, runs, and transcribes the JFK sample**, but it is **not a one-to-one GGUF/ggml runtime** and is **not recommended** for real work. Q4_K is dequantized to f32, attn/MLP are packed INT8, and `lm_head` stays tiled f32. Prefer **`bitnet-asr`** in whisburn, or run the 7B model with [CrispASR](https://github.com/CrispStrobe/CrispASR) / ggml on `cstr/vibevoice-asr-GGUF`.
 >
-> What Burn actually does: download **Q4_K GGUF** (~5 GB), dequantize each tensor to f32, then **re-quantize the decoder to per-channel INT8**. That is a second quant step (Q4 → f32 → INT8), not native Q4 matmul. Embeddings stay in host RAM; `lm_head` is applied in ~64 MB tiles so a 2.18 GB f32 table never lands on the GPU. The result fits in memory but greedy decode is very slow compared with ggml.
+> What Burn actually does: download **Q4_K GGUF** (~5 GB), dequantize each tensor to f32, then **re-quantize attn/MLP to per-channel INT8**. That is a second quant step (Q4 → f32 → INT8), not native Q4 matmul. Embeddings stay in host RAM; `lm_head` stays f32 and is applied in ~128 MB tiles so a 2.18 GB table never lands on the GPU. Greedy decode is very slow compared with ggml.
 
 ### Source
 
@@ -293,7 +293,7 @@ Requires ~12 GB disk. The 1.5B ternary decoder is much smaller than the 7B INT8 
 |------|----------|--------------|
 | `moonshine-tiny` | ASR | greedy STT (raw 16 kHz) |
 | `moonshine-base` | ASR | greedy STT (raw 16 kHz, 61M) |
-| `vibevoice-asr` | ASR | experimental 7B (GGUF Q4 → INT8; not recommended) |
+| `vibevoice-asr` | ASR | experimental 7B (GGUF Q4 → INT8 attn/MLP, f32 lm_head; not recommended) |
 | `bitnet-asr` | ASR | greedy STT (1.5B ternary I2_S, Burn) |
 | `silero-vad` | VAD | false |
 | `ten-vad` | VAD | false |

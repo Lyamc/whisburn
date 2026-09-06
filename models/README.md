@@ -25,7 +25,7 @@ Each model directory typically contains:
 | `tokenizer.json` | GPT-2 BPE tokenizer (Whisper, Parakeet) or Qwen tokenizer assets |
 | `parakeet_decode.json` | Parakeet TDT decode metadata (blank, vocab, durations) |
 | `qwen3_runtime.json` | Qwen3-ASR Burn runtime metadata |
-| `vibevoice-asr-q4_k.gguf` | VibeVoice 7B Q4_K weights (dequantized to Burn INT8 at load; experimental) |
+| `vibevoice-asr-q4_k.gguf` | VibeVoice 7B Q4_K weights (attn/MLP → INT8, tiled f32 lm_head; experimental) |
 | `vibevoice_runtime.json` | VibeVoice Burn runtime metadata |
 | `.burn_version` | Records the Burn version used for conversion |
 
