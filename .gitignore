@@ -7,6 +7,9 @@
 /models/*
 !/models/README.md
 
+# Staging tree for Hugging Face uploads
+/.hf-publish/
+
 # HuggingFace / conversion intermediates (anywhere in tree)
 model.safetensors
 *.mpk

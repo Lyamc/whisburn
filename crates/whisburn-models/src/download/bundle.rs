@@ -11,6 +11,68 @@ use super::fetch::fetch_repo_file;
 use super::http::fetch_hf_http;
 use super::options::DownloadOptions;
 
+/// Fetch a pre-converted Burn 0.21 folder from `lyamc/whisburn/{name}/`.
+pub fn download_published_bundle(
+    api: &Api,
+    source: &DownloadSource,
+    dir: &Path,
+    name: &str,
+    options: &DownloadOptions,
+) -> anyhow::Result<()> {
+    let repo = api.model(source.repo_id().to_string());
+    let files = [
+        "model.mpk.gz",
+        "model.mpk",
+        "config.cfg",
+        "tokenizer.json",
+        "config.json",
+        "preprocessor_config.json",
+        "parakeet_decode.json",
+        ".burn_version",
+        ".whisper_layout",
+        "tiny_en.cfg",
+        "medium_en.cfg",
+        "parakeet-tdt-0.6b-v3.cfg",
+    ];
+
+    let mut got_weights = false;
+    let mut got_cfg = false;
+    let mut got_tok = false;
+    for file in files {
+        let remote = format!("{name}/{file}");
+        match fetch_repo_file(&repo, &remote, dir, options).or_else(|_| {
+            fetch_hf_http(source.repo_id(), &remote, dir, options)
+        }) {
+            Ok(_) => {
+                if file.ends_with(".mpk") || file.ends_with(".mpk.gz") {
+                    got_weights = true;
+                }
+                if file.ends_with(".cfg") {
+                    got_cfg = true;
+                }
+                if file == "tokenizer.json" {
+                    got_tok = true;
+                }
+            }
+            Err(err) => {
+                if options.verbose {
+                    tracing::info!("optional {remote}: {err}");
+                }
+            }
+        }
+    }
+
+    if !got_weights || !got_cfg || !got_tok {
+        anyhow::bail!(
+            "published bundle for '{name}' on {} is incomplete (weights={got_weights} cfg={got_cfg} tok={got_tok})",
+            source.repo_id()
+        );
+    }
+
+    decompress_mpk_gz_variants(dir, name, options.verbose)?;
+    Ok(())
+}
+
 pub fn download_generic_bundle(
     api: &Api,
     source: &DownloadSource,

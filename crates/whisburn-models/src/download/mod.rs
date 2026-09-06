@@ -20,12 +20,12 @@ use crate::convert::{
     is_whisper_model, needs_reconversion_for,
 };
 use crate::paths::{has_burn_bundle, model_dir, models_dir, resolve_model_dir};
-use crate::sources::resolve_download_source;
+use crate::sources::{published_bundle_source, resolve_download_source};
 
 pub use cleanup::save_response_gz;
 pub use options::{DownloadOptions, PrepProgress, PrepProgressFn};
 
-use bundle::download_generic_bundle;
+use bundle::{download_generic_bundle, download_published_bundle};
 use cleanup::clear_stale_artifacts;
 use fetch::build_api;
 use moonshine::download_moonshine_hf;
@@ -78,6 +78,21 @@ pub fn download_model(name: &str, options: &DownloadOptions) -> anyhow::Result<P
     }
 
     let api = build_api(&options.hf_token)?;
+
+    if let Some(published) = published_bundle_source(name) {
+        match download_published_bundle(&api, &published, &dir, name, options) {
+            Ok(()) => {
+                if has_burn_bundle(&dir, name) {
+                    return Ok(dir);
+                }
+            }
+            Err(err) => {
+                tracing::warn!(
+                    "published bundle for '{name}' unavailable ({err}); converting from upstream"
+                );
+            }
+        }
+    }
 
     if is_whisper_model(name) {
         download_whisper_hf(&api, &source, &dir, name, options)?;

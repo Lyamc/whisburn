@@ -3,6 +3,15 @@ use whisburn_engine::model::registry::{find_model, ModelInfo};
 /// Pre-converted Burn Whisper bundles published by Gadersd.
 pub const GADERSD_WHISPER_BURN: &str = "Gadersd/whisper-burn";
 
+/// Burn 0.21 runtime bundles published for whisburn (skip local conversion).
+pub const WHISBURN_BURN_REPO: &str = "lyamc/whisburn";
+
+const WHISBURN_PUBLISHED_MODELS: &[&str] = &[
+    "tiny_en",
+    "medium_en",
+    "parakeet-tdt-0.6b-v3",
+];
+
 /// Whisper models with ready-made Burn artifacts on Gadersd/whisper-burn.
 const GADERSD_WHISPER_MODELS: &[&str] = &[
     "tiny",
@@ -24,6 +33,11 @@ pub enum DownloadSource {
         repo_id: &'static str,
         model_name: String,
     },
+    /// Burn 0.21 `.mpk.gz` bundles on `lyamc/whisburn`.
+    WhisburnBurn {
+        repo_id: &'static str,
+        model_name: String,
+    },
     /// Upstream HuggingFace model repo (may require on-device conversion).
     HuggingFace {
         hf_id: String,
@@ -34,17 +48,30 @@ pub enum DownloadSource {
 impl DownloadSource {
     pub fn model_name(&self) -> &str {
         match self {
-            Self::GadersdBurn { model_name, .. } => model_name,
+            Self::GadersdBurn { model_name, .. } | Self::WhisburnBurn { model_name, .. } => {
+                model_name
+            }
             Self::HuggingFace { model_name, .. } => model_name,
         }
     }
 
     pub fn repo_id(&self) -> &str {
         match self {
-            Self::GadersdBurn { repo_id, .. } => repo_id,
+            Self::GadersdBurn { repo_id, .. } | Self::WhisburnBurn { repo_id, .. } => repo_id,
             Self::HuggingFace { hf_id, .. } => hf_id,
         }
     }
+}
+
+pub fn published_bundle_source(name: &str) -> Option<DownloadSource> {
+    find_model(name)?;
+    if !WHISBURN_PUBLISHED_MODELS.contains(&name) {
+        return None;
+    }
+    Some(DownloadSource::WhisburnBurn {
+        repo_id: WHISBURN_BURN_REPO,
+        model_name: name.to_string(),
+    })
 }
 
 pub fn resolve_download_source(name: &str) -> Option<DownloadSource> {
@@ -78,6 +105,13 @@ mod tests {
         let source = resolve_download_source("tiny_en").unwrap();
         assert!(matches!(source, DownloadSource::HuggingFace { .. }));
         assert_eq!(source.repo_id(), "openai/whisper-tiny.en");
+    }
+
+    #[test]
+    fn tiny_en_has_published_burn_bundle() {
+        let source = published_bundle_source("tiny_en").unwrap();
+        assert!(matches!(source, DownloadSource::WhisburnBurn { .. }));
+        assert_eq!(source.repo_id(), WHISBURN_BURN_REPO);
     }
 
     #[test]
