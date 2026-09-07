@@ -27,6 +27,10 @@ Each model directory typically contains:
 | `qwen3_runtime.json` | Qwen3-ASR Burn runtime metadata |
 | `vibevoice-asr-q4_k.gguf` | VibeVoice 7B Q4_K weights (attn/MLP → INT8, tiled f32 lm_head; experimental) |
 | `vibevoice_runtime.json` | VibeVoice Burn runtime metadata |
+| `vad_runtime.json` | Silero / TEN VAD runtime metadata |
+| `ten_features.json` | TEN-VAD mel mean/std/window |
+| `embedding.safetensors` | Speaker embeddings for clustering diarization |
+| `diarize_runtime.json` | Diarization runtime metadata |
 | `.burn_version` | Records the Burn version used for conversion |
 
 Intermediate files (`model.safetensors`, `encoder/*.npy`, `decoder/*.npy`) are removed after Whisper/Parakeet conversion. Qwen3 keeps `model.safetensors` as the runtime weight source.

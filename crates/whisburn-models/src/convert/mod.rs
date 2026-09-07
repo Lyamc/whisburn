@@ -16,6 +16,14 @@ pub use moonshine::{is_moonshine_model, prepare_moonshine_bundle};
 pub use qwen3::{is_qwen3_model, prepare_qwen3_bundle, Qwen3RuntimeConfig};
 pub use tone::{is_tone_model, prepare_tone_bundle};
 pub use vibevoice::{is_vibevoice_model, prepare_vibevoice_bundle, VibeVoiceRuntimeConfig};
+
+pub fn is_vad_model(name: &str) -> bool {
+    matches!(name, "silero-vad" | "ten-vad")
+}
+
+pub fn is_diarize_model(name: &str) -> bool {
+    matches!(name, "diarization-3.1" | "nemo-diarization")
+}
 pub use whisper::{convert_whisper_from_hf, is_whisper_model, needs_reconversion};
 
 pub fn needs_reconversion_for(name: &str, model_dir: &std::path::Path) -> bool {

@@ -12,6 +12,8 @@ pub mod tone;
 pub mod moonshine;
 pub mod qwen3;
 pub mod vibevoice;
+pub mod vad;
+pub mod diarize;
 
 pub use load::*;
 pub use attention::*;

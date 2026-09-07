@@ -7,6 +7,9 @@ mod moonshine;
 mod parakeet;
 mod qwen3;
 mod tone;
+mod python;
+mod vad;
+mod diarize;
 mod vibevoice;
 mod whisper;
 
@@ -32,6 +35,8 @@ use moonshine::download_moonshine_hf;
 use parakeet::download_parakeet_hf;
 use qwen3::download_qwen3_hf;
 use tone::download_tone_hf;
+use diarize::{download_diarize, is_diarize_download};
+use vad::{download_vad, is_vad_download};
 use vibevoice::download_vibevoice_hf;
 use whisper::download_whisper_hf;
 
@@ -126,6 +131,10 @@ pub fn download_model(name: &str, options: &DownloadOptions) -> anyhow::Result<P
         download_moonshine_hf(&api, &source, &dir, name, options)?;
     } else if is_tone_model(name) {
         download_tone_hf(&api, &source, &dir, name, options)?;
+    } else if is_vad_download(name) {
+        download_vad(&api, &source, &dir, name, options)?;
+    } else if is_diarize_download(name) {
+        download_diarize(&api, &source, &dir, name, options)?;
     } else {
         download_generic_bundle(&api, &source, &dir, name, options)?;
     }

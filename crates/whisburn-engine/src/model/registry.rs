@@ -94,10 +94,10 @@ pub const MODEL_REGISTRY: &[ModelInfo] = &[
     model!("qwen3-asr-1.7b", "Qwen/Qwen3-ASR-1.7B-hf", "Qwen3-ASR 1.7B (Burn inference: audio tower + thinker + greedy decode).", ModelCategory::Asr, 4500, true, ModelTier::High, ModelTier::High, ModelTier::High, ModelTier::High, 75, "Top Qwen accuracy"),
     model!("vibevoice-asr", "microsoft/VibeVoice-ASR-HF", "Microsoft VibeVoice-ASR 7B (INT8 Qwen2.5 decoder + dual encoders, Burn greedy STT).", ModelCategory::Asr, 8_000, true, ModelTier::High, ModelTier::High, ModelTier::High, ModelTier::Low, 40, "Large STT, INT8 decoder"),
     model!("bitnet-asr", "microsoft/VibeVoice-ASR-BitNet", "Microsoft VibeVoice-ASR-BitNet 1.5B (ternary I2_S Qwen2.5 decoder + dual VAEs, Burn greedy STT).", ModelCategory::Asr, 2_500, true, ModelTier::Medium, ModelTier::High, ModelTier::Medium, ModelTier::High, 55, "Ternary 1.5B STT"),
-    model!("silero-vad", "snakers4/silero-vad", "Silero VAD.", ModelCategory::Vad, 50, false, ModelTier::Low, ModelTier::Medium, ModelTier::Low, ModelTier::High, 90, "Voice activity detect"),
-    model!("ten-vad", "TEN-framework/ten-vad", "TEN VAD.", ModelCategory::Vad, 50, false, ModelTier::Low, ModelTier::Medium, ModelTier::Low, ModelTier::High, 90, "TEN voice detect"),
-    model!("diarization-3.1", "pyannote/speaker-diarization-3.1", "Pyannote diarization.", ModelCategory::Diarization, 500, false, ModelTier::Medium, ModelTier::High, ModelTier::High, ModelTier::Medium, 55, "Speaker diarization"),
-    model!("nemo-diarization", "nvidia/diar_msdd_telephonic", "NeMo diarization.", ModelCategory::Diarization, 800, false, ModelTier::Medium, ModelTier::High, ModelTier::High, ModelTier::Medium, 55, "NeMo phone diarization"),
+    model!("silero-vad", "snakers4/silero-vad", "Silero VAD v5 (Burn/host, 16 kHz chunks).", ModelCategory::Vad, 50, true, ModelTier::Low, ModelTier::Medium, ModelTier::Low, ModelTier::High, 90, "Voice activity detect"),
+    model!("ten-vad", "TEN-framework/ten-vad", "TEN VAD (Burn/host, 16 kHz hop 256).", ModelCategory::Vad, 50, true, ModelTier::Low, ModelTier::Medium, ModelTier::Low, ModelTier::High, 90, "TEN voice detect"),
+    model!("diarization-3.1", "pyannote/wespeaker-voxceleb-resnet34-LM", "Pyannote 3.1-style clustering diarization (WeSpeaker embeddings).", ModelCategory::Diarization, 500, true, ModelTier::Medium, ModelTier::High, ModelTier::High, ModelTier::Medium, 55, "Speaker diarization"),
+    model!("nemo-diarization", "nvidia/speakerverification_en_titanet_large", "NeMo clustering diarization (TitaNet/WeSpeaker embeddings).", ModelCategory::Diarization, 800, true, ModelTier::Medium, ModelTier::High, ModelTier::High, ModelTier::Medium, 55, "NeMo phone diarization"),
 ];
 
 pub fn get_model_names() -> Vec<&'static str> {

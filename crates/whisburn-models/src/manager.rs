@@ -3,10 +3,12 @@ use std::sync::{Arc, Mutex as StdMutex};
 
 use tokio::sync::Mutex;
 use whisburn_core::{SpeechTask, TaskOptions, TranscriptResult, WhisburnError, WhisburnResult};
-use whisburn_engine::model::registry::{find_model, ModelCategory};
+use whisburn_engine::model::registry::find_model;
 use whisburn_engine::runtime::InferenceRuntime;
 
 use crate::diarize::assign_alternating_speakers;
+use whisburn_engine::model::diarize::{assign_speakers, is_diarize_model};
+use whisburn_engine::model::registry::ModelCategory;
 use crate::download::{download_model, DownloadOptions, PrepProgressFn};
 use crate::paths::{is_model_ready, resolve_model_dir};
 
@@ -148,13 +150,22 @@ impl ModelManager {
             )));
         }
 
+        let overlay = matches!(options.task, SpeechTask::Diarize) && !is_diarize_model(model_name);
+        let copy = overlay.then(|| samples.clone());
         let mut result = self
             .runtime
             .transcribe_waveform(model_name, samples, sample_rate, options)?;
 
-        if matches!(options.task, SpeechTask::Diarize) {
+        if overlay {
             result.task = "diarize".to_string();
-            result = assign_alternating_speakers(result);
+            let audio = copy.unwrap_or_default();
+            result = if is_model_ready("diarization-3.1") {
+                assign_speakers(result, &audio, sample_rate, "diarization-3.1")
+            } else if is_model_ready("nemo-diarization") {
+                assign_speakers(result, &audio, sample_rate, "nemo-diarization")
+            } else {
+                assign_alternating_speakers(result)
+            };
         }
 
         Ok(result)
@@ -181,7 +192,10 @@ impl ModelManager {
 
         match options.task {
             SpeechTask::Transcribe | SpeechTask::Stt => {
-                if info.category != ModelCategory::Asr {
+                if info.category != ModelCategory::Asr
+                    && info.category != ModelCategory::Vad
+                    && info.category != ModelCategory::Diarization
+                {
                     return Err(WhisburnError::UnsupportedCapability {
                         model: model_name.to_string(),
                         capability: "transcribe".to_string(),
@@ -197,7 +211,10 @@ impl ModelManager {
                 }
             }
             SpeechTask::Diarize => {
-                if info.category != ModelCategory::Asr {
+                if info.category != ModelCategory::Asr
+                    && info.category != ModelCategory::Diarization
+                    && !is_diarize_model(model_name)
+                {
                     return Err(WhisburnError::UnsupportedCapability {
                         model: model_name.to_string(),
                         capability: "diarize".to_string(),

@@ -211,7 +211,9 @@ Whisper models (`tiny` through `large-v3-turbo`, distil variants) are **Burn-rea
 | Registered, conversion WIP | Parakeet CTC, T-one |
 | Working | VibeVoice-ASR-BitNet (`bitnet-asr`, Qwen2.5-1.5B ternary I2_S decoder) |
 | Experimental, not recommended | VibeVoice-ASR 7B (`vibevoice-asr`: GGUF Q4 → INT8 attn/MLP, tiled f32 lm_head; not a ggml 1:1) |
-| Planned | VAD, diarization, TTS |
+| Working | VAD (`silero-vad`, `ten-vad`) |
+| Working | Diarization (`diarization-3.1` WeSpeaker clustering, `nemo-diarization` clustering; MSDD not ported) |
+| Planned | TTS |
 
 See [MODELS.md](MODELS.md) for the conversion pipeline and registry details.
 

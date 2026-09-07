@@ -87,6 +87,17 @@ pub fn has_burn_bundle(dir: &Path, name: &str) -> bool {
     if crate::convert::is_vibevoice_model(name) {
         return has_vibevoice_bundle(dir);
     }
+    if crate::convert::is_vad_model(name) {
+        let ok = dir.join("model.safetensors").exists() && dir.join("vad_runtime.json").exists();
+        if name == "ten-vad" {
+            return ok && dir.join("ten_features.json").exists();
+        }
+        return ok;
+    }
+    if crate::convert::is_diarize_model(name) {
+        return (dir.join("embedding.safetensors").exists() || dir.join("model.safetensors").exists())
+            && dir.join("diarize_runtime.json").exists();
+    }
 
     let mpk_candidates = [
         dir.join("model.mpk"),

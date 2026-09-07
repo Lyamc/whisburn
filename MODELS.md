@@ -287,7 +287,35 @@ cargo run -p whisburn-cli -- models download bitnet-asr --verbose
 
 Requires ~12 GB disk. The 1.5B ternary decoder is much smaller than the 7B INT8 path and can run on a 12 GB GPU.
 
-## Planned models
+## VAD
+
+| Name | Source | Notes |
+|------|--------|--------|
+| `silero-vad` | `snakers4/silero-vad` | v5, 16 kHz / 512-sample chunks, host LSTM |
+| `ten-vad` | `TEN-framework/ten-vad` | 16 kHz hop 256, log-mel + 2-layer LSTM |
+
+```bash
+cargo run -p whisburn-cli -- models download silero-vad --verbose
+cargo run -p whisburn-cli -- transcribe -i samples/jfk.wav -m silero-vad --format json
+```
+
+## Diarization
+
+Clustering diarization (speech windows → speaker embeddings → agglomerative clustering). Overlap-aware pyannote powerset segmentation and NeMo MSDD are **not** ported.
+
+| Name | Embedding | Notes |
+|------|-----------|--------|
+| `diarization-3.1` | WeSpeaker ResNet34 (`pyannote/wespeaker-voxceleb-resnet34-LM`, gated) | Needs `HF_TOKEN` after accepting the model license |
+| `nemo-diarization` | NVIDIA TitaNet-L `.nemo` (encoder not fully ported; clustering + projection) | Same clustering recipe; MSDD not ported |
+
+`--task diarize` on an ASR model uses `diarization-3.1` or `nemo-diarization` when those bundles are already downloaded; otherwise it still falls back to alternating speaker tags.
+
+```bash
+cargo run -p whisburn-cli -- models download diarization-3.1 --verbose
+cargo run -p whisburn-cli -- transcribe -i samples/jfk.wav -m diarization-3.1 --task diarize --format json
+```
+
+## Other ready models
 
 | Name | Category | `burn_ready` |
 |------|----------|--------------|
@@ -295,10 +323,6 @@ Requires ~12 GB disk. The 1.5B ternary decoder is much smaller than the 7B INT8 
 | `moonshine-base` | ASR | greedy STT (raw 16 kHz, 61M) |
 | `vibevoice-asr` | ASR | experimental 7B (GGUF Q4 → INT8 attn/MLP, f32 lm_head; not recommended) |
 | `bitnet-asr` | ASR | greedy STT (1.5B ternary I2_S, Burn) |
-| `silero-vad` | VAD | false |
-| `ten-vad` | VAD | false |
-| `diarization-3.1` | Diarization | false |
-| `nemo-diarization` | Diarization | false |
 
 ## Server audio transcoding
 

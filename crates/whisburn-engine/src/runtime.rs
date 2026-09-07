@@ -13,6 +13,8 @@ use crate::model::load_model;
 use crate::model::Model;
 use crate::orchestrator::Orchestrator;
 use crate::token::{Gpt2Tokenizer, Language};
+use crate::model::diarize::{is_diarize_model, run_diarize};
+use crate::model::vad::{is_vad_model, run_vad};
 use crate::transcribe::{waveform_to_text, DecodeTask};
 
 struct LoadedModel<B: Backend> {
@@ -137,6 +139,13 @@ impl InferenceRuntime {
                 return Ok(());
             }
         }
+        if is_vad_model(model_name) || is_diarize_model(model_name) {
+            self.warmed
+                .lock()
+                .expect("warmed lock")
+                .insert(model_name.to_string());
+            return Ok(());
+        }
         match &self.backend {
             BackendRuntime::Wgpu { device, cache } => {
                 Self::ensure_cached::<Wgpu>(model_name, device, cache, self.verbose)?;
@@ -178,6 +187,15 @@ impl InferenceRuntime {
         sample_rate: usize,
         options: &TaskOptions,
     ) -> WhisburnResult<TranscriptResult> {
+        if is_vad_model(model_name) {
+            return run_vad(model_name, &samples, sample_rate)
+                .map_err(|e| WhisburnError::Inference(e));
+        }
+        if is_diarize_model(model_name) {
+            return run_diarize(model_name, &samples, sample_rate)
+                .map_err(|e| WhisburnError::Inference(e));
+        }
+
         let decode_task = decode_task_for(options.task);
 
         if options.orchestrate {

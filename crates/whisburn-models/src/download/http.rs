@@ -56,6 +56,16 @@ pub fn list_hf_repo_files(
         .collect())
 }
 
+pub fn fetch_url_bytes(url: &str) -> anyhow::Result<Vec<u8>> {
+    let resp = native_agent()
+        .get(url)
+        .call()
+        .map_err(|e| anyhow::anyhow!("GET {url}: {e}"))?;
+    resp.into_body()
+        .read_to_vec()
+        .map_err(|e| anyhow::anyhow!("read {url}: {e}"))
+}
+
 fn native_agent() -> ureq::Agent {
     use std::sync::OnceLock;
     use ureq::tls::{TlsConfig, TlsProvider};
