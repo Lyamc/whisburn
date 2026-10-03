@@ -19,14 +19,19 @@ fn sample_jfk_wav() -> Option<Vec<u8>> {
 
 fn test_state() -> AppState {
     AppState {
-        manager: Arc::new(ModelManager::new(None, false, false)),
+        manager: Arc::new(ModelManager::new(Some("cpu".into()), false, false)),
         max_upload_bytes: 1024 * 1024,
         max_audio_seconds: 24 * 60 * 60,
         default_model: "tiny_en".to_string(),
         preload_models: PreloadModels::None,
+        summarize_enabled: true,
+        summarize_default: true,
+        summarizer_model: "qwen3-0.6b".into(),
         gpu: whisburn_server::gpu::GpuInfo {
             name: "test-gpu".into(),
             vram_mb: Some(8192),
+            vram_used_mb: None,
+            vram_free_mb: None,
             source: "test".into(),
         },
         job_semaphore: Arc::new(Semaphore::new(1)),
@@ -113,6 +118,9 @@ async fn root_endpoint_serves_web_ui() {
     assert!(html.contains("queue-card"));
     assert!(html.contains("model-meta"));
     assert!(html.contains("id=\"summarize\""), "summarize toggle");
+    assert!(html.contains("id=\"summarize\" checked"), "summarize on by default");
+    assert!(html.contains("id=\"summary-card\""), "summary display panel");
+    assert!(html.contains("id=\"summary-result\""), "summary textarea");
     assert!(html.contains("id=\"steps\""), "wizard steps container");
     assert!(html.contains("data-step=\"1\""));
     assert!(html.contains("data-step=\"2\""));
@@ -235,6 +243,10 @@ async fn config_endpoint_returns_default_model() {
     assert!(json["loaded_models"].as_array().unwrap().is_empty());
     assert!(json["gpu"].is_object());
     assert_eq!(json["gpu"]["vram_mb"], 8192);
+    assert_eq!(json["summarize_enabled"], true);
+    assert_eq!(json["summarize_default"], true);
+    assert_eq!(json["vram_reserve_mb"], 1024);
+    assert_eq!(json["vram_reserve_percent"], 15);
 }
 
 #[tokio::test]

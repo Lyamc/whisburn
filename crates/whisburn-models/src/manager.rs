@@ -5,6 +5,7 @@ use tokio::sync::Mutex;
 use whisburn_core::{SpeechTask, TaskOptions, TranscriptResult, WhisburnError, WhisburnResult};
 use whisburn_engine::model::registry::find_model;
 use whisburn_engine::runtime::InferenceRuntime;
+use whisburn_engine::vram::VramPolicy;
 
 use crate::diarize::assign_alternating_speakers;
 use whisburn_engine::model::diarize::{assign_speakers, is_diarize_model};
@@ -21,8 +22,17 @@ pub struct ModelManager {
 
 impl ModelManager {
     pub fn new(device: Option<String>, verbose: bool, debug: bool) -> Self {
+        Self::new_with_policy(device, verbose, debug, VramPolicy::from_env())
+    }
+
+    pub fn new_with_policy(
+        device: Option<String>,
+        verbose: bool,
+        debug: bool,
+        policy: VramPolicy,
+    ) -> Self {
         Self {
-            runtime: InferenceRuntime::new(device, verbose, debug),
+            runtime: InferenceRuntime::new_with_policy(device, verbose, debug, policy),
             download_options: DownloadOptions {
                 verbose,
                 ..DownloadOptions::default()
@@ -53,6 +63,14 @@ impl ModelManager {
 
     pub fn loaded_models(&self) -> Vec<String> {
         self.runtime.loaded_models()
+    }
+
+    pub fn release_gpu(&self) {
+        self.runtime.release_gpu();
+    }
+
+    pub fn vram_policy(&self) -> VramPolicy {
+        self.runtime.policy()
     }
 
     pub fn is_loaded(&self, name: &str) -> bool {
@@ -176,7 +194,28 @@ impl ModelManager {
         text: &str,
         progress: Option<whisburn_engine::model::qwen3::summarize::SummarizeProgress>,
     ) -> WhisburnResult<String> {
-        let name = whisburn_engine::model::qwen3::summarize::DEFAULT_SUMMARIZER_MODEL;
+        self.summarize_with_model(
+            whisburn_engine::model::qwen3::summarize::DEFAULT_SUMMARIZER_MODEL,
+            text,
+            progress,
+        )
+    }
+
+    pub fn summarize_with_model(
+        &self,
+        model_name: &str,
+        text: &str,
+        progress: Option<whisburn_engine::model::qwen3::summarize::SummarizeProgress>,
+    ) -> WhisburnResult<String> {
+        let name = model_name;
+        let info = find_model(name)
+            .ok_or_else(|| WhisburnError::Model(format!("unknown summarizer: {name}")))?;
+        if info.category != ModelCategory::Llm {
+            return Err(WhisburnError::UnsupportedCapability {
+                model: name.to_string(),
+                capability: "summarize".to_string(),
+            });
+        }
         let prep = progress.clone().map(|cb| {
             std::sync::Arc::new(move |p: crate::download::PrepProgress| {
                 cb(0, 1, &p.label);

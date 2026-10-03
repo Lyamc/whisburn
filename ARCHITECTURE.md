@@ -86,6 +86,7 @@ Model download and conversion:
 - Downloads `model.safetensors`, `config.json`, `tokenizer.json`
 - Converts weights: HF layout → npy dump → `NamedMpkGzFileRecorder` (Burn 0.21.0)
 - `ModelManager` — async ensure + `process_waveform` used by server and CLI
+- `InferenceRuntime` — WGPU with NdArray CPU offload when remaining VRAM is below `max(reserve_mb, total * percent / 100)` (defaults 1024 MiB / 15%). Long clips that would drive activations into that danger zone are split and run on the GPU in slices, with cubecl pools cleaned between slices. GPU tensors and cubecl pools are dropped on OOM, panic, other inference errors, and when idle VRAM is below the reserve.
 
 ### whisburn-server
 

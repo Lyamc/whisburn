@@ -139,13 +139,36 @@ models/parakeet-tdt-0.6b-v3/
 | `parakeet-ctc-0.6b` | nvidia/parakeet-ctc-0.6b | `burn_ready: true` (encoder + CTC greedy) |
 | `parakeet-ctc-1.1b` | nvidia/parakeet-ctc-1.1b | `burn_ready: true` (42-layer encoder + CTC greedy) |
 | `t-one` | t-tech/T-one | `burn_ready: true` (8 kHz Conformer CTC, Russian, greedy) |
+| `phonon-2` | FermionResearch/Phonon-2 | `burn_ready: true` (five-value container of Parakeet TDT v3) |
 
-## Offline summarizer (Qwen3-0.6B)
+### Phonon-2
 
-Toggle **Summarize transcript** in the web UI (or `whisburn transcribe --summarize`) to run a small local English LLM after ASR. The transcript still downloads as usual; a sidecar `{stem}_summary.txt` is written next to it.
+[Phonon-2](https://huggingface.co/FermionResearch/Phonon-2) is a packed five-value checkpoint of `nvidia/parakeet-tdt-0.6b-v3` (CC-BY-4.0). Download unpacks `phonon-2.bps.tar.zst` (needs `zstd` and `tar`), expands `model.fermion` to the same tensor names the Parakeet converter already maps, and writes a Burn `.mpk`. Config and tokenizer come from the base Parakeet repo. Inference is the existing TDT decoder.
 
-- **Model** — `qwen3-0.6b` (`Qwen/Qwen3-0.6B`), ~0.6B parameters, ~1.8 GB VRAM. Downloaded on first use.
-- **Long files** — 4-hour calls are split into ~1800-word chunks, summarized, then merged. First load can take a minute while weights hit the GPU.
+```bash
+cargo run -p whisburn-cli -- models download phonon-2 --verbose
+```
+
+## Offline summarizer
+
+**Summarize transcript** is on by default in the web UI (`whisburn transcribe --summarize` on the CLI). After ASR, a local English LLM writes a summary into the page and downloads a sidecar `{stem}_summary.txt` next to the transcript. Uncheck the box to skip it. The web UI **Summarizer** menu and `WHISBURN_SUMMARIZER` / `--summarizer` choose the model. The default stays `qwen3-0.6b`.
+
+- **Qwen3-0.6B** — `qwen3-0.6b` (`Qwen/Qwen3-0.6B`). Downloaded on first use. Weights are about 1.8 GB; summarization always runs on CPU after the speech model is unloaded.
+- **Granite 4.2 3B FP8** — `granite-4.2-3b-fp8` (`ibm-granite/granite-4.2-3b-fp8`), Apache-2.0. Channel-wise FP8 E4M3 linears (compressed-tensors) stay packed on disk (~4 GB) and are dequantized one projection at a time. It also runs on CPU, after ASR unload. Embeddings and `lm_head` stay BF16. The prompt disables thinking (`<think></think>`).
+- **Long files** — Qwen uses ~1800-word chunks. Granite uses ~700-word chunks. Section summaries are merged.
+- **English only** — prompts and chunking assume English speech.
+
+```bash
+cargo run -p whisburn-cli -- models download qwen3-0.6b
+cargo run -p whisburn-cli -- models download granite-4.2-3b-fp8
+cargo run -p whisburn-cli -- transcribe -i samples/jfk.wav --model tiny_en --format txt --summarize
+cargo run -p whisburn-cli -- transcribe -i samples/jfk.wav --model parakeet-tdt-0.6b-v3 --format txt --summarize --summarizer granite-4.2-3b-fp8
+```
+
+**Summarize transcript** is on by default in the web UI (`whisburn transcribe --summarize` on the CLI). After ASR, a small local English LLM writes a summary into the page and downloads a sidecar `{stem}_summary.txt` next to the transcript. Uncheck the box to skip it.
+
+- **Model** — `qwen3-0.6b` (`Qwen/Qwen3-0.6B`), ~0.6B parameters. Downloaded on first use. The summarizer runs on CPU after the speech model is unloaded.
+- **Long files** — 4-hour calls are split into ~1800-word chunks, summarized, then merged. First load can take a minute while weights are read into system RAM.
 - **English only** — prompts and chunking assume English speech.
 
 ```bash

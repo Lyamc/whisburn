@@ -9,13 +9,17 @@ license.workspace = true
 name = "whisburn"
 path = "src/main.rs"
 
+[features]
+default = ["app"]
+app = ["dep:whisburn-app"]
+
 [dependencies]
 whisburn-core = { workspace = true }
 whisburn-audio = { workspace = true }
 whisburn-engine = { workspace = true }
 whisburn-models = { workspace = true }
 whisburn-server = { workspace = true }
-whisburn-app = { workspace = true }
+whisburn-app = { workspace = true, optional = true }
 burn = { workspace = true }
 clap = { workspace = true }
 anyhow = { workspace = true }

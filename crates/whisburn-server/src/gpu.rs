@@ -1,39 +1,45 @@
 use serde::Serialize;
+use whisburn_engine::vram::{probe, VramSnapshot};
 
 #[derive(Debug, Clone, Serialize)]
 pub struct GpuInfo {
     pub name: String,
     pub vram_mb: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vram_used_mb: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vram_free_mb: Option<u32>,
     pub source: String,
 }
 
 pub fn probe_gpu() -> GpuInfo {
     if let Ok(raw) = std::env::var("WHISBURN_GPU_VRAM_MB") {
         if let Ok(mb) = raw.parse::<u32>() {
+            let snap = probe();
             return GpuInfo {
                 name: std::env::var("WHISBURN_GPU_NAME")
                     .unwrap_or_else(|_| "configured".into()),
                 vram_mb: Some(mb),
+                vram_used_mb: snap.used_mb,
+                vram_free_mb: snap.free_mb.or_else(|| {
+                    snap.used_mb.map(|u| mb.saturating_sub(u))
+                }),
                 source: "env".into(),
             };
         }
     }
 
-    #[cfg(windows)]
-    {
-        if let Some((name, vram_mb)) = probe_windows_gpu() {
-            return GpuInfo {
-                name,
-                vram_mb: Some(vram_mb),
-                source: "wmi".into(),
-            };
-        }
+    let snap = probe();
+    if snap.total_mb.is_some() || snap.free_mb.is_some() {
+        return GpuInfo::from_snapshot(snap);
     }
 
     if let Some((name, vram_mb)) = probe_wgpu_adapter() {
         return GpuInfo {
             name,
             vram_mb,
+            vram_used_mb: None,
+            vram_free_mb: None,
             source: "wgpu".into(),
         };
     }
@@ -41,7 +47,21 @@ pub fn probe_gpu() -> GpuInfo {
     GpuInfo {
         name: "unknown".into(),
         vram_mb: None,
+        vram_used_mb: None,
+        vram_free_mb: None,
         source: "unknown".into(),
+    }
+}
+
+impl GpuInfo {
+    fn from_snapshot(snap: VramSnapshot) -> Self {
+        Self {
+            name: snap.name.unwrap_or_else(|| "unknown".into()),
+            vram_mb: snap.total_mb,
+            vram_used_mb: snap.used_mb,
+            vram_free_mb: snap.free_mb,
+            source: snap.source.to_string(),
+        }
     }
 }
 
@@ -64,45 +84,4 @@ fn probe_wgpu_adapter() -> Option<(String, Option<u32>)> {
         _ => None,
     };
     Some((name, vram_mb))
-}
-
-#[cfg(windows)]
-fn probe_windows_gpu() -> Option<(String, u32)> {
-    use std::os::windows::process::CommandExt;
-    use std::process::Command;
-
-    const CREATE_NO_WINDOW: u32 = 0x08000000;
-    let script = r#"
-$gpu = Get-CimInstance Win32_VideoController |
-  Where-Object { $_.AdapterRAM -and $_.AdapterRAM -gt 0 } |
-  Sort-Object AdapterRAM -Descending |
-  Select-Object -First 1
-if ($null -eq $gpu) { exit 1 }
-Write-Output ($gpu.Name + '|' + [int]($gpu.AdapterRAM / 1MB))
-"#;
-    let out = Command::new("powershell")
-        .args([
-            "-NoProfile",
-            "-NonInteractive",
-            "-Command",
-            script,
-        ])
-        .creation_flags(CREATE_NO_WINDOW)
-        .output()
-        .ok()?;
-    if !out.status.success() {
-        return None;
-    }
-    let text = String::from_utf8_lossy(&out.stdout).trim().to_string();
-    let (name, mb) = text.rsplit_once('|')?;
-    let vram_mb: u32 = mb.trim().parse().ok()?;
-    if vram_mb == 0 {
-        return None;
-    }
-    Some((name.trim().to_string(), vram_mb))
-}
-
-#[cfg(not(windows))]
-fn probe_windows_gpu() -> Option<(String, u32)> {
-    None
 }

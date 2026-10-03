@@ -7,6 +7,7 @@ pub mod helper;
 pub mod cli;
 pub mod orchestrator;
 pub mod runtime;
+pub mod vram;
 
 #[cfg(test)]
 mod tests;

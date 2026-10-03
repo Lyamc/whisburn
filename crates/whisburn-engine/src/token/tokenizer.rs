@@ -94,6 +94,7 @@ impl Gpt2Tokenizer {
         let merges_path = dir.join("merges.txt");
 
         let is_qwen_family = model_name.contains("qwen3")
+            || model_name.contains("granite")
             || model_name.contains("vibevoice")
             || model_name.contains("bitnet")
             || model_name.contains("moonshine")

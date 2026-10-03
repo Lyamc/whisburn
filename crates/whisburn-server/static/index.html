@@ -377,6 +377,14 @@
     .advanced[open] summary { color: var(--text); }
     .help { font-size: 0.78rem; color: var(--muted); margin: 6px 0 0; }
     .result-toolbar { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 8px; }
+    #summary-card { margin-top: 0; }
+    #summarize-wrap.unavailable {
+      opacity: 0.55;
+    }
+    #summarize-wrap.unavailable label {
+      color: var(--muted);
+      cursor: not-allowed;
+    }
     .action-card .btn-row { margin-top: 0; }
     #queue-card {
       border-top: 1px solid var(--border);
@@ -487,10 +495,14 @@
           </div>
           <div id="summarize-wrap" style="margin-top:14px">
             <label for="summarize" style="display:flex;align-items:center;gap:8px;color:var(--text)">
-              <input type="checkbox" id="summarize" />
+              <input type="checkbox" id="summarize" checked />
               Summarize transcript
             </label>
-            <p class="help">Saves a second file named <code>…_summary.txt</code>. Uses a small offline English model (Qwen3-0.6B). Long recordings are summarized in chunks.</p>
+            <label for="summarizer" style="margin-top:8px">Summarizer</label>
+            <select id="summarizer">
+              <option value="qwen3-0.6b">qwen3-0.6b</option>
+            </select>
+            <p class="help" id="summarize-help">Shows a summary under the transcript and downloads <code>…_summary.txt</code>. Pick Qwen3-0.6B for speed, or Granite 4.2 3B FP8 for a larger English summary. Long recordings are summarized in chunks.</p>
           </div>
           <details class="advanced">
             <summary>More options</summary>
@@ -587,6 +599,15 @@
       </div>
       <textarea id="result" readonly placeholder="The transcript will appear here after you run step 3."></textarea>
     </div>
+
+    <div class="card hidden" id="summary-card">
+      <h2>Summary</h2>
+      <div class="result-toolbar">
+        <button type="button" class="btn-ghost" id="btn-copy-summary" disabled>Copy</button>
+        <button type="button" class="btn-ghost" id="btn-download-summary" disabled>Download</button>
+      </div>
+      <textarea id="summary-result" readonly placeholder="The English summary will appear here when summarization finishes."></textarea>
+    </div>
   </div>
 
   <script>
@@ -682,7 +703,89 @@
     let previewInFlight = false;
     let processInFlight = false;
     let pendingSummary = null;
+    let lastSummaryBlob = null;
+    let lastSummaryName = null;
+    let summarizeSettingsApplied = false;
     let currentStep = 1;
+    const summaryCard = $("summary-card");
+    const summaryEl = $("summary-result");
+    const btnCopySummary = $("btn-copy-summary");
+    const btnDownloadSummary = $("btn-download-summary");
+
+    function clearSummary() {
+      pendingSummary = null;
+      lastSummaryBlob = null;
+      lastSummaryName = null;
+      if (summaryEl) summaryEl.value = "";
+      if (summaryCard) summaryCard.classList.add("hidden");
+      if (btnCopySummary) btnCopySummary.disabled = true;
+      if (btnDownloadSummary) btnDownloadSummary.disabled = true;
+    }
+
+    function applySummarizeSettings(config) {
+      const sumEl = $("summarize");
+      const wrap = $("summarize-wrap");
+      const help = $("summarize-help");
+      const modelEl = $("summarizer");
+      if (!sumEl) return;
+      const enabled = config?.summarize_enabled !== false;
+      const def = config?.summarize_default ?? enabled;
+      sumEl.disabled = !enabled;
+      if (modelEl) modelEl.disabled = !enabled;
+      if (!enabled) {
+        sumEl.checked = false;
+        wrap?.classList.add("unavailable");
+        wrap?.setAttribute("title", "Summarizer model is not installed on this server.");
+        if (help) {
+          help.textContent = "Summaries are turned off on this server (no summarizer was downloaded).";
+        }
+      } else {
+        if (!summarizeSettingsApplied) sumEl.checked = !!def;
+        wrap?.classList.remove("unavailable");
+        wrap?.removeAttribute("title");
+        if (help) {
+          help.innerHTML = "Shows a summary under the transcript and downloads <code>…_summary.txt</code>. The speech model is unloaded first, then the summarizer runs on CPU so the two never share VRAM. Qwen3-0.6B is the fast default. Granite 4.2 3B FP8 is larger. Long recordings are summarized in chunks.";
+        }
+      }
+      summarizeSettingsApplied = true;
+    }
+
+    function fillSummarizerOptions(models, config) {
+      const sel = $("summarizer");
+      if (!sel) return;
+      const llms = (models || []).filter((m) => m.burn_ready && m.category === "Llm");
+      const keep = sel.value;
+      const preferred = (config && config.summarizer_model) || "qwen3-0.6b";
+      sel.innerHTML = "";
+      const rows = llms.length ? llms : [{ name: preferred }];
+      for (const m of rows) {
+        const opt = document.createElement("option");
+        opt.value = m.name;
+        opt.textContent = m.name;
+        sel.appendChild(opt);
+      }
+      const want = keep || preferred;
+      if ([...sel.options].some((o) => o.value === want)) sel.value = want;
+    }
+
+    function showSummary(text, stem) {
+      const trimmed = (text || "").trim();
+      if (!trimmed) {
+        clearSummary();
+        return;
+      }
+      pendingSummary = { text: trimmed, stem };
+      lastSummaryName = `${stem}_summary.txt`;
+      lastSummaryBlob = new Blob([trimmed], { type: "text/plain;charset=utf-8" });
+      if (summaryEl) {
+        summaryEl.value = trimmed;
+        summaryEl.style.height = "auto";
+        summaryEl.style.height = `${Math.max(120, summaryEl.scrollHeight + 4)}px`;
+      }
+      if (summaryCard) summaryCard.classList.remove("hidden");
+      if (btnCopySummary) btnCopySummary.disabled = false;
+      if (btnDownloadSummary) btnDownloadSummary.disabled = false;
+    }
 
     function updateStepSummaries() {
       const s1 = $("step-1-summary");
@@ -1147,6 +1250,8 @@
         if (config?.default_model) defaultModel = config.default_model;
         if (config?.max_audio_seconds) maxAudioSeconds = config.max_audio_seconds;
         if (config?.gpu) gpuInfo = config.gpu;
+        applySummarizeSettings(config);
+        fillSummarizerOptions(models, config);
         catalog = models;
         const ready = models.filter((m) => m.burn_ready && m.category === "Asr");
         modelSelect.innerHTML = "";
@@ -1422,7 +1527,7 @@
           : "Complete";
         setDualProgress(100, doneLabel, 100, "100%");
         if (ev.summary) {
-          pendingSummary = { text: ev.summary, stem };
+          showSummary(ev.summary, stem);
         }
       }
     }
@@ -1436,7 +1541,7 @@
 
       setAudioFile(file);
       lastResultBlob = null;
-      pendingSummary = null;
+      clearSummary();
       lastDownloadName = buildDownloadName(stem, format === "opus" ? "ogg" : format);
       showProgress(true);
       setDualProgress(0, `Uploading ${file.name}…`, 0, "0%");
@@ -1454,17 +1559,7 @@
       } else {
         const model = modelSelect.value || preferredModel || defaultModel;
         preferredModel = model;
-        const language = languageInput.value.trim() || "en";
-        const params = new URLSearchParams({
-          model,
-          format,
-          language,
-          timestamps: timestampsSelect.value,
-          sentences: sentencesSelect ? sentencesSelect.value : "false",
-        });
-        if (diarizeSelect.value === "true") params.set("task", "diarize");
-        const extOverride = fileExtSelect.value.trim();
-        if (extOverride) params.set("file_extension", extOverride);
+        const params = transcribeQueryParams();
         url = `/v1/transcribe/stream?${params}`;
         processLabel = diarizeSelect.value === "true"
           ? `Transcribing with speaker labels (${model})`
@@ -1548,14 +1643,12 @@
       }
       const savedToFolder = await deliverOutput(lastResultBlob, lastDownloadName);
       let summaryNote = "";
-      if (pendingSummary && pendingSummary.text) {
-        const sumName = `${pendingSummary.stem}_summary.txt`;
-        const sumBlob = new Blob([pendingSummary.text], { type: "text/plain" });
+      if (lastSummaryBlob && lastSummaryName) {
         if (!suppressAutoDownload) {
-          triggerDownload(sumBlob, sumName);
-          try { await writeToOutputFolder(sumBlob, sumName); } catch (_) { /* folder optional */ }
+          triggerDownload(lastSummaryBlob, lastSummaryName);
+          try { await writeToOutputFolder(lastSummaryBlob, lastSummaryName); } catch (_) { /* folder optional */ }
         }
-        summaryNote = ` Summary saved as ${sumName}.`;
+        summaryNote = ` Summary shown and saved as ${lastSummaryName}.`;
         pendingSummary = null;
       }
       setStatus(`Done — ${lastDownloadName} downloaded.${summaryNote}`, "ok");
@@ -1775,6 +1868,7 @@
     btnCancel.addEventListener("click", cancelProcessing);
     btnDownload.addEventListener("click", () => {
       if (lastResultBlob) triggerDownload(lastResultBlob, lastDownloadName);
+      if (lastSummaryBlob && lastSummaryName) triggerDownload(lastSummaryBlob, lastSummaryName);
     });
     $("btn-copy").addEventListener("click", async () => {
       if (!resultEl.value) return;
@@ -1787,6 +1881,24 @@
         setStatus("Copied transcript to clipboard.", "ok");
       }
     });
+    if (btnCopySummary) {
+      btnCopySummary.addEventListener("click", async () => {
+        if (!summaryEl || !summaryEl.value) return;
+        try {
+          await navigator.clipboard.writeText(summaryEl.value);
+          setStatus("Copied summary to clipboard.", "ok");
+        } catch {
+          summaryEl.select();
+          document.execCommand("copy");
+          setStatus("Copied summary to clipboard.", "ok");
+        }
+      });
+    }
+    if (btnDownloadSummary) {
+      btnDownloadSummary.addEventListener("click", () => {
+        if (lastSummaryBlob && lastSummaryName) triggerDownload(lastSummaryBlob, lastSummaryName);
+      });
+    }
 
     syncOutputControls();
     loadCatalog();
@@ -1807,8 +1919,11 @@
       const extOverride = fileExtSelect.value.trim();
       if (extOverride) params.set("file_extension", extOverride);
       const sumEl = $("summarize");
-      if (sumEl && sumEl.checked && outputTypeSelect.value !== "audio") {
-        params.set("summarize", "true");
+      const wantSummary = !!(sumEl && !sumEl.disabled && sumEl.checked && outputTypeSelect.value !== "audio");
+      params.set("summarize", wantSummary ? "true" : "false");
+      const summarizerEl = $("summarizer");
+      if (wantSummary && summarizerEl && summarizerEl.value) {
+        params.set("summarizer", summarizerEl.value);
       }
       return params;
     }

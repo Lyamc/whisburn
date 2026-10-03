@@ -10,6 +10,7 @@ pub mod parakeet;
 pub mod parakeet_decoder;
 pub mod tone;
 pub mod moonshine;
+pub mod granite;
 pub mod qwen3;
 pub mod vibevoice;
 pub mod vad;

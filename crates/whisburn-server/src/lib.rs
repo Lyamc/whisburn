@@ -28,7 +28,12 @@ use whisburn_models::ModelManager;
 
 pub async fn run_server(config: ServerConfig) -> anyhow::Result<()> {
     let manager = Arc::new(
-        ModelManager::new(config.device.clone(), config.verbose, config.debug)
+        ModelManager::new_with_policy(
+            config.device.clone(),
+            config.verbose,
+            config.debug,
+            config.vram_policy(),
+        )
             .with_hf_token(config.hf_token.clone()),
     );
 
@@ -56,7 +61,10 @@ pub async fn run_server(config: ServerConfig) -> anyhow::Result<()> {
     info!(
         gpu = %gpu.name,
         vram_mb = ?gpu.vram_mb,
+        vram_free_mb = ?gpu.vram_free_mb,
         source = %gpu.source,
+        reserve_mb = config.vram_reserve_mb,
+        reserve_percent = config.vram_reserve_percent,
         "GPU detected for model compatibility hints"
     );
 
@@ -66,6 +74,9 @@ pub async fn run_server(config: ServerConfig) -> anyhow::Result<()> {
         max_audio_seconds: config.max_audio_seconds,
         default_model: config.default_model.clone(),
         preload_models: config.preload_models.clone(),
+        summarize_enabled: config.summarize_enabled,
+        summarize_default: config.summarize_default && config.summarize_enabled,
+        summarizer_model: config.summarizer_model.clone(),
         gpu,
         job_semaphore: Arc::new(Semaphore::new(1)),
     };

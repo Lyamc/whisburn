@@ -1,5 +1,7 @@
 # Rust / Cargo
 /target/
+/result
+/result-*
 **/*.rs.bk
 **/*.profraw
 

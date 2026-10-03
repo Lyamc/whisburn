@@ -5,6 +5,8 @@ mod http;
 mod options;
 mod moonshine;
 mod parakeet;
+mod granite;
+mod phonon;
 mod qwen3;
 mod tone;
 mod python;
@@ -19,8 +21,8 @@ use std::path::PathBuf;
 use whisburn_engine::model::registry::find_model;
 
 use crate::convert::{
-    is_moonshine_model, is_parakeet_model, is_qwen3_model, is_tone_model, is_vibevoice_model,
-    is_whisper_model, needs_reconversion_for,
+    is_granite_model, is_moonshine_model, is_parakeet_model, is_phonon_model, is_qwen3_model,
+    is_tone_model, is_vibevoice_model, is_whisper_model, needs_reconversion_for,
 };
 use crate::paths::{has_burn_bundle, model_dir, models_dir, resolve_model_dir};
 use crate::sources::{published_bundle_source, resolve_download_source};
@@ -32,7 +34,9 @@ use bundle::{download_generic_bundle, download_published_bundle};
 use cleanup::clear_stale_artifacts;
 use fetch::build_api;
 use moonshine::download_moonshine_hf;
+use granite::download_granite_hf;
 use parakeet::download_parakeet_hf;
+use phonon::download_phonon_hf;
 use qwen3::download_qwen3_hf;
 use tone::download_tone_hf;
 use diarize::{download_diarize, is_diarize_download};
@@ -121,6 +125,10 @@ pub fn download_model(name: &str, options: &DownloadOptions) -> anyhow::Result<P
 
     if is_whisper_model(name) {
         download_whisper_hf(&api, &source, &dir, name, options)?;
+    } else if is_phonon_model(name) {
+        download_phonon_hf(&api, &source, &dir, name, options)?;
+    } else if is_granite_model(name) {
+        download_granite_hf(&api, &source, &dir, name, options)?;
     } else if is_parakeet_model(name) {
         download_parakeet_hf(&api, &source, &dir, name, options)?;
     } else if is_vibevoice_model(name) {

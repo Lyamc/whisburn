@@ -1,8 +1,10 @@
 pub mod burn_mpk;
+pub mod granite;
 pub mod dtype;
 pub mod npy;
 pub mod moonshine;
 pub mod parakeet;
+pub mod phonon;
 pub mod qwen3;
 pub mod tone;
 pub mod vibevoice;
@@ -12,6 +14,8 @@ pub use burn_mpk::save_model_from_npy;
 pub use parakeet::{
     convert_parakeet_from_hf, is_parakeet_burn_ready, is_parakeet_model, ParakeetDecodeConfig,
 };
+pub use phonon::is_phonon_model;
+pub use granite::is_granite_model;
 pub use moonshine::{is_moonshine_model, prepare_moonshine_bundle};
 pub use qwen3::{is_qwen3_model, prepare_qwen3_bundle, Qwen3RuntimeConfig};
 pub use tone::{is_tone_model, prepare_tone_bundle};
@@ -35,6 +39,10 @@ pub fn needs_reconversion_for(name: &str, model_dir: &std::path::Path) -> bool {
         moonshine::needs_moonshine_reconversion(model_dir)
     } else if tone::is_tone_model(name) {
         tone::needs_tone_reconversion(model_dir)
+    } else if phonon::is_phonon_model(name) {
+        phonon::needs_phonon_reconversion(model_dir)
+    } else if granite::is_granite_model(name) {
+        granite::needs_granite_reconversion(model_dir)
     } else {
         whisper::needs_reconversion(model_dir)
     }

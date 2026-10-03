@@ -13,6 +13,9 @@ pub struct AppState {
     pub max_audio_seconds: u64,
     pub default_model: String,
     pub preload_models: PreloadModels,
+    pub summarize_enabled: bool,
+    pub summarize_default: bool,
+    pub summarizer_model: String,
     pub gpu: GpuInfo,
     /// Serialize GPU/ffmpeg jobs so concurrent uploads cannot abort connections.
     pub job_semaphore: Arc<Semaphore>,

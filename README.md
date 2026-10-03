@@ -67,6 +67,59 @@ cargo run -p whisburn-cli -- serve --port 8787 --model qwen3-asr-0.6b
 
 The UI auto-transcodes uploads to Opus for in-browser playback (requires ffmpeg). For the Iced desktop client, run `whisburn app`.
 
+### NixOS
+
+This repository is a flake. The NixOS module builds `whisburn` (ffmpeg on `PATH`, Vulkan/WGPU libraries wrapped in) and runs `whisburn serve --no-open` as a systemd service. Models download on demand into `services.whisburn.modelsDir` (`/var/lib/whisburn/models` by default).
+
+```nix
+{
+  inputs.whisburn.url = "github:Lyamc/whisburn";
+
+  outputs = { nixpkgs, whisburn, ... }: {
+    nixosConfigurations.host = nixpkgs.lib.nixosSystem {
+      modules = [
+        whisburn.nixosModules.default
+        {
+          services.whisburn.enable = true;
+          services.whisburn.openFirewall = true; # TCP 8787
+        }
+      ];
+    };
+  };
+}
+```
+
+A configuration without a flake can import the module by path:
+
+```nix
+imports = [ /path/to/whisburn/nix/module.nix ];
+
+services.whisburn.enable = true;
+```
+
+That is enough to get the web UI at `http://127.0.0.1:8787/` after `nixos-rebuild switch`. Optional settings:
+
+```nix
+services.whisburn = {
+  enable = true;
+  openFirewall = true;
+  model = "qwen3-asr-0.6b";
+  device = "cpu";              # omit to use WGPU / GPU
+  preloadModels = [ "tiny_en" ];
+  environmentFile = "/etc/whisburn.env"; # HF_TOKEN=...
+  # summary.enable = true;     # default: download summary.model, checkbox on
+  # summary.model = "qwen3-0.6b"; # or "granite-4.2-3b-fp8"
+  # summary.enable = false;    # skip summarizer download; UI toggle is greyed out
+  # summary.default = false;   # keep summarizer installed, checkbox off
+  # vramReserveMb = 1024;      # keep this much GPU memory free for the desktop
+  # vramReservePercent = 15;   # or this % of the card, whichever is larger
+};
+```
+
+The service account is `whisburn` (groups `video` and `render` for GPU). Point `services.whisburn.user` at an existing account and set `createUser = false` to run as that user instead. Put a HuggingFace token in the environment file; do not put it in `configuration.nix`.
+
+The Nix package builds `whisburn serve`, `transcribe`, and `models` (no Iced desktop client). The binary is wrapped with ffmpeg and Vulkan/WGPU libraries.
+
 **curl example:**
 
 ```bash
@@ -114,6 +167,8 @@ whisburn models      Download or list models
 | `--device` | auto | Burn device override |
 | `--hf-token` | `$HF_TOKEN` | HuggingFace API token |
 | `--no-open` | off | Do not open the web UI in a browser |
+| `--vram-reserve-mb` | `1024` | Keep at least this many MiB of GPU memory free |
+| `--vram-reserve-percent` | `15` | Keep at least this % of total VRAM free (the larger floor wins) |
 | `-v, --verbose` | | Verbose logging |
 
 ### `transcribe`
@@ -132,6 +187,8 @@ whisburn models      Download or list models
 | `--max-tokens` | `448` | Max decoder tokens per chunk |
 | `--sentences` | `false` | Group output segments into sentences |
 | `--device` | auto | Burn device override |
+| `--vram-reserve-mb` | `1024` | Keep at least this many MiB of GPU memory free |
+| `--vram-reserve-percent` | `15` | Keep at least this % of total VRAM free |
 | `-v, --verbose` | | Verbose logging |
 | `--debug` | | Debug mel / chunk logging |
 
@@ -232,7 +289,8 @@ See [`.cargo/config.toml`](.cargo/config.toml) and [`scripts/cross-build.sh`](sc
 
 Notes:
 - GPU acceleration (wgpu) requires appropriate drivers + graphics stack on the **target** machine.
-- `WHISBURN_DEVICE=cpu` selects wgpu's CPU path (portable, no native GPU required at runtime for basic use).
+- `WHISBURN_DEVICE=cpu` selects the ndarray CPU path. It uses every core (rayon) and Burn's SIMD kernels.
+- GPU inference keeps a VRAM floor free for the desktop (`WHISBURN_VRAM_RESERVE_MB`, default 1024; `WHISBURN_VRAM_RESERVE_PERCENT`, default 15). If the model itself would breach that floor, the job offloads to system RAM. If the model fits but the clip is long enough to push activations into the danger zone, the runtime splits the audio and stays on the GPU. Panics and GPU errors drop GPU tensors.
 - Full CUDA/Metal cross builds need matching native toolchains.
 - Prefer targets where **native TLS** is available; rustls/`ring` is not used by default (avoids a C build dependency).
 

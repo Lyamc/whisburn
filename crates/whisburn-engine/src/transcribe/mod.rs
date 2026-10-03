@@ -9,12 +9,45 @@ pub use task::DecodeTask;
 
 pub use utils::{get_output_path, format_srt, format_timestamp, parse_time, TranscriptSegment, clean_text, find_chunk_overlap, trim_trailing_hallucination};
 
+use std::cell::RefCell;
+use std::sync::Arc;
+
 use burn::tensor::backend::Backend;
 use crate::audio::max_waveform_samples;
 use crate::model::{get_model_stats, Model};
 use crate::token::{self, *};
-use self::mel::waveform_to_mel_tensor;
+use self::mel::{mel_window_count, waveform_to_mel_tensor};
 use self::decode::*;
+
+thread_local! {
+    static DECODE_PROGRESS: RefCell<Option<Arc<dyn Fn(usize, usize) + Send + Sync>>> =
+        RefCell::new(None);
+}
+
+/// Fires on this thread before each encoder window (`index` is 0-based).
+/// Dropping the guard clears the callback so later jobs stay quiet.
+pub struct DecodeProgressGuard;
+
+impl Drop for DecodeProgressGuard {
+    fn drop(&mut self) {
+        DECODE_PROGRESS.with(|slot| *slot.borrow_mut() = None);
+    }
+}
+
+pub fn set_decode_progress(
+    cb: Arc<dyn Fn(usize, usize) + Send + Sync>,
+) -> DecodeProgressGuard {
+    DECODE_PROGRESS.with(|slot| *slot.borrow_mut() = Some(cb));
+    DecodeProgressGuard
+}
+
+fn report_decode_progress(index: usize, total: usize) {
+    DECODE_PROGRESS.with(|slot| {
+        if let Some(cb) = slot.borrow().clone() {
+            cb(index, total);
+        }
+    });
+}
 
 use indicatif::{ProgressBar, ProgressStyle};
 
@@ -170,18 +203,13 @@ pub fn waveform_to_text<B: Backend>(
         println!("DEBUG: Waveform samples: {}, model: {}", waveform.len(), model_name);
     }
 
+    // One spectrogram at a time. Collecting every window up front pinned a
+    // multi-hour file (or a 10-minute server segment) in VRAM before decode
+    // started and wgpu aborted with Out of Memory.
+    let total_chunks = mel_window_count(waveform.len(), n_waveform_samples_per_window, sample_rate);
     let mel_iter = waveform_to_mel_tensor(waveform, sample_rate, n_waveform_samples_per_window, &device, n_mels, is_nemo, model_name);
-    
-    // Apply Global Normalization if stats exist
     let (mean, std) = get_model_stats::<B>(model_name, &device);
-    
-    let mel_vec: Vec<_> = if let (Some(m), Some(s)) = (mean, std) {
-        mel_iter.map(|mel| (mel - m.clone().unsqueeze()) / s.clone().unsqueeze()).collect()
-    } else {
-        mel_iter.collect()
-    };
 
-    let total_chunks = mel_vec.len();
     if debug { println!("DEBUG WAVEFORM_TO_TEXT: total_chunks: {}", total_chunks); }
     
     let pb = if !streaming_mode && !quiet {
@@ -207,7 +235,13 @@ pub fn waveform_to_text<B: Backend>(
     let mut segments: Vec<TranscriptSegment> = Vec::new();
     let mut accumulated_text = String::new();
 
-    for (i, mel) in mel_vec.into_iter().enumerate() {
+    for (i, mel) in mel_iter.enumerate() {
+        report_decode_progress(i, total_chunks);
+        let mel = if let (Some(m), Some(s)) = (&mean, &std) {
+            (mel - m.clone().unsqueeze()) / s.clone().unsqueeze()
+        } else {
+            mel
+        };
         if verbose && !quiet {
             let msg = format!("Processing chunk {}/{}...", i + 1, total_chunks);
             if let Some(ref p) = pb { p.println(msg); } else { println!("{}", msg); }
@@ -326,4 +360,26 @@ pub fn waveform_to_text<B: Backend>(
     }
 
     Ok((final_text, segments))
+}
+
+#[cfg(test)]
+mod progress_tests {
+    use super::*;
+    use std::sync::atomic::{AtomicUsize, Ordering};
+
+    #[test]
+    fn decode_progress_is_per_thread_and_cleared_on_drop() {
+        let seen = Arc::new(AtomicUsize::new(0));
+        let tick = seen.clone();
+        let guard = set_decode_progress(Arc::new(move |index, total| {
+            assert_eq!(total, 4);
+            tick.fetch_add(index + 1, Ordering::SeqCst);
+        }));
+        report_decode_progress(0, 4);
+        report_decode_progress(3, 4);
+        assert_eq!(seen.load(Ordering::SeqCst), 5);
+        drop(guard);
+        report_decode_progress(1, 4);
+        assert_eq!(seen.load(Ordering::SeqCst), 5);
+    }
 }

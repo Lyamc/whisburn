@@ -1,5 +1,5 @@
-use std::sync::Arc;
-use std::time::Instant;
+use std::sync::{Arc, Mutex};
+use std::time::{Duration, Instant};
 
 use axum::body::Bytes;
 use whisburn_audio::{
@@ -71,10 +71,15 @@ pub async fn acquire_job(sem: &Arc<Semaphore>) -> Result<SemaphorePermit<'_>, Ap
 }
 
 fn send_progress(tx: &Option<ProgressSender>, event: TranscribeProgress) {
-    if let Some(tx) = tx {
-        if tx.try_send(event).is_err() {
+    let Some(tx) = tx else {
+        return;
+    };
+    match tx.try_send(event) {
+        Ok(()) => {}
+        Err(tokio::sync::mpsc::error::TrySendError::Full(_)) => {
             warn!("transcribe progress channel full; dropping event");
         }
+        Err(tokio::sync::mpsc::error::TrySendError::Closed(_)) => {}
     }
 }
 
@@ -345,6 +350,53 @@ pub async fn transcribe_upload_with_progress(
             TRANSCRIBE_SEGMENT_OVERLAP_SECS,
             None,
             |waveform| {
+                let tx = progress_for_blocking.clone();
+                let seg_index = chunk_idx;
+                let seg_total = total.max(1);
+                let started = job_start;
+                let last_tick = Arc::new(Mutex::new(
+                    started
+                        .checked_sub(Duration::from_secs(3))
+                        .unwrap_or(started),
+                ));
+                let _guard = whisburn_engine::transcribe::set_decode_progress(Arc::new(
+                    move |window, windows| {
+                        let windows = windows.max(1);
+                        let mut last = last_tick.lock().unwrap_or_else(|e| e.into_inner());
+                        let finished_window = window + 1 == windows;
+                        if !finished_window && last.elapsed() < Duration::from_secs(2) {
+                            return;
+                        }
+                        *last = Instant::now();
+                        let within = (window as f64 + 0.5) / windows as f64;
+                        let frac = (seg_index as f64 + within) / seg_total as f64;
+                        let overall = 72.0 + frac.clamp(0.0, 1.0) * 26.0;
+                        send_progress(
+                            &tx,
+                            with_timing(
+                                TranscribeProgress {
+                                    phase: "transcribe".into(),
+                                    task_label: format!(
+                                        "Transcribing segment {} of {seg_total} (window {}/{windows})",
+                                        seg_index + 1,
+                                        window + 1
+                                    ),
+                                    task_pct: within * 100.0,
+                                    overall_pct: overall,
+                                    chunk: Some(seg_index + 1),
+                                    chunks_total: Some(seg_total),
+                                    partial_text: None,
+                                    latest_segment: None,
+                                    elapsed_secs: None,
+                                    eta_secs: None,
+                                    summary: None,
+                                },
+                                started,
+                                Some(overall),
+                            ),
+                        );
+                    },
+                ));
                 let part = manager
                     .process_waveform_sync(
                         &model_name,

@@ -74,7 +74,17 @@ fn has_qwen3_bundle(dir: &Path) -> bool {
         && has_tokenizer
 }
 
+fn has_granite_bundle(dir: &Path) -> bool {
+    dir.join("model.safetensors").exists()
+        && dir.join("config.json").exists()
+        && dir.join("tokenizer.json").exists()
+        && dir.join(".burn_version").exists()
+}
+
 pub fn has_burn_bundle(dir: &Path, name: &str) -> bool {
+    if crate::convert::is_granite_model(name) {
+        return has_granite_bundle(dir);
+    }
     if crate::convert::is_qwen3_model(name) {
         return has_qwen3_bundle(dir);
     }

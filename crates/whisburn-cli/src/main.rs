@@ -3,6 +3,7 @@ use clap::{Parser, Subcommand};
 use tracing_subscriber::EnvFilter;
 
 use whisburn_core::{load_settings, OutputFormat, PreloadModels, SpeechTask, TaskOptions};
+use whisburn_engine::vram::VramPolicy;
 use whisburn_models::{download_model, DownloadOptions, ModelManager};
 use whisburn_server::ServerConfig;
 
@@ -55,8 +56,15 @@ enum Commands {
         /// Pass alone or `all` for every burn_ready model; pass names for specific models.
         #[arg(long = "preload-models", value_delimiter = ',', num_args = 0.., env = "WHISBURN_PRELOAD_MODELS")]
         preload_models: Option<Vec<String>>,
+        /// Keep at least this many MiB of GPU memory free (compositor / other apps).
+        #[arg(long, env = "WHISBURN_VRAM_RESERVE_MB")]
+        vram_reserve_mb: Option<u32>,
+        /// Keep at least this percentage of total VRAM free.
+        #[arg(long, env = "WHISBURN_VRAM_RESERVE_PERCENT")]
+        vram_reserve_percent: Option<u32>,
     },
     /// Open the Iced desktop transcription client
+    #[cfg(feature = "app")]
     App,
     /// Download and prepare a model locally
     Models {
@@ -77,6 +85,10 @@ enum Commands {
         format: String,
         #[arg(long, env = "WHISBURN_DEVICE")]
         device: Option<String>,
+        #[arg(long, env = "WHISBURN_VRAM_RESERVE_MB")]
+        vram_reserve_mb: Option<u32>,
+        #[arg(long, env = "WHISBURN_VRAM_RESERVE_PERCENT")]
+        vram_reserve_percent: Option<u32>,
         #[arg(long, env = "HF_TOKEN")]
         hf_token: Option<String>,
         #[arg(long)]
@@ -91,9 +103,12 @@ enum Commands {
         max_tokens: usize,
         #[arg(long)]
         sentences: bool,
-        /// Also write `{input_stem}_summary.txt` using the offline English Qwen3-0.6B model.
+        /// Also write `{input_stem}_summary.txt` with an offline English summarizer.
         #[arg(long)]
         summarize: bool,
+        /// Summarizer used with `--summarize` (`qwen3-0.6b` or `granite-4.2-3b-fp8`).
+        #[arg(long, env = "WHISBURN_SUMMARIZER", default_value = "qwen3-0.6b")]
+        summarizer: String,
         #[arg(short, long)]
         verbose: bool,
         #[arg(long)]
@@ -109,6 +124,10 @@ enum Commands {
         models: String,
         #[arg(long, env = "WHISBURN_DEVICE")]
         device: Option<String>,
+        #[arg(long, env = "WHISBURN_VRAM_RESERVE_MB")]
+        vram_reserve_mb: Option<u32>,
+        #[arg(long, env = "WHISBURN_VRAM_RESERVE_PERCENT")]
+        vram_reserve_percent: Option<u32>,
         #[arg(long, env = "HF_TOKEN")]
         hf_token: Option<String>,
         /// Also exercise diarization mode
@@ -165,6 +184,14 @@ fn init_tracing(verbose: bool, debug: bool) {
     tracing_subscriber::fmt().with_env_filter(filter).init();
 }
 
+fn vram_policy_from_cli(reserve_mb: Option<u32>, reserve_percent: Option<u32>) -> VramPolicy {
+    let env = VramPolicy::from_env();
+    VramPolicy {
+        reserve_mb: reserve_mb.unwrap_or(env.reserve_mb),
+        reserve_percent: reserve_percent.unwrap_or(env.reserve_percent).min(100),
+    }
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let cli = Cli::parse();
@@ -189,11 +216,13 @@ async fn main() -> Result<()> {
             debug,
             no_open,
             preload_models,
+            vram_reserve_mb,
+            vram_reserve_percent,
         } => {
             let file_settings = load_settings();
             let preload =
                 preload_models.map(|names| PreloadModels::from_cli_values(Some(names)));
-            let config = ServerConfig::from_settings_and_cli(
+            let mut config = ServerConfig::from_settings_and_cli(
                 file_settings,
                 port,
                 model,
@@ -204,8 +233,15 @@ async fn main() -> Result<()> {
                 debug,
                 !no_open,
             );
+            if let Some(mb) = vram_reserve_mb {
+                config.vram_reserve_mb = mb;
+            }
+            if let Some(pct) = vram_reserve_percent {
+                config.vram_reserve_percent = pct.min(100);
+            }
             whisburn_server::run_server(config).await?;
         }
+        #[cfg(feature = "app")]
         Commands::App => {
             whisburn_app::run()?;
         }
@@ -243,6 +279,8 @@ async fn main() -> Result<()> {
             task,
             format,
             device,
+            vram_reserve_mb,
+            vram_reserve_percent,
             hf_token,
             timestamps,
             orchestrate,
@@ -251,11 +289,18 @@ async fn main() -> Result<()> {
             max_tokens,
             sentences,
             summarize,
+            summarizer,
             verbose,
             debug,
         } => {
             let speech_task = SpeechTask::parse(&task).unwrap_or(SpeechTask::Transcribe);
-            let manager = ModelManager::new(device, verbose, debug).with_hf_token(hf_token);
+            let manager = ModelManager::new_with_policy(
+                device,
+                verbose,
+                debug,
+                vram_policy_from_cli(vram_reserve_mb, vram_reserve_percent),
+            )
+            .with_hf_token(hf_token);
 
             // Fast probe for estimation before heavy work (scoped to avoid holding full audio bytes)
             let ext = std::path::Path::new(&input)
@@ -336,8 +381,8 @@ async fn main() -> Result<()> {
             std::io::Write::write_all(&mut std::io::stdout(), &encoded)?;
 
             if summarize {
-                eprintln!("Summarizing transcript with offline Qwen3-0.6B…");
-                let summary = manager.summarize_text(&result.text, None)?;
+                eprintln!("Summarizing transcript with {summarizer}…");
+                let summary = manager.summarize_with_model(&summarizer, &result.text, None)?;
                 let stem = std::path::Path::new(&input)
                     .file_stem()
                     .and_then(|s| s.to_str())
@@ -355,6 +400,8 @@ async fn main() -> Result<()> {
             input,
             models,
             device,
+            vram_reserve_mb,
+            vram_reserve_percent,
             hf_token,
             diarize,
             sentences,
@@ -365,7 +412,13 @@ async fn main() -> Result<()> {
             let sample = input.unwrap_or_else(|| "samples/jfk.wav".to_string());
             let out_base = out_dir.unwrap_or_else(|| "verify-outputs".to_string());
             std::fs::create_dir_all(&out_base)?;
-            let mgr = ModelManager::new(device.clone(), verbose, debug).with_hf_token(hf_token.clone());
+            let mgr = ModelManager::new_with_policy(
+                device.clone(),
+                verbose,
+                debug,
+                vram_policy_from_cli(vram_reserve_mb, vram_reserve_percent),
+            )
+            .with_hf_token(hf_token.clone());
 
             let model_list: Vec<String> = if models.eq_ignore_ascii_case("burn-ready") {
                 whisburn_engine::model::registry::MODEL_REGISTRY

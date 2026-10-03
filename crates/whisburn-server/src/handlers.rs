@@ -43,6 +43,11 @@ pub struct ServerConfigResponse {
     pub loaded_models: Vec<String>,
     pub max_audio_seconds: u64,
     pub gpu: GpuInfo,
+    pub summarize_enabled: bool,
+    pub summarize_default: bool,
+    pub summarizer_model: String,
+    pub vram_reserve_mb: u32,
+    pub vram_reserve_percent: u32,
 }
 
 pub async fn server_config(State(state): State<AppState>) -> impl IntoResponse {
@@ -52,6 +57,11 @@ pub async fn server_config(State(state): State<AppState>) -> impl IntoResponse {
         loaded_models: state.manager.loaded_models(),
         max_audio_seconds: state.max_audio_seconds,
         gpu: state.gpu.clone(),
+        summarize_enabled: state.summarize_enabled,
+        summarize_default: state.summarize_default,
+        summarizer_model: state.summarizer_model.clone(),
+        vram_reserve_mb: state.manager.vram_policy().reserve_mb,
+        vram_reserve_percent: state.manager.vram_policy().reserve_percent,
     })
 }
 
@@ -147,8 +157,10 @@ pub struct TranscribeQuery {
     pub file_extension: Option<String>,
     /// When true, use the SSE streaming endpoint semantics on the regular route too.
     pub stream: Option<bool>,
-    /// Offline English summary with Qwen3-0.6B; also writes `{stem}_summary.txt` in the UI.
+    /// Offline English summary; also writes `{stem}_summary.txt` in the UI.
     pub summarize: Option<bool>,
+    /// Summarizer id (`qwen3-0.6b` or `granite-4.2-3b-fp8`). Defaults to the server setting.
+    pub summarizer: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -285,7 +297,13 @@ pub async fn transcribe_stream(
     let manager = state.manager.clone();
     let bytes = upload.bytes;
     let extension = upload.extension;
-    let summarize = query.summarize.unwrap_or(false);
+    let summarize = state.summarize_enabled
+        && query.summarize.unwrap_or(state.summarize_default);
+    let summarizer = query
+        .summarizer
+        .clone()
+        .filter(|name| !name.is_empty())
+        .unwrap_or_else(|| state.summarizer_model.clone());
     let (tx, rx) = tokio::sync::mpsc::channel::<TranscribeProgress>(256);
     let stream_start = std::time::Instant::now();
 
@@ -308,7 +326,7 @@ pub async fn transcribe_stream(
                     let _ = tx
                         .send(TranscribeProgress {
                             phase: "summarize".into(),
-                            task_label: "Summarizing with offline Qwen3-0.6B…".into(),
+                            task_label: format!("Summarizing with {summarizer}…"),
                             task_pct: 0.0,
                             overall_pct: 98.0,
                             chunk: None,
@@ -339,7 +357,10 @@ pub async fn transcribe_stream(
                             summary: None,
                         });
                     });
-                    match tokio::task::spawn_blocking(move || manager.summarize_text(&text, Some(progress)))
+                    let summarizer_name = summarizer.clone();
+                    match tokio::task::spawn_blocking(move || {
+                        manager.summarize_with_model(&summarizer_name, &text, Some(progress))
+                    })
                         .await
                     {
                         Ok(Ok(s)) => Some(s),
