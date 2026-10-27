@@ -1,3 +1,4 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::{
     config::Config,
     module::{Module, Param},
@@ -6,7 +7,7 @@ use burn::{
         conv::{Conv1d, Conv1dConfig},
         PaddingConfig1d,
     },
-    tensor::{backend::Backend, Distribution, Tensor},
+    tensor::{Distribution, Tensor},
 };
 
 use crate::model::attention::{MultiHeadAttention, MultiHeadAttentionConfig};
@@ -22,7 +23,7 @@ pub struct AudioEncoderConfig {
 }
 
 impl AudioEncoderConfig {
-    pub fn init<B: Backend>(&self, tensor_device_ref: &B::Device) -> AudioEncoder<B> {
+    pub fn init(&self, tensor_device_ref: &Device) -> AudioEncoder {
         let conv1 = Conv1dConfig::new(self.n_mels, self.n_audio_state, 3)
             .with_padding(PaddingConfig1d::Explicit(1, 1))
             .init(tensor_device_ref);
@@ -63,20 +64,20 @@ impl AudioEncoderConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct AudioEncoder<B: Backend> {
-    pub conv1: Conv1d<B>,
+pub struct AudioEncoder {
+    pub conv1: Conv1d,
     pub gelu1: nn::Gelu,
-    pub conv2: Conv1d<B>,
+    pub conv2: Conv1d,
     pub gelu2: nn::Gelu,
-    pub blocks: Vec<ResidualEncoderAttentionBlock<B>>,
-    pub ln_post: nn::LayerNorm<B>,
-    pub positional_embedding: Option<Param<Tensor<B, 2>>>,
+    pub blocks: Vec<ResidualEncoderAttentionBlock>,
+    pub ln_post: nn::LayerNorm,
+    pub positional_embedding: Option<Param<Tensor< 2>>>,
     pub n_mels: usize,
     pub n_audio_ctx: usize,
 }
 
-impl<B: Backend> AudioEncoder<B> {
-    pub fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+impl AudioEncoder {
+    pub fn forward(&self, x: Tensor< 3>) -> Tensor< 3> {
         let dims = x.dims();
         let [_, n_mels, _] = dims;
 
@@ -123,10 +124,10 @@ pub struct ResidualEncoderAttentionBlockConfig {
 }
 
 impl ResidualEncoderAttentionBlockConfig {
-    pub fn init<B: Backend>(
+    pub fn init(
         &self,
-        tensor_device_ref: &B::Device,
-    ) -> ResidualEncoderAttentionBlock<B> {
+        tensor_device_ref: &Device,
+    ) -> ResidualEncoderAttentionBlock {
         let attn =
             MultiHeadAttentionConfig::new(self.n_state, self.n_head).init(tensor_device_ref);
         let attn_ln = nn::LayerNormConfig::new(self.n_state).init(tensor_device_ref);
@@ -143,15 +144,15 @@ impl ResidualEncoderAttentionBlockConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct ResidualEncoderAttentionBlock<B: Backend> {
-    pub attn: MultiHeadAttention<B>,
-    pub attn_ln: nn::LayerNorm<B>,
-    pub mlp: MLP<B>,
-    pub mlp_ln: nn::LayerNorm<B>,
+pub struct ResidualEncoderAttentionBlock {
+    pub attn: MultiHeadAttention,
+    pub attn_ln: nn::LayerNorm,
+    pub mlp: MLP,
+    pub mlp_ln: nn::LayerNorm,
 }
 
-impl<B: Backend> ResidualEncoderAttentionBlock<B> {
-    pub fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+impl ResidualEncoderAttentionBlock {
+    pub fn forward(&self, x: Tensor< 3>) -> Tensor< 3> {
         let x = x.clone() + self.attn.forward(self.attn_ln.forward(x), None);
         let x = x.clone() + self.mlp.forward(self.mlp_ln.forward(x));
         x

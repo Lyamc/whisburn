@@ -1,11 +1,11 @@
 use burn::{
     module::{Module, Param, ParamId},
-    tensor::{backend::Backend, Tensor},
+    tensor::{Tensor},
 };
 use crate::model::load::helpers::load_tensor;
 use std::error::Error;
 
-pub fn inject_weights<B: Backend, M: Module<B>>(
+pub fn inject_weights<M: Module>(
     module: M,
     path: &str,
 ) -> Result<M, Box<dyn Error>> {

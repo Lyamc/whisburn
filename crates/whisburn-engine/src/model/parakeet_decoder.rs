@@ -1,29 +1,30 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::config::Config;
 use burn::module::{Module, Param};
 use burn::nn::{Embedding, EmbeddingConfig, Linear, LinearConfig};
 use burn::tensor::activation::{sigmoid, tanh};
-use burn::tensor::{backend::Backend, Int, Tensor};
+use burn::tensor::{Int, Tensor};
 
 /// PyTorch-compatible LSTM layer using gate-ordered weights (i, f, g, o).
 #[derive(Module, Debug)]
-pub struct ParakeetLstmLayer<B: Backend> {
-    pub weight_ih: Param<Tensor<B, 2>>,
-    pub weight_hh: Param<Tensor<B, 2>>,
-    pub bias_ih: Param<Tensor<B, 1>>,
-    pub bias_hh: Param<Tensor<B, 1>>,
+pub struct ParakeetLstmLayer {
+    pub weight_ih: Param<Tensor< 2>>,
+    pub weight_hh: Param<Tensor< 2>>,
+    pub bias_ih: Param<Tensor< 1>>,
+    pub bias_hh: Param<Tensor< 1>>,
 }
 
-impl<B: Backend> ParakeetLstmLayer<B> {
+impl ParakeetLstmLayer {
     pub fn hidden_size(&self) -> usize {
         self.bias_ih.dims()[0] / 4
     }
 
     pub fn step(
         &self,
-        input: Tensor<B, 2>,
-        hidden: Tensor<B, 2>,
-        cell: Tensor<B, 2>,
-    ) -> (Tensor<B, 2>, Tensor<B, 2>) {
+        input: Tensor< 2>,
+        hidden: Tensor< 2>,
+        cell: Tensor< 2>,
+    ) -> (Tensor< 2>, Tensor< 2>) {
         // HF/PyTorch LSTM weights are [4*hidden, in]; matmul uses transposed layout.
         let gates = input.matmul(self.weight_ih.val().clone().transpose())
             + self.bias_ih.val().clone().unsqueeze()
@@ -43,17 +44,17 @@ impl<B: Backend> ParakeetLstmLayer<B> {
 }
 
 #[derive(Module, Debug)]
-pub struct ParakeetLstm<B: Backend> {
-    pub layers: Vec<ParakeetLstmLayer<B>>,
+pub struct ParakeetLstm {
+    pub layers: Vec<ParakeetLstmLayer>,
 }
 
-impl<B: Backend> ParakeetLstm<B> {
+impl ParakeetLstm {
     pub fn step(
         &self,
-        input: Tensor<B, 2>,
-        hidden: &[Tensor<B, 2>],
-        cell: &[Tensor<B, 2>],
-    ) -> (Tensor<B, 2>, Vec<Tensor<B, 2>>, Vec<Tensor<B, 2>>) {
+        input: Tensor< 2>,
+        hidden: &[Tensor< 2>],
+        cell: &[Tensor< 2>],
+    ) -> (Tensor< 2>, Vec<Tensor< 2>>, Vec<Tensor< 2>>) {
         let mut x = input;
         let mut new_hidden = Vec::with_capacity(self.layers.len());
         let mut new_cell = Vec::with_capacity(self.layers.len());
@@ -77,7 +78,7 @@ pub struct ParakeetDecoderConfig {
 }
 
 impl ParakeetDecoderConfig {
-    pub fn init<B: Backend>(&self, device: &B::Device) -> ParakeetDecoder<B> {
+    pub fn init(&self, device: &Device) -> ParakeetDecoder {
         let embedding = EmbeddingConfig::new(self.vocab_size, self.hidden_size).init(device);
         let projector = LinearConfig::new(self.hidden_size, self.hidden_size).init(device);
         let layers = (0..self.num_layers)
@@ -103,13 +104,13 @@ impl ParakeetDecoderConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct ParakeetDecoder<B: Backend> {
-    pub embedding: Embedding<B>,
-    pub lstm: ParakeetLstm<B>,
-    pub projector: Linear<B>,
+pub struct ParakeetDecoder {
+    pub embedding: Embedding,
+    pub lstm: ParakeetLstm,
+    pub projector: Linear,
 }
 
-impl<B: Backend> ParakeetDecoder<B> {
+impl ParakeetDecoder {
     pub fn hidden_size(&self) -> usize {
         self.lstm
             .layers
@@ -119,15 +120,15 @@ impl<B: Backend> ParakeetDecoder<B> {
     }
 }
 
-pub struct ParakeetDecoderCache<B: Backend> {
-    pub output: Tensor<B, 2>,
-    pub hidden: Vec<Tensor<B, 2>>,
-    pub cell: Vec<Tensor<B, 2>>,
+pub struct ParakeetDecoderCache {
+    pub output: Tensor< 2>,
+    pub hidden: Vec<Tensor< 2>>,
+    pub cell: Vec<Tensor< 2>>,
     pub initialized: bool,
 }
 
-impl<B: Backend> ParakeetDecoderCache<B> {
-    pub fn new(device: &B::Device, num_layers: usize, hidden_size: usize) -> Self {
+impl ParakeetDecoderCache {
+    pub fn new(device: &Device, num_layers: usize, hidden_size: usize) -> Self {
         let hidden = (0..num_layers)
             .map(|_| Tensor::zeros([1, hidden_size], device))
             .collect();
@@ -142,25 +143,25 @@ impl<B: Backend> ParakeetDecoderCache<B> {
         }
     }
 
-    pub fn reset(&mut self, device: &B::Device, num_layers: usize, hidden_size: usize) {
+    pub fn reset(&mut self, device: &Device, num_layers: usize, hidden_size: usize) {
         *self = Self::new(device, num_layers, hidden_size);
     }
 }
 
-impl<B: Backend> ParakeetDecoder<B> {
+impl ParakeetDecoder {
     pub fn forward_step(
         &self,
         token_id: usize,
         blank_token_id: usize,
-        cache: &mut ParakeetDecoderCache<B>,
+        cache: &mut ParakeetDecoderCache,
         update_state: bool,
-    ) -> Tensor<B, 2> {
+    ) -> Tensor< 2> {
         if cache.initialized && token_id == blank_token_id && !update_state {
             return cache.output.clone();
         }
 
         let device = self.embedding.weight.device();
-        let token = Tensor::<B, 2, Int>::from_ints([[token_id as i32]], &device);
+        let token = Tensor::< 2, Int>::from_ints([[token_id as i32]], &device);
         let embedded = self.embedding.forward(token);
         let [_, _, d_model] = embedded.dims();
         let input = embedded.reshape([1, d_model]);

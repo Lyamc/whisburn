@@ -32,6 +32,10 @@ pub struct ServerConfig {
     pub vram_reserve_mb: u32,
     /// Keep at least this percentage of total VRAM free (0–100).
     pub vram_reserve_percent: u32,
+    /// When to drop the last model after a job finishes.
+    pub idle_unload: whisburn_engine::idle::IdleUnloadPolicy,
+    /// Raw parallelism setting. `0` and `1` run one job at a time.
+    pub max_parallel_jobs: u32,
 }
 
 impl Default for ServerConfig {
@@ -64,11 +68,21 @@ impl Default for ServerConfig {
                 .and_then(|v| v.parse().ok())
                 .unwrap_or(whisburn_engine::vram::DEFAULT_RESERVE_PERCENT)
                 .min(100),
+            idle_unload: whisburn_engine::idle::IdleUnloadPolicy::from_env(),
+            max_parallel_jobs: std::env::var("WHISBURN_MAX_PARALLEL_JOBS")
+                .ok()
+                .map(|v| whisburn_engine::placement::parse_parallelism(&v))
+                .unwrap_or(1),
         }
     }
 }
 
 impl ServerConfig {
+    /// Jobs allowed to allocate together. `0` and `1` are serial.
+    pub fn effective_parallel_jobs(&self) -> u32 {
+        whisburn_engine::placement::parallelism_limit(self.max_parallel_jobs) as u32
+    }
+
     pub fn vram_policy(&self) -> whisburn_engine::vram::VramPolicy {
         whisburn_engine::vram::VramPolicy {
             reserve_mb: self.vram_reserve_mb,
@@ -87,6 +101,8 @@ impl ServerConfig {
         debug: bool,
         open_browser: bool,
     ) -> Self {
+        let idle_unload = idle_from_settings(&file);
+        let max_parallel_jobs = parallel_from_settings(&file);
         Self {
             port: port.unwrap_or(file.server_port),
             default_model: model.unwrap_or(file.default_model),
@@ -96,7 +112,29 @@ impl ServerConfig {
             verbose,
             debug,
             open_browser,
+            idle_unload,
+            max_parallel_jobs,
             ..Self::default()
         }
+    }
+}
+
+/// Env wins over `settings.toml`. An unset env uses the file override, or auto.
+fn parallel_from_settings(file: &whisburn_core::Settings) -> u32 {
+    if let Ok(raw) = std::env::var("WHISBURN_MAX_PARALLEL_JOBS") {
+        whisburn_engine::placement::parse_parallelism(&raw)
+    } else {
+        file.max_parallel_jobs
+            .map(whisburn_engine::placement::parallelism_limit)
+            .map(|n| n as u32)
+            .unwrap_or(1)
+    }
+}
+
+fn idle_from_settings(file: &whisburn_core::Settings) -> whisburn_engine::idle::IdleUnloadPolicy {
+    if std::env::var_os("WHISBURN_IDLE_UNLOAD_SECS").is_some() {
+        whisburn_engine::idle::IdleUnloadPolicy::from_env()
+    } else {
+        whisburn_engine::idle::IdleUnloadPolicy::from_secs_override(file.idle_unload_secs)
     }
 }

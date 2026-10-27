@@ -201,11 +201,6 @@ pub enum ApiError {
     #[error("Too many retries: {0}")]
     TooManyRetries(Box<ApiError>),
 
-    /// Native tls error
-    #[error("Native tls: {0}")]
-    #[cfg(feature = "native-tls")]
-    Native(#[from] native_tls::Error),
-
     /// The part file is corrupted
     #[error("Invalid part file - corrupted file")]
     InvalidResume,
@@ -729,17 +724,15 @@ impl ApiRepo {
     }
 }
 
-#[cfg(feature = "native-tls")]
-fn builder() -> Result<ConfigBuilder<AgentScope>, ApiError> {
-    Ok(Agent::config_builder().tls_config(
-        TlsConfig::builder()
-            .provider(TlsProvider::NativeTls)
-            .build(),
-    ))
+fn install_pure_tls() {
+    if rustls::crypto::CryptoProvider::get_default().is_some() {
+        return;
+    }
+    let _ = rustls::crypto::CryptoProvider::install_default(rustls_rustcrypto::provider());
 }
 
-#[cfg(not(feature = "native-tls"))]
 fn builder() -> Result<ConfigBuilder<AgentScope>, ApiError> {
+    install_pure_tls();
     Ok(Agent::config_builder()
         .tls_config(TlsConfig::builder().provider(TlsProvider::Rustls).build()))
 }

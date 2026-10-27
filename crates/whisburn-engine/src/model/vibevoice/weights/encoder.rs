@@ -1,6 +1,7 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::module::{Module, Param};
 use burn::nn::{Linear, LinearConfig};
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 use std::error::Error;
 
 use super::dtype::transpose_linear_weight;
@@ -41,13 +42,13 @@ pub fn detect_encoder_layout(
     None
 }
 
-pub fn load_encoder<B: Backend>(
+pub fn load_encoder(
     store: &mut VibeVoiceWeightStore,
     prefix: &str,
     layout: EncoderLayout,
-    encoder: &TokenizerEncoder<B>,
-    device: &B::Device,
-) -> Result<TokenizerEncoder<B>, Box<dyn Error>> {
+    encoder: &TokenizerEncoder,
+    device: &Device,
+) -> Result<TokenizerEncoder, Box<dyn Error>> {
     let (stem_conv, stem_blocks) = match layout {
         EncoderLayout::Hf => (format!("{prefix}.stem"), format!("{prefix}.stem.stage")),
         EncoderLayout::Original => (
@@ -75,20 +76,20 @@ pub fn load_encoder<B: Backend>(
         })
         .collect::<Result<Vec<_>, _>>()?;
     let head = load_sconv_pair(store, &format!("{prefix}.head.conv"), &encoder.head, device)?;
-    let mut record = encoder.clone().into_record();
-    record.stem = stem.into_record();
-    record.conv_layers = conv_layers.into_iter().map(|l| l.into_record()).collect();
-    record.head = head.into_record();
-    Ok(encoder.clone().load_record(record))
+    let mut loaded = encoder.clone();
+    loaded.stem = stem;
+    loaded.conv_layers = conv_layers.into_iter().map(|l| l).collect();
+    loaded.head = head;
+    Ok(loaded)
 }
 
-fn load_level<B: Backend>(
+fn load_level(
     store: &mut VibeVoiceWeightStore,
     conv_prefix: &str,
     block_prefix: &str,
-    level: &EncoderLevel<B>,
-    device: &B::Device,
-) -> Result<EncoderLevel<B>, Box<dyn Error>> {
+    level: &EncoderLevel,
+    device: &Device,
+) -> Result<EncoderLevel, Box<dyn Error>> {
     let conv = load_sconv_pair(store, &format!("{conv_prefix}.conv"), &level.conv, device)?;
     let blocks = level
         .blocks
@@ -96,18 +97,18 @@ fn load_level<B: Backend>(
         .enumerate()
         .map(|(i, block)| load_block(store, &format!("{block_prefix}.{i}"), block, device))
         .collect::<Result<Vec<_>, _>>()?;
-    let mut record = level.clone().into_record();
-    record.conv = conv.into_record();
-    record.blocks = blocks.into_iter().map(|b| b.into_record()).collect();
-    Ok(level.clone().load_record(record))
+    let mut loaded = level.clone();
+    loaded.conv = conv;
+    loaded.blocks = blocks.into_iter().map(|b| b).collect();
+    Ok(loaded)
 }
 
-fn load_block<B: Backend>(
+fn load_block(
     store: &mut VibeVoiceWeightStore,
     prefix: &str,
-    block: &Block1D<B>,
-    device: &B::Device,
-) -> Result<Block1D<B>, Box<dyn Error>> {
+    block: &Block1D,
+    device: &Device,
+) -> Result<Block1D, Box<dyn Error>> {
     let dim = block.norm.weight.dims()[0];
     let norm = load_rms(store, &format!("{prefix}.norm.weight"), block.norm.eps, dim, device)?;
     let mixer = load_sconv_pair(store, &format!("{prefix}.mixer.conv"), &block.mixer, device)?;
@@ -117,29 +118,29 @@ fn load_block<B: Backend>(
     let linear1 = load_linear(store, &format!("{prefix}.ffn.linear1"), device)?;
     let linear2 = load_linear(store, &format!("{prefix}.ffn.linear2"), device)?;
 
-    let mut record = block.clone().into_record();
-    record.norm = norm.into_record();
-    record.mixer = mixer.into_record();
-    record.gamma = Param::from_tensor(gamma);
-    record.ffn_norm = ffn_norm.into_record();
-    record.ffn.linear1 = linear1.into_record();
-    record.ffn.linear2 = linear2.into_record();
-    record.ffn_gamma = Param::from_tensor(ffn_gamma);
-    Ok(block.clone().load_record(record))
+    let mut loaded = block.clone();
+    loaded.norm = norm;
+    loaded.mixer = mixer;
+    loaded.gamma = Param::from_tensor(gamma);
+    loaded.ffn_norm = ffn_norm;
+    loaded.ffn.linear1 = linear1;
+    loaded.ffn.linear2 = linear2;
+    loaded.ffn_gamma = Param::from_tensor(ffn_gamma);
+    Ok(loaded)
 }
 
-fn load_sconv_pair<B: Backend>(
+fn load_sconv_pair(
     store: &mut VibeVoiceWeightStore,
     prefix: &str,
-    layer: &sconv::SConv1d<B>,
-    device: &B::Device,
-) -> Result<sconv::SConv1d<B>, Box<dyn Error>> {
+    layer: &sconv::SConv1d,
+    device: &Device,
+) -> Result<sconv::SConv1d, Box<dyn Error>> {
     let weight_key = sconv_weight_key(store, prefix)?;
     let (w, w_shape) = store.tensor_f32(&weight_key)?;
     if w_shape.len() != 3 {
         return Err(format!("{prefix}.weight: expected rank-3 conv, got {w_shape:?}").into());
     }
-    let weight = Tensor::<B, 1>::from_floats(w.as_slice(), device).reshape([
+    let weight = Tensor::< 1>::from_floats(w.as_slice(), device).reshape([
         w_shape[0],
         w_shape[1],
         w_shape[2],
@@ -151,7 +152,7 @@ fn load_sconv_pair<B: Backend>(
     let bias = store
         .tensor_f32(&bias_key)
         .ok()
-        .map(|(b, _)| Tensor::<B, 1>::from_floats(b.as_slice(), device));
+        .map(|(b, _)| Tensor::< 1>::from_floats(b.as_slice(), device));
     let [out_ch, in_per_group, kernel] = weight.dims();
     let groups = layer.groups.max(1);
     let in_ch = in_per_group * groups;
@@ -181,13 +182,13 @@ fn sconv_weight_key(store: &VibeVoiceWeightStore, prefix: &str) -> Result<String
     Err(format!("{prefix}.weight: conv weight not in index (tried nested conv wrappers)").into())
 }
 
-fn load_rms<B: Backend>(
+fn load_rms(
     store: &mut VibeVoiceWeightStore,
     key: &str,
     eps: f64,
     dim: usize,
-    device: &B::Device,
-) -> Result<ConvRmsNorm<B>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<ConvRmsNorm, Box<dyn Error>> {
     let weight = load_vec(store, key, dim, device)?;
     Ok(ConvRmsNorm {
         weight: Param::from_tensor(weight),
@@ -195,36 +196,36 @@ fn load_rms<B: Backend>(
     })
 }
 
-fn load_vec<B: Backend>(
+fn load_vec(
     store: &mut VibeVoiceWeightStore,
     key: &str,
     dim: usize,
-    device: &B::Device,
-) -> Result<Tensor<B, 1>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<Tensor< 1>, Box<dyn Error>> {
     let (data, shape) = store.tensor_f32(key)?;
     if shape != [dim] {
         return Err(format!("{key}: expected [{dim}], got {shape:?}").into());
     }
-    Ok(Tensor::<B, 1>::from_floats(data.as_slice(), device))
+    Ok(Tensor::< 1>::from_floats(data.as_slice(), device))
 }
 
-fn load_linear<B: Backend>(
+fn load_linear(
     store: &mut VibeVoiceWeightStore,
     prefix: &str,
-    device: &B::Device,
-) -> Result<Linear<B>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<Linear, Box<dyn Error>> {
     let (data, shape) = store.tensor_f32(&format!("{prefix}.weight"))?;
     let (weight_data, [d_in, d_out]) = transpose_linear_weight(&data, &shape);
-    let weight = Tensor::<B, 1>::from_floats(weight_data.as_slice(), device).reshape([d_in, d_out]);
+    let weight = Tensor::< 1>::from_floats(weight_data.as_slice(), device).reshape([d_in, d_out]);
     let bias = store
         .tensor_f32(&format!("{prefix}.bias"))
         .ok()
-        .map(|(b, _)| Tensor::<B, 1>::from_floats(b.as_slice(), device));
+        .map(|(b, _)| Tensor::< 1>::from_floats(b.as_slice(), device));
     let linear = LinearConfig::new(d_in, d_out)
         .with_bias(bias.is_some())
         .init(device);
-    let mut record = linear.clone().into_record();
-    record.weight = Param::from_tensor(weight);
-    record.bias = bias.map(Param::from_tensor);
-    Ok(linear.load_record(record))
+    let mut loaded = linear.clone();
+    loaded.weight = Param::from_tensor(weight);
+    loaded.bias = bias.map(Param::from_tensor);
+    Ok(loaded)
 }

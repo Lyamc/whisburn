@@ -1,24 +1,25 @@
 //! Vocab embeddings kept on the host so the 7B table (~2.18 GB f32) never
 //! sits on the GPU. Only the gathered rows for the current token ids are uploaded.
 
+use burn::tensor::{Device, DeviceKind};
 use std::fmt;
 use std::sync::Arc;
 
 use burn::module::{Module, Param};
-use burn::tensor::{backend::Backend, Int, Tensor};
+use burn::tensor::{Int, Tensor};
 
 #[derive(Module)]
-pub struct HostEmbedding<B: Backend> {
+pub struct HostEmbedding {
     #[module(skip)]
     weight: Arc<Vec<f32>>,
     #[module(skip)]
     vocab: usize,
     #[module(skip)]
     hidden: usize,
-    marker: Param<Tensor<B, 1>>,
+    marker: Param<Tensor< 1>>,
 }
 
-impl<B: Backend> fmt::Debug for HostEmbedding<B> {
+impl fmt::Debug for HostEmbedding {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("HostEmbedding")
             .field("vocab", &self.vocab)
@@ -28,13 +29,13 @@ impl<B: Backend> fmt::Debug for HostEmbedding<B> {
     }
 }
 
-impl<B: Backend> HostEmbedding<B> {
-    pub fn empty(vocab: usize, hidden: usize, device: &B::Device) -> Self {
+impl HostEmbedding {
+    pub fn empty(vocab: usize, hidden: usize, device: &Device) -> Self {
         Self {
             weight: Arc::new(Vec::new()),
             vocab,
             hidden,
-            marker: Param::from_tensor(Tensor::<B, 1>::zeros([1], device)),
+            marker: Param::from_tensor(Tensor::< 1>::zeros([1], device)),
         }
     }
 
@@ -42,26 +43,26 @@ impl<B: Backend> HostEmbedding<B> {
         weight: Vec<f32>,
         vocab: usize,
         hidden: usize,
-        device: &B::Device,
+        device: &Device,
     ) -> Self {
         debug_assert_eq!(weight.len(), vocab * hidden);
         Self {
             weight: Arc::new(weight),
             vocab,
             hidden,
-            marker: Param::from_tensor(Tensor::<B, 1>::zeros([1], device)),
+            marker: Param::from_tensor(Tensor::< 1>::zeros([1], device)),
         }
     }
 
-    pub fn forward(&self, ids: Tensor<B, 2, Int>) -> Tensor<B, 3> {
+    pub fn forward(&self, ids: Tensor< 2, Int>) -> Tensor< 3> {
         let [batch, seq] = ids.dims();
         let device = ids.device();
         let data = ids.into_data();
         let ids_i: Vec<i64> = data
             .clone()
-            .to_vec::<i64>()
+            .try_to_vec::<i64>()
             .or_else(|_| {
-                data.to_vec::<i32>()
+                data.try_to_vec::<i32>()
                     .map(|v| v.into_iter().map(i64::from).collect())
             })
             .expect("embedding ids");
@@ -79,24 +80,23 @@ impl<B: Backend> HostEmbedding<B> {
                 }
             }
         }
-        Tensor::<B, 1>::from_floats(rows.as_slice(), &device).reshape([batch, seq, hidden])
+        Tensor::< 1>::from_floats(rows.as_slice(), &device).reshape([batch, seq, hidden])
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::HostEmbedding;
-    use burn::backend::ndarray::{NdArray, NdArrayDevice};
-    use burn::tensor::{Int, Tensor};
+    use burn::tensor::{Device, Int, Tensor};
 
     #[test]
     fn gathers_requested_rows() {
-        let device = NdArrayDevice::Cpu;
+        let device = Device::flex();
         // 3 tokens, hidden 2: rows [0,1], [2,3], [4,5]
         let table = vec![0.0, 1.0, 2.0, 3.0, 4.0, 5.0];
-        let emb = HostEmbedding::<NdArray>::from_weight(table, 3, 2, &device);
-        let ids = Tensor::<NdArray, 1, Int>::from_ints([2i32, 0], &device).reshape([1, 2]);
-        let out = emb.forward(ids).into_data().to_vec::<f32>().unwrap();
+        let emb = HostEmbedding::from_weight(table, 3, 2, &device);
+        let ids = Tensor::< 1, Int>::from_ints([2i32, 0], &device).reshape([1, 2]);
+        let out = emb.forward(ids).into_data().try_to_vec::<f32>().unwrap();
         assert_eq!(out, vec![4.0, 5.0, 0.0, 1.0]);
     }
 }

@@ -1,10 +1,11 @@
 mod load;
 
 use std::collections::HashMap;
-use std::fs;
+use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 
+use memmap2::Mmap;
 use safetensors::SafeTensors;
 
 use crate::model::vibevoice::weights::dtype::bytes_to_f32;
@@ -42,44 +43,52 @@ pub fn canonicalize_qwen3_key(key: &str) -> String {
 }
 
 pub struct Qwen3WeightStore {
-    tensors: HashMap<String, (Vec<f32>, Vec<usize>)>,
+    /// File-backed. A `read()` into a `Vec` plus an f32 copy of every tensor
+    /// sat on the anonymous heap next to the Burn module and earlyoom killed
+    /// summarization on a 15 GiB machine.
+    bytes: Mmap,
+    /// Canonical name → safetensors name. Values are names, not weights.
+    keys: HashMap<String, String>,
 }
 
 impl Qwen3WeightStore {
     pub fn open(model_dir: &Path) -> Result<Self, String> {
         let path = model_dir.join("model.safetensors");
-        let bytes = fs::read(&path).map_err(|e| format!("read {}: {e}", path.display()))?;
+        let file = File::open(&path).map_err(|e| format!("read {}: {e}", path.display()))?;
+        let bytes = unsafe { Mmap::map(&file) }.map_err(|e| format!("mmap {}: {e}", path.display()))?;
         let st = SafeTensors::deserialize(&bytes)
             .map_err(|e| format!("parse {}: {e}", path.display()))?;
-        let mut tensors = HashMap::new();
-        for key in st.names() {
-            let tensor = st.tensor(key).map_err(|e| format!("{key}: {e}"))?;
-            let shape: Vec<usize> = tensor.shape().iter().copied().collect();
-            let floats = bytes_to_f32(tensor.data(), tensor.dtype())?;
-            tensors.insert(canonicalize_qwen3_key(key), (floats, shape));
+        let mut keys = HashMap::new();
+        for name in st.names() {
+            keys.insert(canonicalize_qwen3_key(name), name.to_string());
         }
-        if !tensors.contains_key("thinker.lm_head.weight") {
-            if let Some(embed) = tensors.get("thinker.model.embed_tokens.weight").cloned() {
-                tensors.insert("thinker.lm_head.weight".into(), embed);
+        if !keys.contains_key("thinker.lm_head.weight") {
+            if let Some(embed) = keys.get("thinker.model.embed_tokens.weight").cloned() {
+                keys.insert("thinker.lm_head.weight".into(), embed);
             }
         }
-        Ok(Self { tensors })
+        Ok(Self { bytes, keys })
     }
 
     pub fn has_key(&self, key: &str) -> bool {
-        self.tensors.contains_key(key)
+        self.keys.contains_key(key)
     }
 
     pub fn tensor_f32(&self, key: &str) -> Result<(Vec<f32>, Vec<usize>), String> {
-        self.tensors
+        let file_key = self
+            .keys
             .get(key)
-            .cloned()
-            .ok_or_else(|| format!("tensor key not found: {key}"))
+            .ok_or_else(|| format!("tensor key not found: {key}"))?;
+        let st = SafeTensors::deserialize(&self.bytes).map_err(|e| format!("{key}: {e}"))?;
+        let tensor = st.tensor(file_key).map_err(|e| format!("{key}: {e}"))?;
+        let shape: Vec<usize> = tensor.shape().iter().copied().collect();
+        let floats = bytes_to_f32(tensor.data(), tensor.dtype())?;
+        Ok((floats, shape))
     }
 }
 
 fn safetensors_header_keys(path: &Path) -> Result<Vec<String>, String> {
-    let mut file = fs::File::open(path).map_err(|e| format!("open {}: {e}", path.display()))?;
+    let mut file = File::open(path).map_err(|e| format!("open {}: {e}", path.display()))?;
     let mut len_buf = [0u8; 8];
     file.read_exact(&mut len_buf)
         .map_err(|e| format!("read header length {}: {e}", path.display()))?;

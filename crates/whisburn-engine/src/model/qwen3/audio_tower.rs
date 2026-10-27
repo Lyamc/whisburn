@@ -1,10 +1,11 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::config::Config;
 use burn::module::Module;
 use burn::nn::{
     conv::{Conv2d, Conv2dConfig},
     Gelu, LayerNorm, LayerNormConfig, Linear, LinearConfig, PaddingConfig2d,
 };
-use burn::tensor::{activation::gelu, backend::Backend, Tensor};
+use burn::tensor::{activation::gelu, Tensor};
 
 use super::mel::cnn_output_length;
 
@@ -29,7 +30,7 @@ impl Qwen3AudioTowerConfig {
         (((m + 1) / 2 + 1) / 2 + 1) / 2
     }
 
-    pub fn init<B: Backend>(&self, device: &B::Device) -> Qwen3AudioTower<B> {
+    pub fn init(&self, device: &Device) -> Qwen3AudioTower {
         let ds = self.downsample_hidden_size;
         let conv_cfg = |in_ch, out_ch| {
             Conv2dConfig::new([in_ch, out_ch], [3, 3])
@@ -74,7 +75,7 @@ impl Qwen3AudioEncoderLayerConfig {
         Self { d_model, n_heads, ffn_dim }
     }
 
-    fn init<B: Backend>(&self, device: &B::Device) -> Qwen3AudioEncoderLayer<B> {
+    fn init(&self, device: &Device) -> Qwen3AudioEncoderLayer {
         Qwen3AudioEncoderLayer {
             self_attn_layer_norm: LayerNormConfig::new(self.d_model).init(device),
             self_attn: Qwen3AudioAttentionConfig::new(self.d_model, self.n_heads).init(device),
@@ -97,7 +98,7 @@ impl Qwen3AudioAttentionConfig {
         Self { d_model, n_heads }
     }
 
-    fn init<B: Backend>(&self, device: &B::Device) -> Qwen3AudioAttention<B> {
+    fn init(&self, device: &Device) -> Qwen3AudioAttention {
         Qwen3AudioAttention {
             n_heads: self.n_heads,
             head_dim: self.d_model / self.n_heads,
@@ -110,19 +111,19 @@ impl Qwen3AudioAttentionConfig {
 }
 
 #[derive(Module, Debug)]
-pub(crate) struct Qwen3AudioAttention<B: Backend> {
+pub(crate) struct Qwen3AudioAttention {
     #[module(skip)]
     n_heads: usize,
     #[module(skip)]
     head_dim: usize,
-    pub(crate) q_proj: Linear<B>,
-    pub(crate) k_proj: Linear<B>,
-    pub(crate) v_proj: Linear<B>,
-    pub(crate) out_proj: Linear<B>,
+    pub(crate) q_proj: Linear,
+    pub(crate) k_proj: Linear,
+    pub(crate) v_proj: Linear,
+    pub(crate) out_proj: Linear,
 }
 
-impl<B: Backend> Qwen3AudioAttention<B> {
-    fn forward(&self, x: Tensor<B, 2>, mask: &Tensor<B, 4>) -> Tensor<B, 2> {
+impl Qwen3AudioAttention {
+    fn forward(&self, x: Tensor< 2>, mask: &Tensor< 4>) -> Tensor< 2> {
         let [seq, d_model] = x.dims();
         let scale = (self.head_dim as f64).powf(-0.5);
 
@@ -143,17 +144,17 @@ impl<B: Backend> Qwen3AudioAttention<B> {
 }
 
 #[derive(Module, Debug)]
-pub(crate) struct Qwen3AudioEncoderLayer<B: Backend> {
-    pub(crate) self_attn_layer_norm: LayerNorm<B>,
-    pub(crate) self_attn: Qwen3AudioAttention<B>,
-    pub(crate) final_layer_norm: LayerNorm<B>,
-    pub(crate) fc1: Linear<B>,
-    pub(crate) fc2: Linear<B>,
+pub(crate) struct Qwen3AudioEncoderLayer {
+    pub(crate) self_attn_layer_norm: LayerNorm,
+    pub(crate) self_attn: Qwen3AudioAttention,
+    pub(crate) final_layer_norm: LayerNorm,
+    pub(crate) fc1: Linear,
+    pub(crate) fc2: Linear,
     gelu: Gelu,
 }
 
-impl<B: Backend> Qwen3AudioEncoderLayer<B> {
-    fn forward(&self, x: Tensor<B, 2>, mask: &Tensor<B, 4>) -> Tensor<B, 2> {
+impl Qwen3AudioEncoderLayer {
+    fn forward(&self, x: Tensor< 2>, mask: &Tensor< 4>) -> Tensor< 2> {
         let residual = x.clone();
         let x = self.self_attn.forward(self.self_attn_layer_norm.forward(x), mask);
         let x = residual + x;
@@ -165,7 +166,7 @@ impl<B: Backend> Qwen3AudioEncoderLayer<B> {
 }
 
 #[derive(Module, Debug)]
-pub struct Qwen3AudioTower<B: Backend> {
+pub struct Qwen3AudioTower {
     #[module(skip)]
     pub n_mels: usize,
     #[module(skip)]
@@ -180,19 +181,19 @@ pub struct Qwen3AudioTower<B: Backend> {
     max_source_positions: usize,
     #[module(skip)]
     d_model: usize,
-    pub(crate) conv2d1: Conv2d<B>,
-    pub(crate) conv2d2: Conv2d<B>,
-    pub(crate) conv2d3: Conv2d<B>,
-    pub(crate) conv_out: Linear<B>,
-    pub(crate) layers: Vec<Qwen3AudioEncoderLayer<B>>,
-    pub(crate) ln_post: LayerNorm<B>,
+    pub(crate) conv2d1: Conv2d,
+    pub(crate) conv2d2: Conv2d,
+    pub(crate) conv2d3: Conv2d,
+    pub(crate) conv_out: Linear,
+    pub(crate) layers: Vec<Qwen3AudioEncoderLayer>,
+    pub(crate) ln_post: LayerNorm,
     gelu: Gelu,
-    pub(crate) proj1: Linear<B>,
-    pub(crate) proj2: Linear<B>,
+    pub(crate) proj1: Linear,
+    pub(crate) proj2: Linear,
 }
 
-impl<B: Backend> Qwen3AudioTower<B> {
-    pub fn forward(&self, mel: Tensor<B, 3>) -> Tensor<B, 3> {
+impl Qwen3AudioTower {
+    pub fn forward(&self, mel: Tensor< 3>) -> Tensor< 3> {
         let [batch, n_mels, frames] = mel.dims();
         debug_assert_eq!(batch, 1, "Qwen3 audio tower supports batch=1");
         debug_assert_eq!(n_mels, self.n_mels);
@@ -202,10 +203,10 @@ impl<B: Backend> Qwen3AudioTower<B> {
         }
 
         let device = mel.device();
-        let mel_data = mel.into_data().to_vec::<f32>().unwrap();
+        let mel_data = mel.into_data().try_to_vec::<f32>().unwrap();
         let hidden = self.encode_frames(&mel_data, n_mels, frames, &device);
         let n_tokens = hidden.len() / self.output_dim;
-        Tensor::<B, 1>::from_floats(hidden.as_slice(), &device).reshape([1, n_tokens, self.output_dim])
+        Tensor::< 1>::from_floats(hidden.as_slice(), &device).reshape([1, n_tokens, self.output_dim])
     }
 
     fn encode_frames(
@@ -213,13 +214,13 @@ impl<B: Backend> Qwen3AudioTower<B> {
         mel: &[f32],
         n_mels: usize,
         frames: usize,
-        device: &B::Device,
+        device: &Device,
     ) -> Vec<f32> {
         let (flat, valid_count) = self.build_conv_sequence(mel, n_mels, frames, device);
-        let hidden = Tensor::<B, 1>::from_floats(flat.as_slice(), device).reshape([valid_count, self.d_model]);
+        let hidden = Tensor::< 1>::from_floats(flat.as_slice(), device).reshape([valid_count, self.d_model]);
         // HF SDPA/eager audio encoder attends over the full flattened sequence (mask=None),
         // not cu_seqlens blocks — see modeling_qwen3_asr.py Qwen3ASRAudioEncoder.forward.
-        let attn_mask = Tensor::<B, 4>::zeros([1, 1, valid_count, valid_count], device);
+        let attn_mask = Tensor::< 4>::zeros([1, 1, valid_count, valid_count], device);
 
         let mut x = hidden;
         for layer in &self.layers {
@@ -228,7 +229,7 @@ impl<B: Backend> Qwen3AudioTower<B> {
 
         let x = self.ln_post.forward(x);
         let x = self.proj2.forward(self.gelu.forward(self.proj1.forward(x)));
-        x.into_data().to_vec::<f32>().unwrap()
+        x.into_data().try_to_vec::<f32>().unwrap()
     }
 
     fn build_conv_sequence(
@@ -236,7 +237,7 @@ impl<B: Backend> Qwen3AudioTower<B> {
         mel: &[f32],
         n_mels: usize,
         frames: usize,
-        device: &B::Device,
+        device: &Device,
     ) -> (Vec<f32>, usize) {
         let chunk_size = self.n_window * 2;
         let chunk_num = (frames + chunk_size - 1) / chunk_size;
@@ -275,9 +276,9 @@ impl<B: Backend> Qwen3AudioTower<B> {
             let input = self.chunk_to_conv_tensor(chunk, n_mels, t, max_chunk, device);
             let embed = self.run_conv_stack(input, mel_after, device);
             let [_, seq, d] = embed.dims();
-            let data = embed.into_data().to_vec::<f32>().unwrap();
-            let pe = sinusoidal_pe::<B>(seq, self.d_model, self.max_source_positions, device);
-            let pe_data = pe.into_data().to_vec::<f32>().unwrap();
+            let data = embed.into_data().try_to_vec::<f32>().unwrap();
+            let pe = sinusoidal_pe(seq, self.d_model, self.max_source_positions, device);
+            let pe_data = pe.into_data().try_to_vec::<f32>().unwrap();
 
             for s in 0..seq {
                 for d_idx in 0..d {
@@ -311,19 +312,19 @@ impl<B: Backend> Qwen3AudioTower<B> {
         n_mels: usize,
         t: usize,
         max_t: usize,
-        device: &B::Device,
-    ) -> Tensor<B, 4> {
+        device: &Device,
+    ) -> Tensor< 4> {
         let mut data = vec![0.0f32; n_mels * max_t];
         for m in 0..n_mels {
             for ti in 0..t {
                 data[m * max_t + ti] = chunk[m][ti];
             }
         }
-        Tensor::<B, 1>::from_floats(data.as_slice(), device)
+        Tensor::< 1>::from_floats(data.as_slice(), device)
             .reshape([1, 1, n_mels, max_t])
     }
 
-    fn run_conv_stack(&self, input: Tensor<B, 4>, _mel_after: usize, _device: &B::Device) -> Tensor<B, 3> {
+    fn run_conv_stack(&self, input: Tensor< 4>, _mel_after: usize, _device: &Device) -> Tensor< 3> {
         let mut parts = Vec::new();
         let [n, _, _, _] = input.dims();
         let step = self.conv_chunksize.max(1);
@@ -343,7 +344,7 @@ impl<B: Backend> Qwen3AudioTower<B> {
     }
 }
 
-fn sinusoidal_pe<B: Backend>(seq: usize, dim: usize, max_len: usize, device: &B::Device) -> Tensor<B, 2> {
+fn sinusoidal_pe(seq: usize, dim: usize, max_len: usize, device: &Device) -> Tensor< 2> {
     let len = seq.min(max_len);
     let half = dim / 2;
     let log_step = (10000.0f64).ln() / (half as f64 - 1.0);
@@ -355,5 +356,5 @@ fn sinusoidal_pe<B: Backend>(seq: usize, dim: usize, max_len: usize, device: &B:
             data[pos * dim + half + i] = freq.cos() as f32;
         }
     }
-    Tensor::<B, 1>::from_floats(data.as_slice(), device).reshape([seq, dim])
+    Tensor::< 1>::from_floats(data.as_slice(), device).reshape([seq, dim])
 }

@@ -1,4 +1,5 @@
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
+use burn::tensor::Device;
+
 use crate::model::load_model;
 use crate::token::Language;
 use crate::transcribe::{waveform_to_text, DecodeTask, TranscriptSegment};
@@ -6,13 +7,13 @@ use crate::cli::CommonArgs;
 use std::time::Instant;
 
 pub struct Orchestrator {
-    device: WgpuDevice,
+    device: Device,
     verbose: bool,
     debug: bool,
 }
 
 impl Orchestrator {
-    pub fn new(device: WgpuDevice, verbose: bool, debug: bool) -> Self {
+    pub fn new(device: Device, verbose: bool, debug: bool) -> Self {
         Self { device, verbose, debug }
     }
 
@@ -34,7 +35,7 @@ impl Orchestrator {
         }
 
         let (scout_bpe, _scout_config, scout_model) =
-            load_model::<Wgpu>(scout_model_name, &self.device, self.verbose).map_err(|e| {
+            load_model(scout_model_name, &self.device, self.verbose).map_err(|e| {
                 anyhow::anyhow!("Failed to load scout model '{}': {}", scout_model_name, e)
             })?;
 
@@ -83,7 +84,7 @@ impl Orchestrator {
         drop(scout_model);
 
         let (expert_bpe, _expert_config, expert_model) =
-            load_model::<Wgpu>(&expert_args.model, &self.device, self.verbose).map_err(|e| {
+            load_model(&expert_args.model, &self.device, self.verbose).map_err(|e| {
                 anyhow::anyhow!(
                     "Failed to load expert model '{}': {}",
                     expert_args.model,

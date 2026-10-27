@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use burn::tensor::Tensor;
 use whisburn_audio::decode_to_mono_pcm;
 use whisburn_engine::audio::prep_audio;
@@ -32,12 +32,12 @@ fn greedy_tokens_match_hf_prefix() {
         .collect();
 
     let wf = decode_to_mono_pcm(&jfk).expect("decode");
-    let device = WgpuDevice::DefaultDevice;
-    let w = Tensor::<Wgpu, 1>::from_floats(wf.samples.as_slice(), &device).unsqueeze();
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
+    let w = Tensor::< 1>::from_floats(wf.samples.as_slice(), &device).unsqueeze();
     let mel = prep_audio(w, wf.sample_rate as f64, 128, false, "qwen3-asr-0.6b");
 
     let (bpe, _, model) =
-        load_model::<Wgpu>("qwen3-asr-0.6b", &device, false).expect("load qwen3");
+        load_model("qwen3-asr-0.6b", &device, false).expect("load qwen3");
     let Model::Qwen3(qwen) = model else {
         panic!("expected qwen3");
     };

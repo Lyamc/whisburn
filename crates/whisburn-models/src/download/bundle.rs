@@ -14,7 +14,7 @@ use super::options::DownloadOptions;
 
 /// Fetch a pre-converted Burn 0.21 folder from `lyamc/whisburn/{name}/`.
 ///
-/// Lists that folder on the Hub and downloads whatever is there (`.mpk.gz` Whisper/Parakeet
+/// Lists that folder on the Hub and downloads whatever is there (`.bpk` Whisper/Parakeet
 /// bundles, Qwen3 safetensors, VibeVoice shards, …). Incomplete folders error so the
 /// caller can fall back to upstream convert.
 pub fn download_published_bundle(
@@ -72,12 +72,12 @@ pub fn download_generic_bundle(
     let bundle_candidates = [
         format!("{name}/config.cfg"),
         format!("{name}/tokenizer.json"),
-        format!("{name}/model.mpk"),
-        format!("{name}/model.mpk.gz"),
+        format!("{name}/model.bpk"),
+        format!("{name}/model.bpk.gz"),
         "config.cfg".to_string(),
         "tokenizer.json".to_string(),
-        "model.mpk".to_string(),
-        "model.mpk.gz".to_string(),
+        "model.bpk".to_string(),
+        "model.bpk.gz".to_string(),
     ];
 
     let fetched = bundle_candidates

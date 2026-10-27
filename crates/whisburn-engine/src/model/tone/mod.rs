@@ -3,12 +3,13 @@
 
 pub mod weights;
 
+use burn::tensor::{Device, DeviceKind};
 use burn::config::Config;
 use burn::module::Module;
 use burn::nn::conv::{Conv1d, Conv1dConfig, Conv2d, Conv2dConfig};
 use burn::nn::{BatchNorm, BatchNormConfig, Linear, LinearConfig, PaddingConfig1d};
 use burn::tensor::activation::{sigmoid, silu, softmax};
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 
 use crate::audio::mel::get_mel_filters;
 use crate::model::conformer::RMSNorm;
@@ -62,7 +63,7 @@ impl TONEConfig {
         }
     }
 
-    pub fn init<B: Backend>(&self, device: &B::Device) -> TONE<B> {
+    pub fn init(&self, device: &Device) -> TONE {
         let recompute = default_recompute(self.n_layers);
         let feat_hidden = pre_encode_feat_out(self.n_mels);
         TONE {
@@ -119,7 +120,7 @@ fn pre_encode_feat_out(n_mels: usize) -> usize {
 }
 
 #[derive(Module, Debug)]
-pub struct TONE<B: Backend> {
+pub struct TONE {
     #[module(skip)]
     d_model: usize,
     #[module(skip)]
@@ -140,20 +141,20 @@ pub struct TONE<B: Backend> {
     mhsa_left: usize,
     #[module(skip)]
     mhsa_stateless: usize,
-    pub pre_norm: RMSNorm<B>,
-    pub conv0: Conv2d<B>,
-    pub bn0: BatchNorm<B>,
-    pub conv1: Conv2d<B>,
-    pub bn1: BatchNorm<B>,
-    pub pre_out: Linear<B>,
-    pub out_norm: RMSNorm<B>,
-    pub layers: Vec<ToneLayer<B>>,
-    pub red_conv: Conv1d<B>,
-    pub red_pw: Conv1d<B>,
-    pub ctc: Conv1d<B>,
+    pub pre_norm: RMSNorm,
+    pub conv0: Conv2d,
+    pub bn0: BatchNorm,
+    pub conv1: Conv2d,
+    pub bn1: BatchNorm,
+    pub pre_out: Linear,
+    pub out_norm: RMSNorm,
+    pub layers: Vec<ToneLayer>,
+    pub red_conv: Conv1d,
+    pub red_pw: Conv1d,
+    pub ctc: Conv1d,
 }
 
-impl<B: Backend> TONE<B> {
+impl TONE {
     pub fn encoder_ctx_size(&self) -> usize {
         24_000
     }
@@ -162,11 +163,11 @@ impl<B: Backend> TONE<B> {
         self.n_mels
     }
 
-    pub fn device(&self) -> B::Device {
+    pub fn device(&self) -> Device {
         self.ctc.weight.device()
     }
 
-    pub fn encode_mel(&self, mel: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn encode_mel(&self, mel: Tensor< 3>) -> Tensor< 3> {
         let x = mel.swap_dims(1, 2);
         let x = tone_rms(&self.pre_norm, x);
         let [b, t, f] = x.dims();
@@ -179,8 +180,8 @@ impl<B: Backend> TONE<B> {
         let x = x.swap_dims(1, 2).reshape([b, t2, c * f2]);
         let mut x = tone_rms(&self.out_norm, self.pre_out.forward(x));
 
-        let mut residual_for_up: Option<Tensor<B, 3>> = None;
-        let mut att_scores: Option<Tensor<B, 4>> = None;
+        let mut residual_for_up: Option<Tensor< 3>> = None;
+        let mut att_scores: Option<Tensor< 4>> = None;
         for (i, layer) in self.layers.iter().enumerate() {
             let (chunk, left) = if i <= self.reduction_position || i > self.upsample_position {
                 let left = if i < self.mhsa_stateless {
@@ -215,7 +216,7 @@ impl<B: Backend> TONE<B> {
         x
     }
 
-    fn temporal_reduce(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+    fn temporal_reduce(&self, x: Tensor< 3>) -> Tensor< 3> {
         let [_b, t, _d] = x.dims();
         let x = x.swap_dims(1, 2);
         let right = if t % 2 == 0 { 0 } else { 1 };
@@ -224,21 +225,21 @@ impl<B: Backend> TONE<B> {
         x.swap_dims(1, 2)
     }
 
-    pub fn logits(&self, mel: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn logits(&self, mel: Tensor< 3>) -> Tensor< 3> {
         let enc = self.encode_mel(mel);
         let x = enc.swap_dims(1, 2);
         self.ctc.forward(x).swap_dims(1, 2)
     }
 }
 
-fn tone_rms<B: Backend, const D: usize>(norm: &RMSNorm<B>, x: Tensor<B, D>) -> Tensor<B, D> {
+fn tone_rms<const D: usize>(norm: &RMSNorm, x: Tensor< D>) -> Tensor< D> {
     let dim = x.dims()[D - 1] as f64;
     let l2 = x.clone().powf_scalar(2.0).sum_dim(D - 1).sqrt();
     let rms = l2.div_scalar(dim.sqrt());
     (x / rms.add_scalar(norm.epsilon)) * norm.gamma.val().unsqueeze()
 }
 
-fn pad_time<B: Backend>(x: Tensor<B, 4>, left: usize) -> Tensor<B, 4> {
+fn pad_time(x: Tensor< 4>, left: usize) -> Tensor< 4> {
     if left == 0 {
         return x;
     }
@@ -247,7 +248,7 @@ fn pad_time<B: Backend>(x: Tensor<B, 4>, left: usize) -> Tensor<B, 4> {
     Tensor::cat(vec![z, x], 2)
 }
 
-fn pad_conv1d<B: Backend>(x: Tensor<B, 3>, left: usize, right: usize) -> Tensor<B, 3> {
+fn pad_conv1d(x: Tensor< 3>, left: usize, right: usize) -> Tensor< 3> {
     let [b, c, _t] = x.dims();
     let device = x.device();
     let mut parts = Vec::new();
@@ -265,7 +266,7 @@ fn pad_conv1d<B: Backend>(x: Tensor<B, 3>, left: usize, right: usize) -> Tensor<
     }
 }
 
-fn upsample_add<B: Backend>(x: Tensor<B, 3>, residual: Tensor<B, 3>, factor: usize) -> Tensor<B, 3> {
+fn upsample_add(x: Tensor< 3>, residual: Tensor< 3>, factor: usize) -> Tensor< 3> {
     let [b, t, d] = x.dims();
     let target = residual.dims()[1];
     let up = x
@@ -277,34 +278,34 @@ fn upsample_add<B: Backend>(x: Tensor<B, 3>, residual: Tensor<B, 3>, factor: usi
 }
 
 #[derive(Module, Debug)]
-pub struct ToneLayer<B: Backend> {
+pub struct ToneLayer {
     #[module(skip)]
     recompute: bool,
-    pub norm_ff1: RMSNorm<B>,
-    pub ff1_g: Linear<B>,
-    pub ff1_v: Linear<B>,
-    pub ff1_o: Linear<B>,
-    pub norm_att: RMSNorm<B>,
-    pub q: Option<Linear<B>>,
-    pub k: Option<Linear<B>>,
-    pub q_ln: Option<burn::nn::LayerNorm<B>>,
-    pub k_ln: Option<burn::nn::LayerNorm<B>>,
-    pub v: Linear<B>,
-    pub o: Linear<B>,
-    pub norm_conv: RMSNorm<B>,
-    pub pw1: Conv1d<B>,
-    pub dw: Conv1d<B>,
-    pub bn: BatchNorm<B>,
-    pub pw2: Conv1d<B>,
-    pub norm_ff2: RMSNorm<B>,
-    pub ff2_g: Linear<B>,
-    pub ff2_v: Linear<B>,
-    pub ff2_o: Linear<B>,
-    pub norm_out: RMSNorm<B>,
+    pub norm_ff1: RMSNorm,
+    pub ff1_g: Linear,
+    pub ff1_v: Linear,
+    pub ff1_o: Linear,
+    pub norm_att: RMSNorm,
+    pub q: Option<Linear>,
+    pub k: Option<Linear>,
+    pub q_ln: Option<burn::nn::LayerNorm>,
+    pub k_ln: Option<burn::nn::LayerNorm>,
+    pub v: Linear,
+    pub o: Linear,
+    pub norm_conv: RMSNorm,
+    pub pw1: Conv1d,
+    pub dw: Conv1d,
+    pub bn: BatchNorm,
+    pub pw2: Conv1d,
+    pub norm_ff2: RMSNorm,
+    pub ff2_g: Linear,
+    pub ff2_v: Linear,
+    pub ff2_o: Linear,
+    pub norm_out: RMSNorm,
 }
 
-impl<B: Backend> ToneLayer<B> {
-    fn new(cfg: &TONEConfig, recompute: bool, device: &B::Device) -> Self {
+impl ToneLayer {
+    fn new(cfg: &TONEConfig, recompute: bool, device: &Device) -> Self {
         let d = cfg.d_model;
         let ff = d * cfg.ff_mult;
         let head = d / cfg.n_heads.max(1);
@@ -347,19 +348,19 @@ impl<B: Backend> ToneLayer<B> {
         }
     }
 
-    fn ff(g: &Linear<B>, v: &Linear<B>, o: &Linear<B>, x: Tensor<B, 3>) -> Tensor<B, 3> {
+    fn ff(g: &Linear, v: &Linear, o: &Linear, x: Tensor< 3>) -> Tensor< 3> {
         o.forward(silu(g.forward(x.clone())) * v.forward(x))
     }
 
     fn forward(
         &self,
-        x: Tensor<B, 3>,
+        x: Tensor< 3>,
         chunk: usize,
         left: usize,
         n_heads: usize,
         rope_dim: usize,
-        prev_scores: Option<Tensor<B, 4>>,
-    ) -> (Tensor<B, 3>, Option<Tensor<B, 4>>) {
+        prev_scores: Option<Tensor< 4>>,
+    ) -> (Tensor< 3>, Option<Tensor< 4>>) {
         let mut residual = x.clone();
         residual = residual
             + Self::ff(&self.ff1_g, &self.ff1_v, &self.ff1_o, tone_rms(&self.norm_ff1, x))
@@ -383,7 +384,7 @@ impl<B: Backend> ToneLayer<B> {
         (tone_rms(&self.norm_out, residual), scores)
     }
 
-    fn conv(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+    fn conv(&self, x: Tensor< 3>) -> Tensor< 3> {
         let x = x.swap_dims(1, 2);
         let x = self.pw1.forward(x);
         let [b, c2, t] = x.dims();
@@ -400,13 +401,13 @@ impl<B: Backend> ToneLayer<B> {
 
     fn attention(
         &self,
-        x: Tensor<B, 3>,
+        x: Tensor< 3>,
         chunk: usize,
         left: usize,
         n_heads: usize,
         rope_dim: usize,
-        prev_scores: Option<Tensor<B, 4>>,
-    ) -> (Tensor<B, 3>, Option<Tensor<B, 4>>) {
+        prev_scores: Option<Tensor< 4>>,
+    ) -> (Tensor< 3>, Option<Tensor< 4>>) {
         let [b, t, d] = x.dims();
         let h = n_heads.max(1);
         let dh = d / h;
@@ -427,7 +428,7 @@ impl<B: Backend> ToneLayer<B> {
             let zeros = Tensor::zeros([b, h, t, t], &x.device());
             (zeros.clone(), Some(zeros))
         };
-        let masked = scores + chunk_mask::<B>(t, chunk.max(1), left, &x.device());
+        let masked = scores + chunk_mask(t, chunk.max(1), left, &x.device());
         let ctx = softmax(masked, 3)
             .matmul(v)
             .swap_dims(1, 2)
@@ -436,16 +437,16 @@ impl<B: Backend> ToneLayer<B> {
     }
 }
 
-fn reshape_heads<B: Backend>(x: Tensor<B, 3>, b: usize, t: usize, h: usize, dh: usize) -> Tensor<B, 4> {
+fn reshape_heads(x: Tensor< 3>, b: usize, t: usize, h: usize, dh: usize) -> Tensor< 4> {
     x.reshape([b, t, h, dh]).swap_dims(1, 2)
 }
 
-fn apply_head_ln<B: Backend>(x: Tensor<B, 4>, ln: &burn::nn::LayerNorm<B>) -> Tensor<B, 4> {
+fn apply_head_ln(x: Tensor< 4>, ln: &burn::nn::LayerNorm) -> Tensor< 4> {
     let [b, h, t, d] = x.dims();
     ln.forward(x.reshape([b * h * t, d])).reshape([b, h, t, d])
 }
 
-fn apply_rope_prefix<B: Backend>(x: Tensor<B, 4>, rope_dim: usize) -> Tensor<B, 4> {
+fn apply_rope_prefix(x: Tensor< 4>, rope_dim: usize) -> Tensor< 4> {
     let [b, h, t, d] = x.dims();
     if rope_dim == 0 || rope_dim > d {
         return x;
@@ -456,30 +457,30 @@ fn apply_rope_prefix<B: Backend>(x: Tensor<B, 4>, rope_dim: usize) -> Tensor<B, 
     let x1 = rot.clone().slice([0..b, 0..h, 0..t, 0..half]);
     let x2 = rot.clone().slice([0..b, 0..h, 0..t, half..rope_dim]);
     let rotated = Tensor::cat(vec![x2.mul_scalar(-1.0), x1], 3);
-    let (cos, sin) = rope_cos_sin::<B>(t, rope_dim, 10_000.0, &rot.device());
+    let (cos, sin) = rope_cos_sin(t, rope_dim, 10_000.0, &rot.device());
     let cos = cos.unsqueeze_dim::<4>(1);
     let sin = sin.unsqueeze_dim::<4>(1);
     Tensor::cat(vec![rot * cos + rotated * sin, pass], 3)
 }
 
-fn rope_cos_sin<B: Backend>(
+fn rope_cos_sin(
     seq: usize,
     dim: usize,
     base: f64,
-    device: &B::Device,
-) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    device: &Device,
+) -> (Tensor< 3>, Tensor< 3>) {
     let half = dim / 2;
     let inv: Vec<f32> = (0..half)
         .map(|i| (base.powf(-(2.0 * i as f64) / dim as f64)) as f32)
         .collect();
-    let inv = Tensor::<B, 1>::from_floats(inv.as_slice(), device);
-    let t = Tensor::<B, 1, burn::tensor::Int>::arange(0..seq as i64, device).float();
+    let inv = Tensor::< 1>::from_floats(inv.as_slice(), device);
+    let t = Tensor::< 1, burn::tensor::Int>::arange(0..seq as i64, device).float();
     let freqs = t.unsqueeze::<2>().transpose().matmul(inv.unsqueeze::<2>());
     let emb = Tensor::cat(vec![freqs.clone(), freqs], 1);
     (emb.clone().cos().unsqueeze::<3>(), emb.sin().unsqueeze::<3>())
 }
 
-fn chunk_mask<B: Backend>(t: usize, chunk: usize, left: usize, device: &B::Device) -> Tensor<B, 4> {
+fn chunk_mask(t: usize, chunk: usize, left: usize, device: &Device) -> Tensor< 4> {
     let mut data = vec![0f32; t * t];
     for i in 0..t {
         let start = (i / chunk) * chunk;
@@ -491,7 +492,7 @@ fn chunk_mask<B: Backend>(t: usize, chunk: usize, left: usize, device: &B::Devic
             }
         }
     }
-    Tensor::<B, 1>::from_floats(data.as_slice(), device).reshape([1, 1, t, t])
+    Tensor::< 1>::from_floats(data.as_slice(), device).reshape([1, 1, t, t])
 }
 
 fn dft_kernels() -> (Vec<f32>, Vec<f32>) {
@@ -528,7 +529,7 @@ fn dft_kernels() -> (Vec<f32>, Vec<f32>) {
     (re, im)
 }
 
-pub fn tone_log_mel<B: Backend>(waveform: &[f32], sample_rate: usize, device: &B::Device) -> Tensor<B, 3> {
+pub fn tone_log_mel(waveform: &[f32], sample_rate: usize, device: &Device) -> Tensor< 3> {
     let wav = if sample_rate == TONE_SR {
         waveform.to_vec()
     } else {
@@ -557,20 +558,20 @@ pub fn tone_log_mel<B: Backend>(waveform: &[f32], sample_rate: usize, device: &B
             spec[f * n_freq + k] = re * re + im * im;
         }
     }
-    let spec = Tensor::<B, 1>::from_floats(spec.as_slice(), device).reshape([1, n_frames, n_freq]);
+    let spec = Tensor::< 1>::from_floats(spec.as_slice(), device).reshape([1, n_frames, n_freq]);
     let filters = get_mel_filters(TONE_SR as f64, N_FFT, N_MELS, false, device, true);
     let mels = spec.matmul(filters.transpose().unsqueeze());
     let mels = mels.swap_dims(1, 2);
     (mels + LOG_ZERO_GUARD).log()
 }
 
-pub fn greedy_ctc_text(logits: Tensor<impl Backend, 3>, vocab: &[String], blank: usize) -> (String, Vec<usize>) {
+pub fn greedy_ctc_text(logits: Tensor<3>, vocab: &[String], blank: usize) -> (String, Vec<usize>) {
     let data = logits.argmax(2).into_data();
     let ids = data
         .clone()
-        .to_vec::<i32>()
+        .try_to_vec::<i32>()
         .or_else(|_| {
-            data.to_vec::<i64>()
+            data.try_to_vec::<i64>()
                 .map(|v| v.into_iter().map(|x| x as i32).collect())
         })
         .unwrap_or_default();

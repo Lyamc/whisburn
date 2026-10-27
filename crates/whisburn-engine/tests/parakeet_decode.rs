@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use whisburn_audio::decode_bytes_to_mono_pcm;
 use whisburn_engine::model::load_model;
 use whisburn_engine::model::Model;
@@ -13,17 +13,17 @@ fn parakeet_jfk_decode_is_readable_not_commas() {
     let _ = std::env::set_current_dir(&root);
 
     let wav_path = root.join("samples/jfk.wav");
-    let mpk = root.join("models/parakeet-tdt-0.6b-v3/model.mpk");
-    if !wav_path.exists() || !mpk.exists() {
+    let weights = root.join("models/parakeet-tdt-0.6b-v3/model.bpk");
+    if !wav_path.exists() || !weights.exists() {
         eprintln!("skip: missing jfk.wav or parakeet model");
         return;
     }
 
     let bytes = std::fs::read(&wav_path).unwrap();
     let wf = decode_bytes_to_mono_pcm(&bytes, "wav").unwrap();
-    let device = WgpuDevice::DefaultDevice;
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
     let (bpe, _, model) =
-        load_model::<Wgpu>("parakeet-tdt-0.6b-v3", &device, false).expect("load parakeet");
+        load_model("parakeet-tdt-0.6b-v3", &device, false).expect("load parakeet");
     let Model::Parakeet(_) = model else {
         panic!("expected parakeet");
     };

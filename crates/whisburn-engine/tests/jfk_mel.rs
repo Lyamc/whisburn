@@ -1,4 +1,4 @@
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
+use burn::tensor::{Device, DeviceKind};
 use burn::tensor::cast::ToElement;
 use whisburn_audio::decode_to_mono_pcm;
 use whisburn_engine::audio::prep_audio;
@@ -16,27 +16,27 @@ fn jfk_mel_stats_and_transcription() {
         return;
     }
     let _ = std::env::set_current_dir(&root);
-    if !Path::new("models/tiny_en/model.mpk").exists() {
+    if !Path::new("models/tiny_en/model.bpk").exists() {
         eprintln!("skip: tiny_en model missing");
         return;
     }
 
     let wf = decode_to_mono_pcm(&path).expect("decode");
-    let device = WgpuDevice::DefaultDevice;
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
     let samples = wf.samples.clone();
-    let tensor = burn::tensor::Tensor::<Wgpu, 1>::from_floats(
+    let tensor = burn::tensor::Tensor::< 1>::from_floats(
         samples.as_slice(),
         &device,
     )
     .unsqueeze();
     let mel = prep_audio(tensor, wf.sample_rate as f64, 80, false, "tiny_en");
-    let min = mel.clone().min().into_scalar().to_f32();
-    let max = mel.clone().max().into_scalar().to_f32();
-    let mean = mel.clone().mean().into_scalar().to_f32();
+    let min = mel.clone().min().into_scalar::<f32>();
+    let max = mel.clone().max().into_scalar::<f32>();
+    let mean = mel.clone().mean().into_scalar::<f32>();
     let dims = mel.dims();
     eprintln!("mel dims={dims:?} min={min} max={max} mean={mean}");
 
-    let (bpe, _cfg, model) = load_model::<Wgpu>("tiny_en", &device, false).expect("load");
+    let (bpe, _cfg, model) = load_model("tiny_en", &device, false).expect("load");
     let (text, _segs) = waveform_to_text(
         &model,
         "tiny_en",

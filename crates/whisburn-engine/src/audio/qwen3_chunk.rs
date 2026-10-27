@@ -79,12 +79,21 @@ pub fn split_audio_into_chunks(
         .collect()
 }
 
-pub const QWEN3_MAX_ASR_CHUNK_SEC: f64 = 1200.0;
+/// 1200s pinned enough host RAM on the 0.6B tower to trip earlyoom on a 15 GiB
+/// machine. 60s is two passes inside a 120s GPU slice, and a 600s server segment
+/// is no longer one encode.
+pub const QWEN3_MAX_ASR_CHUNK_SEC: f64 = 60.0;
 pub const QWEN3_MIN_ASR_CHUNK_SEC: f64 = 0.5;
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn asr_chunk_cap_fits_a_gpu_slice() {
+        assert!(QWEN3_MAX_ASR_CHUNK_SEC <= 60.0);
+        assert!(QWEN3_MAX_ASR_CHUNK_SEC * 2.0 <= 120.0);
+    }
 
     #[test]
     fn short_audio_single_chunk() {

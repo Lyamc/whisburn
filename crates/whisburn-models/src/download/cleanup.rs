@@ -5,6 +5,8 @@ use std::path::Path;
 const STALE_FILES: &[&str] = &[
     "model.mpk",
     "model.mpk.gz",
+    "model.bpk",
+    "model.bpk.gz",
     "config.cfg",
     "shapes.json",
     ".burn_version",
@@ -43,11 +45,12 @@ pub fn clear_stale_artifacts(dir: &Path) {
         .filter(|path| {
             let ext = path.extension().and_then(|e| e.to_str());
             ext == Some("mpk")
+                || ext == Some("bpk")
                 || ext == Some("cfg")
                 || path
                     .file_name()
                     .and_then(|n| n.to_str())
-                    .is_some_and(|n| n.ends_with(".mpk.gz"))
+                    .is_some_and(|n| n.ends_with(".mpk.gz") || n.ends_with(".bpk.gz"))
         })
         .for_each(|path| {
             let _ = fs::remove_file(path);
@@ -57,36 +60,71 @@ pub fn clear_stale_artifacts(dir: &Path) {
 pub fn decompress_mpk_gz_variants(dir: &Path, model_name: &str, verbose: bool) -> anyhow::Result<()> {
     use std::fs::File;
 
-    [dir.join(format!("{model_name}.mpk.gz")), dir.join("model.mpk.gz")]
+    [
+        dir.join(format!("{model_name}.bpk.gz")),
+        dir.join("model.bpk.gz"),
+    ]
         .iter()
         .filter(|gz_path| gz_path.exists())
         .try_for_each(|gz_path| {
-            let mpk_name = gz_path
+            let unpacked_name = gz_path
                 .file_name()
                 .and_then(|n| n.to_str())
                 .map(|n| n.trim_end_matches(".gz"))
-                .unwrap_or("model.mpk");
+                .unwrap_or("model.bpk");
 
-            let mpk_path = dir.join(mpk_name);
-            if mpk_path.exists() {
+            let unpacked_path = dir.join(unpacked_name);
+            if unpacked_path.exists() {
                 return Ok(());
             }
 
             if verbose {
-                tracing::info!("decompressing {} -> {}", gz_path.display(), mpk_path.display());
+                tracing::info!(
+                    "decompressing {} -> {}",
+                    gz_path.display(),
+                    unpacked_path.display()
+                );
             }
 
             let gz_file = File::open(gz_path)?;
             let mut decoder = flate2::read::GzDecoder::new(gz_file);
-            let mut mpk_file = File::create(&mpk_path)?;
-            copy(&mut decoder, &mut mpk_file)?;
+            let mut unpacked_file = File::create(&unpacked_path)?;
+            copy(&mut decoder, &mut unpacked_file)?;
 
-            let model_alias = dir.join("model.mpk");
-            if mpk_name != "model.mpk" && !model_alias.exists() {
-                fs::copy(&mpk_path, &model_alias)?;
+            let alias = dir.join("model.bpk");
+            if unpacked_path != alias && !alias.exists() {
+                fs::copy(&unpacked_path, &alias)?;
             }
             Ok(())
         })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::io::Write;
+
+    #[test]
+    fn decompress_unpacks_burnpack_and_leaves_named_mpk_gzip() {
+        let dir = std::env::temp_dir().join(format!("whisburn-gz-{}-bpk", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).unwrap();
+        let write_gz = |name: &str, bytes: &[u8]| {
+            let file = fs::File::create(dir.join(name)).unwrap();
+            let mut enc = flate2::write::GzEncoder::new(file, flate2::Compression::default());
+            enc.write_all(bytes).unwrap();
+            enc.finish().unwrap();
+        };
+        write_gz("model.bpk.gz", b"pack");
+        write_gz("model.mpk.gz", b"old");
+
+        decompress_mpk_gz_variants(&dir, "tiny_en", false).unwrap();
+
+        assert_eq!(fs::read(dir.join("model.bpk")).unwrap(), b"pack");
+        assert!(!dir.join("model.mpk").is_file());
+        assert!(dir.join("model.mpk.gz").is_file());
+        let _ = fs::remove_dir_all(&dir);
+    }
 }
 
 pub fn save_response_gz<R: Read>(

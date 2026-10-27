@@ -1494,10 +1494,13 @@
       if (ev.phase === "error") {
         throw new Error(ev.task_label || "Transcription failed");
       }
-      const chunkHint = ev.chunk != null && ev.chunks_total
+      const label = ev.task_label || "";
+      // The label already names the segment. Appending "segment 2/7" again
+      // made the counter look duplicated while the window number moved on its own.
+      const chunkHint = ev.chunk != null && ev.chunks_total && !/segment\s+\d+/i.test(label)
         ? ` · segment ${ev.chunk}/${ev.chunks_total}`
         : "";
-      let taskText = `${ev.task_label}${chunkHint} — ${ev.task_pct.toFixed(0)}%`;
+      let taskText = `${label}${chunkHint} — ${ev.task_pct.toFixed(0)}%`;
 
       const elapsed = ev.elapsed_secs != null ? ev.elapsed_secs : null;
       const eta = ev.eta_secs != null ? ev.eta_secs : null;

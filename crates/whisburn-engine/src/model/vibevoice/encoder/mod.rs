@@ -5,8 +5,9 @@ pub mod norm;
 mod pad;
 pub mod sconv;
 
+use burn::tensor::{Device, DeviceKind};
 use burn::module::Module;
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 
 pub use config::{HfTokenizerEncoderConfig, TokenizerEncoderConfig};
 pub use level::EncoderLevel;
@@ -16,14 +17,14 @@ use block::Block1D;
 use sconv::SConv1d as SConv;
 
 #[derive(Module, Debug)]
-pub struct TokenizerEncoder<B: Backend> {
-    pub stem: EncoderLevel<B>,
-    pub conv_layers: Vec<EncoderLevel<B>>,
-    pub head: SConv<B>,
+pub struct TokenizerEncoder {
+    pub stem: EncoderLevel,
+    pub conv_layers: Vec<EncoderLevel>,
+    pub head: SConv,
 }
 
-impl<B: Backend> TokenizerEncoder<B> {
-    pub fn forward(&self, audio: Tensor<B, 3>) -> Tensor<B, 3> {
+impl TokenizerEncoder {
+    pub fn forward(&self, audio: Tensor< 3>) -> Tensor< 3> {
         let x = self.stem.forward(audio);
         let x = self
             .conv_layers
@@ -33,12 +34,12 @@ impl<B: Backend> TokenizerEncoder<B> {
     }
 
     /// `[batch, time, dim]` latent mean (HF permute after encoder).
-    pub fn encode_mean(&self, audio: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn encode_mean(&self, audio: Tensor< 3>) -> Tensor< 3> {
         self.forward(audio).swap_dims(1, 2)
     }
 }
 
-pub fn init_encoder<B: Backend>(cfg: &TokenizerEncoderConfig, device: &B::Device) -> TokenizerEncoder<B> {
+pub fn init_encoder(cfg: &TokenizerEncoderConfig, device: &Device) -> TokenizerEncoder {
     let stem = init_level(
         cfg,
         0,
@@ -66,7 +67,7 @@ pub fn init_encoder<B: Backend>(cfg: &TokenizerEncoderConfig, device: &B::Device
     }
 }
 
-fn init_level<B: Backend>(
+fn init_level(
     cfg: &TokenizerEncoderConfig,
     _level: usize,
     in_ch: usize,
@@ -74,8 +75,8 @@ fn init_level<B: Backend>(
     kernel: usize,
     stride: usize,
     depth: usize,
-    device: &B::Device,
-) -> EncoderLevel<B> {
+    device: &Device,
+) -> EncoderLevel {
     let ch = out_ch;
     let blocks = (0..depth)
         .map(|_| Block1D {

@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use burn::tensor::Tensor;
 use whisburn_audio::decode_to_mono_pcm;
 use whisburn_engine::audio::prep_audio;
@@ -37,10 +37,10 @@ fn jfk_mel_values_match_hf_reference() {
         .collect();
 
     let wf = decode_to_mono_pcm(&path).expect("decode");
-    let device = WgpuDevice::DefaultDevice;
-    let w = Tensor::<Wgpu, 1>::from_floats(wf.samples.as_slice(), &device).unsqueeze();
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
+    let w = Tensor::< 1>::from_floats(wf.samples.as_slice(), &device).unsqueeze();
     let mel = prep_audio(w, wf.sample_rate as f64, 128, false, "qwen3-asr-0.6b");
-    let rust = mel.into_data().to_vec::<f32>().unwrap();
+    let rust = mel.into_data().try_to_vec::<f32>().unwrap();
     let mel_rmse = rmse(&rust, &hf);
     eprintln!("mel_rmse={mel_rmse:.6}");
     assert!(mel_rmse < 0.01, "mel diverges from HF: rmse={mel_rmse}");
@@ -57,8 +57,8 @@ fn jfk_mel_frame_count_matches_hf_whisper() {
     let _ = std::env::set_current_dir(&root);
 
     let wf = decode_to_mono_pcm(&path).expect("decode");
-    let device = WgpuDevice::DefaultDevice;
-    let w = Tensor::<Wgpu, 1>::from_floats(wf.samples.as_slice(), &device).unsqueeze();
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
+    let w = Tensor::< 1>::from_floats(wf.samples.as_slice(), &device).unsqueeze();
     let mel = prep_audio(w, wf.sample_rate as f64, 128, false, "qwen3-asr-0.6b");
     let frames = mel.dims()[2];
     assert_eq!(frames, 1100, "HF Qwen3 WhisperFeatureExtractor uses 1100 frames for JFK");

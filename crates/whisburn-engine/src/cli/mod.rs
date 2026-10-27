@@ -1,10 +1,10 @@
 pub mod audio;
-pub mod transcribe;
 pub mod download;
+pub mod transcribe;
 
-use burn::backend::wgpu::WgpuDevice;
-use clap::Args;
+use burn::tensor::{Device, DeviceKind};
 use crate::token::Language;
+use clap::Args;
 use strum::IntoEnumIterator;
 
 use crate::model::registry::get_model_names;
@@ -65,37 +65,39 @@ pub fn parse_language(lang_str: &str) -> Language {
         Some(l) => l,
         None => {
             let supported: Vec<String> = Language::iter().map(|l| l.as_str().to_string()).collect();
-            eprintln!("Invalid language: {}. Supported languages: {:?}", lang_str, supported);
+            eprintln!(
+                "Invalid language: {}. Supported languages: {:?}",
+                lang_str, supported
+            );
             std::process::exit(1);
         }
     }
 }
 
-pub fn get_device(device_arg: &Option<String>) -> WgpuDevice {
+pub fn get_device(device_arg: &Option<String>) -> Device {
+    crate::gpu_env::prepare_gpu_runtime();
+    crate::gpu_env::log_gpu_runtime();
     match device_arg {
         Some(s) => {
             if s.to_lowercase() == "cpu" {
-                WgpuDevice::Cpu
+                Device::wgpu(DeviceKind::Cpu)
             } else if let Ok(idx) = s.parse::<u32>() {
-                WgpuDevice::DiscreteGpu(idx as usize)
+                Device::wgpu(DeviceKind::DiscreteGpu(idx as usize))
             } else {
                 eprintln!("Invalid device: {}. Using default.", s);
-                WgpuDevice::default()
+                Device::wgpu(DeviceKind::DefaultDevice)
             }
         }
-        None => WgpuDevice::default(),
+        None => Device::wgpu(DeviceKind::DefaultDevice),
     }
 }
 
-pub fn get_backend_info(device: &WgpuDevice) -> String {
-    match device {
-        WgpuDevice::DiscreteGpu(i) => format!("WGPU (Discrete GPU #{})", i),
-        WgpuDevice::IntegratedGpu(i) => format!("WGPU (Integrated GPU #{})", i),
-        WgpuDevice::VirtualGpu(i) => format!("WGPU (Virtual GPU #{})", i),
-        WgpuDevice::Cpu => "WGPU (CPU)".to_string(),
-        #[allow(deprecated)]
-        WgpuDevice::BestAvailable => "WGPU (Best Available)".to_string(),
-        WgpuDevice::DefaultDevice => "WGPU (Default Device)".to_string(),
-        WgpuDevice::Existing(i) => format!("WGPU (Existing #{})", i),
+/// Label for the CLI device string. `Device` is opaque, so the original
+/// argument is the source of the name.
+pub fn get_backend_info(device_arg: &Option<String>) -> String {
+    match device_arg.as_deref() {
+        Some(s) if s.eq_ignore_ascii_case("cpu") => "WGPU (CPU)".to_string(),
+        Some(s) if s.parse::<u32>().is_ok() => format!("WGPU (Discrete GPU #{s})"),
+        _ => "WGPU (Default Device)".to_string(),
     }
 }

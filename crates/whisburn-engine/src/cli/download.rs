@@ -1,11 +1,18 @@
-use std::fs;
-use std::path::Path;
-use ureq;
+use crate::model::registry::find_model;
 use flate2::read::GzDecoder;
 use indicatif::{ProgressBar, ProgressStyle};
+use std::fs;
 use std::io;
+use std::path::Path;
 use std::process::Command;
-use crate::model::registry::find_model;
+use ureq;
+
+fn install_pure_tls() {
+    if rustls::crypto::CryptoProvider::get_default().is_some() {
+        return;
+    }
+    let _ = rustls::crypto::CryptoProvider::install_default(rustls_rustcrypto::provider());
+}
 
 fn native_agent() -> ureq::Agent {
     use std::sync::OnceLock;
@@ -13,25 +20,20 @@ fn native_agent() -> ureq::Agent {
     static AGENT: OnceLock<ureq::Agent> = OnceLock::new();
     AGENT
         .get_or_init(|| {
+            install_pure_tls();
             let config = ureq::config::Config::builder()
-                .tls_config(
-                    TlsConfig::builder()
-                        .provider(TlsProvider::NativeTls)
-                        .build(),
-                )
+                .tls_config(TlsConfig::builder().provider(TlsProvider::Rustls).build())
                 .build();
             ureq::Agent::new_with_config(config)
         })
         .clone()
 }
 
-
-
 fn get_hf_id(name: &str) -> String {
     if let Some(info) = find_model(name) {
         return info.hf_id.to_string();
     }
-    
+
     // Fallback for Whisper naming variations
     match name {
         "tiny.en" => "openai/whisper-tiny.en".to_string(),
@@ -44,14 +46,19 @@ fn get_hf_id(name: &str) -> String {
     }
 }
 
-pub fn try_convert_on_the_fly(model_name: &str, verbose: bool, hf_token: Option<String>) -> anyhow::Result<()> {
+pub fn try_convert_on_the_fly(
+    model_name: &str,
+    verbose: bool,
+    hf_token: Option<String>,
+) -> anyhow::Result<()> {
     let hf_id = get_hf_id(model_name);
-    
+
     let mut cmd = Command::new("python");
     cmd.arg("convert_whisper.py")
         .arg(&hf_id)
-        .arg("--name").arg(model_name);
-    
+        .arg("--name")
+        .arg(model_name);
+
     if let Some(ref token) = hf_token {
         cmd.arg("--hf-token").arg(token);
     }
@@ -70,11 +77,11 @@ pub fn try_convert_on_the_fly(model_name: &str, verbose: bool, hf_token: Option<
 }
 
 pub fn run_download_logic(
-    model_name: &str, 
-    base_url_opt: Option<String>, 
-    decompress: bool, 
+    model_name: &str,
+    base_url_opt: Option<String>,
+    decompress: bool,
     verbose: bool,
-    hf_token: Option<String>
+    hf_token: Option<String>,
 ) -> anyhow::Result<()> {
     let base_url = match base_url_opt {
         Some(url) => url,
@@ -87,7 +94,7 @@ pub fn run_download_logic(
     let output_dir = whisburn_core::model_dir(model_name).display().to_string();
     fs::create_dir_all(&output_dir)?;
 
-    let files = ["config.cfg", "tokenizer.json", "model.mpk"];
+    let files = ["config.cfg", "tokenizer.json", "model.bpk"];
 
     for file in files {
         let download_file = file.to_string();
@@ -99,13 +106,15 @@ pub fn run_download_logic(
             format!("{}/{}/{}", base_url, model_name, download_file)
         };
 
-        if verbose { println!("Downloading {}...", url); }
-        
+        if verbose {
+            println!("Downloading {}...", url);
+        }
+
         let mut request = native_agent().get(&url);
         if let Some(ref token) = hf_token {
             request = request.header("Authorization", format!("Bearer {token}"));
         }
-        
+
         let response = request.call();
 
         match response {
@@ -116,23 +125,25 @@ pub fn run_download_logic(
                 // Try alternative: {model_name}.{ext} inside the folder
                 let alt_download_file = if download_file == "config.cfg" {
                     format!("{}.cfg", model_name)
-                } else if download_file == "model.mpk" {
-                    format!("{}.mpk", model_name)
+                } else if download_file == "model.bpk" {
+                    format!("{}.bpk", model_name)
                 } else {
                     download_file.clone()
                 };
 
                 if alt_download_file == download_file {
-                    // Try .gz if it's .mpk
-                    if download_file.ends_with(".mpk") {
+                    // Try .gz if it's a burnpack.
+                    if download_file.ends_with(".bpk") {
                         let gz_url = format!("{}.gz", url);
-                        if verbose { println!("Trying .gz: {}...", gz_url); }
-                        
+                        if verbose {
+                            println!("Trying .gz: {}...", gz_url);
+                        }
+
                         let mut request = native_agent().get(&gz_url);
                         if let Some(ref token) = hf_token {
                             request = request.header("Authorization", format!("Bearer {token}"));
                         }
-                        
+
                         if let Ok(res) = request.call() {
                             save_response(res, &output_dir, &target_file, decompress, verbose)?;
                             continue;
@@ -141,19 +152,25 @@ pub fn run_download_logic(
                     continue;
                 }
 
-                let alt_url = if base_url.contains("huggingface.co") && !base_url.contains("/resolve/main") {
-                    format!("{}/resolve/main/{}/{}", base_url, model_name, alt_download_file)
-                } else {
-                    format!("{}/{}/{}", base_url, model_name, alt_download_file)
-                };
+                let alt_url =
+                    if base_url.contains("huggingface.co") && !base_url.contains("/resolve/main") {
+                        format!(
+                            "{}/resolve/main/{}/{}",
+                            base_url, model_name, alt_download_file
+                        )
+                    } else {
+                        format!("{}/{}/{}", base_url, model_name, alt_download_file)
+                    };
 
-                if verbose { println!("Trying alternative {}...", alt_url); }
-                
+                if verbose {
+                    println!("Trying alternative {}...", alt_url);
+                }
+
                 let mut request = native_agent().get(&alt_url);
                 if let Some(ref token) = hf_token {
                     request = request.header("Authorization", format!("Bearer {token}"));
                 }
-                
+
                 match request.call() {
                     Ok(res) => {
                         save_response(res, &output_dir, &target_file, decompress, verbose)?;
@@ -161,45 +178,59 @@ pub fn run_download_logic(
                     Err(_) => {
                         // Try .gz for alternative
                         let gz_url = format!("{}.gz", alt_url);
-                        if verbose { println!("Trying .gz: {}...", gz_url); }
-                        
+                        if verbose {
+                            println!("Trying .gz: {}...", gz_url);
+                        }
+
                         let mut request = native_agent().get(&gz_url);
                         if let Some(ref token) = hf_token {
                             request = request.header("Authorization", format!("Bearer {token}"));
                         }
-                        
+
                         if let Ok(res) = request.call() {
                             save_response(res, &output_dir, &target_file, decompress, verbose)?;
                         } else {
-                             // One last try: some repos have files in root
-                             let root_url = if base_url.contains("huggingface.co") && !base_url.contains("/resolve/main") {
-                                 format!("{}/resolve/main/{}", base_url, alt_download_file)
-                             } else {
-                                 format!("{}/{}", base_url, alt_download_file)
-                             };
-                             if verbose { println!("Trying root {}...", root_url); }
-                             
-                             let mut request = native_agent().get(&root_url);
-                             if let Some(ref token) = hf_token {
-                                 request = request.header("Authorization", format!("Bearer {token}"));
-                             }
-                             
-                             if let Ok(res) = request.call() {
-                                 save_response(res, &output_dir, &target_file, decompress, verbose)?;
-                             } else {
-                                 let root_gz_url = format!("{}.gz", root_url);
-                                 
-                                 let mut request = native_agent().get(&root_gz_url);
-                                 if let Some(ref token) = hf_token {
-                                     request = request.header("Authorization", format!("Bearer {token}"));
-                                 }
-                                 
-                                 if let Ok(res) = request.call() {
-                                     save_response(res, &output_dir, &target_file, decompress, verbose)?;
-                                 } else {
-                                     eprintln!("Failed to download {}", file);
-                                 }
-                             }
+                            // One last try: some repos have files in root
+                            let root_url = if base_url.contains("huggingface.co")
+                                && !base_url.contains("/resolve/main")
+                            {
+                                format!("{}/resolve/main/{}", base_url, alt_download_file)
+                            } else {
+                                format!("{}/{}", base_url, alt_download_file)
+                            };
+                            if verbose {
+                                println!("Trying root {}...", root_url);
+                            }
+
+                            let mut request = native_agent().get(&root_url);
+                            if let Some(ref token) = hf_token {
+                                request =
+                                    request.header("Authorization", format!("Bearer {token}"));
+                            }
+
+                            if let Ok(res) = request.call() {
+                                save_response(res, &output_dir, &target_file, decompress, verbose)?;
+                            } else {
+                                let root_gz_url = format!("{}.gz", root_url);
+
+                                let mut request = native_agent().get(&root_gz_url);
+                                if let Some(ref token) = hf_token {
+                                    request =
+                                        request.header("Authorization", format!("Bearer {token}"));
+                                }
+
+                                if let Ok(res) = request.call() {
+                                    save_response(
+                                        res,
+                                        &output_dir,
+                                        &target_file,
+                                        decompress,
+                                        verbose,
+                                    )?;
+                                } else {
+                                    eprintln!("Failed to download {}", file);
+                                }
+                            }
                         }
                     }
                 }
@@ -218,7 +249,7 @@ fn save_response(
 ) -> anyhow::Result<()> {
     let path = Path::new(output_dir).join(target_file);
     let mut file = fs::File::create(&path)?;
-    
+
     let pb = if !verbose {
         let len = res
             .headers()
@@ -249,7 +280,7 @@ fn save_response(
     } else {
         io::copy(&mut reader, &mut file)?;
     }
-    
+
     if let Some(p) = pb {
         p.finish_and_clear();
     }

@@ -1,7 +1,7 @@
+use burn::tensor::Device;
 use burn::{
     module::Param,
     nn::{self, conv::Conv1dConfig, PaddingConfig1d},
-    tensor::backend::Backend,
 };
 use crate::model::*;
 use crate::model::load::helpers::*;
@@ -9,12 +9,12 @@ use crate::model::attention::attn_decoder_mask;
 use std::error::Error;
 use std::path::Path;
 
-pub fn load_audio_encoder<B: Backend>(
+pub fn load_audio_encoder(
     path: &str,
-    device: &B::Device,
-) -> Result<(AudioEncoder<B>, AudioEncoderConfig), Box<dyn Error>> {
-    let n_mels = load_usize::<B>("n_mels", path, device)?;
-    let n_audio_state = load_usize::<B>("n_audio_state", path, device)?;
+    device: &Device,
+) -> Result<(AudioEncoder, AudioEncoderConfig), Box<dyn Error>> {
+    let n_mels = load_usize("n_mels", path, device)?;
+    let n_audio_state = load_usize("n_audio_state", path, device)?;
 
     let conv1_config =
         Conv1dConfig::new(n_mels, n_audio_state, 3).with_padding(PaddingConfig1d::Explicit(1, 1));
@@ -34,9 +34,9 @@ pub fn load_audio_encoder<B: Backend>(
         nn::conv::Conv1dConfig::new(n_audio_state, n_audio_state, 1).init(device)
     };
 
-    let n_layer = load_usize::<B>("n_layer", path, device)?;
+    let n_layer = load_usize("n_layer", path, device)?;
 
-    let blocks: Vec<ResidualEncoderAttentionBlock<B>> = (0..n_layer)
+    let blocks: Vec<ResidualEncoderAttentionBlock> = (0..n_layer)
         .map(|i| load_residual_encoder_attention_block(&format!("{}/block_{}", path, i), n_audio_state, device))
         .collect::<Result<_, _>>()?;
 
@@ -45,7 +45,7 @@ pub fn load_audio_encoder<B: Backend>(
     let n_head = blocks[0].attn.n_head;
 
     let positional_embedding = if Path::new(&format!("{}/positional_embedding.npy", path)).exists() {
-        Some(Param::from_tensor(load_tensor::<B, 2>("positional_embedding", path, device)?))
+        Some(Param::from_tensor(load_tensor::< 2>("positional_embedding", path, device)?))
     } else {
         None
     };
@@ -79,19 +79,19 @@ pub fn load_audio_encoder<B: Backend>(
     Ok((audio_encoder, config))
 }
 
-pub fn load_text_decoder<B: Backend>(
+pub fn load_text_decoder(
     path: &str,
-    device: &B::Device,
-) -> Result<(TextDecoder<B>, TextDecoderConfig), Box<dyn Error>> {
-    let token_embedding_tensor = load_tensor::<B, 2>("token_embedding/weight", path, device)?;
-    let positional_embedding_tensor = load_tensor::<B, 2>("positional_embedding", path, device)?;
+    device: &Device,
+) -> Result<(TextDecoder, TextDecoderConfig), Box<dyn Error>> {
+    let token_embedding_tensor = load_tensor::< 2>("token_embedding/weight", path, device)?;
+    let positional_embedding_tensor = load_tensor::< 2>("positional_embedding", path, device)?;
     let tensor_device_ref = token_embedding_tensor.device();
 
     let [n_text_ctx, n_text_state] = positional_embedding_tensor.dims();
     let [n_vocab, _] = token_embedding_tensor.dims();
 
-    let n_layer = load_usize::<B>("n_layer", path, device)?;
-    let blocks: Vec<ResidualDecoderAttentionBlock<B>> = (0..n_layer)
+    let n_layer = load_usize("n_layer", path, device)?;
+    let blocks: Vec<ResidualDecoderAttentionBlock> = (0..n_layer)
         .map(|i| load_residual_decoder_attention_block(&format!("{}/block_{}", path, i), n_text_state, device))
         .collect::<Result<_, _>>()?;
 
@@ -122,7 +122,7 @@ pub fn load_text_decoder<B: Backend>(
     Ok((text_decoder, config))
 }
 
-pub fn load_whisper<B: Backend>(path: &str, device: &B::Device) -> Result<(Whisper<B>, WhisperConfig), Box<dyn Error>> {
+pub fn load_whisper(path: &str, device: &Device) -> Result<(Whisper, WhisperConfig), Box<dyn Error>> {
     let (encoder, encoder_config) = load_audio_encoder(&format!("{}/{}", path, "encoder"), device)?;
     let (decoder, decoder_config) = load_text_decoder(&format!("{}/{}", path, "decoder"), device)?;
     let whisper = Whisper {

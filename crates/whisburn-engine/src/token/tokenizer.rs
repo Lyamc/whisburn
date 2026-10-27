@@ -98,7 +98,8 @@ impl Gpt2Tokenizer {
             || model_name.contains("vibevoice")
             || model_name.contains("bitnet")
             || model_name.contains("moonshine")
-            || model_name.contains("t-one");
+            || model_name.contains("t-one")
+            || model_name.contains("nemotron");
 
         let mut tokenizer = if Path::new(&json_path).exists() {
             tokenizers::Tokenizer::from_file(&json_path)?

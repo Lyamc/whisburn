@@ -43,18 +43,10 @@ let _filename = repo.get("config.json").unwrap();
 
 # SSL/TLS
 
-This library uses tokio default TLS implementations which is `native-tls` (openssl) for `tokio`.
-
-If you want control over the TLS backend you can remove the default features and only add the backend you are intending to use. 
+This vendored copy uses ureq with `rustls-no-provider` and [Lyamc/rustls-rustcrypto](https://github.com/Lyamc/rustls-rustcrypto). It does not link OpenSSL and does not build ring.
 
 ```bash
-cargo add hf-hub --no-default-features --features ureq,rustls-tls
-cargo add hf-hub --no-default-features --features ureq,native-tls
-cargo add hf-hub --no-default-features --features tokio,rustls-tls
-cargo add hf-hub --no-default-features --features tokio,native-tls
+cargo add hf-hub --no-default-features --features ureq
 ```
-
-
-When using the [`ureq`](https://github.com/algesten/ureq) feature, you will always use its default TLS backend which is [rustls](https://github.com/rustls/rustls).
 
 When using [`tokio`](https://github.com/tokio-rs/tokio), by default `default-tls` will be enabled, which means OpenSSL. If you want/need to use rustls, disable the default features and use `rustls-tls` in conjunction with `tokio`.

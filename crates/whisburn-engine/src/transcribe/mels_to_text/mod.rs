@@ -6,7 +6,6 @@ use crate::model::*;
 use crate::token::{self, *};
 use burn::tensor::{
     activation::log_softmax,
-    backend::Backend,
     ElementConversion, Int, Tensor, TensorData,
 };
 use std::iter;
@@ -24,11 +23,11 @@ pub struct BeamSearchToken {
     pub log_prob: f64,
 }
 
-pub fn mels_to_text<B: Backend>(
-    whisper: &Whisper<B>,
+pub fn mels_to_text(
+    whisper: &Whisper,
     bpe: &Gpt2Tokenizer,
     lang: Language,
-    mels: Tensor<B, 3>,
+    mels: Tensor< 3>,
     _padding: usize,
     _streaming_mode: bool,
     include_timestamps: bool,
@@ -97,7 +96,7 @@ pub fn mels_to_text<B: Backend>(
             })
             .collect();
 
-        let token_tensor = Tensor::<B, 2, Int>::from_ints(
+        let token_tensor = Tensor::< 2, Int>::from_ints(
             TensorData::new(flattened_tokens, [beams.len(), max_seq_len]),
             &device,
         );
@@ -115,7 +114,7 @@ pub fn mels_to_text<B: Backend>(
                 at_generation_start(max_seq_len, prompt_len),
                 end_token,
             );
-            let mask = Tensor::<B, 1>::from_floats(mask_vec.as_slice(), &device);
+            let mask = Tensor::< 1>::from_floats(mask_vec.as_slice(), &device);
             logits + mask.unsqueeze::<3>()
         } else {
             logits
@@ -134,14 +133,14 @@ pub fn mels_to_text<B: Backend>(
                     .slice([batch..batch + 1, token_index..token_index + 1])
                     .flatten::<1>(0, 2)
                     .into_data()
-                    .to_vec::<B::FloatElem>()
+                    .try_to_vec::<f32>()
                     .unwrap()
             })
             .zip(beams)
             .map(|(log_probs, beam)| {
                 log_probs
                     .into_iter()
-                    .map(|log_prob| log_prob.elem::<f64>())
+                    .map(|log_prob| log_prob as f64)
                     .enumerate()
                     .map(|(token_id, log_prob)| {
                         (

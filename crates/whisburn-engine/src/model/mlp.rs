@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::{
     nn,
-    tensor::backend::Backend,
     tensor::Tensor,
     config::Config,
     module::Module,
@@ -12,7 +12,7 @@ pub struct MLPConfig {
 }
 
 impl MLPConfig {
-    pub fn init<B: Backend>(&self, tensor_device_ref: &B::Device) -> MLP<B> {
+    pub fn init(&self, tensor_device_ref: &Device) -> MLP {
         let lin1 = nn::LinearConfig::new(self.n_state, 4 * self.n_state).init(tensor_device_ref);
         let gelu = nn::Gelu::new();
         let lin2 = nn::LinearConfig::new(4 * self.n_state, self.n_state).init(tensor_device_ref);
@@ -22,14 +22,14 @@ impl MLPConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct MLP<B: Backend> {
-    pub lin1: nn::Linear<B>,
+pub struct MLP {
+    pub lin1: nn::Linear,
     pub gelu: nn::Gelu,
-    pub lin2: nn::Linear<B>,
+    pub lin2: nn::Linear,
 }
 
-impl<B: Backend> MLP<B> {
-    pub fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+impl MLP {
+    pub fn forward(&self, x: Tensor< 3>) -> Tensor< 3> {
         let x = self.lin1.forward(x);
         let x = self.gelu.forward(x);
         let x = self.lin2.forward(x);

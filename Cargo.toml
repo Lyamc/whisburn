@@ -25,12 +25,8 @@ whisburn-models = { path = "crates/whisburn-models" }
 whisburn-server = { path = "crates/whisburn-server" }
 whisburn-app = { path = "crates/whisburn-app" }
 
-# default-features would enable burn-core's optional tch/dataset backends
-# (libtorch / sqlite via `cc`). Inference only needs wgpu + ndarray.
-burn = { version = "0.21", default-features = false, features = ["std", "wgpu", "ndarray", "simd", "fusion"] }
-# Burn 0.21 does not forward `multi-threads`. This direct dep turns on rayon
-# and burn-ndarray's SIMD kernels (macerator / stdarch, the vector path behind std::simd-style ops).
-burn-ndarray = { version = "0.21", default-features = false, features = ["std", "simd", "multi-threads"] }
+# No default features: those pull optim/train. Inference uses WGPU plus Flex.
+burn = { version = "0.22.1", default-features = false, features = ["std", "wgpu", "flex", "fusion"] }
 rayon = "1"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
@@ -43,10 +39,12 @@ tower-http = { version = "0.7", features = ["cors", "trace", "limit", "catch-pan
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 clap = { version = "4.5", features = ["derive", "env"] }
-# native-tls (Schannel/Security.framework/OpenSSL) — avoids ring/cc at build time
-ureq = { version = "3", default-features = false, features = ["native-tls"] }
-# Vendored hf-hub with ureq default-features disabled (upstream forces rustls/ring via ureq defaults)
-hf-hub = { path = "third_party/hf-hub", default-features = false, features = ["ureq", "native-tls"] }
+# Pure-Rust TLS. ureq's `rustls` feature pulls ring (needs `cc`). This provider is
+# Lyamc/rustls-rustcrypto: RustCrypto only, no OpenSSL, no ring, no `cc`.
+ureq = { version = "3", default-features = false, features = ["rustls-no-provider", "rustls-webpki-roots"] }
+rustls = { version = "0.23", default-features = false, features = ["std", "tls12", "logging"] }
+rustls-rustcrypto = { git = "https://github.com/Lyamc/rustls-rustcrypto", rev = "9cba6e9c0a3348cfe8386ff93f05445de20a4c2b" }
+hf-hub = { path = "third_party/hf-hub", default-features = false, features = ["ureq"] }
 symphonia = { version = "0.5", default-features = false, features = ["wav", "mp3", "flac", "ogg", "pcm", "aac", "isomp4", "mkv"] }
 rubato = "5"
 hound = "3.5"

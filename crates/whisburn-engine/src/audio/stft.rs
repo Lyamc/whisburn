@@ -1,7 +1,8 @@
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Device, DeviceKind};
+use burn::tensor::{Tensor};
 use crate::helper::*;
 
-pub fn hann_window<B: Backend>(window_length: usize, device: &B::Device) -> Tensor<B, 1> {
+pub fn hann_window(window_length: usize, device: &Device) -> Tensor< 1> {
     Tensor::arange(0..window_length as i64, device)
         .float()
         .mul_scalar(std::f64::consts::PI / window_length as f64)
@@ -10,7 +11,7 @@ pub fn hann_window<B: Backend>(window_length: usize, device: &B::Device) -> Tens
 }
 
 /// Periodic=false Hann window used by HF Parakeet (torch.hann_window(..., periodic=False)).
-pub fn hann_window_symmetric<B: Backend>(window_length: usize, device: &B::Device) -> Tensor<B, 1> {
+pub fn hann_window_symmetric(window_length: usize, device: &Device) -> Tensor< 1> {
     if window_length <= 1 {
         return Tensor::ones([window_length.max(1)], device);
     }
@@ -24,12 +25,12 @@ pub fn hann_window_symmetric<B: Backend>(window_length: usize, device: &B::Devic
 }
 
 /// torch.stft(..., center=True, pad_mode="constant") style STFT for HF Parakeet.
-pub fn stfft_centered_constant<B: Backend>(
-    input: Tensor<B, 2>,
+pub fn stfft_centered_constant(
+    input: Tensor< 2>,
     n_fft: usize,
     hop_length: usize,
-    window: Tensor<B, 1>,
-) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    window: Tensor< 1>,
+) -> (Tensor< 3>, Tensor< 3>) {
     let [n_batch, _] = input.dims();
     let device = input.device();
     let pad = n_fft / 2;
@@ -40,23 +41,36 @@ pub fn stfft_centered_constant<B: Backend>(
 }
 
 /// HF `WhisperFeatureExtractor` STFT (`center=False`): no edge padding, last mel frame dropped later.
-pub fn stfft_whisper_hf<B: Backend>(
-    input: Tensor<B, 2>,
+pub fn stfft_whisper_hf(
+    input: Tensor< 2>,
     n_fft: usize,
     hop_length: usize,
-    window: Tensor<B, 1>,
-) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    window: Tensor< 1>,
+) -> (Tensor< 3>, Tensor< 3>) {
     stfft_frames(input, n_fft, hop_length, window)
 }
 
-pub fn stfft<B: Backend>(
-    input: Tensor<B, 2>,
+/// A silence-cut slice can be shorter than one FFT. Zero-pad instead of aborting the file.
+fn pad_min_fft(input: Tensor< 2>, n_fft: usize) -> Tensor< 2> {
+    let [n_batch, n] = input.dims();
+    if n >= n_fft {
+        return input;
+    }
+    let device = input.device();
+    Tensor::cat(
+        vec![input, Tensor::zeros([n_batch, n_fft - n], &device)],
+        1,
+    )
+}
+
+pub fn stfft(
+    input: Tensor< 2>,
     n_fft: usize,
     hop_length: usize,
-    window: Tensor<B, 1>,
-) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    window: Tensor< 1>,
+) -> (Tensor< 3>, Tensor< 3>) {
+    let input = pad_min_fft(input, n_fft);
     let [_, orig_input_size] = input.dims();
-    assert!(orig_input_size >= n_fft);
 
     let pad = n_fft / 2;
     let left_pad = reverse(input.clone().slice([0..input.dims()[0], 1..(pad + 1)]), 1);
@@ -71,12 +85,13 @@ pub fn stfft<B: Backend>(
     stfft_frames(input, n_fft, hop_length, window)
 }
 
-fn stfft_frames<B: Backend>(
-    input: Tensor<B, 2>,
+fn stfft_frames(
+    input: Tensor< 2>,
     n_fft: usize,
     hop_length: usize,
-    window: Tensor<B, 1>,
-) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    window: Tensor< 1>,
+) -> (Tensor< 3>, Tensor< 3>) {
+    let input = pad_min_fft(input, n_fft);
     let [n_batch, input_size] = input.dims();
     let device = input.device();
 
@@ -126,4 +141,19 @@ fn stfft_frames<B: Backend>(
         .matmul(input_windows);
 
     (real_part, imaginary_part)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+        
+    #[test]
+    fn shorter_than_fft_is_padded() {
+        let device = Device::flex();
+        let input = Tensor::< 2>::from_floats([[0.25, -0.5, 0.125]], &device);
+        let window = hann_window(8, &device);
+        let (real, _imag) = stfft(input, 8, 4, window);
+        assert_eq!(real.dims()[0], 1);
+        assert!(real.dims()[2] >= 1);
+    }
 }

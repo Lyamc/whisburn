@@ -28,11 +28,12 @@ use whisburn_models::ModelManager;
 
 pub async fn run_server(config: ServerConfig) -> anyhow::Result<()> {
     let manager = Arc::new(
-        ModelManager::new_with_policy(
+        ModelManager::new_with_policies(
             config.device.clone(),
             config.verbose,
             config.debug,
             config.vram_policy(),
+            config.idle_unload,
         )
             .with_hf_token(config.hf_token.clone()),
     );
@@ -65,6 +66,9 @@ pub async fn run_server(config: ServerConfig) -> anyhow::Result<()> {
         source = %gpu.source,
         reserve_mb = config.vram_reserve_mb,
         reserve_percent = config.vram_reserve_percent,
+        max_parallel_jobs = config.effective_parallel_jobs(),
+        idle_unload = config.idle_unload.mode_label(),
+        idle_timeout_secs = ?config.idle_unload.timeout_for(None).map(|d| d.as_secs()),
         "GPU detected for model compatibility hints"
     );
 
@@ -78,7 +82,8 @@ pub async fn run_server(config: ServerConfig) -> anyhow::Result<()> {
         summarize_default: config.summarize_default && config.summarize_enabled,
         summarizer_model: config.summarizer_model.clone(),
         gpu,
-        job_semaphore: Arc::new(Semaphore::new(1)),
+        max_parallel_jobs: config.effective_parallel_jobs(),
+        job_semaphore: Arc::new(Semaphore::new(config.effective_parallel_jobs() as usize)),
     };
 
     let app = Router::new()

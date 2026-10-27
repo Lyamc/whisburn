@@ -1,4 +1,4 @@
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 use std::error::Error;
 
 use crate::model::Whisper;
@@ -7,11 +7,11 @@ use crate::transcribe::mels_to_text::mels_to_text;
 
 use super::DecodeTask;
 
-pub fn decode_whisper<B: Backend>(
-    whisper: &Whisper<B>,
+pub fn decode_whisper(
+    whisper: &Whisper,
     bpe: &Gpt2Tokenizer,
     lang: Language,
-    mel: Tensor<B, 3>,
+    mel: Tensor< 3>,
     padding: usize,
     streaming_mode: bool,
     include_timestamps: bool,

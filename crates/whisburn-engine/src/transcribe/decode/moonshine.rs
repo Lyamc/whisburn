@@ -1,12 +1,11 @@
-use burn::tensor::backend::Backend;
 use burn::tensor::Tensor;
 
 use crate::model::moonshine::weights::load_moonshine_runtime;
 use crate::model::moonshine::{decode_moonshine_tokens, MoonshineASR};
 use crate::token::Gpt2Tokenizer;
 
-pub fn decode_moonshine<B: Backend>(
-    model: &MoonshineASR<B>,
+pub fn decode_moonshine(
+    model: &MoonshineASR,
     bpe: &Gpt2Tokenizer,
     waveform: &[f32],
     sample_rate: usize,
@@ -23,7 +22,7 @@ pub fn decode_moonshine<B: Backend>(
     };
 
     let device = model.device();
-    let audio = Tensor::<B, 1>::from_floats(waveform.as_slice(), &device).reshape([1, waveform.len()]);
+    let audio = Tensor::< 1>::from_floats(waveform.as_slice(), &device).reshape([1, waveform.len()]);
     let hidden = model.encode(audio);
     if verbose {
         let [_, frames, dim] = hidden.dims();

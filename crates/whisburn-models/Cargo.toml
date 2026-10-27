@@ -4,6 +4,7 @@ description = "Model registry, auto-download, and lifecycle management"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
 
 [dependencies]
 whisburn-core = { workspace = true }
@@ -14,6 +15,8 @@ serde_json = { workspace = true }
 thiserror = { workspace = true }
 anyhow = { workspace = true }
 ureq = { workspace = true }
+rustls = { workspace = true }
+rustls-rustcrypto = { workspace = true }
 tracing = { workspace = true }
 hf-hub = { workspace = true }
 flate2 = { workspace = true }

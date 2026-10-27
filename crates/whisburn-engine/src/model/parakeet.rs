@@ -1,8 +1,9 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::{
     config::Config,
     module::{Module, Param},
     nn::{Linear, LinearConfig, conv::{Conv2d, Conv2dConfig}, PaddingConfig2d},
-    tensor::{activation::relu, backend::Backend, Tensor},
+    tensor::{activation::relu, Tensor},
 };
 use crate::audio::parakeet_subsampled_frames;
 use crate::model::conformer::{ConformerEncoder, ConformerEncoderConfig};
@@ -16,7 +17,7 @@ pub struct ParakeetConfig {
 }
 
 impl ParakeetConfig {
-    pub fn init<B: Backend>(&self, device: &B::Device) -> Parakeet<B> {
+    pub fn init(&self, device: &Device) -> Parakeet {
         let encoder = self.encoder.init(device);
         
         let conv1 = Conv2dConfig::new([1, 256], [3, 3])
@@ -78,25 +79,34 @@ impl ParakeetConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct Parakeet<B: Backend> {
-    pub conv1: Conv2d<B>,
-    pub conv2: Conv2d<B>,
-    pub conv3: Conv2d<B>,
-    pub conv4: Conv2d<B>,
-    pub conv5: Conv2d<B>,
-    pub pre_encode_out: Linear<B>,
-    pub encoder: ConformerEncoder<B>,
-    pub final_proj: Linear<B>,
-    pub ctc_linear: Linear<B>,
-    pub joint_pred_bias: Param<Tensor<B, 1>>,
-    pub decoder: Option<ParakeetDecoder<B>>,
-    pub mean: Option<Param<Tensor<B, 2>>>,
-    pub std: Option<Param<Tensor<B, 2>>>,
+pub struct Parakeet {
+    pub conv1: Conv2d,
+    pub conv2: Conv2d,
+    pub conv3: Conv2d,
+    pub conv4: Conv2d,
+    pub conv5: Conv2d,
+    pub pre_encode_out: Linear,
+    pub encoder: ConformerEncoder,
+    pub final_proj: Linear,
+    pub ctc_linear: Linear,
+    pub joint_pred_bias: Param<Tensor< 1>>,
+    pub decoder: Option<ParakeetDecoder>,
+    pub mean: Option<Param<Tensor< 2>>>,
+    pub std: Option<Param<Tensor< 2>>>,
     pub n_mels: usize,
 }
 
-impl<B: Backend> Parakeet<B> {
-    pub fn encode_hidden(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+impl Parakeet {
+    pub fn encode_hidden(&self, x: Tensor< 3>) -> Tensor< 3> {
+        // Three stride-2 convolutions collapse a handful of mel frames to length 0.
+        let [b, c, t] = x.dims();
+        let min_frames = 32;
+        let x = if t < min_frames {
+            let pad = Tensor::zeros([b, c, min_frames - t], &x.device());
+            Tensor::cat(vec![x, pad], 2)
+        } else {
+            x
+        };
         let x = x.swap_dims(1, 2).unsqueeze::<4>();
 
         let x = self.conv1.forward(x);
@@ -138,20 +148,20 @@ impl<B: Backend> Parakeet<B> {
         self.encoder.forward(x)
     }
 
-    pub fn encode(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn encode(&self, x: Tensor< 3>) -> Tensor< 3> {
         self.final_proj.forward(self.encode_hidden(x))
     }
 
     pub fn joint_step(
         &self,
-        enc_frame: Tensor<B, 2>,
-        dec_frame: Tensor<B, 2>,
-    ) -> Tensor<B, 2> {
+        enc_frame: Tensor< 2>,
+        dec_frame: Tensor< 2>,
+    ) -> Tensor< 2> {
         let joint = relu(enc_frame + dec_frame);
         self.ctc_linear.forward(joint)
     }
 
-    pub fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn forward(&self, x: Tensor< 3>) -> Tensor< 3> {
         if self.decoder.is_none() {
             // CTC: Conv1d k=1 over encoder hidden (no joint / encoder_projector).
             return self.ctc_linear.forward(self.encode_hidden(x));
@@ -164,7 +174,7 @@ impl<B: Backend> Parakeet<B> {
 
     pub fn decode_tdt_greedy(
         &self,
-        mel: Tensor<B, 3>,
+        mel: Tensor< 3>,
         blank_token_id: usize,
         vocab_size: usize,
         duration_start: usize,
@@ -208,7 +218,7 @@ impl<B: Backend> Parakeet<B> {
                 update_decoder,
             );
             let logits = self.joint_step(enc_frame, dec_frame);
-            let logit_vec = logits.into_data().to_vec::<f32>().unwrap();
+            let logit_vec = logits.into_data().try_to_vec::<f32>().unwrap();
 
             let mut best_token = 0usize;
             let mut best_token_score = f32::NEG_INFINITY;

@@ -1,13 +1,14 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::module::{Module, Param};
 use burn::nn::conv::{Conv1d, Conv1dConfig};
 use burn::nn::PaddingConfig1d;
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 
 use super::pad::{extra_padding_for_conv1d, padding_total, zero_pad1d};
 
 #[derive(Module, Debug)]
-pub struct SConv1d<B: Backend> {
-    pub conv: Conv1d<B>,
+pub struct SConv1d {
+    pub conv: Conv1d,
     #[module(skip)]
     pub kernel_size: usize,
     #[module(skip)]
@@ -18,14 +19,14 @@ pub struct SConv1d<B: Backend> {
     pub groups: usize,
 }
 
-impl<B: Backend> SConv1d<B> {
+impl SConv1d {
     pub fn new(
         in_ch: usize,
         out_ch: usize,
         kernel_size: usize,
         stride: usize,
         groups: usize,
-        device: &B::Device,
+        device: &Device,
     ) -> Self {
         let groups = groups.max(1);
         let pad = padding_total(kernel_size, stride, 1);
@@ -43,7 +44,7 @@ impl<B: Backend> SConv1d<B> {
         }
     }
 
-    pub fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn forward(&self, x: Tensor< 3>) -> Tensor< 3> {
         let length = x.dims()[2];
         let extra = extra_padding_for_conv1d(length, self.kernel_size, self.stride, self.padding_total);
         let x = zero_pad1d(x, self.padding_total, extra);
@@ -51,19 +52,19 @@ impl<B: Backend> SConv1d<B> {
     }
 }
 
-pub fn load_sconv<B: Backend>(
-    weight: Tensor<B, 3>,
-    bias: Option<Tensor<B, 1>>,
+pub fn load_sconv(
+    weight: Tensor< 3>,
+    bias: Option<Tensor< 1>>,
     in_ch: usize,
     out_ch: usize,
     kernel_size: usize,
     stride: usize,
     groups: usize,
-    device: &B::Device,
-) -> SConv1d<B> {
+    device: &Device,
+) -> SConv1d {
     let layer = SConv1d::new(in_ch, out_ch, kernel_size, stride, groups, device);
-    let mut record = layer.clone().into_record();
-    record.conv.weight = Param::from_tensor(weight);
-    record.conv.bias = bias.map(Param::from_tensor);
-    layer.load_record(record)
+    let mut loaded = layer.clone();
+    loaded.conv.weight = Param::from_tensor(weight);
+    loaded.conv.bias = bias.map(Param::from_tensor);
+    loaded
 }

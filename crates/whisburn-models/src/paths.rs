@@ -81,7 +81,17 @@ fn has_granite_bundle(dir: &Path) -> bool {
         && dir.join(".burn_version").exists()
 }
 
+fn has_nemotron_bundle(dir: &Path) -> bool {
+    dir.join("model.safetensors").is_file()
+        && dir.join("config.json").is_file()
+        && dir.join("tokenizer.json").is_file()
+        && dir.join("processor_config.json").is_file()
+}
+
 pub fn has_burn_bundle(dir: &Path, name: &str) -> bool {
+    if name.contains("nemotron") {
+        return has_nemotron_bundle(dir);
+    }
     if crate::convert::is_granite_model(name) {
         return has_granite_bundle(dir);
     }
@@ -109,11 +119,9 @@ pub fn has_burn_bundle(dir: &Path, name: &str) -> bool {
             && dir.join("diarize_runtime.json").exists();
     }
 
-    let mpk_candidates = [
-        dir.join("model.mpk"),
-        dir.join(format!("{name}.mpk")),
-        dir.join("model.mpk.gz"),
-        dir.join(format!("{name}.mpk.gz")),
+    let weight_candidates = [
+        dir.join("model.bpk"),
+        dir.join(format!("{name}.bpk")),
     ];
     let cfg_candidates = [
         dir.join("config.cfg"),
@@ -121,7 +129,7 @@ pub fn has_burn_bundle(dir: &Path, name: &str) -> bool {
     ];
     let tokenizer = dir.join("tokenizer.json");
 
-    mpk_candidates.iter().any(|p| p.exists())
+    weight_candidates.iter().any(|p| p.exists())
         && cfg_candidates.iter().any(|p| p.exists())
         && tokenizer.exists()
 }

@@ -2,11 +2,9 @@
 name = "hf-hub"
 version = "0.5.0"
 edition = "2021"
-homepage = "https://github.com/huggingface/hf-hub"
 license = "Apache-2.0"
 documentation = "https://docs.rs/hf-hub"
 repository = "https://github.com/huggingface/hf-hub"
-readme = "README.md"
 keywords = ["huggingface", "hf", "hub", "machine-learning"]
 description = """
 This crates aims ease the interaction with huggingface
@@ -29,13 +27,16 @@ serde = { version = "1", features = ["derive"], optional = true }
 serde_json = { version = "1", optional = true }
 thiserror = { version = "2", optional = true }
 tokio = { version = "1.29.1", optional = true, features = ["fs", "macros"] }
-# Patched for whisburn: disable default `tls` (rustls/ring/cc). Use OS native TLS only.
+# Patched for whisburn: no ring (`cc`) and no OpenSSL. Crypto provider is
+# Lyamc/rustls-rustcrypto, installed before the first HTTPS request.
 ureq = { version = "3", optional = true, default-features = false, features = [
   "json",
   "socks-proxy",
-  "native-tls",
+  "rustls-no-provider",
+  "rustls-webpki-roots",
 ] }
-native-tls = { version = "0.2.12", optional = true }
+rustls = { version = "0.23", default-features = false, features = ["std", "tls12", "logging"] }
+rustls-rustcrypto = { git = "https://github.com/Lyamc/rustls-rustcrypto", rev = "9cba6e9c0a3348cfe8386ff93f05445de20a4c2b" }
 
 [target.'cfg(windows)'.dependencies.windows-sys]
 version = "0.61"
@@ -44,12 +45,12 @@ optional = true
 
 [features]
 default = ["default-tls", "tokio", "ureq"]
-# These features are only relevant when used with the `tokio` feature, but this might change in the future.
-default-tls = ["native-tls"]
-# Do not enable `dep:reqwest` here — whisburn uses the ureq backend.
-# `reqwest?/native-tls` only applies if the tokio/reqwest API is also enabled.
-native-tls = ["dep:native-tls", "ureq?/native-tls", "reqwest?/native-tls"]
-rustls-tls = ["reqwest?/rustls-tls"]
+# Kept so older feature sets still select a backend. TLS is rustls-rustcrypto
+# on the ureq dependency above, not OS native-tls / OpenSSL.
+default-tls = []
+# reqwest 0.12 names this `rustls-tls-no-provider` (manual roots, no ring).
+# The ureq API used by whisburn does not enable it.
+rustls-tls = ["reqwest?/rustls-tls-no-provider"]
 tokio = [
   "dep:futures",
   "dep:indicatif",

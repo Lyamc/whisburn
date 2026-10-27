@@ -1,7 +1,7 @@
-use burn::tensor::{backend::Backend, Shape, Tensor};
+use burn::tensor::{Shape, Tensor};
 use npy::NpyData;
 
-pub fn numpy_to_tensor<B: Backend, const D: usize>(numpy_data: NpyData<f32>) -> Tensor<B, D> {
+pub fn numpy_to_tensor<const D: usize>(numpy_data: NpyData<f32>) -> Tensor< D> {
     let v: Vec<f32> = numpy_data.to_vec();
     let shape_vec: Vec<usize> = v[0..D]
         .iter()
@@ -11,5 +11,5 @@ pub fn numpy_to_tensor<B: Backend, const D: usize>(numpy_data: NpyData<f32>) -> 
 
     let device = Default::default();
 
-    Tensor::<B, 1>::from_floats(&v[D..], &device).reshape(shape)
+    Tensor::< 1>::from_floats(&v[D..], &device).reshape(shape)
 }

@@ -1,3 +1,4 @@
+use burn::tensor::{Device, DeviceKind};
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
@@ -5,13 +6,13 @@ use std::path::Path;
 use burn::module::{Module, Param};
 use burn::nn::conv::Conv1d;
 use burn::nn::{Embedding, LayerNorm, Linear};
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 use serde::{Deserialize, Serialize};
 
 use super::{MoonshineASR, MoonshineDecoderLayer, MoonshineEncoderLayer};
 use crate::model::vibevoice::weights::dtype::{bytes_to_f32, transpose_linear_weight};
 
-pub const BURN_BUNDLE_VERSION: &str = "0.21.0-moonshine";
+pub const BURN_BUNDLE_VERSION: &str = "0.22.1-moonshine";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MoonshineRuntimeConfig {
@@ -131,10 +132,10 @@ impl Store {
     }
 }
 
-pub fn load_moonshine_weights<B: Backend>(
-    model: &mut MoonshineASR<B>,
+pub fn load_moonshine_weights(
+    model: &mut MoonshineASR,
     model_dir: &Path,
-    device: &B::Device,
+    device: &Device,
     verbose: bool,
 ) -> Result<(), Box<dyn std::error::Error>> {
     if !weights_present(model_dir) {
@@ -149,8 +150,8 @@ pub fn load_moonshine_weights<B: Backend>(
     model.conv3 = load_conv1d(&store, "model.encoder.conv3", model.conv3.clone(), device)?;
     let (gw, _) = store.tensor_f32("model.encoder.groupnorm.weight")?;
     let (gb, _) = store.tensor_f32("model.encoder.groupnorm.bias")?;
-    model.groupnorm_weight = Param::from_tensor(Tensor::<B, 1>::from_floats(gw.as_slice(), device));
-    model.groupnorm_bias = Param::from_tensor(Tensor::<B, 1>::from_floats(gb.as_slice(), device));
+    model.groupnorm_weight = Param::from_tensor(Tensor::< 1>::from_floats(gw.as_slice(), device));
+    model.groupnorm_bias = Param::from_tensor(Tensor::< 1>::from_floats(gb.as_slice(), device));
     for (i, layer) in model.encoder_layers.iter_mut().enumerate() {
         *layer = load_encoder_layer(&store, i, layer, device)?;
     }
@@ -167,114 +168,114 @@ pub fn load_moonshine_weights<B: Backend>(
     Ok(())
 }
 
-fn load_encoder_layer<B: Backend>(
+fn load_encoder_layer(
     store: &Store,
     i: usize,
-    layer: &MoonshineEncoderLayer<B>,
-    device: &B::Device,
-) -> Result<MoonshineEncoderLayer<B>, Box<dyn std::error::Error>> {
+    layer: &MoonshineEncoderLayer,
+    device: &Device,
+) -> Result<MoonshineEncoderLayer, Box<dyn std::error::Error>> {
     let p = format!("model.encoder.layers.{i}");
-    let mut record = layer.clone().into_record();
-    record.input_layernorm = load_ln(store, &format!("{p}.input_layernorm"), layer.input_layernorm.clone(), device)?.into_record();
-    record.q_proj = load_linear(store, &format!("{p}.self_attn.q_proj"), layer.q_proj.clone(), device)?.into_record();
-    record.k_proj = load_linear(store, &format!("{p}.self_attn.k_proj"), layer.k_proj.clone(), device)?.into_record();
-    record.v_proj = load_linear(store, &format!("{p}.self_attn.v_proj"), layer.v_proj.clone(), device)?.into_record();
-    record.o_proj = load_linear(store, &format!("{p}.self_attn.o_proj"), layer.o_proj.clone(), device)?.into_record();
-    record.post_attention_layernorm = load_ln(store, &format!("{p}.post_attention_layernorm"), layer.post_attention_layernorm.clone(), device)?.into_record();
-    record.fc1 = load_linear(store, &format!("{p}.mlp.fc1"), layer.fc1.clone(), device)?.into_record();
-    record.fc2 = load_linear(store, &format!("{p}.mlp.fc2"), layer.fc2.clone(), device)?.into_record();
-    Ok(layer.clone().load_record(record))
+    let mut loaded = layer.clone();
+    loaded.input_layernorm = load_ln(store, &format!("{p}.input_layernorm"), layer.input_layernorm.clone(), device)?;
+    loaded.q_proj = load_linear(store, &format!("{p}.self_attn.q_proj"), layer.q_proj.clone(), device)?;
+    loaded.k_proj = load_linear(store, &format!("{p}.self_attn.k_proj"), layer.k_proj.clone(), device)?;
+    loaded.v_proj = load_linear(store, &format!("{p}.self_attn.v_proj"), layer.v_proj.clone(), device)?;
+    loaded.o_proj = load_linear(store, &format!("{p}.self_attn.o_proj"), layer.o_proj.clone(), device)?;
+    loaded.post_attention_layernorm = load_ln(store, &format!("{p}.post_attention_layernorm"), layer.post_attention_layernorm.clone(), device)?;
+    loaded.fc1 = load_linear(store, &format!("{p}.mlp.fc1"), layer.fc1.clone(), device)?;
+    loaded.fc2 = load_linear(store, &format!("{p}.mlp.fc2"), layer.fc2.clone(), device)?;
+    Ok(loaded)
 }
 
-fn load_decoder_layer<B: Backend>(
+fn load_decoder_layer(
     store: &Store,
     i: usize,
-    layer: &MoonshineDecoderLayer<B>,
-    device: &B::Device,
-) -> Result<MoonshineDecoderLayer<B>, Box<dyn std::error::Error>> {
+    layer: &MoonshineDecoderLayer,
+    device: &Device,
+) -> Result<MoonshineDecoderLayer, Box<dyn std::error::Error>> {
     let p = format!("model.decoder.layers.{i}");
-    let mut record = layer.clone().into_record();
-    record.input_layernorm = load_ln(store, &format!("{p}.input_layernorm"), layer.input_layernorm.clone(), device)?.into_record();
-    record.self_q = load_linear(store, &format!("{p}.self_attn.q_proj"), layer.self_q.clone(), device)?.into_record();
-    record.self_k = load_linear(store, &format!("{p}.self_attn.k_proj"), layer.self_k.clone(), device)?.into_record();
-    record.self_v = load_linear(store, &format!("{p}.self_attn.v_proj"), layer.self_v.clone(), device)?.into_record();
-    record.self_o = load_linear(store, &format!("{p}.self_attn.o_proj"), layer.self_o.clone(), device)?.into_record();
-    record.post_attention_layernorm = load_ln(store, &format!("{p}.post_attention_layernorm"), layer.post_attention_layernorm.clone(), device)?.into_record();
-    record.cross_q = load_linear(store, &format!("{p}.encoder_attn.q_proj"), layer.cross_q.clone(), device)?.into_record();
-    record.cross_k = load_linear(store, &format!("{p}.encoder_attn.k_proj"), layer.cross_k.clone(), device)?.into_record();
-    record.cross_v = load_linear(store, &format!("{p}.encoder_attn.v_proj"), layer.cross_v.clone(), device)?.into_record();
-    record.cross_o = load_linear(store, &format!("{p}.encoder_attn.o_proj"), layer.cross_o.clone(), device)?.into_record();
-    record.final_layernorm = load_ln(store, &format!("{p}.final_layernorm"), layer.final_layernorm.clone(), device)?.into_record();
-    record.fc1 = load_linear(store, &format!("{p}.mlp.fc1"), layer.fc1.clone(), device)?.into_record();
-    record.fc2 = load_linear(store, &format!("{p}.mlp.fc2"), layer.fc2.clone(), device)?.into_record();
-    Ok(layer.clone().load_record(record))
+    let mut loaded = layer.clone();
+    loaded.input_layernorm = load_ln(store, &format!("{p}.input_layernorm"), layer.input_layernorm.clone(), device)?;
+    loaded.self_q = load_linear(store, &format!("{p}.self_attn.q_proj"), layer.self_q.clone(), device)?;
+    loaded.self_k = load_linear(store, &format!("{p}.self_attn.k_proj"), layer.self_k.clone(), device)?;
+    loaded.self_v = load_linear(store, &format!("{p}.self_attn.v_proj"), layer.self_v.clone(), device)?;
+    loaded.self_o = load_linear(store, &format!("{p}.self_attn.o_proj"), layer.self_o.clone(), device)?;
+    loaded.post_attention_layernorm = load_ln(store, &format!("{p}.post_attention_layernorm"), layer.post_attention_layernorm.clone(), device)?;
+    loaded.cross_q = load_linear(store, &format!("{p}.encoder_attn.q_proj"), layer.cross_q.clone(), device)?;
+    loaded.cross_k = load_linear(store, &format!("{p}.encoder_attn.k_proj"), layer.cross_k.clone(), device)?;
+    loaded.cross_v = load_linear(store, &format!("{p}.encoder_attn.v_proj"), layer.cross_v.clone(), device)?;
+    loaded.cross_o = load_linear(store, &format!("{p}.encoder_attn.o_proj"), layer.cross_o.clone(), device)?;
+    loaded.final_layernorm = load_ln(store, &format!("{p}.final_layernorm"), layer.final_layernorm.clone(), device)?;
+    loaded.fc1 = load_linear(store, &format!("{p}.mlp.fc1"), layer.fc1.clone(), device)?;
+    loaded.fc2 = load_linear(store, &format!("{p}.mlp.fc2"), layer.fc2.clone(), device)?;
+    Ok(loaded)
 }
 
-fn load_linear<B: Backend>(
+fn load_linear(
     store: &Store,
     prefix: &str,
-    linear: Linear<B>,
-    device: &B::Device,
-) -> Result<Linear<B>, Box<dyn std::error::Error>> {
+    linear: Linear,
+    device: &Device,
+) -> Result<Linear, Box<dyn std::error::Error>> {
     let (data, shape) = store.tensor_f32(&format!("{prefix}.weight"))?;
     let (weight_data, [d_in, d_out]) = transpose_linear_weight(&data, &shape);
-    let weight = Tensor::<B, 1>::from_floats(weight_data.as_slice(), device).reshape([d_in, d_out]);
+    let weight = Tensor::< 1>::from_floats(weight_data.as_slice(), device).reshape([d_in, d_out]);
     let bias = store
         .tensor_f32(&format!("{prefix}.bias"))
         .ok()
-        .map(|(b, _)| Tensor::<B, 1>::from_floats(b.as_slice(), device));
-    let mut record = linear.clone().into_record();
-    record.weight = Param::from_tensor(weight);
-    record.bias = bias.map(Param::from_tensor);
-    Ok(linear.load_record(record))
+        .map(|(b, _)| Tensor::< 1>::from_floats(b.as_slice(), device));
+    let mut loaded = linear.clone();
+    loaded.weight = Param::from_tensor(weight);
+    loaded.bias = bias.map(Param::from_tensor);
+    Ok(loaded)
 }
 
-fn load_conv1d<B: Backend>(
+fn load_conv1d(
     store: &Store,
     prefix: &str,
-    conv: Conv1d<B>,
-    device: &B::Device,
-) -> Result<Conv1d<B>, Box<dyn std::error::Error>> {
+    conv: Conv1d,
+    device: &Device,
+) -> Result<Conv1d, Box<dyn std::error::Error>> {
     let (data, shape) = store.tensor_f32(&format!("{prefix}.weight"))?;
     let shape3: [usize; 3] = shape.try_into().map_err(|_| "conv1d weight must be 3D")?;
-    let weight = Tensor::<B, 1>::from_floats(data.as_slice(), device).reshape(shape3);
+    let weight = Tensor::< 1>::from_floats(data.as_slice(), device).reshape(shape3);
     let bias = store
         .tensor_f32(&format!("{prefix}.bias"))
         .ok()
-        .map(|(b, _)| Tensor::<B, 1>::from_floats(b.as_slice(), device));
-    let mut record = conv.clone().into_record();
-    record.weight = Param::from_tensor(weight);
-    record.bias = bias.map(Param::from_tensor);
-    Ok(conv.load_record(record))
+        .map(|(b, _)| Tensor::< 1>::from_floats(b.as_slice(), device));
+    let mut loaded = conv.clone();
+    loaded.weight = Param::from_tensor(weight);
+    loaded.bias = bias.map(Param::from_tensor);
+    Ok(loaded)
 }
 
-fn load_ln<B: Backend>(
+fn load_ln(
     store: &Store,
     prefix: &str,
-    ln: LayerNorm<B>,
-    device: &B::Device,
-) -> Result<LayerNorm<B>, Box<dyn std::error::Error>> {
+    ln: LayerNorm,
+    device: &Device,
+) -> Result<LayerNorm, Box<dyn std::error::Error>> {
     let (w, _) = store.tensor_f32(&format!("{prefix}.weight"))?;
-    let weight = Tensor::<B, 1>::from_floats(w.as_slice(), device);
+    let weight = Tensor::< 1>::from_floats(w.as_slice(), device);
     let bias = match store.tensor_f32(&format!("{prefix}.bias")) {
-        Ok((b, _)) => Tensor::<B, 1>::from_floats(b.as_slice(), device),
-        Err(_) => Tensor::<B, 1>::zeros([weight.dims()[0]], device),
+        Ok((b, _)) => Tensor::< 1>::from_floats(b.as_slice(), device),
+        Err(_) => Tensor::< 1>::zeros([weight.dims()[0]], device),
     };
-    let mut record = ln.clone().into_record();
-    record.gamma = Param::from_tensor(weight);
-    record.beta = Some(Param::from_tensor(bias));
-    Ok(ln.load_record(record))
+    let mut loaded = ln.clone();
+    loaded.gamma = Param::from_tensor(weight);
+    loaded.beta = Some(Param::from_tensor(bias));
+    Ok(loaded)
 }
 
-fn load_embed<B: Backend>(
+fn load_embed(
     store: &Store,
     prefix: &str,
-    embed: Embedding<B>,
-    device: &B::Device,
-) -> Result<Embedding<B>, Box<dyn std::error::Error>> {
+    embed: Embedding,
+    device: &Device,
+) -> Result<Embedding, Box<dyn std::error::Error>> {
     let (data, shape) = store.tensor_f32(&format!("{prefix}.weight"))?;
-    let weight = Tensor::<B, 1>::from_floats(data.as_slice(), device).reshape([shape[0], shape[1]]);
-    let mut record = embed.clone().into_record();
-    record.weight = Param::from_tensor(weight);
-    Ok(embed.load_record(record))
+    let weight = Tensor::< 1>::from_floats(data.as_slice(), device).reshape([shape[0], shape[1]]);
+    let mut loaded = embed.clone();
+    loaded.weight = Param::from_tensor(weight);
+    Ok(loaded)
 }

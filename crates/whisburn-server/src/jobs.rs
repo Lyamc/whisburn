@@ -114,6 +114,36 @@ fn map_prep_progress(prep: &PrepProgress) -> TranscribeProgress {
     )
 }
 
+/// `m:ss` for a position inside one ~10 minute segment.
+fn format_clock(secs: f64) -> String {
+    let total = secs.max(0.0).round() as u64;
+    let minutes = total / 60;
+    let seconds = total % 60;
+    format!("{minutes}:{seconds:02}")
+}
+
+/// Label and current-file percent for one encoder window inside a segment.
+/// `window` is cumulative across the GPU slices of this segment, so the clock
+/// moves through the segment once instead of restarting every slice.
+fn segment_progress_label(
+    seg_index: usize,
+    seg_total: usize,
+    window: usize,
+    windows: usize,
+    seg_secs: f64,
+) -> (String, f64) {
+    let windows = windows.max(1);
+    let within = (window as f64 + 0.5) / windows as f64;
+    let shown = (within * seg_secs).clamp(0.0, seg_secs);
+    let label = format!(
+        "Transcribing segment {} of {seg_total} · {} / {}",
+        seg_index + 1,
+        format_clock(shown),
+        format_clock(seg_secs),
+    );
+    (label, within * 100.0)
+}
+
 fn estimate_chunks(duration_secs: Option<f64>, segmented: bool) -> Option<usize> {
     if !segmented {
         return Some(1);
@@ -231,7 +261,10 @@ pub async fn transcribe_upload_with_progress(
         info!(model = %model, "loading model weights into GPU");
         let warm_manager = manager.clone();
         let warm_name = model.clone();
-        tokio::task::spawn_blocking(move || warm_manager.warm_model_sync(&warm_name))
+        let warm_audio = duration;
+        tokio::task::spawn_blocking(move || {
+            warm_manager.warm_model_for_audio(&warm_name, warm_audio)
+        })
             .await
             .map_err(|e| ApiError::bad_request(format!("GPU load task panicked: {e}")))?
             .map_err(ApiError::from)?;
@@ -353,6 +386,7 @@ pub async fn transcribe_upload_with_progress(
                 let tx = progress_for_blocking.clone();
                 let seg_index = chunk_idx;
                 let seg_total = total.max(1);
+                let seg_secs = waveform.duration_secs();
                 let started = job_start;
                 let last_tick = Arc::new(Mutex::new(
                     started
@@ -368,7 +402,14 @@ pub async fn transcribe_upload_with_progress(
                             return;
                         }
                         *last = Instant::now();
-                        let within = (window as f64 + 0.5) / windows as f64;
+                        let (task_label, task_pct) = segment_progress_label(
+                            seg_index,
+                            seg_total,
+                            window,
+                            windows,
+                            seg_secs,
+                        );
+                        let within = task_pct / 100.0;
                         let frac = (seg_index as f64 + within) / seg_total as f64;
                         let overall = 72.0 + frac.clamp(0.0, 1.0) * 26.0;
                         send_progress(
@@ -376,12 +417,8 @@ pub async fn transcribe_upload_with_progress(
                             with_timing(
                                 TranscribeProgress {
                                     phase: "transcribe".into(),
-                                    task_label: format!(
-                                        "Transcribing segment {} of {seg_total} (window {}/{windows})",
-                                        seg_index + 1,
-                                        window + 1
-                                    ),
-                                    task_pct: within * 100.0,
+                                    task_label,
+                                    task_pct,
                                     overall_pct: overall,
                                     chunk: Some(seg_index + 1),
                                     chunks_total: Some(seg_total),
@@ -419,7 +456,8 @@ pub async fn transcribe_upload_with_progress(
                 merge_transcript(&mut merged, part, offset, skip_before);
                 chunk_idx += 1;
 
-                let task_pct = (chunk_idx as f64 / total as f64) * 100.0;
+                // Current-file bar is this segment. Leave it full until the next one starts.
+                let task_pct = 100.0;
                 let overall_pct = 72.0 + (chunk_idx as f64 / total as f64) * 26.0;
                 send_progress(
                     &progress_for_blocking,
@@ -581,4 +619,35 @@ pub async fn ensure_model_job(
         .await
         .map_err(|e| ApiError::bad_request(format!("ensure task panicked: {e}")))?
         .map_err(ApiError::from)
+}
+
+#[cfg(test)]
+mod progress_label_tests {
+    use super::{format_clock, segment_progress_label};
+
+    #[test]
+    fn clock_is_minutes_and_seconds() {
+        assert_eq!(format_clock(0.0), "0:00");
+        assert_eq!(format_clock(45.0), "0:45");
+        assert_eq!(format_clock(600.0), "10:00");
+        assert_eq!(format_clock(599.6), "10:00");
+    }
+
+    #[test]
+    fn segment_clock_advances_while_the_segment_number_stays() {
+        let (start, start_pct) = segment_progress_label(1, 7, 0, 50, 600.0);
+        assert_eq!(start, "Transcribing segment 2 of 7 · 0:06 / 10:00");
+        assert!((start_pct - 1.0).abs() < 0.01);
+
+        // A later 120s GPU slice is still segment 2. The clock moves; the segment does not.
+        let (mid, mid_pct) = segment_progress_label(1, 7, 10, 50, 600.0);
+        assert_eq!(mid, "Transcribing segment 2 of 7 · 2:06 / 10:00");
+        assert!(mid_pct > start_pct);
+        assert!(!mid.contains("window"));
+
+        let (end, end_pct) = segment_progress_label(1, 7, 49, 50, 600.0);
+        assert_eq!(end, "Transcribing segment 2 of 7 · 9:54 / 10:00");
+        assert!(end_pct > mid_pct);
+        assert!(end_pct < 100.0);
+    }
 }

@@ -1,5 +1,5 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::module::Module;
-use burn::tensor::backend::Backend;
 use std::error::Error;
 use std::path::Path;
 
@@ -11,11 +11,11 @@ use crate::model::vibevoice::weights::{
 use crate::model::vibevoice::{build_vibevoice_config, load_vibevoice_runtime, VibeVoiceASR};
 use crate::token::Gpt2Tokenizer;
 
-pub fn load_vibevoice_model<B: Backend>(
+pub fn load_vibevoice_model(
     model_name: &str,
-    device: &B::Device,
+    device: &Device,
     verbose: bool,
-) -> Result<(Gpt2Tokenizer, ModelConfig, Model<B>), Box<dyn Error>> {
+) -> Result<(Gpt2Tokenizer, ModelConfig, Model), Box<dyn Error>> {
     let model_dir = whisburn_core::resolve_model_dir(model_name).display().to_string();
     let runtime_path = format!("{model_dir}/vibevoice_runtime.json");
     if !std::path::Path::new(&runtime_path).exists() {
@@ -53,11 +53,11 @@ pub fn load_vibevoice_model<B: Backend>(
     Ok((bpe, model_config, model))
 }
 
-fn load_vibevoice_weights<B: Backend>(
-    model: &mut VibeVoiceASR<B>,
+fn load_vibevoice_weights(
+    model: &mut VibeVoiceASR,
     model_dir: &str,
     model_name: &str,
-    device: &B::Device,
+    device: &Device,
     verbose: bool,
 ) -> Result<(), Box<dyn Error>> {
     let dir = Path::new(model_dir);

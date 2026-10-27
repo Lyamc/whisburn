@@ -116,6 +116,14 @@ pub struct Settings {
     pub preload_models: PreloadModels,
     #[serde(default = "default_server_url")]
     pub server_url: String,
+    /// Idle unload override. `None` = auto (5× weight-load time, 30s–15m).
+    /// `Some(0)` disables. `Some(n)` forces `n` seconds.
+    #[serde(default)]
+    pub idle_unload_secs: Option<u32>,
+    /// Inference jobs allowed to allocate at once. `None` keeps the server
+    /// default (serial). `Some(0)` or `Some(1)` is serial. `Some(n)` allows n.
+    #[serde(default)]
+    pub max_parallel_jobs: Option<u32>,
 }
 
 fn default_model() -> String {
@@ -137,6 +145,8 @@ impl Default for Settings {
             server_port: default_server_port(),
             preload_models: PreloadModels::None,
             server_url: default_server_url(),
+            idle_unload_secs: None,
+            max_parallel_jobs: None,
         }
     }
 }

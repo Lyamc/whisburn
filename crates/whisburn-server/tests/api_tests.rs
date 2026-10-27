@@ -34,8 +34,19 @@ fn test_state() -> AppState {
             vram_free_mb: None,
             source: "test".into(),
         },
+        max_parallel_jobs: 1,
         job_semaphore: Arc::new(Semaphore::new(1)),
     }
+}
+
+fn test_state_with_parallel(raw: u32) -> AppState {
+    let mut cfg = whisburn_server::ServerConfig::default();
+    cfg.max_parallel_jobs = raw;
+    let n = cfg.effective_parallel_jobs();
+    let mut state = test_state();
+    state.max_parallel_jobs = n;
+    state.job_semaphore = Arc::new(Semaphore::new(n as usize));
+    state
 }
 
 fn multipart_audio_request(uri: &str, field: &str, filename: &str, bytes: &[u8]) -> Request<Body> {
@@ -247,6 +258,39 @@ async fn config_endpoint_returns_default_model() {
     assert_eq!(json["summarize_default"], true);
     assert_eq!(json["vram_reserve_mb"], 1024);
     assert_eq!(json["vram_reserve_percent"], 15);
+    assert!(json["idle_unload_mode"].is_string());
+    assert!(json["idle_timeout_secs"].is_number() || json["idle_timeout_secs"].is_null());
+    assert_eq!(json["max_parallel_jobs"], 1);
+}
+
+#[tokio::test]
+async fn config_endpoint_reports_parallelism_override() {
+    let app = routes::router().with_state(test_state_with_parallel(4));
+    let response = app
+        .oneshot(
+            Request::builder()
+                .uri("/v1/config")
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    assert_eq!(response.status(), StatusCode::OK);
+    let json = json_body(response).await;
+    assert_eq!(json["max_parallel_jobs"], 4);
+
+    let serial = routes::router().with_state(test_state_with_parallel(0));
+    let response = serial
+        .oneshot(
+            Request::builder()
+                .uri("/v1/config")
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    let json = json_body(response).await;
+    assert_eq!(json["max_parallel_jobs"], 1);
 }
 
 #[tokio::test]

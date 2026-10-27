@@ -5,6 +5,7 @@ use tokio::sync::Mutex;
 use whisburn_core::{SpeechTask, TaskOptions, TranscriptResult, WhisburnError, WhisburnResult};
 use whisburn_engine::model::registry::find_model;
 use whisburn_engine::runtime::InferenceRuntime;
+use whisburn_engine::idle::IdleUnloadPolicy;
 use whisburn_engine::vram::VramPolicy;
 
 use crate::diarize::assign_alternating_speakers;
@@ -22,7 +23,13 @@ pub struct ModelManager {
 
 impl ModelManager {
     pub fn new(device: Option<String>, verbose: bool, debug: bool) -> Self {
-        Self::new_with_policy(device, verbose, debug, VramPolicy::from_env())
+        Self::new_with_policies(
+            device,
+            verbose,
+            debug,
+            VramPolicy::from_env(),
+            IdleUnloadPolicy::from_env(),
+        )
     }
 
     pub fn new_with_policy(
@@ -31,8 +38,24 @@ impl ModelManager {
         debug: bool,
         policy: VramPolicy,
     ) -> Self {
+        Self::new_with_policies(
+            device,
+            verbose,
+            debug,
+            policy,
+            IdleUnloadPolicy::from_env(),
+        )
+    }
+
+    pub fn new_with_policies(
+        device: Option<String>,
+        verbose: bool,
+        debug: bool,
+        policy: VramPolicy,
+        idle: IdleUnloadPolicy,
+    ) -> Self {
         Self {
-            runtime: InferenceRuntime::new_with_policy(device, verbose, debug, policy),
+            runtime: InferenceRuntime::new_with_policies(device, verbose, debug, policy, idle),
             download_options: DownloadOptions {
                 verbose,
                 ..DownloadOptions::default()
@@ -73,6 +96,18 @@ impl ModelManager {
         self.runtime.policy()
     }
 
+    pub fn idle_policy(&self) -> IdleUnloadPolicy {
+        self.runtime.idle_policy()
+    }
+
+    pub fn last_model_load_ms(&self) -> Option<u64> {
+        self.runtime.last_model_load_ms()
+    }
+
+    pub fn idle_timeout_secs(&self) -> Option<u64> {
+        self.runtime.idle_timeout().map(|d| d.as_secs())
+    }
+
     pub fn is_loaded(&self, name: &str) -> bool {
         self.runtime.loaded_models().iter().any(|n| n == name)
     }
@@ -83,13 +118,23 @@ impl ModelManager {
     }
 
     pub fn warm_model_sync(&self, name: &str) -> WhisburnResult<()> {
+        self.warm_model_for_audio(name, None)
+    }
+
+    /// Download if needed, then place weights with the same admission plan as
+    /// transcription. `audio_sec` is the clip about to run.
+    pub fn warm_model_for_audio(&self, name: &str, audio_sec: Option<f64>) -> WhisburnResult<()> {
         self.ensure_model_sync(name)?;
         tracing::info!(
             model = name,
             backend = %self.runtime.backend_name(),
             "loading model weights"
         );
-        self.runtime.warm_model(name)?;
+        if let Some(secs) = audio_sec {
+            self.runtime.warm_for_audio(name, secs)?;
+        } else {
+            self.runtime.warm_model(name)?;
+        }
         tracing::info!(model = name, "model weights loaded");
         Ok(())
     }
@@ -187,6 +232,12 @@ impl ModelManager {
         }
 
         Ok(result)
+    }
+
+    /// Hold for a whole HTTP transcribe so the vram guard cannot exit between
+    /// segments or before the summary is sent.
+    pub fn begin_request(&self) -> whisburn_engine::runtime::JobGuard {
+        self.runtime.begin_request()
     }
 
     pub fn summarize_text(

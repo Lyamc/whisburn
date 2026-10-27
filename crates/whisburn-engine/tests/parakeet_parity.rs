@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use burn::tensor::cast::ToElement;
 use burn::tensor::Tensor;
 use npy::NpyData;
@@ -19,12 +19,12 @@ fn parakeet_hf_mel_encode_parity() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     let _ = std::env::set_current_dir(&root);
 
-    let mpk = root.join("models/parakeet-tdt-0.6b-v3/model.mpk");
+    let weights = root.join("models/parakeet-tdt-0.6b-v3/model.bpk");
     let hf_mel = root.join("temp_dump_parakeet-tdt-0.6b-v3/hf_mel_bct.npy");
     let hf_enc = root.join("temp_dump_parakeet-tdt-0.6b-v3/hf_enc_pooler.npy");
     let hf_pre = root.join("temp_dump_parakeet-tdt-0.6b-v3/hf_enc_preproj.npy");
-    if !mpk.exists() || !hf_mel.exists() || !hf_enc.exists() || !hf_pre.exists() {
-        eprintln!("skip: missing parakeet mpk or HF reference npy");
+    if !weights.exists() || !hf_mel.exists() || !hf_enc.exists() || !hf_pre.exists() {
+        eprintln!("skip: missing parakeet burnpack or HF reference npy");
         return;
     }
 
@@ -35,11 +35,11 @@ fn parakeet_hf_mel_encode_parity() {
     let n_mels = 128usize;
     let enc_frames = enc_vec.len() / 640;
 
-    let device = WgpuDevice::DefaultDevice;
-    let mel = Tensor::<Wgpu, 1>::from_floats(mel_vec.as_slice(), &device)
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
+    let mel = Tensor::< 1>::from_floats(mel_vec.as_slice(), &device)
         .reshape([1, n_mels, mel_frames]);
     let (_, _, model) =
-        load_model::<Wgpu>("parakeet-tdt-0.6b-v3", &device, false).expect("load parakeet");
+        load_model("parakeet-tdt-0.6b-v3", &device, false).expect("load parakeet");
     let Model::Parakeet(parakeet) = model else {
         panic!("expected parakeet model");
     };
@@ -67,7 +67,7 @@ fn parakeet_hf_mel_encode_parity() {
         .clone()
         .slice([0..1, 0..1, 0..1024])
         .into_data()
-        .to_vec::<f32>()
+        .try_to_vec::<f32>()
         .unwrap();
     let hf_hidden0: Vec<f32> = pre_vec[..1024].to_vec();
     let hidden_rmse = rmse(&hidden0, &hf_hidden0);
@@ -77,7 +77,7 @@ fn parakeet_hf_mel_encode_parity() {
         l2(&hf_hidden0)
     );
 
-    let frame0 = enc.clone().slice([0..1, 0..1, 0..640]).into_data().to_vec::<f32>().unwrap();
+    let frame0 = enc.clone().slice([0..1, 0..1, 0..640]).into_data().try_to_vec::<f32>().unwrap();
     let hf_frame0: Vec<f32> = enc_vec[..640].to_vec();
 
     let rmse = rmse(&frame0, &hf_frame0);

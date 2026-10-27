@@ -27,7 +27,10 @@ fn estimate_transcribe_secs(audio_secs: f64, model: &str) -> f64 {
 }
 
 #[derive(Parser, Debug)]
-#[command(name = "whisburn", about = "whisburn: Burn-based speech processing server and CLI")]
+#[command(
+    name = "whisburn",
+    about = "whisburn: Burn-based speech processing server and CLI"
+)]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
@@ -62,6 +65,15 @@ enum Commands {
         /// Keep at least this percentage of total VRAM free.
         #[arg(long, env = "WHISBURN_VRAM_RESERVE_PERCENT")]
         vram_reserve_percent: Option<u32>,
+        /// Seconds to keep the last model in memory after a job. Omit for auto
+        /// (5× weight-load time, 30s–15m). `0` keeps models loaded.
+        /// Non-numeric overrides (`off`, `auto`) belong in `WHISBURN_IDLE_UNLOAD_SECS`.
+        #[arg(long)]
+        idle_unload_secs: Option<u32>,
+        /// Inference jobs allowed to allocate at once. `0` or `1` is serial.
+        /// `off`/`disabled` are accepted via `WHISBURN_MAX_PARALLEL_JOBS`.
+        #[arg(long)]
+        max_parallel_jobs: Option<u32>,
     },
     /// Open the Iced desktop transcription client
     #[cfg(feature = "app")]
@@ -120,7 +132,10 @@ enum Commands {
         #[arg(short, long)]
         input: Option<String>,
         /// Comma separated list of models (or "burn-ready" for all ready ones)
-        #[arg(long, default_value = "tiny_en,base_en,parakeet-tdt-0.6b-v3,qwen3-asr-0.6b")]
+        #[arg(
+            long,
+            default_value = "tiny_en,base_en,parakeet-tdt-0.6b-v3,qwen3-asr-0.6b"
+        )]
         models: String,
         #[arg(long, env = "WHISBURN_DEVICE")]
         device: Option<String>,
@@ -192,8 +207,15 @@ fn vram_policy_from_cli(reserve_mb: Option<u32>, reserve_percent: Option<u32>) -
     }
 }
 
+fn main() -> Result<()> {
+    // Before the tokio runtime starts threads. wgpu dlopens libvulkan later
+    // and reads whatever LD_LIBRARY_PATH is set to here.
+    whisburn_engine::gpu_env::prepare_gpu_runtime();
+    async_main()
+}
+
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn async_main() -> Result<()> {
     let cli = Cli::parse();
     let (verbose, debug) = match &cli.command {
         Commands::Serve { verbose, debug, .. }
@@ -218,10 +240,11 @@ async fn main() -> Result<()> {
             preload_models,
             vram_reserve_mb,
             vram_reserve_percent,
+            idle_unload_secs,
+            max_parallel_jobs,
         } => {
             let file_settings = load_settings();
-            let preload =
-                preload_models.map(|names| PreloadModels::from_cli_values(Some(names)));
+            let preload = preload_models.map(|names| PreloadModels::from_cli_values(Some(names)));
             let mut config = ServerConfig::from_settings_and_cli(
                 file_settings,
                 port,
@@ -238,6 +261,14 @@ async fn main() -> Result<()> {
             }
             if let Some(pct) = vram_reserve_percent {
                 config.vram_reserve_percent = pct.min(100);
+            }
+            if let Some(secs) = idle_unload_secs {
+                config.idle_unload =
+                    whisburn_engine::idle::IdleUnloadPolicy::from_secs_override(Some(secs));
+            }
+            if let Some(n) = max_parallel_jobs {
+                config.max_parallel_jobs =
+                    whisburn_engine::placement::parallelism_limit(n) as u32;
             }
             whisburn_server::run_server(config).await?;
         }
@@ -267,7 +298,10 @@ async fn main() -> Result<()> {
                 for m in whisburn_engine::model::registry::MODEL_REGISTRY {
                     println!(
                         "{:<24} {:<8} vram={:>4}MB ready={}",
-                        m.name, format!("{:?}", m.category), m.vram_mb, m.burn_ready
+                        m.name,
+                        format!("{:?}", m.category),
+                        m.vram_mb,
+                        m.burn_ready
                     );
                 }
             }
@@ -309,7 +343,9 @@ async fn main() -> Result<()> {
                 .unwrap_or("wav");
             let audio_dur = {
                 let b = std::fs::read(&input).map_err(|e| anyhow!("failed to read input: {e}"))?;
-                whisburn_audio::probe_bytes_duration_secs(&b, ext).ok().flatten()
+                whisburn_audio::probe_bytes_duration_secs(&b, ext)
+                    .ok()
+                    .flatten()
             };
 
             if let Some(d) = audio_dur {
@@ -323,12 +359,15 @@ async fn main() -> Result<()> {
 
             let start = std::time::Instant::now();
             let waveform = whisburn_audio::decode_to_mono_pcm(std::path::Path::new(&input))?;
-            let output_format = OutputFormat::parse(&format)
-                .ok_or_else(|| anyhow::anyhow!("unsupported format '{}'. Use json, txt, srt or vtt.", format)) ? ;
+            let output_format = OutputFormat::parse(&format).ok_or_else(|| {
+                anyhow::anyhow!(
+                    "unsupported format '{}'. Use json, txt, srt or vtt.",
+                    format
+                )
+            })?;
 
-            let include_timestamps = timestamps.unwrap_or_else(|| {
-                !model.ends_with("_en") && !model.contains(".en")
-            });
+            let include_timestamps =
+                timestamps.unwrap_or_else(|| !model.ends_with("_en") && !model.contains(".en"));
 
             let options = TaskOptions {
                 task: speech_task,
@@ -353,7 +392,10 @@ async fn main() -> Result<()> {
                     if let Some(d) = ticker_dur {
                         let est = estimate_transcribe_secs(d, &ticker_model);
                         let rem = (est - el).max(0.0);
-                        eprint!("\r[elapsed {:.0}s | est. remaining ~{:.0}s] processing...   ", el, rem);
+                        eprint!(
+                            "\r[elapsed {:.0}s | est. remaining ~{:.0}s] processing...   ",
+                            el, rem
+                        );
                     } else {
                         eprint!("\r[elapsed {:.0}s] processing...   ", el);
                     }
@@ -361,12 +403,7 @@ async fn main() -> Result<()> {
             });
 
             let result = manager
-                .process_waveform(
-                    &model,
-                    waveform.samples,
-                    waveform.sample_rate,
-                    &options,
-                )
+                .process_waveform(&model, waveform.samples, waveform.sample_rate, &options)
                 .await?;
 
             // Stop the ticker
@@ -377,7 +414,12 @@ async fn main() -> Result<()> {
             let elapsed = start.elapsed().as_secs_f64();
             eprintln!("Transcription finished in {:.1}s", elapsed);
 
-            let encoded = whisburn_audio::encode_result_with_options(&result, output_format, include_timestamps, sentences)?;
+            let encoded = whisburn_audio::encode_result_with_options(
+                &result,
+                output_format,
+                include_timestamps,
+                sentences,
+            )?;
             std::io::Write::write_all(&mut std::io::stdout(), &encoded)?;
 
             if summarize {
@@ -427,7 +469,11 @@ async fn main() -> Result<()> {
                     .map(|m| m.name.to_string())
                     .collect()
             } else {
-                models.split(',').map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect()
+                models
+                    .split(',')
+                    .map(|s| s.trim().to_string())
+                    .filter(|s| !s.is_empty())
+                    .collect()
             };
 
             let formats = ["json", "txt", "srt"];
@@ -443,7 +489,11 @@ async fn main() -> Result<()> {
                 for &fmt in &formats {
                     for &do_diar in &[false, diarize] {
                         for &do_sent in &[false, sentences] {
-                            let task = if do_diar { SpeechTask::Diarize } else { SpeechTask::Transcribe };
+                            let task = if do_diar {
+                                SpeechTask::Diarize
+                            } else {
+                                SpeechTask::Transcribe
+                            };
                             let opts = TaskOptions {
                                 task,
                                 language: whisburn_core::LanguageCode::new("en".to_string()),
@@ -451,24 +501,55 @@ async fn main() -> Result<()> {
                                 group_into_sentences: do_sent,
                                 ..TaskOptions::default()
                             };
-                            let res = match mgr.process_waveform(m, waveform.samples.clone(), waveform.sample_rate, &opts).await {
+                            let res = match mgr
+                                .process_waveform(
+                                    m,
+                                    waveform.samples.clone(),
+                                    waveform.sample_rate,
+                                    &opts,
+                                )
+                                .await
+                            {
                                 Ok(r) => r,
-                                Err(e) => { eprintln!("  {} failed: {}", m, e); continue; }
+                                Err(e) => {
+                                    eprintln!("  {} failed: {}", m, e);
+                                    continue;
+                                }
                             };
 
                             let of = OutputFormat::parse(fmt).unwrap();
-                            let bytes = whisburn_audio::encode_result_with_options(&res, of, true, do_sent)?;
+                            let bytes = whisburn_audio::encode_result_with_options(
+                                &res, of, true, do_sent,
+                            )?;
                             let tag = format!(
                                 "{m}__{}__{}{}{}",
                                 fmt,
                                 if do_diar { "diarize_" } else { "" },
                                 if do_sent { "sentences_" } else { "" },
                                 if do_diar && do_sent { "" } else { "" }
-                            ).trim_end_matches('_').to_string();
-                            let fname = format!("{}/{}_{}.{}", out_base, tag.replace(['/', ':'], "_"), "out", fmt);
+                            )
+                            .trim_end_matches('_')
+                            .to_string();
+                            let fname = format!(
+                                "{}/{}_{}.{}",
+                                out_base,
+                                tag.replace(['/', ':'], "_"),
+                                "out",
+                                fmt
+                            );
                             std::fs::write(&fname, &bytes)?;
-                            let preview = String::from_utf8_lossy(&bytes).chars().take(160).collect::<String>();
-                            summary.push((m.clone(), fmt.to_string(), do_diar, do_sent, fname, preview));
+                            let preview = String::from_utf8_lossy(&bytes)
+                                .chars()
+                                .take(160)
+                                .collect::<String>();
+                            summary.push((
+                                m.clone(),
+                                fmt.to_string(),
+                                do_diar,
+                                do_sent,
+                                fname,
+                                preview,
+                            ));
                         }
                     }
                 }
@@ -476,7 +557,15 @@ async fn main() -> Result<()> {
 
             println!("\n=== Verification Summary ===");
             for (m, f, d, s, path, prev) in &summary {
-                println!("model={} fmt={} diarize={} sentences={} -> {} | {}", m, f, d, s, path, prev.replace('\n', " "));
+                println!(
+                    "model={} fmt={} diarize={} sentences={} -> {} | {}",
+                    m,
+                    f,
+                    d,
+                    s,
+                    path,
+                    prev.replace('\n', " ")
+                );
             }
             println!("Wrote {} artifacts to {}", summary.len(), out_base);
         }

@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use burn::tensor::Tensor;
 use whisburn_audio::decode_to_mono_pcm;
 use whisburn_engine::audio::prep_audio;
@@ -46,12 +46,12 @@ fn qwen3_audio_encoder_matches_hf_reference() {
     assert_eq!(hf_vec.len(), hf_tokens * 1024);
 
     let wf = decode_to_mono_pcm(&jfk).expect("decode");
-    let device = WgpuDevice::DefaultDevice;
-    let w = Tensor::<Wgpu, 1>::from_floats(wf.samples.as_slice(), &device).unsqueeze();
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
+    let w = Tensor::< 1>::from_floats(wf.samples.as_slice(), &device).unsqueeze();
     let mel = prep_audio(w, wf.sample_rate as f64, 128, false, "qwen3-asr-0.6b");
 
     let (_, _, model) =
-        load_model::<Wgpu>("qwen3-asr-0.6b", &device, false).expect("load qwen3");
+        load_model("qwen3-asr-0.6b", &device, false).expect("load qwen3");
     let Model::Qwen3(qwen) = model else {
         panic!("expected qwen3");
     };
@@ -61,7 +61,7 @@ fn qwen3_audio_encoder_matches_hf_reference() {
     assert_eq!(hidden, 1024);
     assert_eq!(tokens, hf_tokens, "audio token count");
 
-    let rust_vec = enc.into_data().to_vec::<f32>().unwrap();
+    let rust_vec = enc.into_data().try_to_vec::<f32>().unwrap();
     let whole_rmse = rmse(&rust_vec, &hf_vec);
     let first_rmse = rmse(&rust_vec[..8], &hf_vec[..8]);
     eprintln!(

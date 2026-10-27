@@ -1,29 +1,30 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::module::{Module, Param};
 use burn::nn::{Gelu, Linear, LinearConfig};
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 
 use super::norm::ConvRmsNorm;
 use super::sconv::SConv1d;
 
 #[derive(Module, Debug)]
-pub struct FfnBlock<B: Backend> {
-    pub linear1: Linear<B>,
+pub struct FfnBlock {
+    pub linear1: Linear,
     pub gelu: Gelu,
-    pub linear2: Linear<B>,
+    pub linear2: Linear,
 }
 
 #[derive(Module, Debug)]
-pub struct Block1D<B: Backend> {
-    pub norm: ConvRmsNorm<B>,
-    pub mixer: SConv1d<B>,
-    pub gamma: Param<Tensor<B, 1>>,
-    pub ffn_norm: ConvRmsNorm<B>,
-    pub ffn: FfnBlock<B>,
-    pub ffn_gamma: Param<Tensor<B, 1>>,
+pub struct Block1D {
+    pub norm: ConvRmsNorm,
+    pub mixer: SConv1d,
+    pub gamma: Param<Tensor< 1>>,
+    pub ffn_norm: ConvRmsNorm,
+    pub ffn: FfnBlock,
+    pub ffn_gamma: Param<Tensor< 1>>,
 }
 
-impl<B: Backend> Block1D<B> {
-    pub fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+impl Block1D {
+    pub fn forward(&self, x: Tensor< 3>) -> Tensor< 3> {
         let residual = x.clone();
         let x = self.norm.forward(x);
         let x = self.mixer.forward(x);
@@ -40,7 +41,7 @@ impl<B: Backend> Block1D<B> {
     }
 }
 
-pub fn init_ffn<B: Backend>(dim: usize, ffn_dim: usize, device: &B::Device) -> FfnBlock<B> {
+pub fn init_ffn(dim: usize, ffn_dim: usize, device: &Device) -> FfnBlock {
     FfnBlock {
         linear1: LinearConfig::new(dim, ffn_dim).init(device),
         gelu: Gelu::new(),

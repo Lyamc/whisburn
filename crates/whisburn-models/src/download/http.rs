@@ -66,16 +66,24 @@ pub fn fetch_url_bytes(url: &str) -> anyhow::Result<Vec<u8>> {
         .map_err(|e| anyhow::anyhow!("read {url}: {e}"))
 }
 
+fn install_pure_tls() {
+    if rustls::crypto::CryptoProvider::get_default().is_some() {
+        return;
+    }
+    let _ = rustls::crypto::CryptoProvider::install_default(rustls_rustcrypto::provider());
+}
+
 fn native_agent() -> ureq::Agent {
     use std::sync::OnceLock;
     use ureq::tls::{TlsConfig, TlsProvider};
     static AGENT: OnceLock<ureq::Agent> = OnceLock::new();
     AGENT
         .get_or_init(|| {
+            install_pure_tls();
             let config = ureq::config::Config::builder()
                 .tls_config(
                     TlsConfig::builder()
-                        .provider(TlsProvider::NativeTls)
+                        .provider(TlsProvider::Rustls)
                         .build(),
                 )
                 .build();

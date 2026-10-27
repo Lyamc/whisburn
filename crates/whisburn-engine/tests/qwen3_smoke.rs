@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use burn::tensor::Tensor;
 use whisburn_engine::model::load_model;
 use whisburn_engine::model::qwen3::parse_qwen3_asr_output_parts;
@@ -21,16 +21,16 @@ fn qwen3_load_and_decode_smoke() {
         return;
     }
 
-    let device = WgpuDevice::DefaultDevice;
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
     let (bpe, _, model) =
-        load_model::<Wgpu>("qwen3-asr-0.6b", &device, true).expect("load qwen3");
+        load_model("qwen3-asr-0.6b", &device, true).expect("load qwen3");
     let Model::Qwen3(qwen) = model else {
         panic!("expected qwen3 model");
     };
 
     // 1 second of silence at 16 kHz — should not crash the full pipeline.
     let samples = vec![0.0f32; 16_000];
-    let w = Tensor::<Wgpu, 1>::from_floats(samples.as_slice(), &device).unsqueeze();
+    let w = Tensor::< 1>::from_floats(samples.as_slice(), &device).unsqueeze();
     let mel = prep_audio(w, 16_000.0, qwen.encoder_mel_size(), false, "qwen3-asr-0.6b");
     let (text, _tokens) =
         decode_qwen3(&qwen, &bpe, mel, "qwen3-asr-0.6b", None, 64, true);

@@ -9,9 +9,10 @@ mod runtime;
 mod waveform;
 pub mod weights;
 
+use burn::tensor::{Device, DeviceKind};
 use burn::config::Config;
 use burn::module::Module;
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 
 pub use connector::{SpeechConnector, SpeechConnectorConfig};
 pub use decoder::{Qwen2Decoder, Qwen2DecoderConfig};
@@ -50,7 +51,7 @@ impl VibeVoiceASRConfig {
         }
     }
 
-    pub fn init<B: Backend>(&self, device: &B::Device) -> VibeVoiceASR<B> {
+    pub fn init(&self, device: &Device) -> VibeVoiceASR {
         VibeVoiceASR {
             acoustic_encoder: encoder::init_encoder(&self.acoustic_encoder, device),
             semantic_encoder: encoder::init_encoder(&self.semantic_encoder, device),
@@ -63,17 +64,17 @@ impl VibeVoiceASRConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct VibeVoiceASR<B: Backend> {
-    pub acoustic_encoder: TokenizerEncoder<B>,
-    pub semantic_encoder: TokenizerEncoder<B>,
-    pub acoustic_connector: SpeechConnector<B>,
-    pub semantic_connector: SpeechConnector<B>,
-    pub decoder: Qwen2Decoder<B>,
+pub struct VibeVoiceASR {
+    pub acoustic_encoder: TokenizerEncoder,
+    pub semantic_encoder: TokenizerEncoder,
+    pub acoustic_connector: SpeechConnector,
+    pub semantic_connector: SpeechConnector,
+    pub decoder: Qwen2Decoder,
     #[module(skip)]
     pub acoustic_fix_std: f32,
 }
 
-impl<B: Backend> VibeVoiceASR<B> {
+impl VibeVoiceASR {
     pub fn encoder_ctx_size(&self) -> usize {
         VibeVoiceRuntimeConfig::default().max_position_embeddings / 4
     }
@@ -87,7 +88,7 @@ impl<B: Backend> VibeVoiceASR<B> {
     }
 
     /// Encode waveform `[batch, 1, samples]` into combined speech features `[batch, tokens, hidden]`.
-    pub fn encode_speech(&self, audio: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn encode_speech(&self, audio: Tensor< 3>) -> Tensor< 3> {
         let acoustic = self
             .acoustic_connector
             .forward(self.acoustic_encoder.encode_mean(audio.clone()));

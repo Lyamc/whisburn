@@ -1,8 +1,9 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::{
     config::Config,
     module::{Module, Param},
     nn,
-    tensor::{backend::Backend, module::embedding, Distribution, Int, Tensor},
+    tensor::{module::embedding, Distribution, Int, Tensor},
 };
 
 use crate::model::attention::{
@@ -21,7 +22,7 @@ pub struct TextDecoderConfig {
 }
 
 impl TextDecoderConfig {
-    pub fn init<B: Backend>(&self, tensor_device_ref: &B::Device) -> TextDecoder<B> {
+    pub fn init(&self, tensor_device_ref: &Device) -> TextDecoder {
         let token_embedding = Param::from_tensor(Tensor::random(
             [self.n_vocab, self.n_text_state],
             Distribution::Normal(0.0, 1.0),
@@ -59,18 +60,18 @@ impl TextDecoderConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct TextDecoder<B: Backend> {
-    pub token_embedding: Param<Tensor<B, 2>>,
-    pub positional_embedding: Param<Tensor<B, 2>>,
-    pub blocks: Vec<ResidualDecoderAttentionBlock<B>>,
-    pub ln: nn::LayerNorm<B>,
-    pub mask: Param<Tensor<B, 2>>,
+pub struct TextDecoder {
+    pub token_embedding: Param<Tensor< 2>>,
+    pub positional_embedding: Param<Tensor< 2>>,
+    pub blocks: Vec<ResidualDecoderAttentionBlock>,
+    pub ln: nn::LayerNorm,
+    pub mask: Param<Tensor< 2>>,
     pub n_vocab: usize,
     pub n_text_ctx: usize,
 }
 
-impl<B: Backend> TextDecoder<B> {
-    pub fn forward(&self, x: Tensor<B, 2, Int>, xa: Tensor<B, 3>) -> Tensor<B, 3> {
+impl TextDecoder {
+    pub fn forward(&self, x: Tensor< 2, Int>, xa: Tensor< 3>) -> Tensor< 3> {
         let dims = x.dims();
         let [_, seq_len] = dims;
 
@@ -111,10 +112,10 @@ pub struct ResidualDecoderAttentionBlockConfig {
 }
 
 impl ResidualDecoderAttentionBlockConfig {
-    pub fn init<B: Backend>(
+    pub fn init(
         &self,
-        tensor_device_ref: &B::Device,
-    ) -> ResidualDecoderAttentionBlock<B> {
+        tensor_device_ref: &Device,
+    ) -> ResidualDecoderAttentionBlock {
         let attn =
             MultiHeadAttentionConfig::new(self.n_state, self.n_head).init(tensor_device_ref);
         let attn_ln = nn::LayerNormConfig::new(self.n_state).init(tensor_device_ref);
@@ -138,22 +139,22 @@ impl ResidualDecoderAttentionBlockConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct ResidualDecoderAttentionBlock<B: Backend> {
-    pub attn: MultiHeadAttention<B>,
-    pub attn_ln: nn::LayerNorm<B>,
-    pub cross_attn: MultiHeadCrossAttention<B>,
-    pub cross_attn_ln: nn::LayerNorm<B>,
-    pub mlp: MLP<B>,
-    pub mlp_ln: nn::LayerNorm<B>,
+pub struct ResidualDecoderAttentionBlock {
+    pub attn: MultiHeadAttention,
+    pub attn_ln: nn::LayerNorm,
+    pub cross_attn: MultiHeadCrossAttention,
+    pub cross_attn_ln: nn::LayerNorm,
+    pub mlp: MLP,
+    pub mlp_ln: nn::LayerNorm,
 }
 
-impl<B: Backend> ResidualDecoderAttentionBlock<B> {
+impl ResidualDecoderAttentionBlock {
     pub fn forward(
         &self,
-        x: Tensor<B, 3>,
-        xa: Tensor<B, 3>,
-        mask: Tensor<B, 2>,
-    ) -> Tensor<B, 3> {
+        x: Tensor< 3>,
+        xa: Tensor< 3>,
+        mask: Tensor< 2>,
+    ) -> Tensor< 3> {
         let x = x.clone() + self.attn.forward(self.attn_ln.forward(x), Some(mask));
         let x = x.clone() + self.cross_attn.forward(self.cross_attn_ln.forward(x), xa);
         let x = x.clone() + self.mlp.forward(self.mlp_ln.forward(x));

@@ -10,7 +10,6 @@
   rustPlatform,
   pkg-config,
   makeWrapper,
-  openssl,
   alsa-lib,
   vulkan-loader,
   wayland,
@@ -42,6 +41,8 @@ rustPlatform.buildRustPackage {
     outputHashes = {
       # git+https://github.com/Lyamc/npy-rs
       "npy-0.5.0" = "sha256-urpWDhAt4BEZ3/KDlCrq5gt+qw+/iYeHadts/EXgDJM=";
+      # git+https://github.com/Lyamc/rustls-rustcrypto
+      "rustls-rustcrypto-0.0.2-alpha" = "sha256-adoon7zrd+rafJ9VHR4rtNq8rQBNvW/3hcD6AmxzP/g=";
     };
   };
 
@@ -51,7 +52,6 @@ rustPlatform.buildRustPackage {
   ];
 
   buildInputs = [
-    openssl
     alsa-lib
     vulkan-loader
     wayland

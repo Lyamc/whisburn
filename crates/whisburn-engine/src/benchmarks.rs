@@ -1,12 +1,13 @@
+use burn::tensor::{Device, DeviceKind};
 #[cfg(test)]
 mod tests {
+    use burn::tensor::{Device, DeviceKind};
     use crate::model::registry::MODEL_REGISTRY;
     use crate::model::load_model;
     use crate::transcribe::waveform_to_text;
     use crate::token::Language;
     use crate::cli::transcribe::load_audio_waveform;
-    use burn::backend::wgpu::{Wgpu, WgpuDevice};
-    use std::path::Path;
+        use std::path::Path;
     use std::time::Instant;
     use sysinfo::{System, ProcessRefreshKind, Pid, ProcessesToUpdate};
     use std::fs;
@@ -51,7 +52,7 @@ mod tests {
             panic!("audio.wav not found! Benchmark requires a test audio file.");
         }
 
-        let device = WgpuDevice::DefaultDevice;
+        let device = Device::wgpu(DeviceKind::DefaultDevice);
         let mut pass = 0;
         let mut fail = 0;
         let mut skip = 0;
@@ -74,7 +75,7 @@ mod tests {
             // Test basic loading for all categories
             let start = Instant::now();
             let panic_result = std::panic::catch_unwind(|| {
-                load_model::<Wgpu>(model_info.name, &device, false)
+                load_model(model_info.name, &device, false)
             });
 
             if panic_result.is_err() {

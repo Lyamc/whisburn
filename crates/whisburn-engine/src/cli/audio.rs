@@ -14,10 +14,13 @@ fn is_voice_segment(frame: &[i16]) -> bool {
     if frame.is_empty() {
         return false;
     }
-    let sum_sq: f64 = frame.iter().map(|&s| {
-        let v = s as f64;
-        v * v
-    }).sum();
+    let sum_sq: f64 = frame
+        .iter()
+        .map(|&s| {
+            let v = s as f64;
+            v * v
+        })
+        .sum();
     (sum_sq / frame.len() as f64).sqrt() >= ENERGY_VAD_RMS_THRESHOLD
 }
 
@@ -46,26 +49,33 @@ pub fn normalize_audio_data_to_16k(input_data: &[f32], input_sample_rate: &f32) 
 
 pub fn record_audio(sender: mpsc::Sender<Vec<i16>>) {
     let host = cpal::default_host();
-    let device = host.default_input_device().expect("Failed to get default input device");
-    let config = device.default_input_config().expect("Failed to get default input config");
+    let device = host
+        .default_input_device()
+        .expect("Failed to get default input device");
+    let config = device
+        .default_input_config()
+        .expect("Failed to get default input config");
     let sample_rate = config.sample_rate() as f32;
 
     // Create a stream with the default input format
     let (mut producer, mut consumer) = RingBuffer::<i16>::new(16384);
-    let stream = device.build_input_stream(
-        config.config(),
-        move |data: &[f32], _: &cpal::InputCallbackInfo| {
-            let data_16k = normalize_audio_data_to_16k(data, &sample_rate);
-            let vad_data_i16_16k: Vec<i16> = data_16k.iter().map(|x| (*x * 32767.0) as i16).collect();
-            for sample in vad_data_i16_16k {
-                if producer.push(sample).is_err() {
-                    // Buffer full, dropping sample
+    let stream = device
+        .build_input_stream(
+            config.config(),
+            move |data: &[f32], _: &cpal::InputCallbackInfo| {
+                let data_16k = normalize_audio_data_to_16k(data, &sample_rate);
+                let vad_data_i16_16k: Vec<i16> =
+                    data_16k.iter().map(|x| (*x * 32767.0) as i16).collect();
+                for sample in vad_data_i16_16k {
+                    if producer.push(sample).is_err() {
+                        // Buffer full, dropping sample
+                    }
                 }
-            }
-        },
-        move |err| eprintln!("Error: {}", err),
-        None
-    ).expect("Failed to build input stream");
+            },
+            move |err| eprintln!("Error: {}", err),
+            None,
+        )
+        .expect("Failed to build input stream");
 
     stream.play().expect("Failed to play stream");
 
@@ -82,7 +92,7 @@ pub fn record_audio(sender: mpsc::Sender<Vec<i16>>) {
                     }
                     Err(_) => {
                         break;
-                    },
+                    }
                 }
             }
 
@@ -91,13 +101,17 @@ pub fn record_audio(sender: mpsc::Sender<Vec<i16>>) {
                 if speech_active {
                     speech_segment.extend(audio_frame);
                     if speech_segment.len() > MAXIMUM_SAMPLE_COUNT {
-                        sender.send(speech_segment.clone()).expect("Failed to send data");
+                        sender
+                            .send(speech_segment.clone())
+                            .expect("Failed to send data");
                         speech_segment.clear();
                     }
                 } else if unactive_count > BUFFER_FRAME_COUNT {
                     speaking = false;
                     if speech_segment.len() > MINIMUM_SAMPLE_COUNT {
-                        sender.send(speech_segment.clone()).expect("Failed to send data");
+                        sender
+                            .send(speech_segment.clone())
+                            .expect("Failed to send data");
                     }
                     speech_segment.clear();
                 } else {

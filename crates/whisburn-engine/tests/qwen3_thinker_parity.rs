@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use burn::tensor::Tensor;
 use whisburn_engine::model::load_model;
 use whisburn_engine::model::qwen3::{build_asr_prompt, flatten_prompt, load_qwen3_runtime};
@@ -35,9 +35,9 @@ fn greedy_with_hf_audio_features_matches_hf_tokens() {
         .map(|c| f32::from_le_bytes([c[0], c[1], c[2], c[3]]))
         .collect();
 
-    let device = WgpuDevice::DefaultDevice;
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
     let (bpe, _, model) =
-        load_model::<Wgpu>("qwen3-asr-0.6b", &device, false).expect("load qwen3");
+        load_model("qwen3-asr-0.6b", &device, false).expect("load qwen3");
     let Model::Qwen3(qwen) = model else {
         panic!("expected qwen3");
     };
@@ -46,7 +46,7 @@ fn greedy_with_hf_audio_features_matches_hf_tokens() {
     let prompt = build_asr_prompt(&runtime, 1100, "", None);
     let prefix = flatten_prompt(&prompt, &bpe);
 
-    let audio = Tensor::<Wgpu, 1>::from_floats(hf_vec.as_slice(), &device)
+    let audio = Tensor::< 1>::from_floats(hf_vec.as_slice(), &device)
         .reshape([1, hf_tokens, 1024]);
     let prefix_ids = prefix.clone();
     let hidden = qwen.thinker.merge_audio_embeds(
@@ -61,7 +61,7 @@ fn greedy_with_hf_audio_features_matches_hf_tokens() {
         .slice([0..1, seq - 1..seq, 0..vocab])
         .argmax(2)
         .into_data()
-        .to_vec::<i32>()
+        .try_to_vec::<i32>()
         .unwrap()[0] as usize;
     eprintln!("prefix_last_logits_argmax={first} (hf expects 11528)");
 

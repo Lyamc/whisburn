@@ -2,8 +2,9 @@ pub mod mel;
 pub mod qwen3_chunk;
 pub mod stft;
 
+use burn::tensor::{Device, DeviceKind};
 use burn::tensor::cast::ToElement;
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 use crate::helper::*;
 use self::mel::*;
 use self::stft::{hann_window, hann_window_symmetric, stfft, stfft_centered_constant};
@@ -33,23 +34,27 @@ const HOP_LENGTH: usize = 160;
 const PARAKEET_LOG_ZERO_GUARD: f32 = 1.0 / 16777216.0; // 2^-24
 const PARAKEET_PREEMPHASIS: f32 = 0.97;
 
-pub struct AudioProcessor<B: Backend> {
-    pub mel_filters: Tensor<B, 2>,
-    pub window: Tensor<B, 1>,
+pub struct AudioProcessor {
+    pub mel_filters: Tensor< 2>,
+    pub window: Tensor< 1>,
     pub n_mels: usize,
     pub n_fft: usize,
     pub is_nemo: bool,
     pub is_parakeet: bool,
+    pub is_nemotron: bool,
     pub is_qwen3: bool,
     pub is_tone: bool,
-    pub mean: Option<Tensor<B, 2>>,
-    pub std: Option<Tensor<B, 2>>,
+    pub mean: Option<Tensor< 2>>,
+    pub std: Option<Tensor< 2>>,
 }
 
-impl<B: Backend> AudioProcessor<B> {
-    pub fn new(device: &B::Device, sample_rate: f64, n_mels: usize, is_nemo: bool, model_name: &str) -> Self {
+impl AudioProcessor {
+    pub fn new(device: &Device, sample_rate: f64, n_mels: usize, is_nemo: bool, model_name: &str) -> Self {
         let is_tone = model_name.contains("t-one");
-        let is_parakeet = model_name.contains("parakeet");
+        // Nemotron shares the Parakeet STFT and Slaney mel, then skips utterance norm.
+        let is_nemotron = model_name.contains("nemotron");
+        // Phonon-2 is a retrained Parakeet TDT v3 and uses that mel frontend.
+        let is_parakeet = model_name.contains("parakeet") || model_name == "phonon-2" || is_nemotron;
         let is_qwen3 = model_name.contains("qwen3");
         let n_fft = if is_nemo || is_tone || is_parakeet { 512 } else { WHISPER_N_FFT };
         let win_length = 400;
@@ -75,6 +80,7 @@ impl<B: Backend> AudioProcessor<B> {
             n_fft,
             is_nemo,
             is_parakeet,
+            is_nemotron,
             is_qwen3,
             is_tone,
             mean: None,
@@ -82,13 +88,13 @@ impl<B: Backend> AudioProcessor<B> {
         }
     }
 
-    pub fn with_stats(mut self, mean: Tensor<B, 2>, std: Tensor<B, 2>) -> Self {
+    pub fn with_stats(mut self, mean: Tensor< 2>, std: Tensor< 2>) -> Self {
         self.mean = Some(mean);
         self.std = Some(std);
         self
     }
 
-    pub fn prep_audio(&self, waveform: Tensor<B, 2>) -> Tensor<B, 3> {
+    pub fn prep_audio(&self, waveform: Tensor< 2>) -> Tensor< 3> {
         // Whisper: float [-1, 1]. Legacy NeMo/T-ONE: int16-scale. Parakeet HF: float + preemphasis.
         let waveform = if self.is_parakeet {
             waveform
@@ -129,6 +135,11 @@ impl<B: Backend> AudioProcessor<B> {
             let mels = (mels + PARAKEET_LOG_ZERO_GUARD).log();
             let [b, c, t] = mels.dims();
             let valid_t = parakeet_valid_mel_frames(t).min(t);
+            if self.is_nemotron {
+                // The streaming feature extractor logs the mel and zeroes the
+                // center-STFT tail. It does not subtract an utterance mean.
+                return masked_mel_tail(mels, valid_t);
+            }
             let valid = mels.clone().slice([0..b, 0..c, 0..valid_t]);
             let mean = valid.clone().mean_dim(2);
             let diff = valid.clone() - mean.clone();
@@ -141,7 +152,7 @@ impl<B: Backend> AudioProcessor<B> {
             for v in mask_vals.iter_mut().take(valid_t) {
                 *v = 1.0;
             }
-            let frame_mask = Tensor::<B, 1>::from_floats(mask_vals.as_slice(), &device)
+            let frame_mask = Tensor::< 1>::from_floats(mask_vals.as_slice(), &device)
                 .reshape([1, 1, t]);
             normed * frame_mask
         } else if self.is_nemo {
@@ -155,7 +166,7 @@ impl<B: Backend> AudioProcessor<B> {
         } else {
             // Standard Whisper style: log10, dynamic-range clamp, global scale
             let mels = tensor_log10(tensor_max_scalar(mels, 1e-10));
-            let peak = mels.clone().max().into_scalar().to_f64();
+            let peak = mels.clone().max().into_scalar::<f64>();
             let mels = tensor_max_scalar(mels, peak - 8.0);
             let mels = (mels + 4.0).div_scalar(4.0);
             if self.is_qwen3 {
@@ -176,7 +187,50 @@ pub fn max_waveform_samples(n_ctx: usize) -> usize {
     n_ctx * HOP_LENGTH
 }
 
-pub fn prep_audio<B: Backend>(waveform: Tensor<B, 2>, sample_rate: f64, n_mels: usize, is_nemo: bool, model_name: &str) -> Tensor<B, 3> {
+fn masked_mel_tail(mels: Tensor< 3>, valid_t: usize) -> Tensor< 3> {
+    let [_, _, t] = mels.dims();
+    let device = mels.device();
+    let mut mask_vals = vec![0f32; t];
+    for value in mask_vals.iter_mut().take(valid_t.min(t)) {
+        *value = 1.0;
+    }
+    let frame_mask = Tensor::< 1>::from_floats(mask_vals.as_slice(), &device).reshape([1, 1, t]);
+    mels * frame_mask
+}
+
+pub fn prep_audio(waveform: Tensor< 2>, sample_rate: f64, n_mels: usize, is_nemo: bool, model_name: &str) -> Tensor< 3> {
     let processor = AudioProcessor::new(&waveform.device(), sample_rate, n_mels, is_nemo, model_name);
     processor.prep_audio(waveform)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+        
+    #[test]
+    fn phonon_uses_parakeet_frontend() {
+        let device = Device::flex();
+        let phonon = AudioProcessor::new(&device, 16000.0, 128, true, "phonon-2");
+        let teacher = AudioProcessor::new(&device, 16000.0, 128, true, "parakeet-tdt-0.6b-v3");
+        assert!(phonon.is_parakeet);
+        assert!(teacher.is_parakeet);
+        assert_eq!(phonon.n_fft, teacher.n_fft);
+        assert_eq!(phonon.n_fft, 512);
+        assert!(!phonon.is_nemotron);
+    }
+
+    #[test]
+    fn nemotron_uses_the_slaney_frontend_without_utterance_norm() {
+        let device = Device::flex();
+        let nemotron = AudioProcessor::new(
+            &device,
+            16000.0,
+            128,
+            false,
+            "nemotron-3.5-asr-streaming-0.6b",
+        );
+        assert!(nemotron.is_nemotron);
+        assert!(nemotron.is_parakeet);
+        assert_eq!(nemotron.n_fft, 512);
+    }
 }

@@ -169,6 +169,7 @@ whisburn models      Download or list models
 | `--no-open` | off | Do not open the web UI in a browser |
 | `--vram-reserve-mb` | `1024` | Keep at least this many MiB of GPU memory free |
 | `--vram-reserve-percent` | `15` | Keep at least this % of total VRAM free (the larger floor wins) |
+| `--idle-unload-secs` | auto | Drop the last model after this many idle seconds. Omit for auto (5× weight-load time, 30s–15m). `0` keeps it loaded |
 | `-v, --verbose` | | Verbose logging |
 
 ### `transcribe`
@@ -291,6 +292,7 @@ Notes:
 - GPU acceleration (wgpu) requires appropriate drivers + graphics stack on the **target** machine.
 - `WHISBURN_DEVICE=cpu` selects the ndarray CPU path. It uses every core (rayon) and Burn's SIMD kernels.
 - GPU inference keeps a VRAM floor free for the desktop (`WHISBURN_VRAM_RESERVE_MB`, default 1024; `WHISBURN_VRAM_RESERVE_PERCENT`, default 15). If the model itself would breach that floor, the job offloads to system RAM. If the model fits but the clip is long enough to push activations into the danger zone, the runtime splits the audio and stays on the GPU. Panics and GPU errors drop GPU tensors.
+- After a request finishes (transcription and any summary), the server unloads the cached model once it has been idle for `clamp(5 × weight-load time, 30s, 15m)`. If the load time is unknown, the wait is 5 minutes. Set `WHISBURN_IDLE_UNLOAD_SECS=0` to keep the model resident, or a positive number of seconds to force that timeout. The next job reloads weights from disk.
 - Full CUDA/Metal cross builds need matching native toolchains.
 - Prefer targets where **native TLS** is available; rustls/`ring` is not used by default (avoids a C build dependency).
 
@@ -335,6 +337,8 @@ cargo test -p whisburn-models
 | `WHISBURN_PORT` | Server listen port (default 8787) |
 | `WHISBURN_DEVICE` | Device override (`cpu`, `0`, `1`, …) |
 | `WHISBURN_PRELOAD_MODELS` | Comma list or `all` for startup preload |
+| `WHISBURN_IDLE_UNLOAD_SECS` | Idle unload override: unset/`auto` = 5× load time (30s–15m); `0`/`off` = keep loaded; `N` = fixed seconds |
+| `WHISBURN_MAX_PARALLEL_JOBS` | Inference jobs in flight at once. `0`, `1`, `off`, or `disabled` is serial (default). `N` allows N |
 | `WHISBURN_VERBOSE`, `WHISBURN_DEBUG` | Verbose/debug flags |
 | `RUST_LOG` | Log filter (e.g. `whisburn=debug`) |
 

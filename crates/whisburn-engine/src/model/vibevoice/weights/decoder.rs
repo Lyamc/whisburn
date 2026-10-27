@@ -1,5 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::module::Param;
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 use std::error::Error;
 
 use super::dtype::transpose_linear_weight;
@@ -11,12 +12,12 @@ use crate::model::vibevoice::quant::{quantize_linear, LinearQuant, QuantLinear};
 
 const LM: &str = "language_model.model";
 
-pub fn load_decoder<B: Backend>(
+pub fn load_decoder(
     store: &mut VibeVoiceWeightStore,
-    decoder: &Qwen2Decoder<B>,
+    decoder: &Qwen2Decoder,
     proj_quant: LinearQuant,
-    device: &B::Device,
-) -> Result<Qwen2Decoder<B>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<Qwen2Decoder, Box<dyn Error>> {
     let embed = load_embedding(store, &format!("{LM}.embed_tokens.weight"), device)?;
     let layers = decoder
         .layers
@@ -50,13 +51,13 @@ pub fn load_decoder<B: Backend>(
     })
 }
 
-fn load_layer<B: Backend>(
+fn load_layer(
     store: &mut VibeVoiceWeightStore,
     i: usize,
-    layer: &Qwen2DecoderLayer<B>,
+    layer: &Qwen2DecoderLayer,
     proj_quant: LinearQuant,
-    device: &B::Device,
-) -> Result<Qwen2DecoderLayer<B>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<Qwen2DecoderLayer, Box<dyn Error>> {
     let p = format!("{LM}.layers.{i}");
     let dim = layer.input_layernorm.gamma.val().dims()[0];
     let input_ln = load_rms(store, &format!("{p}.input_layernorm.weight"), layer.input_layernorm.epsilon, dim, device)?;
@@ -87,11 +88,11 @@ fn load_layer<B: Backend>(
     })
 }
 
-fn load_embedding<B: Backend>(
+fn load_embedding(
     store: &mut VibeVoiceWeightStore,
     key: &str,
-    device: &B::Device,
-) -> Result<HostEmbedding<B>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<HostEmbedding, Box<dyn Error>> {
     let (data, shape) = store.tensor_f32(key)?;
     if shape.len() != 2 {
         return Err(format!("{key}: expected rank-2 embedding, got {shape:?}").into());
@@ -99,29 +100,29 @@ fn load_embedding<B: Backend>(
     Ok(HostEmbedding::from_weight(data, shape[0], shape[1], device))
 }
 
-fn load_rms<B: Backend>(
+fn load_rms(
     store: &mut VibeVoiceWeightStore,
     key: &str,
     eps: f64,
     dim: usize,
-    device: &B::Device,
-) -> Result<RMSNorm<B>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<RMSNorm, Box<dyn Error>> {
     let (data, shape) = store.tensor_f32(key)?;
     if shape != [dim] && data.len() != dim {
         return Err(format!("{key}: expected [{dim}], got {shape:?}").into());
     }
     Ok(RMSNorm {
-        gamma: Param::from_tensor(Tensor::<B, 1>::from_floats(data.as_slice(), device)),
+        gamma: Param::from_tensor(Tensor::< 1>::from_floats(data.as_slice(), device)),
         epsilon: eps,
     })
 }
 
-fn load_quant_linear<B: Backend>(
+fn load_quant_linear(
     store: &mut VibeVoiceWeightStore,
     prefix: &str,
     scheme: LinearQuant,
-    device: &B::Device,
-) -> Result<QuantLinear<B>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<QuantLinear, Box<dyn Error>> {
     let (data, shape) = store.tensor_f32(&format!("{prefix}.weight"))?;
     let (weight_data, [d_in, d_out]) = transpose_linear_weight(&data, &shape);
     drop(data);
@@ -134,11 +135,11 @@ fn load_quant_linear<B: Backend>(
     Ok(QuantLinear::from_quantized(q, scale, bias, d_in, d_out, device))
 }
 
-fn load_f32_linear<B: Backend>(
+fn load_f32_linear(
     store: &mut VibeVoiceWeightStore,
     prefix: &str,
-    device: &B::Device,
-) -> Result<QuantLinear<B>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<QuantLinear, Box<dyn Error>> {
     let (data, shape) = store.tensor_f32(&format!("{prefix}.weight"))?;
     let (weight_data, [d_in, d_out]) = transpose_linear_weight(&data, &shape);
     drop(data);

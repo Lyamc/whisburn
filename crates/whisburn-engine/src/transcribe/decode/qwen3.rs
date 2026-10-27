@@ -1,4 +1,3 @@
-use burn::tensor::backend::Backend;
 
 use crate::model::qwen3::{
     build_asr_prompt, flatten_prompt, load_qwen3_runtime, parse_qwen3_asr_output_with_forced,
@@ -6,10 +5,10 @@ use crate::model::qwen3::{
 };
 use crate::token::Gpt2Tokenizer;
 
-pub fn decode_qwen3<B: Backend>(
-    model: &Qwen3ASR<B>,
+pub fn decode_qwen3(
+    model: &Qwen3ASR,
     bpe: &Gpt2Tokenizer,
-    mel: burn::tensor::Tensor<B, 3>,
+    mel: burn::tensor::Tensor< 3>,
     model_name: &str,
     forced_language: Option<&str>,
     max_new_tokens: usize,

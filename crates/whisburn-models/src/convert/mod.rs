@@ -43,6 +43,11 @@ pub fn needs_reconversion_for(name: &str, model_dir: &std::path::Path) -> bool {
         phonon::needs_phonon_reconversion(model_dir)
     } else if granite::is_granite_model(name) {
         granite::needs_granite_reconversion(model_dir)
+    } else if name.contains("nemotron") {
+        let burn_ok = std::fs::read_to_string(model_dir.join(".burn_version"))
+            .map(|v| v.trim() == parakeet::BURN_VERSION)
+            .unwrap_or(false);
+        !burn_ok
     } else {
         whisper::needs_reconversion(model_dir)
     }

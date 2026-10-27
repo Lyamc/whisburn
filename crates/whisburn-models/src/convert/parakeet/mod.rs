@@ -20,7 +20,7 @@ use config::ParakeetConfig;
 use layout::layout_tensor;
 use mapping::{map_hf_tensor, should_skip_key};
 
-pub const BURN_VERSION: &str = "0.21.0";
+pub const BURN_VERSION: &str = "0.22.1";
 
 pub fn convert_parakeet_from_hf(
     model_dir: &Path,

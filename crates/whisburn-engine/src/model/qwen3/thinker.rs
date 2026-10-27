@@ -1,7 +1,8 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::config::Config;
 use burn::module::Module;
 use burn::nn::{Embedding, EmbeddingConfig, Linear, LinearConfig};
-use burn::tensor::{activation::silu, backend::Backend, Tensor, Int};
+use burn::tensor::{activation::silu, Tensor, Int};
 
 use crate::model::attention::attn_decoder_mask;
 use crate::model::conformer::RMSNorm;
@@ -21,7 +22,7 @@ pub struct Qwen3ThinkerConfig {
 }
 
 impl Qwen3ThinkerConfig {
-    pub fn init<B: Backend>(&self, device: &B::Device) -> Qwen3Thinker<B> {
+    pub fn init(&self, device: &Device) -> Qwen3Thinker {
         let layers = (0..self.n_layers)
             .map(|_| {
                 Qwen3ThinkerLayerConfig::new(
@@ -80,7 +81,7 @@ impl Qwen3ThinkerLayerConfig {
         }
     }
 
-    fn init<B: Backend>(&self, device: &B::Device) -> Qwen3ThinkerLayer<B> {
+    fn init(&self, device: &Device) -> Qwen3ThinkerLayer {
         let q_out = self.n_heads * self.head_dim;
         let kv_out = self.n_kv_heads * self.head_dim;
         Qwen3ThinkerLayer {
@@ -113,32 +114,32 @@ impl Qwen3ThinkerLayerConfig {
 }
 
 #[derive(Module, Debug)]
-pub(crate) struct Qwen3ThinkerAttention<B: Backend> {
+pub(crate) struct Qwen3ThinkerAttention {
     #[module(skip)]
     n_heads: usize,
     #[module(skip)]
     n_kv_heads: usize,
     #[module(skip)]
     head_dim: usize,
-    pub(crate) q_proj: Linear<B>,
-    pub(crate) k_proj: Linear<B>,
-    pub(crate) v_proj: Linear<B>,
-    pub(crate) o_proj: Linear<B>,
-    pub(crate) q_norm: RMSNorm<B>,
-    pub(crate) k_norm: RMSNorm<B>,
+    pub(crate) q_proj: Linear,
+    pub(crate) k_proj: Linear,
+    pub(crate) v_proj: Linear,
+    pub(crate) o_proj: Linear,
+    pub(crate) q_norm: RMSNorm,
+    pub(crate) k_norm: RMSNorm,
 }
 
-type KvLayerCache<B> = (Tensor<B, 4>, Tensor<B, 4>);
+type KvLayerCache = (Tensor< 4>, Tensor< 4>);
 
-impl<B: Backend> Qwen3ThinkerAttention<B> {
+impl Qwen3ThinkerAttention {
     fn forward_with_cache(
         &self,
-        x: Tensor<B, 3>,
-        cos: &Tensor<B, 3>,
-        sin: &Tensor<B, 3>,
-        mask: &Tensor<B, 2>,
-        cache: Option<KvLayerCache<B>>,
-    ) -> (Tensor<B, 3>, KvLayerCache<B>) {
+        x: Tensor< 3>,
+        cos: &Tensor< 3>,
+        sin: &Tensor< 3>,
+        mask: &Tensor< 2>,
+        cache: Option<KvLayerCache>,
+    ) -> (Tensor< 3>, KvLayerCache) {
         let [batch, seq, _] = x.dims();
         let scale = (self.head_dim as f64).powf(-0.5);
         let n_rep = self.n_heads / self.n_kv_heads;
@@ -175,46 +176,46 @@ impl<B: Backend> Qwen3ThinkerAttention<B> {
 }
 
 #[derive(Module, Debug)]
-pub(crate) struct Qwen3ThinkerMlp<B: Backend> {
-    pub(crate) gate_proj: Linear<B>,
-    pub(crate) up_proj: Linear<B>,
-    pub(crate) down_proj: Linear<B>,
+pub(crate) struct Qwen3ThinkerMlp {
+    pub(crate) gate_proj: Linear,
+    pub(crate) up_proj: Linear,
+    pub(crate) down_proj: Linear,
 }
 
-impl<B: Backend> Qwen3ThinkerMlp<B> {
-    fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+impl Qwen3ThinkerMlp {
+    fn forward(&self, x: Tensor< 3>) -> Tensor< 3> {
         let gate = silu(self.gate_proj.forward(x.clone()));
         self.down_proj.forward(gate * self.up_proj.forward(x))
     }
 }
 
 #[derive(Module, Debug)]
-pub(crate) struct Qwen3ThinkerLayer<B: Backend> {
-    pub(crate) input_layernorm: RMSNorm<B>,
-    pub(crate) self_attn: Qwen3ThinkerAttention<B>,
-    pub(crate) post_attention_layernorm: RMSNorm<B>,
-    pub(crate) mlp: Qwen3ThinkerMlp<B>,
+pub(crate) struct Qwen3ThinkerLayer {
+    pub(crate) input_layernorm: RMSNorm,
+    pub(crate) self_attn: Qwen3ThinkerAttention,
+    pub(crate) post_attention_layernorm: RMSNorm,
+    pub(crate) mlp: Qwen3ThinkerMlp,
 }
 
-impl<B: Backend> Qwen3ThinkerLayer<B> {
+impl Qwen3ThinkerLayer {
     fn forward(
         &self,
-        x: Tensor<B, 3>,
-        cos: &Tensor<B, 3>,
-        sin: &Tensor<B, 3>,
-        mask: &Tensor<B, 2>,
-    ) -> Tensor<B, 3> {
+        x: Tensor< 3>,
+        cos: &Tensor< 3>,
+        sin: &Tensor< 3>,
+        mask: &Tensor< 2>,
+    ) -> Tensor< 3> {
         self.forward_with_cache(x, cos, sin, mask, None).0
     }
 
     fn forward_with_cache(
         &self,
-        x: Tensor<B, 3>,
-        cos: &Tensor<B, 3>,
-        sin: &Tensor<B, 3>,
-        mask: &Tensor<B, 2>,
-        cache: Option<KvLayerCache<B>>,
-    ) -> (Tensor<B, 3>, KvLayerCache<B>) {
+        x: Tensor< 3>,
+        cos: &Tensor< 3>,
+        sin: &Tensor< 3>,
+        mask: &Tensor< 2>,
+        cache: Option<KvLayerCache>,
+    ) -> (Tensor< 3>, KvLayerCache) {
         let residual = x.clone();
         let (attn, cache) = self.self_attn.forward_with_cache(
             self.input_layernorm.forward(x),
@@ -231,7 +232,7 @@ impl<B: Backend> Qwen3ThinkerLayer<B> {
 }
 
 #[derive(Module, Debug)]
-pub struct Qwen3Thinker<B: Backend> {
+pub struct Qwen3Thinker {
     #[module(skip)]
     pub hidden_size: usize,
     #[module(skip)]
@@ -242,17 +243,62 @@ pub struct Qwen3Thinker<B: Backend> {
     rope_theta: f64,
     #[module(skip)]
     mrope_section: Vec<usize>,
-    pub embed_tokens: Embedding<B>,
-    pub(crate) layers: Vec<Qwen3ThinkerLayer<B>>,
-    pub(crate) norm: RMSNorm<B>,
-    pub lm_head: Linear<B>,
+    pub embed_tokens: Embedding,
+    pub(crate) layers: Vec<Qwen3ThinkerLayer>,
+    pub(crate) norm: RMSNorm,
+    pub lm_head: Linear,
 }
 
-impl<B: Backend> Qwen3Thinker<B> {
+pub(crate) struct Qwen3ThinkerParts {
+    pub hidden_size: usize,
+    pub vocab_size: usize,
+    pub head_dim: usize,
+    pub rope_theta: f64,
+    pub mrope_section: Vec<usize>,
+    pub embed_tokens: Embedding,
+    pub layers: Vec<Qwen3ThinkerLayer>,
+    pub norm: RMSNorm,
+    pub lm_head: Linear,
+}
+
+impl Qwen3Thinker {
+    /// Move the modules out so a loader can replace them without cloning the
+    /// whole network. A clone while the new weights are alive doubled this
+    /// 0.6B model and earlyoom killed the process.
+    pub(crate) fn into_parts(self) -> Qwen3ThinkerParts {
+        Qwen3ThinkerParts {
+            hidden_size: self.hidden_size,
+            vocab_size: self.vocab_size,
+            head_dim: self.head_dim,
+            rope_theta: self.rope_theta,
+            mrope_section: self.mrope_section,
+            embed_tokens: self.embed_tokens,
+            layers: self.layers,
+            norm: self.norm,
+            lm_head: self.lm_head,
+        }
+    }
+
+    pub(crate) fn from_parts(parts: Qwen3ThinkerParts) -> Self {
+        Self {
+            hidden_size: parts.hidden_size,
+            vocab_size: parts.vocab_size,
+            head_dim: parts.head_dim,
+            rope_theta: parts.rope_theta,
+            mrope_section: parts.mrope_section,
+            embed_tokens: parts.embed_tokens,
+            layers: parts.layers,
+            norm: parts.norm,
+            lm_head: parts.lm_head,
+        }
+    }
+}
+
+impl Qwen3Thinker {
     pub fn forward_hidden(
         &self,
-        inputs_embeds: Tensor<B, 3>,
-    ) -> Tensor<B, 3> {
+        inputs_embeds: Tensor< 3>,
+    ) -> Tensor< 3> {
         let [_, seq, _] = inputs_embeds.dims();
         let device = inputs_embeds.device();
         let (cos, sin) = mrope_embeddings(
@@ -272,20 +318,20 @@ impl<B: Backend> Qwen3Thinker<B> {
 
     pub fn forward_logits(
         &self,
-        inputs_embeds: Tensor<B, 3>,
-    ) -> Tensor<B, 3> {
+        inputs_embeds: Tensor< 3>,
+    ) -> Tensor< 3> {
         self.lm_head.forward(self.forward_hidden(inputs_embeds))
     }
 
     pub fn merge_audio_embeds(
         &self,
         input_ids: &[usize],
-        audio_features: Tensor<B, 3>,
+        audio_features: Tensor< 3>,
         pad_token_id: usize,
-        device: &B::Device,
-    ) -> Tensor<B, 3> {
+        device: &Device,
+    ) -> Tensor< 3> {
         let ids: Vec<i32> = input_ids.iter().map(|&id| id as i32).collect();
-        let ids_tensor = Tensor::<B, 1, Int>::from_ints(ids.as_slice(), device).reshape([1, input_ids.len()]);
+        let ids_tensor = Tensor::< 1, Int>::from_ints(ids.as_slice(), device).reshape([1, input_ids.len()]);
         let mut hidden = self.embed_tokens.forward(ids_tensor);
         let [_, _seq, h] = hidden.dims();
         let pad_positions: Vec<usize> = input_ids
@@ -304,11 +350,11 @@ impl<B: Backend> Qwen3Thinker<B> {
     pub fn generate_greedy(
         &self,
         prefix_ids: &[usize],
-        audio_features: Tensor<B, 3>,
+        audio_features: Tensor< 3>,
         pad_token_id: usize,
         eos_ids: &[usize],
         max_new_tokens: usize,
-        device: &B::Device,
+        device: &Device,
     ) -> Vec<usize> {
         let prefix_len = prefix_ids.len();
         if prefix_len == 0 {
@@ -321,20 +367,17 @@ impl<B: Backend> Qwen3Thinker<B> {
         let mut pos = prefix_len;
 
         for _ in 0..max_new_tokens {
-            let logits = self.lm_head.forward(hidden.clone());
-            let [_, seq, vocab] = logits.dims();
-            let last = logits.slice([0..1, seq - 1..seq, 0..vocab]);
-            let next = argmax_id(last);
+            let next = next_token_id(self, hidden.clone());
             if eos_ids.contains(&next) {
                 break;
             }
             generated.push(next);
 
             let next_id = vec![next as i32];
-            let ids_tensor = Tensor::<B, 1, Int>::from_ints(next_id.as_slice(), device).reshape([1, 1]);
+            let ids_tensor = Tensor::< 1, Int>::from_ints(next_id.as_slice(), device).reshape([1, 1]);
             let token_hidden = self.embed_tokens.forward(ids_tensor);
             let (cos, sin) = mrope_embeddings_at_pos(pos, self.head_dim, self.rope_theta, &self.mrope_section, device);
-            let mask = Tensor::<B, 2>::zeros([1, pos + 1], device);
+            let mask = Tensor::< 2>::zeros([1, pos + 1], device);
             let mut x = token_hidden;
             let mut layer_caches = caches;
             for (layer, cache) in self.layers.iter().zip(layer_caches.iter_mut()) {
@@ -356,24 +399,24 @@ impl<B: Backend> Qwen3Thinker<B> {
         prefix_ids: &[usize],
         eos_ids: &[usize],
         max_new_tokens: usize,
-        device: &B::Device,
+        device: &Device,
     ) -> Vec<usize> {
         if prefix_ids.is_empty() {
             return Vec::new();
         }
         let ids: Vec<i32> = prefix_ids.iter().map(|&id| id as i32).collect();
         let ids_tensor =
-            Tensor::<B, 1, Int>::from_ints(ids.as_slice(), device).reshape([1, prefix_ids.len()]);
+            Tensor::< 1, Int>::from_ints(ids.as_slice(), device).reshape([1, prefix_ids.len()]);
         let hidden = self.embed_tokens.forward(ids_tensor);
         let (mut hidden, mut caches) = self.forward_hidden_with_cache(hidden, device, None);
         let mut generated = Vec::new();
         let mut pos = prefix_ids.len();
 
         for _ in 0..max_new_tokens {
-            let logits = self.lm_head.forward(hidden.clone());
-            let [_, seq, vocab] = logits.dims();
-            let last = logits.slice([0..1, seq - 1..seq, 0..vocab]);
-            let next = argmax_id(last);
+            // Project only the last position. A full [seq, vocab] logits tensor
+            // for a ~2k-token summary chunk is about 1.6 GB and earlyoom killed
+            // the server while swap was already full.
+            let next = next_token_id(self, hidden.clone());
             if eos_ids.contains(&next) {
                 break;
             }
@@ -381,11 +424,11 @@ impl<B: Backend> Qwen3Thinker<B> {
 
             let next_id = vec![next as i32];
             let ids_tensor =
-                Tensor::<B, 1, Int>::from_ints(next_id.as_slice(), device).reshape([1, 1]);
+                Tensor::< 1, Int>::from_ints(next_id.as_slice(), device).reshape([1, 1]);
             let token_hidden = self.embed_tokens.forward(ids_tensor);
             let (cos, sin) =
                 mrope_embeddings_at_pos(pos, self.head_dim, self.rope_theta, &self.mrope_section, device);
-            let mask = Tensor::<B, 2>::zeros([1, pos + 1], device);
+            let mask = Tensor::< 2>::zeros([1, pos + 1], device);
             let mut x = token_hidden;
             let mut layer_caches = caches;
             for (layer, cache) in self.layers.iter().zip(layer_caches.iter_mut()) {
@@ -403,10 +446,10 @@ impl<B: Backend> Qwen3Thinker<B> {
 
     fn forward_hidden_with_cache(
         &self,
-        inputs_embeds: Tensor<B, 3>,
-        device: &B::Device,
-        caches: Option<Vec<Option<KvLayerCache<B>>>>,
-    ) -> (Tensor<B, 3>, Vec<Option<KvLayerCache<B>>>) {
+        inputs_embeds: Tensor< 3>,
+        device: &Device,
+        caches: Option<Vec<Option<KvLayerCache>>>,
+    ) -> (Tensor< 3>, Vec<Option<KvLayerCache>>) {
         let [_, seq, _] = inputs_embeds.dims();
         let (cos, sin) = mrope_embeddings(seq, self.head_dim, self.rope_theta, &self.mrope_section, device);
         let mask = attn_decoder_mask(seq, device);
@@ -421,18 +464,29 @@ impl<B: Backend> Qwen3Thinker<B> {
     }
 }
 
-fn argmax_id<B: Backend>(last: Tensor<B, 3>) -> usize {
+/// Greedy next id from the last timestep only.
+fn next_token_id(thinker: &Qwen3Thinker, hidden: Tensor< 3>) -> usize {
+    let [b, seq, h] = hidden.dims();
+    let last = if seq <= 1 {
+        hidden
+    } else {
+        hidden.slice([0..b, seq - 1..seq, 0..h])
+    };
+    argmax_id(thinker.lm_head.forward(last))
+}
+
+fn argmax_id(last: Tensor< 3>) -> usize {
     let data = last.argmax(2).into_data();
     data.clone()
-        .to_vec::<i64>()
+        .try_to_vec::<i64>()
         .or_else(|_| {
-            data.to_vec::<i32>()
+            data.try_to_vec::<i32>()
                 .map(|v| v.into_iter().map(i64::from).collect())
         })
         .expect("argmax ids")[0] as usize
 }
 
-fn apply_rope<B: Backend>(x: Tensor<B, 4>, cos: &Tensor<B, 3>, sin: &Tensor<B, 3>) -> Tensor<B, 4> {
+fn apply_rope(x: Tensor< 4>, cos: &Tensor< 3>, sin: &Tensor< 3>) -> Tensor< 4> {
     let [b, h, s, d] = x.dims();
     let half = d / 2;
     let x1 = x.clone().slice([0..b, 0..h, 0..s, 0..half]);
@@ -445,7 +499,7 @@ fn apply_rope<B: Backend>(x: Tensor<B, 4>, cos: &Tensor<B, 3>, sin: &Tensor<B, 3
     x * cos + rotated * sin
 }
 
-fn repeat_kv<B: Backend>(x: Tensor<B, 4>, n_rep: usize) -> Tensor<B, 4> {
+fn repeat_kv(x: Tensor< 4>, n_rep: usize) -> Tensor< 4> {
     if n_rep == 1 {
         return x;
     }
@@ -461,13 +515,13 @@ fn repeat_kv<B: Backend>(x: Tensor<B, 4>, n_rep: usize) -> Tensor<B, 4> {
     Tensor::cat(heads, 1)
 }
 
-fn mrope_embeddings_at_pos<B: Backend>(
+fn mrope_embeddings_at_pos(
     pos: usize,
     head_dim: usize,
     theta: f64,
     mrope_section: &[usize],
-    device: &B::Device,
-) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    device: &Device,
+) -> (Tensor< 3>, Tensor< 3>) {
     let (cos, sin) = mrope_embeddings(pos + 1, head_dim, theta, mrope_section, device);
     (
         cos.slice([0..1, pos..pos + 1, 0..head_dim]),
@@ -475,13 +529,13 @@ fn mrope_embeddings_at_pos<B: Backend>(
     )
 }
 
-fn mrope_embeddings<B: Backend>(
+fn mrope_embeddings(
     seq: usize,
     head_dim: usize,
     theta: f64,
     mrope_section: &[usize],
-    device: &B::Device,
-) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    device: &Device,
+) -> (Tensor< 3>, Tensor< 3>) {
     let half = head_dim / 2;
     let mut inv_freq = vec![0.0f64; half];
     // HF default RoPE: arange(0, head_dim, 2) / head_dim (not 0..half).
@@ -528,9 +582,9 @@ fn mrope_embeddings<B: Backend>(
         }
     }
 
-    let cos = Tensor::<B, 1>::from_floats(cos_data.as_slice(), device)
+    let cos = Tensor::< 1>::from_floats(cos_data.as_slice(), device)
         .reshape([1, seq, head_dim]);
-    let sin = Tensor::<B, 1>::from_floats(sin_data.as_slice(), device)
+    let sin = Tensor::< 1>::from_floats(sin_data.as_slice(), device)
         .reshape([1, seq, head_dim]);
     (cos, sin)
 }
@@ -538,17 +592,16 @@ fn mrope_embeddings<B: Backend>(
 #[cfg(test)]
 mod repeat_kv_tests {
     use super::repeat_kv;
-    use burn::backend::wgpu::{Wgpu, WgpuDevice};
-    use burn::tensor::Tensor;
+    use burn::tensor::{Device, DeviceKind, Tensor};
 
     #[test]
     fn interleaves_kv_heads_like_hf() {
-        let device = WgpuDevice::DefaultDevice;
+        let device = Device::wgpu(DeviceKind::DefaultDevice);
         // [B=1, n_kv=2, S=1, D=2]
-        let x = Tensor::<Wgpu, 1>::from_floats([1.0f32, 10.0, 2.0, 20.0], &device)
+        let x = Tensor::< 1>::from_floats([1.0f32, 10.0, 2.0, 20.0], &device)
             .reshape([1, 2, 1, 2]);
         let y = repeat_kv(x, 2);
-        let data = y.into_data().to_vec::<f32>().unwrap();
+        let data = y.into_data().try_to_vec::<f32>().unwrap();
         // kv0, kv0, kv1, kv1 — not kv0, kv1, kv0, kv1
         assert_eq!(data, vec![1.0, 10.0, 1.0, 10.0, 2.0, 20.0, 2.0, 20.0]);
     }
@@ -557,17 +610,17 @@ mod repeat_kv_tests {
 #[cfg(test)]
 mod mrope_tests {
     use super::mrope_embeddings;
-    use burn::backend::wgpu::{Wgpu, WgpuDevice};
-
+    use burn::tensor::{Device, DeviceKind};
+    
     #[test]
     fn inv_freq_matches_hf_even_indices() {
-        let device = WgpuDevice::DefaultDevice;
+        let device = Device::wgpu(DeviceKind::DefaultDevice);
         let head_dim = 128;
         let theta = 1_000_000.0;
         let mrope_section = [24usize, 20, 20];
-        let (cos, sin) = mrope_embeddings::<Wgpu>(2, head_dim, theta, &mrope_section, &device);
-        let cos_data = cos.into_data().to_vec::<f32>().unwrap();
-        let sin_data = sin.into_data().to_vec::<f32>().unwrap();
+        let (cos, sin) = mrope_embeddings(2, head_dim, theta, &mrope_section, &device);
+        let cos_data = cos.into_data().try_to_vec::<f32>().unwrap();
+        let sin_data = sin.into_data().try_to_vec::<f32>().unwrap();
 
         let inv0 = 1.0f64;
         let inv3 = 1.0 / theta.powf(6.0 / head_dim as f64);

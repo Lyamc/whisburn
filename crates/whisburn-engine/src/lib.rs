@@ -6,6 +6,9 @@ pub mod beam;
 pub mod helper;
 pub mod cli;
 pub mod orchestrator;
+pub mod gpu_env;
+pub mod idle;
+pub mod placement;
 pub mod runtime;
 pub mod vram;
 

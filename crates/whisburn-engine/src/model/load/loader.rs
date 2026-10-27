@@ -1,8 +1,8 @@
+use burn::tensor::Device;
 use burn::{
     module::Module,
-    tensor::{backend::Backend, Tensor},
+    tensor::Tensor,
     config::Config,
-    record::{FullPrecisionSettings, HalfPrecisionSettings, NamedMpkFileRecorder, NamedMpkGzFileRecorder, Recorder},
 };
 use crate::model::*;
 use crate::model::conformer::*;
@@ -14,14 +14,13 @@ use crate::model::load::vibevoice::load_vibevoice_model;
 use crate::token::Gpt2Tokenizer;
 use std::error::Error;
 use std::path::Path;
-use flate2::read::GzDecoder;
 use indicatif::{ProgressBar, ProgressStyle};
 use std::time::Duration;
 
-pub fn load_model_from_npy<B: Backend>(
+pub fn load_model_from_npy(
     path: &str,
-    device: &B::Device,
-) -> Result<(Model<B>, ModelConfig), Box<dyn Error>> {
+    device: &Device,
+) -> Result<(Model, ModelConfig), Box<dyn Error>> {
     if Path::new(&format!("{}/tone.encoder", path)).exists() || path.contains("t-one") {
         return Err(
             "T-one uses safetensors, not npy. Load via `load_model(\"t-one\", ...)` after download."
@@ -37,7 +36,7 @@ pub fn load_model_from_npy<B: Backend>(
         let kernel_size = parakeet.encoder.layers[0].conv.depth_conv.weight.dims()[2];
         
         let n_mels = if Path::new(&format!("{}/encoder/n_mels.npy", path)).exists() {
-            load_usize::<B>("n_mels", &format!("{}/encoder", path), device)?
+            load_usize("n_mels", &format!("{}/encoder", path), device)?
         } else {
             128 // Default for Parakeet-TDT v3
         };
@@ -69,11 +68,11 @@ pub fn load_model_from_npy<B: Backend>(
     }
 }
 
-pub fn load_model<B: Backend>(
+pub fn load_model(
     model_name: &str,
-    device: &B::Device,
+    device: &Device,
     verbose: bool,
-) -> Result<(Gpt2Tokenizer, ModelConfig, Model<B>), Box<dyn Error>> {
+) -> Result<(Gpt2Tokenizer, ModelConfig, Model), Box<dyn Error>> {
     tracing::info!(model = model_name, "initializing model load");
     if verbose {
         println!("Initializing model loading for: {}", model_name);
@@ -93,6 +92,10 @@ pub fn load_model<B: Backend>(
 
     if model_name.starts_with("qwen3-asr-") {
         return load_qwen3_model(model_name, device, verbose);
+    }
+
+    if crate::model::load::nemotron::is_nemotron_model(model_name) {
+        return crate::model::load::nemotron::load_nemotron_model(model_name, device, verbose);
     }
 
     let pb = ProgressBar::new_spinner();
@@ -153,73 +156,31 @@ pub fn load_model<B: Backend>(
         }
     };
 
-    let named_stem = dir.join(model_name);
-    let mpk_path = named_stem.with_extension("mpk");
-    let gz_path = dir.join(format!("{model_name}.mpk.gz"));
-
-    let model_mpk_path = dir.join("model.mpk");
-    let model_gz_path = dir.join("model.mpk.gz");
-
-    let (final_path, final_gz_path) = if mpk_path.exists() || gz_path.exists() {
-        (mpk_path, gz_path)
-    } else {
-        (model_mpk_path, model_gz_path)
-    };
-
-    if !final_path.exists() && final_gz_path.exists() {
-        pb.set_message(format!("Decompressing {}...", final_gz_path.display()));
-        let gz_file = std::fs::File::open(&final_gz_path)?;
-        let mut decoder = GzDecoder::new(gz_file);
-        let mut mpk_file = std::fs::File::create(&final_path)?;
-        std::io::copy(&mut decoder, &mut mpk_file)?;
-    }
-
-    if !final_path.exists() {
+    let candidates = [
+        dir.join(format!("{model_name}.bpk")),
+        dir.join("model.bpk"),
+    ];
+    let Some(weight_path) = candidates.iter().find(|path| path.exists()) else {
         pb.finish_and_clear();
-        return Err(format!("Model weights not found: {}", final_path.display()).into());
-    }
-
-    let final_path_str = final_path.to_string_lossy().into_owned();
-    let load_path = final_path_str
-        .strip_suffix(".mpk")
-        .unwrap_or(&final_path_str)
-        .to_string();
+        let looked = candidates
+            .iter()
+            .map(|path| path.display().to_string())
+            .collect::<Vec<_>>()
+            .join(", ");
+        return Err(format!("Burnpack weights not found for '{model_name}' (looked for {looked})").into());
+    };
 
     tracing::info!(
         model = model_name,
-        path = %final_path.display(),
+        path = %weight_path.display(),
         "loading model weights onto device"
     );
-    pb.set_message(format!("Loading model weights from {}...", load_path));
-    let model: Model<B> = {
-        // Prefer full precision — HF-converted bundles are recorded with FullPrecisionSettings.
-        let mut result = NamedMpkFileRecorder::<FullPrecisionSettings>::new()
-            .load(load_path.clone().into(), device);
-
-        if result.is_err() {
-            result = NamedMpkGzFileRecorder::<FullPrecisionSettings>::new()
-                .load(load_path.clone().into(), device);
-        }
-
-        if result.is_err() {
-            if verbose {
-                pb.println("Failed FullPrecision, trying HalfPrecisionSettings...");
-            }
-            result = NamedMpkFileRecorder::<HalfPrecisionSettings>::new()
-                .load(load_path.clone().into(), device);
-
-            if result.is_err() {
-                result = NamedMpkGzFileRecorder::<HalfPrecisionSettings>::new()
-                    .load(load_path.clone().into(), device);
-            }
-        }
-
-        match result.map(|record| model_config.init(device).load_record(record)) {
-            Ok(m) => m,
-            Err(e) => {
-                pb.finish_and_clear();
-                return Err(format!("Failed to initialize model: {}", e).into());
-            }
+    pb.set_message(format!("Loading model weights from {}...", weight_path.display()));
+    let model = match model_config.init(device).try_load_file(weight_path) {
+        Ok(model) => model,
+        Err(e) => {
+            pb.finish_and_clear();
+            return Err(format!("Failed to initialize model: {e}").into());
         }
     };
 
@@ -232,16 +193,16 @@ pub fn load_model<B: Backend>(
     Ok((bpe, model_config, model))
 }
 
-pub fn get_model_stats<B: Backend>(model_name: &str, device: &B::Device) -> (Option<Tensor<B, 2>>, Option<Tensor<B, 2>>) {
+pub fn get_model_stats(model_name: &str, device: &Device) -> (Option<Tensor< 2>>, Option<Tensor< 2>>) {
     let dir = whisburn_core::resolve_model_dir(model_name);
     let path = dir.to_string_lossy().into_owned();
     let mean = if dir.join("mean.npy").exists() {
-        load_tensor::<B, 2>("mean", &path, device).ok()
+        load_tensor::< 2>("mean", &path, device).ok()
     } else {
         None
     };
     let std = if dir.join("std.npy").exists() {
-        load_tensor::<B, 2>("std", &path, device).ok()
+        load_tensor::< 2>("std", &path, device).ok()
     } else {
         None
     };

@@ -2,7 +2,7 @@
 //!
 //! Remaining VRAM is compared to `max(reserve_mb, total * reserve_percent / 100)`.
 //! When the model itself would breach that floor, the runtime offloads to the
-//! ndarray CPU backend. When the model fits but the clip is long enough to push
+//! Flex CPU backend. When the model fits but the clip is long enough to push
 //! activations into the danger zone, the runtime keeps the GPU and splits audio.
 
 use std::process::Command;
@@ -380,6 +380,25 @@ Write-Output ($gpu.Name + '|' + [int]($gpu.AdapterRAM / 1MB))
     })
 }
 
+/// Exit only when this process is idle, still holding a cubecl pool, and the
+/// card no longer has the compositor reserve. A finished job that leaves
+/// headroom must keep the server up so the summary and the next file can run.
+pub fn compositor_exit_required(
+    jobs_in_flight: usize,
+    held_mb: Option<u32>,
+    snap: &VramSnapshot,
+    policy: &VramPolicy,
+) -> bool {
+    if jobs_in_flight > 0 {
+        return false;
+    }
+    match held_mb {
+        Some(mb) if mb > 256 => {}
+        _ => return false,
+    }
+    policy.should_offload(snap, 0)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -451,6 +470,23 @@ mod tests {
         assert!(looks_like_gpu_oom("cuda OOM while allocating buffer"));
         assert!(!looks_like_gpu_oom("unknown model"));
         assert!(!looks_like_gpu_oom("failed to open audio file"));
+    }
+
+    #[test]
+    fn compositor_exit_required_only_when_idle_and_this_process_starves_the_card() {
+        let policy = VramPolicy::default();
+        let healthy = snap_8g(4000);
+        let starved = snap_8g(500);
+        assert!(!compositor_exit_required(1, Some(7000), &starved, &policy));
+        assert!(!compositor_exit_required(
+            0,
+            Some(4000),
+            &healthy,
+            &policy
+        ));
+        assert!(compositor_exit_required(0, Some(7000), &starved, &policy));
+        assert!(!compositor_exit_required(0, Some(100), &starved, &policy));
+        assert!(!compositor_exit_required(0, None, &starved, &policy));
     }
 
     fn snap_8g(free_mb: u32) -> VramSnapshot {

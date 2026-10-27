@@ -6,9 +6,10 @@ mod runtime;
 pub(crate) mod thinker;
 pub mod weights;
 
+use burn::tensor::{Device, DeviceKind};
 use burn::config::Config;
 use burn::module::Module;
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 
 pub use audio_tower::{Qwen3AudioTower, Qwen3AudioTowerConfig};
 pub use prompt::{
@@ -60,7 +61,7 @@ impl Qwen3ASRConfig {
         }
     }
 
-    pub fn init<B: Backend>(&self, device: &B::Device) -> Qwen3ASR<B> {
+    pub fn init(&self, device: &Device) -> Qwen3ASR {
         Qwen3ASR {
             audio_tower: self.audio_tower.init(device),
             thinker: self.thinker.init(device),
@@ -69,12 +70,12 @@ impl Qwen3ASRConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct Qwen3ASR<B: Backend> {
-    pub audio_tower: Qwen3AudioTower<B>,
-    pub thinker: Qwen3Thinker<B>,
+pub struct Qwen3ASR {
+    pub audio_tower: Qwen3AudioTower,
+    pub thinker: Qwen3Thinker,
 }
 
-impl<B: Backend> Qwen3ASR<B> {
+impl Qwen3ASR {
     pub fn encoder_ctx_size(&self) -> usize {
         1500
     }
@@ -87,11 +88,11 @@ impl<B: Backend> Qwen3ASR<B> {
         16_000
     }
 
-    pub fn device(&self) -> B::Device {
+    pub fn device(&self) -> Device {
         self.audio_tower.conv2d1.weight.device()
     }
 
-    pub fn encode_audio(&self, mel: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn encode_audio(&self, mel: Tensor< 3>) -> Tensor< 3> {
         self.audio_tower.forward(mel)
     }
 

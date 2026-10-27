@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use burn::tensor::Tensor;
 use whisburn_engine::model::load_model;
 use whisburn_engine::model::Model;
@@ -43,16 +43,16 @@ fn audio_encoder_with_hf_mel_matches_hf_output() {
         .map(|c| f32::from_le_bytes([c[0], c[1], c[2], c[3]]))
         .collect();
 
-    let device = WgpuDevice::DefaultDevice;
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
     let (_, _, model) =
-        load_model::<Wgpu>("qwen3-asr-0.6b", &device, false).expect("load qwen3");
+        load_model("qwen3-asr-0.6b", &device, false).expect("load qwen3");
     let Model::Qwen3(qwen) = model else {
         panic!("expected qwen3");
     };
 
-    let mel = Tensor::<Wgpu, 1>::from_floats(mel_vec.as_slice(), &device).reshape([1, 128, 1100]);
+    let mel = Tensor::< 1>::from_floats(mel_vec.as_slice(), &device).reshape([1, 128, 1100]);
     let enc = qwen.encode_audio(mel);
-    let rust_vec = enc.into_data().to_vec::<f32>().unwrap();
+    let rust_vec = enc.into_data().try_to_vec::<f32>().unwrap();
     let enc_rmse = rmse(&rust_vec, &hf_audio_vec);
     eprintln!("audio_encoder_with_hf_mel_rmse={enc_rmse:.6}");
     assert!(

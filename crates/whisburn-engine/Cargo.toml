@@ -4,14 +4,13 @@ description = "Burn-based speech inference engine (Whisper, Parakeet, and more)"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
 
 [dependencies]
 whisburn-core = { workspace = true }
 whisburn-audio = { workspace = true }
 burn = { workspace = true }
-burn-ndarray = { workspace = true }
 rayon = { workspace = true }
-cubecl = { version = "0.10", default-features = false, features = ["wgpu", "std"] }
 serde = { workspace = true }
 num-traits = "0.2"
 hound = { workspace = true }
@@ -27,10 +26,13 @@ dasp = { version = "0.11", features = ["all"] }
 rtrb = "0.3"
 flate2 = { workspace = true }
 ureq = { workspace = true }
+rustls = { workspace = true }
+rustls-rustcrypto = { workspace = true }
 indicatif = { workspace = true }
 regex = { workspace = true }
 safetensors = { workspace = true }
 half = { workspace = true }
+memmap2 = "0.9.11"
 termsize = "0.1"
 cpal = "0.18"
 clap = { workspace = true }
@@ -39,8 +41,8 @@ tracing = { workspace = true }
 [features]
 default = ["wgpu", "cpu"]
 wgpu = ["burn/wgpu"]
-# NdArray CPU path: rayon across cores, plus Burn's SIMD kernels.
-cpu = ["burn/ndarray", "burn/simd"]
+# Flex is the pure-Rust CPU backend. Rayon is the host thread pool.
+cpu = ["burn/flex"]
 
 [dev-dependencies]
 indicatif = { workspace = true }

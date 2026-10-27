@@ -18,19 +18,32 @@ pub struct ServerConfig {
     pub loaded_models: Vec<String>,
 }
 
+fn ensure_tls() {
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        if rustls::crypto::CryptoProvider::get_default().is_some() {
+            return;
+        }
+        let _ = rustls::crypto::CryptoProvider::install_default(rustls_rustcrypto::provider());
+    }
+}
+
 pub async fn fetch_models(base_url: &str) -> anyhow::Result<Vec<ModelInfo>> {
+    ensure_tls();
     let url = format!("{}/v1/models", base_url.trim_end_matches('/'));
     let models = reqwest::Client::new().get(url).send().await?.json().await?;
     Ok(models)
 }
 
 pub async fn fetch_config(base_url: &str) -> anyhow::Result<ServerConfig> {
+    ensure_tls();
     let url = format!("{}/v1/config", base_url.trim_end_matches('/'));
     let config = reqwest::Client::new().get(url).send().await?.json().await?;
     Ok(config)
 }
 
 pub async fn fetch_health(base_url: &str) -> anyhow::Result<()> {
+    ensure_tls();
     let url = format!("{}/health", base_url.trim_end_matches('/'));
     reqwest::Client::new()
         .get(url)
@@ -48,6 +61,7 @@ pub async fn transcribe_bytes(
     format: &str,
     language: &str,
 ) -> anyhow::Result<Vec<u8>> {
+    ensure_tls();
     let url = format!(
         "{}/v1/transcribe?model={}&format={}&language={}&download=false",
         base_url.trim_end_matches('/'),

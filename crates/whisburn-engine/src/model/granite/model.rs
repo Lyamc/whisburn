@@ -1,9 +1,10 @@
+use burn::tensor::{Device, DeviceKind};
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 
 use burn::module::{Module, Param};
-use burn::tensor::{activation::silu, activation::softmax, backend::Backend, Tensor};
+use burn::tensor::{activation::silu, activation::softmax, Tensor};
 use half::bf16;
 use safetensors::{Dtype, SafeTensors};
 use serde::Deserialize;
@@ -173,19 +174,19 @@ fn decode_plain(data: &[u8], dtype: Dtype) -> Result<Vec<f32>, String> {
     }
 }
 
-type KvCache<B> = (Tensor<B, 4>, Tensor<B, 4>);
+type KvCache = (Tensor< 4>, Tensor< 4>);
 
-pub struct GraniteModel<B: Backend> {
+pub struct GraniteModel {
     cfg: GraniteConfig,
     store: WeightStore,
-    input_norm: Vec<RMSNorm<B>>,
-    post_norm: Vec<RMSNorm<B>>,
-    final_norm: RMSNorm<B>,
-    device: B::Device,
+    input_norm: Vec<RMSNorm>,
+    post_norm: Vec<RMSNorm>,
+    final_norm: RMSNorm,
+    device: Device,
 }
 
-impl<B: Backend> GraniteModel<B> {
-    pub fn load(model_dir: &Path, device: &B::Device) -> Result<Self, String> {
+impl GraniteModel {
+    pub fn load(model_dir: &Path, device: &Device) -> Result<Self, String> {
         let cfg: GraniteConfig = serde_json::from_str(
             &fs::read_to_string(model_dir.join("config.json")).map_err(|e| e.to_string())?,
         )
@@ -232,7 +233,7 @@ impl<B: Backend> GraniteModel<B> {
         }
         let mut ids = prefix.to_vec();
         let mut x = self.embed(&ids)?;
-        let mut caches: Vec<Option<KvCache<B>>> = vec![None; self.cfg.num_hidden_layers];
+        let mut caches: Vec<Option<KvCache>> = vec![None; self.cfg.num_hidden_layers];
         let (mut hidden, filled) = self.forward_layers(x, &mut caches, 0)?;
         caches = filled;
         let mut generated = Vec::new();
@@ -254,7 +255,7 @@ impl<B: Backend> GraniteModel<B> {
         Ok(generated)
     }
 
-    fn embed(&self, ids: &[usize]) -> Result<Tensor<B, 3>, String> {
+    fn embed(&self, ids: &[usize]) -> Result<Tensor< 3>, String> {
         let packed = self.store.get("model.embed_tokens.weight")?;
         if packed.shape.len() != 2 {
             return Err("embed_tokens rank".into());
@@ -278,18 +279,18 @@ impl<B: Backend> GraniteModel<B> {
                 data[t * hidden + h] = v * mult;
             }
         }
-        Ok(Tensor::<B, 1>::from_floats(data.as_slice(), &self.device)
+        Ok(Tensor::< 1>::from_floats(data.as_slice(), &self.device)
             .reshape([1, ids.len(), hidden]))
     }
 
     fn forward_layers(
         &self,
-        mut x: Tensor<B, 3>,
-        caches: &mut [Option<KvCache<B>>],
+        mut x: Tensor< 3>,
+        caches: &mut [Option<KvCache>],
         pos0: usize,
-    ) -> Result<(Tensor<B, 3>, Vec<Option<KvCache<B>>>), String> {
+    ) -> Result<(Tensor< 3>, Vec<Option<KvCache>>), String> {
         let seq = x.dims()[1];
-        let (cos, sin) = rope_embeddings::<B>(
+        let (cos, sin) = rope_embeddings(
             pos0,
             seq,
             self.cfg.head_dim(),
@@ -297,7 +298,7 @@ impl<B: Backend> GraniteModel<B> {
             &self.device,
         );
         let mask = if caches.iter().any(|c| c.is_some()) || pos0 > 0 {
-            Tensor::<B, 2>::zeros([1, pos0 + seq], &self.device)
+            Tensor::< 2>::zeros([1, pos0 + seq], &self.device)
         } else {
             attn_decoder_mask(seq, &self.device)
         };
@@ -319,12 +320,12 @@ impl<B: Backend> GraniteModel<B> {
     fn attention(
         &self,
         layer: usize,
-        x: Tensor<B, 3>,
-        cos: &Tensor<B, 3>,
-        sin: &Tensor<B, 3>,
-        mask: &Tensor<B, 2>,
-        cache: Option<KvCache<B>>,
-    ) -> Result<(Tensor<B, 3>, KvCache<B>), String> {
+        x: Tensor< 3>,
+        cos: &Tensor< 3>,
+        sin: &Tensor< 3>,
+        mask: &Tensor< 2>,
+        cache: Option<KvCache>,
+    ) -> Result<(Tensor< 3>, KvCache), String> {
         let [batch, seq, _] = x.dims();
         let heads = self.cfg.num_attention_heads;
         let kv_heads = self.cfg.num_key_value_heads;
@@ -364,7 +365,7 @@ impl<B: Backend> GraniteModel<B> {
         Ok((out, (k_full, v_full)))
     }
 
-    fn mlp(&self, layer: usize, x: Tensor<B, 3>) -> Result<Tensor<B, 3>, String> {
+    fn mlp(&self, layer: usize, x: Tensor< 3>) -> Result<Tensor< 3>, String> {
         let gate = silu(self.proj(&format!("model.layers.{layer}.mlp.gate_proj.weight"), x.clone())?);
         let up = self.proj(&format!("model.layers.{layer}.mlp.up_proj.weight"), x)?;
         self.proj(
@@ -373,18 +374,18 @@ impl<B: Backend> GraniteModel<B> {
         )
     }
 
-    fn proj(&self, name: &str, x: Tensor<B, 3>) -> Result<Tensor<B, 3>, String> {
+    fn proj(&self, name: &str, x: Tensor< 3>) -> Result<Tensor< 3>, String> {
         let (weight, inp, out) = self.store.linear_in_out(name)?;
         let [batch, seq, h] = x.dims();
         if h != inp {
             return Err(format!("{name} expected in={inp}, got {h}"));
         }
         let flat = x.reshape([batch * seq, inp]);
-        let w = Tensor::<B, 1>::from_floats(weight.as_slice(), &self.device).reshape([inp, out]);
+        let w = Tensor::< 1>::from_floats(weight.as_slice(), &self.device).reshape([inp, out]);
         Ok(flat.matmul(w).reshape([batch, seq, out]))
     }
 
-    fn argmax_token(&self, hidden: &Tensor<B, 3>) -> Result<usize, String> {
+    fn argmax_token(&self, hidden: &Tensor< 3>) -> Result<usize, String> {
         let [_, seq, h] = hidden.dims();
         let last = hidden.clone().slice([0..1, seq - 1..seq, 0..h]).reshape([1, h]);
         let packed = self.store.get("lm_head.weight")?;
@@ -413,11 +414,11 @@ impl<B: Backend> GraniteModel<B> {
                     w[c * n + row] = values[c] * scale as f32;
                 }
             }
-            let wt = Tensor::<B, 1>::from_floats(w.as_slice(), &self.device).reshape([h, n]);
+            let wt = Tensor::< 1>::from_floats(w.as_slice(), &self.device).reshape([h, n]);
             let scores = last.clone().matmul(wt);
             let data = scores.into_data();
             let vals = data
-                .to_vec::<f32>()
+                .try_to_vec::<f32>()
                 .map_err(|_| "lm_head scores".to_string())?;
             for (i, v) in vals.iter().enumerate() {
                 if *v > best {
@@ -431,21 +432,21 @@ impl<B: Backend> GraniteModel<B> {
     }
 }
 
-fn load_norm<B: Backend>(
+fn load_norm(
     store: &WeightStore,
     name: &str,
     eps: f64,
-    device: &B::Device,
-) -> Result<RMSNorm<B>, String> {
+    device: &Device,
+) -> Result<RMSNorm, String> {
     let weight = store.f32(name)?;
     let mut norm = RMSNorm::with_eps(weight.len(), eps, device);
-    let mut record = norm.clone().into_record();
-    record.gamma = Param::from_tensor(Tensor::<B, 1>::from_floats(weight.as_slice(), device));
-    norm = norm.load_record(record);
+    let mut loaded = norm.clone();
+    loaded.gamma = Param::from_tensor(Tensor::< 1>::from_floats(weight.as_slice(), device));
+    norm = loaded;
     Ok(norm)
 }
 
-fn apply_rope<B: Backend>(x: Tensor<B, 4>, cos: &Tensor<B, 3>, sin: &Tensor<B, 3>) -> Tensor<B, 4> {
+fn apply_rope(x: Tensor< 4>, cos: &Tensor< 3>, sin: &Tensor< 3>) -> Tensor< 4> {
     let [b, h, s, d] = x.dims();
     let half = d / 2;
     let x1 = x.clone().slice([0..b, 0..h, 0..s, 0..half]);
@@ -456,7 +457,7 @@ fn apply_rope<B: Backend>(x: Tensor<B, 4>, cos: &Tensor<B, 3>, sin: &Tensor<B, 3
     x * cos + rotated * sin
 }
 
-fn repeat_kv<B: Backend>(x: Tensor<B, 4>, n_rep: usize) -> Tensor<B, 4> {
+fn repeat_kv(x: Tensor< 4>, n_rep: usize) -> Tensor< 4> {
     if n_rep == 1 {
         return x;
     }
@@ -471,13 +472,13 @@ fn repeat_kv<B: Backend>(x: Tensor<B, 4>, n_rep: usize) -> Tensor<B, 4> {
     Tensor::cat(heads, 1)
 }
 
-fn rope_embeddings<B: Backend>(
+fn rope_embeddings(
     pos0: usize,
     seq: usize,
     head_dim: usize,
     theta: f64,
-    device: &B::Device,
-) -> (Tensor<B, 3>, Tensor<B, 3>) {
+    device: &Device,
+) -> (Tensor< 3>, Tensor< 3>) {
     let half = head_dim / 2;
     let mut cos_data = vec![0.0f32; seq * head_dim];
     let mut sin_data = vec![0.0f32; seq * head_dim];
@@ -494,8 +495,8 @@ fn rope_embeddings<B: Backend>(
             sin_data[t * head_dim + half + i] = s;
         }
     }
-    let cos = Tensor::<B, 1>::from_floats(cos_data.as_slice(), device).reshape([1, seq, head_dim]);
-    let sin = Tensor::<B, 1>::from_floats(sin_data.as_slice(), device).reshape([1, seq, head_dim]);
+    let cos = Tensor::< 1>::from_floats(cos_data.as_slice(), device).reshape([1, seq, head_dim]);
+    let sin = Tensor::< 1>::from_floats(sin_data.as_slice(), device).reshape([1, seq, head_dim]);
     (cos, sin)
 }
 
@@ -503,10 +504,10 @@ pub fn is_granite_model(name: &str) -> bool {
     name == "granite-4.2-3b-fp8"
 }
 
-pub fn load_granite<B: Backend>(
+pub fn load_granite(
     model_name: &str,
-    device: &B::Device,
-) -> Result<GraniteModel<B>, String> {
+    device: &Device,
+) -> Result<GraniteModel, String> {
     let dir = whisburn_core::resolve_model_dir(model_name);
     GraniteModel::load(&dir, device)
 }
@@ -517,9 +518,9 @@ fn build_prompt(user: &str) -> String {
     )
 }
 
-pub fn summarize_text<B: Backend>(
+pub fn summarize_text(
     model_name: &str,
-    device: &B::Device,
+    device: &Device,
     text: &str,
     verbose: bool,
     progress: Option<SummarizeProgress>,
@@ -527,7 +528,7 @@ pub fn summarize_text<B: Backend>(
     if verbose {
         tracing::info!(model = model_name, "loading Granite FP8 summarizer");
     }
-    let model = load_granite::<B>(model_name, device).map_err(WhisburnError::Model)?;
+    let model = load_granite(model_name, device).map_err(WhisburnError::Model)?;
     let tokenizer = Gpt2Tokenizer::new(model_name)
         .map_err(|e| WhisburnError::Model(format!("granite tokenizer: {e}")))?;
     let mut eos = Vec::new();
@@ -597,8 +598,8 @@ pub fn summarize_text<B: Backend>(
     )
 }
 
-fn complete<B: Backend>(
-    model: &GraniteModel<B>,
+fn complete(
+    model: &GraniteModel,
     tokenizer: &Gpt2Tokenizer,
     prompt: &str,
     eos: &[usize],
@@ -617,8 +618,7 @@ fn complete<B: Backend>(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use burn::backend::ndarray::{NdArray, NdArrayDevice};
-    use half::bf16;
+        use half::bf16;
     use safetensors::tensor::{serialize, Dtype as SafeDtype, TensorView};
     use std::collections::HashMap;
 
@@ -723,8 +723,8 @@ mod tests {
             }"#,
         )
         .unwrap();
-        let device = NdArrayDevice::Cpu;
-        let model = GraniteModel::<NdArray>::load(&dir, &device).unwrap();
+        let device = Device::flex();
+        let model = GraniteModel::load(&dir, &device).unwrap();
         let next = model.generate(&[1, 2], &[5], 1).unwrap();
         assert_eq!(next.len(), 1);
         assert!(next[0] < vocab);

@@ -15,7 +15,12 @@ fn burn_bundle_detection_requires_weights_config_and_tokenizer() {
     fs::write(path.join("tokenizer.json"), "{}").unwrap();
     fs::write(path.join("config.cfg"), "").unwrap();
     fs::write(path.join("model.mpk"), b"stub").unwrap();
+    assert!(
+        !has_burn_bundle(&path, model),
+        "a Named MPK file is not a Burn 0.22 bundle"
+    );
 
+    fs::write(path.join("model.bpk"), b"stub").unwrap();
     assert!(has_burn_bundle(&path, model));
 }
 

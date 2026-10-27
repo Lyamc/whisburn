@@ -1,4 +1,5 @@
 mod moonshine;
+mod nemotron;
 mod parakeet;
 mod qwen3;
 mod tone;
@@ -6,6 +7,7 @@ mod vibevoice;
 mod whisper;
 
 pub use moonshine::decode_moonshine;
+pub use nemotron::decode_nemotron;
 pub use parakeet::{decode_parakeet, is_garbage_parakeet_text};
 pub use qwen3::decode_qwen3;
 pub use tone::decode_tone;

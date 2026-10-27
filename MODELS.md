@@ -140,6 +140,7 @@ models/parakeet-tdt-0.6b-v3/
 | `parakeet-ctc-1.1b` | nvidia/parakeet-ctc-1.1b | `burn_ready: true` (42-layer encoder + CTC greedy) |
 | `t-one` | t-tech/T-one | `burn_ready: true` (8 kHz Conformer CTC, Russian, greedy) |
 | `phonon-2` | FermionResearch/Phonon-2 | `burn_ready: true` (five-value container of Parakeet TDT v3) |
+| `nemotron-3.5-asr-streaming-0.6b` | nvidia/nemotron-3.5-asr-streaming-0.6b | `burn_ready: true` (offline FastConformer RNN-T, OpenMDW-1.1) |
 
 ### Phonon-2
 

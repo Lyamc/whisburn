@@ -1,4 +1,5 @@
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Device, DeviceKind};
+use burn::tensor::{Tensor};
 use npy::NpyData;
 use std::error::Error;
 use std::io::Read;
@@ -29,11 +30,11 @@ pub fn tensor_exists(name: &str, path: &str) -> bool {
     false
 }
 
-pub fn load_tensor<B: Backend, const D: usize>(
+pub fn load_tensor<const D: usize>(
     name: &str,
     path: &str,
-    device: &B::Device,
-) -> Result<Tensor<B, D>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<Tensor< D>, Box<dyn Error>> {
     let tensor_path = format!("{}/{}.npy", path, name);
     
     // Check metadata first. If it's NOT in shapes.json, it's not just a missing file, 
@@ -77,7 +78,7 @@ pub fn load_tensor<B: Backend, const D: usize>(
         for i in 0..D {
             fallback_shape[i] = if i < data.len() { data[i] as usize } else { 1 };
         }
-        let tensor = Tensor::<B, 1>::from_floats(&data[D..], device).reshape(fallback_shape);
+        let tensor = Tensor::< 1>::from_floats(&data[D..], device).reshape(fallback_shape);
         return Ok(tensor);
     }
 
@@ -102,13 +103,13 @@ pub fn load_tensor<B: Backend, const D: usize>(
         s
     };
 
-    let tensor = Tensor::<B, 1>::from_floats(&data[..], device).reshape(target_shape);
+    let tensor = Tensor::< 1>::from_floats(&data[..], device).reshape(target_shape);
     Ok(tensor)
 }
 
-pub fn load_usize<B: Backend>(name: &str, path: &str, device: &B::Device) -> Result<usize, Box<dyn Error>> {
-    let tensor = load_tensor::<B, 1>(name, path, device)?;
+pub fn load_usize(name: &str, path: &str, device: &Device) -> Result<usize, Box<dyn Error>> {
+    let tensor = load_tensor::< 1>(name, path, device)?;
     let data = tensor.into_data();
-    let val = data.to_vec::<f32>().unwrap()[0] as usize;
+    let val = data.try_to_vec::<f32>().unwrap()[0] as usize;
     Ok(val)
 }

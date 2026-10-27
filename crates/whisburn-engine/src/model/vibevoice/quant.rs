@@ -8,14 +8,15 @@
 //! Packed `i8` (or host f32) stays on the host. Each forward copies **one tile**
 //! into f32, runs the matmul, then drops the tile.
 
+use burn::tensor::{Device, DeviceKind};
 use std::fmt;
 use std::sync::Arc;
 
 use burn::module::{Module, Param};
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 
 #[derive(Module)]
-pub struct QuantLinear<B: Backend> {
+pub struct QuantLinear {
     #[module(skip)]
     qweight: Arc<Vec<i8>>,
     #[module(skip)]
@@ -26,11 +27,11 @@ pub struct QuantLinear<B: Backend> {
     d_in: usize,
     #[module(skip)]
     d_out: usize,
-    pub scale: Param<Tensor<B, 1>>,
-    pub bias: Option<Param<Tensor<B, 1>>>,
+    pub scale: Param<Tensor< 1>>,
+    pub bias: Option<Param<Tensor< 1>>>,
 }
 
-impl<B: Backend> fmt::Debug for QuantLinear<B> {
+impl fmt::Debug for QuantLinear {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("QuantLinear")
             .field("d_in", &self.d_in)
@@ -40,16 +41,16 @@ impl<B: Backend> fmt::Debug for QuantLinear<B> {
     }
 }
 
-impl<B: Backend> QuantLinear<B> {
-    pub fn empty(d_in: usize, d_out: usize, with_bias: bool, device: &B::Device) -> Self {
+impl QuantLinear {
+    pub fn empty(d_in: usize, d_out: usize, with_bias: bool, device: &Device) -> Self {
         Self {
             qweight: Arc::new(Vec::new()),
             scale_host: Arc::new(vec![1.0; d_out]),
             f32_weight: None,
             d_in,
             d_out,
-            scale: Param::from_tensor(Tensor::<B, 1>::ones([d_out], device)),
-            bias: with_bias.then(|| Param::from_tensor(Tensor::<B, 1>::zeros([d_out], device))),
+            scale: Param::from_tensor(Tensor::< 1>::ones([d_out], device)),
+            bias: with_bias.then(|| Param::from_tensor(Tensor::< 1>::zeros([d_out], device))),
         }
     }
 
@@ -59,12 +60,12 @@ impl<B: Backend> QuantLinear<B> {
         bias: Option<Vec<f32>>,
         d_in: usize,
         d_out: usize,
-        device: &B::Device,
+        device: &Device,
     ) -> Self {
         debug_assert_eq!(qweight.len(), d_in * d_out);
         debug_assert_eq!(scale.len(), d_out);
-        let scale_t = Tensor::<B, 1>::from_floats(scale.as_slice(), device);
-        let bias = bias.map(|b| Param::from_tensor(Tensor::<B, 1>::from_floats(b.as_slice(), device)));
+        let scale_t = Tensor::< 1>::from_floats(scale.as_slice(), device);
+        let bias = bias.map(|b| Param::from_tensor(Tensor::< 1>::from_floats(b.as_slice(), device)));
         Self {
             qweight: Arc::new(qweight),
             scale_host: Arc::new(scale),
@@ -82,27 +83,27 @@ impl<B: Backend> QuantLinear<B> {
         bias: Option<Vec<f32>>,
         d_in: usize,
         d_out: usize,
-        device: &B::Device,
+        device: &Device,
     ) -> Self {
         debug_assert_eq!(weight.len(), d_in * d_out);
         let bias =
-            bias.map(|b| Param::from_tensor(Tensor::<B, 1>::from_floats(b.as_slice(), device)));
+            bias.map(|b| Param::from_tensor(Tensor::< 1>::from_floats(b.as_slice(), device)));
         Self {
             qweight: Arc::new(Vec::new()),
             scale_host: Arc::new(vec![1.0; d_out]),
             f32_weight: Some(Arc::new(weight)),
             d_in,
             d_out,
-            scale: Param::from_tensor(Tensor::<B, 1>::ones([d_out], device)),
+            scale: Param::from_tensor(Tensor::< 1>::ones([d_out], device)),
             bias,
         }
     }
 
-    pub fn device(&self) -> B::Device {
+    pub fn device(&self) -> Device {
         self.scale.val().device()
     }
 
-    pub fn forward(&self, x: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn forward(&self, x: Tensor< 3>) -> Tensor< 3> {
         let [b, s, d] = x.dims();
         debug_assert_eq!(d, self.d_in);
         let device = x.device();
@@ -125,7 +126,7 @@ impl<B: Backend> QuantLinear<B> {
         y
     }
 
-    fn dequant_cols(&self, col0: usize, col1: usize, device: &B::Device) -> Tensor<B, 2> {
+    fn dequant_cols(&self, col0: usize, col1: usize, device: &Device) -> Tensor< 2> {
         let w_out = col1 - col0;
         let q = self.qweight.as_slice();
         let sc = self.scale_host.as_slice();
@@ -148,7 +149,7 @@ impl<B: Backend> QuantLinear<B> {
                 }
             }
         }
-        Tensor::<B, 1>::from_floats(w.as_slice(), device).reshape([self.d_in, w_out])
+        Tensor::< 1>::from_floats(w.as_slice(), device).reshape([self.d_in, w_out])
     }
 }
 
@@ -210,19 +211,18 @@ pub fn quantize_linear(
 #[cfg(test)]
 mod tests {
     use super::{quantize_per_out_channel, quantize_ternary_absmean};
+    use burn::tensor::{Device, Tensor};
 
     #[test]
     fn f32_forward_matches_matmul() {
-        use burn::backend::ndarray::{NdArray, NdArrayDevice};
-        use burn::tensor::Tensor;
-        let device = NdArrayDevice::Cpu;
+        let device = Device::flex();
         let d_in = 3;
         let d_out = 4;
         // Burn layout [d_in, d_out]
         let w: Vec<f32> = (0..d_in * d_out).map(|i| i as f32 * 0.5).collect();
-        let layer = super::QuantLinear::<NdArray>::from_f32(w.clone(), None, d_in, d_out, &device);
-        let x = Tensor::<NdArray, 1>::from_floats([1.0f32, 0.0, 2.0].as_slice(), &device).reshape([1, 1, d_in]);
-        let y = layer.forward(x).into_data().to_vec::<f32>().unwrap();
+        let layer = super::QuantLinear::from_f32(w.clone(), None, d_in, d_out, &device);
+        let x = Tensor::< 1>::from_floats([1.0f32, 0.0, 2.0].as_slice(), &device).reshape([1, 1, d_in]);
+        let y = layer.forward(x).into_data().try_to_vec::<f32>().unwrap();
         // y[j] = x0*w[0,j] + x2*w[2,j]
         let mut expect = vec![0f32; d_out];
         for j in 0..d_out {

@@ -1,11 +1,10 @@
-use burn::tensor::backend::Backend;
 
 use crate::model::tone::weights::load_tone_runtime;
 use crate::model::tone::{greedy_ctc_text, tone_log_mel, TONE};
 use crate::token::Gpt2Tokenizer;
 
-pub fn decode_tone<B: Backend>(
-    model: &TONE<B>,
+pub fn decode_tone(
+    model: &TONE,
     _bpe: &Gpt2Tokenizer,
     waveform: &[f32],
     sample_rate: usize,

@@ -1,7 +1,8 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::{
     config::Config,
     module::Module,
-    tensor::{backend::Backend, Int, Tensor},
+    tensor::{Int, Tensor},
 };
 
 use crate::model::encoder::{AudioEncoder, AudioEncoderConfig};
@@ -14,7 +15,7 @@ pub struct WhisperConfig {
 }
 
 impl WhisperConfig {
-    pub fn init<B: Backend>(&self, tensor_device_ref: &B::Device) -> Whisper<B> {
+    pub fn init(&self, tensor_device_ref: &Device) -> Whisper {
         let n_audio_state = self.audio_encoder_config.n_audio_state;
         let n_text_state = self.text_decoder_config.n_text_state;
 
@@ -33,25 +34,25 @@ impl WhisperConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct Whisper<B: Backend> {
-    pub encoder: AudioEncoder<B>,
-    pub decoder: TextDecoder<B>,
+pub struct Whisper {
+    pub encoder: AudioEncoder,
+    pub decoder: TextDecoder,
 }
 
-impl<B: Backend> Whisper<B> {
-    pub fn forward(&self, mel: Tensor<B, 3>, tokens: Tensor<B, 2, Int>) -> Tensor<B, 3> {
+impl Whisper {
+    pub fn forward(&self, mel: Tensor< 3>, tokens: Tensor< 2, Int>) -> Tensor< 3> {
         self.decoder.forward(tokens, self.encoder.forward(mel))
     }
 
-    pub fn forward_encoder(&self, mel: Tensor<B, 3>) -> Tensor<B, 3> {
+    pub fn forward_encoder(&self, mel: Tensor< 3>) -> Tensor< 3> {
         self.encoder.forward(mel)
     }
 
     pub fn forward_decoder(
         &self,
-        tokens: Tensor<B, 2, Int>,
-        encoder_output: Tensor<B, 3>,
-    ) -> Tensor<B, 3> {
+        tokens: Tensor< 2, Int>,
+        encoder_output: Tensor< 3>,
+    ) -> Tensor< 3> {
         self.decoder.forward(tokens, encoder_output)
     }
 

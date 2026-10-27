@@ -1,14 +1,15 @@
-use burn::tensor::{activation::relu, backend::Backend, Tensor};
+use burn::tensor::{Device, DeviceKind};
+use burn::tensor::{activation::relu, Tensor};
 use crate::helper::*;
 
-pub fn get_mel_filters<B: Backend>(
+pub fn get_mel_filters(
     sample_rate: f64,
     n_fft: usize,
     n_mels: usize,
     htk: bool,
-    device: &B::Device,
+    device: &Device,
     normalize: bool,
-) -> Tensor<B, 2> {
+) -> Tensor< 2> {
     let fmin = 0.0;
     let fmax = sample_rate * 0.5;
 
@@ -62,23 +63,23 @@ Try increasing your sampling rate (and fmax) or reducing n_mels.");
     return weights;
 }
 
-pub fn fft_frequencies<B: Backend>(
+pub fn fft_frequencies(
     sample_rate: f64,
     n_fft: usize,
-    device: &B::Device,
-) -> Tensor<B, 1> {
+    device: &Device,
+) -> Tensor< 1> {
     Tensor::arange(0..(n_fft / 2 + 1) as i64, device)
         .float()
         .mul_scalar(sample_rate / n_fft as f64)
 }
 
-pub fn mel_frequencies<B: Backend>(
+pub fn mel_frequencies(
     n_mels: usize,
     fmin: f64,
     fmax: f64,
     htk: bool,
-    device: &B::Device,
-) -> Tensor<B, 1> {
+    device: &Device,
+) -> Tensor< 1> {
     let min_mel = hz_to_mel(fmin, htk);
     let max_mel = hz_to_mel(fmax, htk);
 
@@ -111,7 +112,7 @@ pub fn hz_to_mel(freq: f64, htk: bool) -> f64 {
     return mel;
 }
 
-pub fn mel_to_hz_tensor<B: Backend>(mel: Tensor<B, 1>, htk: bool) -> Tensor<B, 1> {
+pub fn mel_to_hz_tensor(mel: Tensor< 1>, htk: bool) -> Tensor< 1> {
     if htk {
         return (_10pow(mel / 2595.0) - 1.0) * 700.0;
     }

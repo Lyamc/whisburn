@@ -1,5 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::nn;
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 use burn::module::Param;
 use crate::model::*;
 use crate::model::conformer::*;
@@ -8,16 +9,16 @@ use crate::model::parakeet_decoder::{ParakeetDecoder, ParakeetLstm, ParakeetLstm
 use std::error::Error;
 use std::path::Path;
 
-fn load_parakeet_decoder<B: Backend>(
+fn load_parakeet_decoder(
     path: &str,
-    device: &B::Device,
-) -> Result<Option<ParakeetDecoder<B>>, Box<dyn Error>> {
+    device: &Device,
+) -> Result<Option<ParakeetDecoder>, Box<dyn Error>> {
     let embed_path = format!("{path}/decoder/embedding/weight.npy");
     if !Path::new(&embed_path).exists() {
         return Ok(None);
     }
 
-    let embed_weight = load_tensor::<B, 2>("weight", &format!("{path}/decoder/embedding"), device)?;
+    let embed_weight = load_tensor::< 2>("weight", &format!("{path}/decoder/embedding"), device)?;
     let [_n_vocab, _hidden_size] = embed_weight.dims();
     let embedding = nn::Embedding {
         weight: Param::from_tensor(embed_weight),
@@ -29,10 +30,10 @@ fn load_parakeet_decoder<B: Backend>(
         if !Path::new(&format!("{layer_path}/weight_ih.npy")).exists() {
             break;
         }
-        let weight_ih = load_tensor::<B, 2>("weight_ih", &layer_path, device)?;
-        let weight_hh = load_tensor::<B, 2>("weight_hh", &layer_path, device)?;
-        let bias_ih = load_tensor::<B, 1>("bias_ih", &layer_path, device)?;
-        let bias_hh = load_tensor::<B, 1>("bias_hh", &layer_path, device)?;
+        let weight_ih = load_tensor::< 2>("weight_ih", &layer_path, device)?;
+        let weight_hh = load_tensor::< 2>("weight_hh", &layer_path, device)?;
+        let bias_ih = load_tensor::< 1>("bias_ih", &layer_path, device)?;
+        let bias_hh = load_tensor::< 1>("bias_hh", &layer_path, device)?;
         lstm_layers.push(ParakeetLstmLayer {
             weight_ih: Param::from_tensor(weight_ih),
             weight_hh: Param::from_tensor(weight_hh),
@@ -45,7 +46,7 @@ fn load_parakeet_decoder<B: Backend>(
         return Ok(None);
     }
 
-    let proj_weight = load_tensor::<B, 2>("weight", &format!("{path}/decoder/projector"), device)?;
+    let proj_weight = load_tensor::< 2>("weight", &format!("{path}/decoder/projector"), device)?;
     let [d_out, d_in] = proj_weight.dims();
     let projector = load_linear(&format!("{path}/decoder/projector"), d_in, d_out, device)?;
 
@@ -56,13 +57,13 @@ fn load_parakeet_decoder<B: Backend>(
     }))
 }
 
-pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parakeet<B>, Box<dyn Error>> {
-    let n_layers = load_usize::<B>("n_layers", &format!("{}/encoder", path), device)?;
-    let d_model = load_usize::<B>("d_model", &format!("{}/encoder", path), device)?;
-    let n_head = load_usize::<B>("n_head", &format!("{}/encoder", path), device)?;
+pub fn load_parakeet(path: &str, device: &Device) -> Result<Parakeet, Box<dyn Error>> {
+    let n_layers = load_usize("n_layers", &format!("{}/encoder", path), device)?;
+    let d_model = load_usize("d_model", &format!("{}/encoder", path), device)?;
+    let n_head = load_usize("n_head", &format!("{}/encoder", path), device)?;
     
     let kernel_size = if Path::new(&format!("{}/encoder/block_0/conv/depth_conv/weight.npy", path)).exists() {
-        let weight = load_tensor::<B, 3>("weight", &format!("{}/encoder/block_0/conv/depth_conv", path), device)?;
+        let weight = load_tensor::< 3>("weight", &format!("{}/encoder/block_0/conv/depth_conv", path), device)?;
         weight.dims()[2]
     } else {
         31 // Default fallback
@@ -70,7 +71,7 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
 
     // Load subsampling convolutions (5 layers for 8x subsampling)
     let conv1 = {
-        let weight = load_tensor::<B, 4>("weight", &format!("{}/encoder/conv1", path), device)?;
+        let weight = load_tensor::< 4>("weight", &format!("{}/encoder/conv1", path), device)?;
         let [out_ch, in_ch, k1, k2] = weight.dims();
         let cfg = nn::conv::Conv2dConfig::new([in_ch, out_ch], [k1, k2])
             .with_padding(nn::PaddingConfig2d::Explicit(k1 / 2, k2 / 2, k1 / 2, k2 / 2))
@@ -79,7 +80,7 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
     };
 
     let conv2 = {
-        let weight = load_tensor::<B, 4>("weight", &format!("{}/encoder/conv2", path), device)?;
+        let weight = load_tensor::< 4>("weight", &format!("{}/encoder/conv2", path), device)?;
         let [out_ch, in_ch_per_group, k1, k2] = weight.dims();
         let groups = out_ch; // For depthwise, groups == out_channels
         let in_ch = in_ch_per_group * groups; 
@@ -91,14 +92,14 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
     };
 
     let conv3 = {
-        let weight = load_tensor::<B, 4>("weight", &format!("{}/encoder/conv3", path), device)?;
+        let weight = load_tensor::< 4>("weight", &format!("{}/encoder/conv3", path), device)?;
         let [out_ch, in_ch, k1, k2] = weight.dims();
         let cfg = nn::conv::Conv2dConfig::new([in_ch, out_ch], [k1, k2]);
         load_conv2d(&format!("{}/encoder/conv3", path), cfg, device)?
     };
 
     let conv4 = {
-        let weight = load_tensor::<B, 4>("weight", &format!("{}/encoder/conv4", path), device)?;
+        let weight = load_tensor::< 4>("weight", &format!("{}/encoder/conv4", path), device)?;
         let [out_ch, in_ch_per_group, k1, k2] = weight.dims();
         let groups = out_ch;
         let in_ch = in_ch_per_group * groups;
@@ -110,13 +111,13 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
     };
 
     let conv5 = {
-        let weight = load_tensor::<B, 4>("weight", &format!("{}/encoder/conv5", path), device)?;
+        let weight = load_tensor::< 4>("weight", &format!("{}/encoder/conv5", path), device)?;
         let [out_ch, in_ch, k1, k2] = weight.dims();
         let cfg = nn::conv::Conv2dConfig::new([in_ch, out_ch], [k1, k2]);
         load_conv2d(&format!("{}/encoder/conv5", path), cfg, device)?
     };
 
-    let pe_out_weight = load_tensor::<B, 2>("weight", &format!("{}/encoder/pre_encode_out", path), device)?;
+    let pe_out_weight = load_tensor::< 2>("weight", &format!("{}/encoder/pre_encode_out", path), device)?;
     let [pe_out, pe_in] = pe_out_weight.dims(); 
     let pre_encode_out = load_linear(&format!("{}/encoder/pre_encode_out", path), pe_in, pe_out, device)?;
 
@@ -129,14 +130,14 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
     
     // Final projection to joint space
     let final_proj = if Path::new(&format!("{}/final_proj/weight.npy", path)).exists() {
-        let weight = load_tensor::<B, 2>("weight", &format!("{}/final_proj", path), device)?;
+        let weight = load_tensor::< 2>("weight", &format!("{}/final_proj", path), device)?;
         let [d_out, d_in] = weight.dims();
         load_linear(&format!("{}/final_proj", path), d_in, d_out, device)?
     } else {
         nn::LinearConfig::new(d_model, 640).init(device)
     };
 
-    let weight = load_tensor::<B, 2>("weight", &format!("{}/ctc_linear", path), device)?;
+    let weight = load_tensor::< 2>("weight", &format!("{}/ctc_linear", path), device)?;
     let [n_v, n_in] = weight.dims();
     let ctc_linear = load_linear(&format!("{}/ctc_linear", path), n_in, n_v, device)?;
 
@@ -144,7 +145,7 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
     let joint_pred_bias = if Path::new(&format!("{}/final_proj/bias.npy", path)).exists() {
         // We actually want joint.pred.bias
         if tensor_exists("bias", &format!("{}/joint_pred", path)) {
-             load_tensor::<B, 1>("bias", &format!("{}/joint_pred", path), device)?
+             load_tensor::< 1>("bias", &format!("{}/joint_pred", path), device)?
         } else {
              Tensor::zeros([640], device)
         }
@@ -153,18 +154,18 @@ pub fn load_parakeet<B: Backend>(path: &str, device: &B::Device) -> Result<Parak
     };
 
     let n_mels = if Path::new(&format!("{}/encoder/n_mels.npy", path)).exists() {
-        load_usize::<B>("n_mels", &format!("{}/encoder", path), device)?
+        load_usize("n_mels", &format!("{}/encoder", path), device)?
     } else {
         128 // Default for Parakeet-TDT v3
     };
 // Load global mel stats if they exist
 let mean = if Path::new(&format!("{}/mean.npy", path)).exists() {
-    load_tensor::<B, 2>("mean", &path, device).ok().map(Param::from_tensor)
+    load_tensor::< 2>("mean", &path, device).ok().map(Param::from_tensor)
 } else {
     None
 };
 let std = if Path::new(&format!("{}/std.npy", path)).exists() {
-    load_tensor::<B, 2>("std", &path, device).ok().map(Param::from_tensor)
+    load_tensor::< 2>("std", &path, device).ok().map(Param::from_tensor)
 } else {
     None
 };

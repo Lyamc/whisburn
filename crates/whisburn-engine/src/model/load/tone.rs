@@ -1,18 +1,18 @@
+use burn::tensor::{Device, DeviceKind};
 use std::error::Error;
 use std::path::Path;
 
-use burn::tensor::backend::Backend;
 
 use crate::model::tone::weights::{load_tone_runtime, load_tone_weights, weights_present};
 use crate::model::tone::TONEConfig;
 use crate::model::*;
 use crate::token::Gpt2Tokenizer;
 
-pub fn load_tone_model<B: Backend>(
+pub fn load_tone_model(
     model_name: &str,
-    device: &B::Device,
+    device: &Device,
     verbose: bool,
-) -> Result<(Gpt2Tokenizer, ModelConfig, Model<B>), Box<dyn Error>> {
+) -> Result<(Gpt2Tokenizer, ModelConfig, Model), Box<dyn Error>> {
     let model_dir = whisburn_core::resolve_model_dir(model_name).display().to_string();
     let runtime_path = format!("{model_dir}/tone_runtime.json");
     if !Path::new(&runtime_path).exists() {

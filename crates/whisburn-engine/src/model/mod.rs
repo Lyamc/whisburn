@@ -15,6 +15,7 @@ pub mod qwen3;
 pub mod vibevoice;
 pub mod vad;
 pub mod diarize;
+pub mod nemotron;
 
 pub use load::*;
 pub use attention::*;
@@ -31,6 +32,7 @@ pub use qwen3::{
     Qwen3ASR, Qwen3ASRConfig, Qwen3AsrPrompt, Qwen3AudioTower, Qwen3AudioTowerConfig,
     Qwen3RuntimeConfig, Qwen3Thinker, Qwen3ThinkerConfig, QWEN3_DEFAULT_MAX_NEW_TOKENS,
 };
+pub use nemotron::{Nemotron, NemotronConfig};
 pub use vibevoice::{
     audio_duration_secs, build_vibevoice_config, load_vibevoice_runtime, normalize_dbfs,
     pad_placeholders, vae_token_length, Qwen2Decoder, Qwen2DecoderConfig, SpeechConnector,
@@ -38,11 +40,8 @@ pub use vibevoice::{
     VibeVoiceASRConfig, VibeVoicePrompt, VibeVoiceRuntimeConfig,
 };
 
-use burn::{
-    config::Config,
-    module::Module,
-    tensor::backend::Backend,
-};
+use burn::tensor::Device;
+use burn::{config::Config, module::Module};
 
 #[derive(Config, Debug)]
 pub enum ModelConfig {
@@ -52,10 +51,11 @@ pub enum ModelConfig {
     Qwen3(qwen3::Qwen3ASRConfig),
     VibeVoice(vibevoice::VibeVoiceASRConfig),
     Moonshine(moonshine::MoonshineASRConfig),
+    Nemotron(nemotron::NemotronConfig),
 }
 
 impl ModelConfig {
-    pub fn init<B: Backend>(&self, device: &B::Device) -> Model<B> {
+    pub fn init(&self, device: &Device) -> Model {
         match self {
             ModelConfig::Whisper(config) => Model::Whisper(config.init(device)),
             ModelConfig::Parakeet(config) => Model::Parakeet(config.init(device)),
@@ -63,21 +63,23 @@ impl ModelConfig {
             ModelConfig::Qwen3(config) => Model::Qwen3(config.init(device)),
             ModelConfig::VibeVoice(config) => Model::VibeVoice(config.init(device)),
             ModelConfig::Moonshine(config) => Model::Moonshine(config.init(device)),
+            ModelConfig::Nemotron(config) => Model::Nemotron(config.init(device)),
         }
     }
 }
 
 #[derive(Module, Debug)]
-pub enum Model<B: Backend> {
-    Whisper(whisper::Whisper<B>),
-    Parakeet(parakeet::Parakeet<B>),
-    TONE(tone::TONE<B>),
-    Qwen3(qwen3::Qwen3ASR<B>),
-    VibeVoice(vibevoice::VibeVoiceASR<B>),
-    Moonshine(moonshine::MoonshineASR<B>),
+pub enum Model {
+    Whisper(whisper::Whisper),
+    Parakeet(parakeet::Parakeet),
+    TONE(tone::TONE),
+    Qwen3(qwen3::Qwen3ASR),
+    VibeVoice(vibevoice::VibeVoiceASR),
+    Moonshine(moonshine::MoonshineASR),
+    Nemotron(nemotron::Nemotron),
 }
 
-impl<B: Backend> Model<B> {
+impl Model {
     pub fn encoder_ctx_size(&self) -> usize {
         match self {
             Model::Whisper(m) => m.encoder_ctx_size(),
@@ -86,6 +88,7 @@ impl<B: Backend> Model<B> {
             Model::Qwen3(m) => m.encoder_ctx_size(),
             Model::VibeVoice(m) => m.encoder_ctx_size(),
             Model::Moonshine(m) => m.encoder_ctx_size(),
+            Model::Nemotron(m) => m.encoder_ctx_size(),
         }
     }
 
@@ -97,6 +100,7 @@ impl<B: Backend> Model<B> {
             Model::Qwen3(m) => m.encoder_mel_size(),
             Model::VibeVoice(m) => m.encoder_mel_size(),
             Model::Moonshine(m) => m.encoder_mel_size(),
+            Model::Nemotron(m) => m.encoder_mel_size(),
         }
     }
 }

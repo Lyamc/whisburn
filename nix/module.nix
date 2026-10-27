@@ -248,6 +248,31 @@ in
       '';
     };
 
+    maxParallelJobs = lib.mkOption {
+      type = lib.types.ints.unsigned;
+      default = 1;
+      description = ''
+        How many speech or summary jobs may allocate at once
+        (`WHISBURN_MAX_PARALLEL_JOBS`).
+        `0` or `1` runs one job at a time. A larger value allows that many
+        jobs into inference together. A job that would breach the VRAM reserve
+        still runs from RAM instead of stacking on the GPU.
+      '';
+    };
+
+    idleUnloadSecs = lib.mkOption {
+      type = lib.types.nullOr lib.types.ints.unsigned;
+      default = null;
+      description = ''
+        How long to keep the last model in GPU/RAM after a job finishes
+        (`WHISBURN_IDLE_UNLOAD_SECS`).
+        `null` (default) is automatic: five times the weight-load time,
+        clamped between 30 seconds and 15 minutes. Until a load has been
+        timed, the fallback is 5 minutes.
+        `0` disables idle unload. A positive number forces that many seconds.
+      '';
+    };
+
     summary = {
       enable = lib.mkOption {
         type = lib.types.bool;
@@ -386,6 +411,10 @@ in
         WHISBURN_SUMMARIZER = cfg.summary.model;
         WHISBURN_VRAM_RESERVE_MB = toString cfg.vramReserveMb;
         WHISBURN_VRAM_RESERVE_PERCENT = toString cfg.vramReservePercent;
+        WHISBURN_MAX_PARALLEL_JOBS = toString cfg.maxParallelJobs;
+      }
+      // lib.optionalAttrs (cfg.idleUnloadSecs != null) {
+        WHISBURN_IDLE_UNLOAD_SECS = toString cfg.idleUnloadSecs;
       }
       // lib.optionalAttrs (cfg.device != null) {
         WHISBURN_DEVICE = cfg.device;

@@ -22,8 +22,6 @@
           default = pkgs.mkShell {
             buildInputs = with pkgs; [
               rustup
-              pkg-config
-              openssl
             ];
           };
 

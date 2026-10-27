@@ -1,4 +1,5 @@
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Device, DeviceKind};
+use burn::tensor::{Tensor};
 use crate::audio::AudioProcessor;
 use std::ops::Div;
 use std::sync::Arc;
@@ -15,15 +16,15 @@ pub fn mel_window_count(waveform_len: usize, window_length_samples: usize, sampl
     waveform_len.saturating_sub(1).div(shift) + 1
 }
 
-pub fn waveform_to_mel_tensor<B: Backend>(
+pub fn waveform_to_mel_tensor(
     waveform: Vec<f32>,
     sample_rate: usize,
     window_length_samples: usize,
-    device: &B::Device,
+    device: &Device,
     n_mels: usize,
     is_nemo: bool,
     model_name: &str,
-) -> impl Iterator<Item = Tensor<B, 3>> {
+) -> impl Iterator<Item = Tensor< 3>> {
     let n_samples_per_tensor = window_length_samples;
     let chunk_overlap = sample_rate.saturating_mul(3);
     let shift = n_samples_per_tensor.saturating_sub(chunk_overlap).max(1);
@@ -38,8 +39,8 @@ pub fn waveform_to_mel_tensor<B: Backend>(
         let std_path = dir.join("std.npy");
         if mean_path.exists() && std_path.exists() {
             let dir_str = dir.to_string_lossy();
-            let mean = load_tensor::<B, 2>("mean", dir_str.as_ref(), &device_clone).unwrap();
-            let std = load_tensor::<B, 2>("std", dir_str.as_ref(), &device_clone).unwrap();
+            let mean = load_tensor::< 2>("mean", dir_str.as_ref(), &device_clone).unwrap();
+            let std = load_tensor::< 2>("std", dir_str.as_ref(), &device_clone).unwrap();
             processor = processor.with_stats(mean, std);
         }
     }
@@ -53,7 +54,7 @@ pub fn waveform_to_mel_tensor<B: Backend>(
 
         let slice = &waveform[start..end];
 
-        let waveform_tensor = Tensor::<B, 1>::from_floats(
+        let waveform_tensor = Tensor::< 1>::from_floats(
             slice,
             &device_clone,
         );

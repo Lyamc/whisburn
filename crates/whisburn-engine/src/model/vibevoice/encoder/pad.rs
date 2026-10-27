@@ -9,11 +9,11 @@ pub fn extra_padding_for_conv1d(length: usize, kernel_size: usize, stride: usize
 }
 
 /// Zero padding on the time axis of `[batch, channels, time]`.
-pub fn zero_pad1d<B: burn::tensor::backend::Backend>(
-    x: burn::tensor::Tensor<B, 3>,
+pub fn zero_pad1d(
+    x: burn::tensor::Tensor< 3>,
     left: usize,
     right: usize,
-) -> burn::tensor::Tensor<B, 3> {
+) -> burn::tensor::Tensor< 3> {
     if left == 0 && right == 0 {
         return x;
     }

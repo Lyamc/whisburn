@@ -1,7 +1,8 @@
+use burn::tensor::{Device, DeviceKind};
 use burn::config::Config;
 use burn::module::{Module, Param};
 use burn::nn::{Linear, LinearConfig};
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 
 #[derive(Config, Debug)]
 pub struct SpeechConnectorConfig {
@@ -10,7 +11,7 @@ pub struct SpeechConnectorConfig {
 }
 
 impl SpeechConnectorConfig {
-    pub fn init<B: Backend>(&self, device: &B::Device) -> SpeechConnector<B> {
+    pub fn init(&self, device: &Device) -> SpeechConnector {
         SpeechConnector {
             fc1: LinearConfig::new(self.input_dim, self.hidden_size).init(device),
             norm_gamma: Param::from_tensor(Tensor::ones([self.hidden_size], device)),
@@ -21,23 +22,23 @@ impl SpeechConnectorConfig {
 }
 
 #[derive(Module, Debug)]
-pub struct SpeechConnector<B: Backend> {
-    pub fc1: Linear<B>,
-    pub norm_gamma: Param<Tensor<B, 1>>,
-    pub fc2: Linear<B>,
+pub struct SpeechConnector {
+    pub fc1: Linear,
+    pub norm_gamma: Param<Tensor< 1>>,
+    pub fc2: Linear,
     #[module(skip)]
     pub eps: f64,
 }
 
-impl<B: Backend> SpeechConnector<B> {
-    pub fn forward(&self, features: Tensor<B, 3>) -> Tensor<B, 3> {
+impl SpeechConnector {
+    pub fn forward(&self, features: Tensor< 3>) -> Tensor< 3> {
         let x = self.fc1.forward(features);
         let x = rms_norm(x, self.norm_gamma.val(), self.eps);
         self.fc2.forward(x)
     }
 }
 
-fn rms_norm<B: Backend>(x: Tensor<B, 3>, gamma: Tensor<B, 1>, eps: f64) -> Tensor<B, 3> {
+fn rms_norm(x: Tensor< 3>, gamma: Tensor< 1>, eps: f64) -> Tensor< 3> {
     let variance = x.clone().powf_scalar(2.0).mean_dim(2);
     let normed = x * variance.add_scalar(eps).powf_scalar(-0.5);
     normed * gamma.unsqueeze_dims(&[0, 1])

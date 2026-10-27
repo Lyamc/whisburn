@@ -87,6 +87,15 @@ pub fn download_vibevoice_hf(
             }
             return prepare_vibevoice_bundle(dir, name, options);
         }
+        // Eight f32 shards are about 17 GB each. Refuse the fallback unless the
+        // filesystem can hold them with room left for the rest of the system.
+        let free = available_bytes(dir).unwrap_or(0);
+        const SHARD_BUDGET: u64 = 160 * 1024 * 1024 * 1024;
+        if free < SHARD_BUDGET {
+            anyhow::bail!(
+                "GGUF Q4_K download failed and the f32 shards need {SHARD_BUDGET} bytes free (have {free}). Put vibevoice-asr-q4_k.gguf in the gguf store instead."
+            );
+        }
         tracing::warn!("GGUF Q4_K download failed; falling back to safetensor shards");
     }
 
@@ -117,4 +126,14 @@ pub fn download_vibevoice_hf(
     }
 
     prepare_vibevoice_bundle(dir, name, options)
+}
+
+fn available_bytes(dir: &Path) -> Option<u64> {
+    let path = dir.ancestors().find(|p| p.exists()).unwrap_or(dir);
+    let output = std::process::Command::new("df")
+        .args(["-B1", "--output=avail", path.to_str()?])
+        .output()
+        .ok()?;
+    let text = String::from_utf8(output.stdout).ok()?;
+    text.lines().nth(1)?.trim().parse().ok()
 }

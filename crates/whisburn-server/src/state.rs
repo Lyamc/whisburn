@@ -17,6 +17,9 @@ pub struct AppState {
     pub summarize_default: bool,
     pub summarizer_model: String,
     pub gpu: GpuInfo,
-    /// Serialize GPU/ffmpeg jobs so concurrent uploads cannot abort connections.
+    /// Inference jobs allowed to allocate at once. `1` is serial.
+    pub max_parallel_jobs: u32,
+    /// Caps concurrent speech/summarize/transcode work. Permits match
+    /// [`whisburn_engine::placement::parallelism_limit`].
     pub job_semaphore: Arc<Semaphore>,
 }

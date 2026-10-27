@@ -9,7 +9,7 @@ use anyhow::Context;
 
 use crate::download::DownloadOptions;
 
-pub const BURN_BUNDLE_VERSION: &str = "0.21.0-granite-fp8";
+pub const BURN_BUNDLE_VERSION: &str = "0.22.1-granite-fp8";
 
 pub fn prepare_granite_bundle(
     model_dir: &Path,

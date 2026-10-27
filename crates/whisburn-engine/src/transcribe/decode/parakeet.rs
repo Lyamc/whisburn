@@ -1,4 +1,4 @@
-use burn::tensor::{backend::Backend, Tensor};
+use burn::tensor::{Tensor};
 use serde::Deserialize;
 use std::path::Path;
 
@@ -188,15 +188,15 @@ fn count_token_classes(
     )
 }
 
-pub fn decode_parakeet<B: Backend>(
-    parakeet: &Parakeet<B>,
+pub fn decode_parakeet(
+    parakeet: &Parakeet,
     bpe: &Gpt2Tokenizer,
-    mel: Tensor<B, 3>,
+    mel: Tensor< 3>,
     model_name: &str,
     verbose: bool,
 ) -> (String, Vec<usize>) {
     if verbose {
-        let max_feat = mel.clone().max().into_data().to_vec::<f32>().unwrap()[0];
+        let max_feat = mel.clone().max().into_data().try_to_vec::<f32>().unwrap()[0];
         println!("DEBUG Parakeet Input: Max feature value: {}", max_feat);
     }
 
@@ -234,7 +234,7 @@ pub fn decode_parakeet<B: Backend>(
             .argmax(2)
              .squeeze_dim::<2>(0)
             .into_data()
-            .to_vec::<i32>()
+            .try_to_vec::<i32>()
             .unwrap();
         if verbose {
             println!("DEBUG Parakeet CTC Raw IDs: {:?}", &raw_ids[..20.min(raw_ids.len())]);
@@ -249,7 +249,7 @@ pub fn decode_parakeet<B: Backend>(
     }
 
     if verbose {
-        let max_logit = logits.clone().max().into_data().to_vec::<f32>().unwrap()[0];
+        let max_logit = logits.clone().max().into_data().try_to_vec::<f32>().unwrap()[0];
         println!("DEBUG Parakeet: Max logit value: {}", max_logit);
     }
 
@@ -264,7 +264,7 @@ pub fn decode_parakeet<B: Backend>(
                 .argsort(2)
                  .squeeze_dim::<2>(0)
                 .into_data()
-                .to_vec::<i32>()
+                .try_to_vec::<i32>()
                 .unwrap();
             let start = top_5.len().saturating_sub(5);
             println!("DEBUG Parakeet Frame {}: Top-5 IDs: {:?}", f, &top_5[start..]);
@@ -275,7 +275,7 @@ pub fn decode_parakeet<B: Backend>(
         .argmax(2)
          .squeeze_dim::<2>(0)
         .into_data()
-        .to_vec::<i32>()
+        .try_to_vec::<i32>()
         .unwrap();
 
     if verbose {
@@ -290,7 +290,7 @@ pub fn decode_parakeet<B: Backend>(
                 .argmax(2)
                  .squeeze_dim::<2>(0)
                 .into_data()
-                .to_vec::<i32>()
+                .try_to_vec::<i32>()
                 .unwrap()
         })
         .unwrap_or_else(|| vec![0; n_frames]);

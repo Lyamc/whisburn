@@ -1,6 +1,6 @@
+use burn::tensor::{Device, DeviceKind};
 use std::path::Path;
 
-use burn::backend::wgpu::{Wgpu, WgpuDevice};
 use burn::tensor::Tensor;
 use whisburn_engine::model::load_model;
 use whisburn_engine::model::qwen3::{build_asr_prompt, flatten_prompt, load_qwen3_runtime};
@@ -56,9 +56,9 @@ fn merged_embeds_and_hidden_match_hf() {
     assert_eq!(seq, 158);
     assert_eq!(audio_tokens, 143);
 
-    let device = WgpuDevice::DefaultDevice;
+    let device = Device::wgpu(DeviceKind::DefaultDevice);
     let (bpe, _, model) =
-        load_model::<Wgpu>("qwen3-asr-0.6b", &device, false).expect("load qwen3");
+        load_model("qwen3-asr-0.6b", &device, false).expect("load qwen3");
     let Model::Qwen3(qwen) = model else {
         panic!("expected qwen3");
     };
@@ -67,7 +67,7 @@ fn merged_embeds_and_hidden_match_hf() {
     let prompt = build_asr_prompt(&runtime, 1100, "", None);
     let prefix = flatten_prompt(&prompt, &bpe);
 
-    let audio = Tensor::<Wgpu, 1>::from_floats(hf_audio.as_slice(), &device)
+    let audio = Tensor::< 1>::from_floats(hf_audio.as_slice(), &device)
         .reshape([1, audio_tokens, 1024]);
     let rust_merged = qwen.thinker.merge_audio_embeds(
         &prefix,
@@ -75,7 +75,7 @@ fn merged_embeds_and_hidden_match_hf() {
         runtime.audio_pad_token_id,
         &device,
     );
-    let rust_vec = rust_merged.clone().into_data().to_vec::<f32>().unwrap();
+    let rust_vec = rust_merged.clone().into_data().try_to_vec::<f32>().unwrap();
 
     let merged_rmse = rmse(&rust_vec, &hf_merged);
     eprintln!("merged_embeds_rmse={merged_rmse:.6}");
@@ -85,7 +85,7 @@ fn merged_embeds_and_hidden_match_hf() {
         .forward_hidden(rust_merged)
         .slice([0..1, seq - 1..seq, 0..1024])
         .into_data()
-        .to_vec::<f32>()
+        .try_to_vec::<f32>()
         .unwrap();
     let hidden_rmse = rmse(&rust_hidden, &hf_hidden);
     eprintln!("last_hidden_rmse={hidden_rmse:.6}");

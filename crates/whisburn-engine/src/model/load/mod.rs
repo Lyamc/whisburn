@@ -7,6 +7,7 @@ pub mod tone;
 pub mod qwen3;
 pub mod vibevoice;
 pub mod moonshine;
+pub mod nemotron;
 pub mod loader;
 
 pub use helpers::*;

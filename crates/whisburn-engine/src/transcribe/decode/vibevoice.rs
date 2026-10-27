@@ -1,4 +1,3 @@
-use burn::tensor::backend::Backend;
 use burn::tensor::Tensor;
 
 use crate::model::vibevoice::{
@@ -6,8 +5,8 @@ use crate::model::vibevoice::{
 };
 use crate::token::Gpt2Tokenizer;
 
-pub fn decode_vibevoice<B: Backend>(
-    model: &VibeVoiceASR<B>,
+pub fn decode_vibevoice(
+    model: &VibeVoiceASR,
     bpe: &Gpt2Tokenizer,
     waveform: &[f32],
     sample_rate: usize,
@@ -27,7 +26,7 @@ pub fn decode_vibevoice<B: Backend>(
     let normalized = normalize_dbfs(&waveform, runtime.target_dbfs);
     let prompt = build_asr_prompt(&runtime, normalized.len(), None);
     let device = model.decoder.lm_head.device();
-    let audio = Tensor::<B, 1>::from_floats(normalized.as_slice(), &device)
+    let audio = Tensor::< 1>::from_floats(normalized.as_slice(), &device)
         .reshape([1, 1, normalized.len()]);
     let speech = model.encode_speech(audio);
     let [_, speech_tokens, _] = speech.dims();

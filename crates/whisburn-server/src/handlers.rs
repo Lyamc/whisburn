@@ -48,6 +48,15 @@ pub struct ServerConfigResponse {
     pub summarizer_model: String,
     pub vram_reserve_mb: u32,
     pub vram_reserve_percent: u32,
+    /// `"auto"`, `"fixed"`, or `"off"`.
+    pub idle_unload_mode: String,
+    /// Override seconds. `null` is auto; `0` is off.
+    pub idle_unload_secs: Option<u32>,
+    /// Current idle window in seconds (auto uses the unknown-load fallback until a load is timed).
+    pub idle_timeout_secs: Option<u64>,
+    pub last_model_load_ms: Option<u64>,
+    /// Inference jobs allowed to allocate together. `1` waits for the previous job.
+    pub max_parallel_jobs: u32,
 }
 
 pub async fn server_config(State(state): State<AppState>) -> impl IntoResponse {
@@ -62,6 +71,11 @@ pub async fn server_config(State(state): State<AppState>) -> impl IntoResponse {
         summarizer_model: state.summarizer_model.clone(),
         vram_reserve_mb: state.manager.vram_policy().reserve_mb,
         vram_reserve_percent: state.manager.vram_policy().reserve_percent,
+        idle_unload_mode: state.manager.idle_policy().mode_label().to_string(),
+        idle_unload_secs: state.manager.idle_policy().override_secs(),
+        idle_timeout_secs: state.manager.idle_timeout_secs(),
+        last_model_load_ms: state.manager.last_model_load_ms(),
+        max_parallel_jobs: state.max_parallel_jobs,
     })
 }
 
@@ -219,6 +233,8 @@ pub async fn transcribe(
 
     let include_timestamps = query.timestamps.unwrap_or(true);
     let sentences = query.sentences.unwrap_or(false);
+    // Covers the write of the body. Releasing VRAM must not kill this process first.
+    let _request = state.manager.begin_request();
     let result = transcribe_upload(
         state.manager.clone(),
         model,
@@ -268,7 +284,14 @@ pub async fn transcribe_stream(
         .model
         .unwrap_or_else(|| state.default_model.clone());
 
-    let _permit = acquire_job(&state.job_semaphore).await?;
+    // Owned permit so the lock stays inside the spawned task. Dropping it when
+    // this handler returns let a second upload unload the model mid-transcript.
+    let permit = state
+        .job_semaphore
+        .clone()
+        .acquire_owned()
+        .await
+        .map_err(|_| ApiError::bad_request("server is shutting down"))?;
 
     let task = query
         .task
@@ -308,6 +331,10 @@ pub async fn transcribe_stream(
     let stream_start = std::time::Instant::now();
 
     tokio::spawn(async move {
+        // Lives through the summary and the done event. release_gpu inside
+        // summarize used to exit while this task still had the transcript.
+        let _permit = permit;
+        let _request = manager.begin_request();
         match transcribe_upload_with_progress(
             manager.clone(),
             model,
